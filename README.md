@@ -2,6 +2,6 @@
 ## Team 35
 
 ### Team Members:
-- Student1 99105283
-- Student2 99102491
-- Student3 99170359
+- amirmohammad izadi 99105283
+- reza vahidimajd 99102491
+- erfan asadi 99170359
