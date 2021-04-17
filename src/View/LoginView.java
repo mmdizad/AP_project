@@ -15,7 +15,7 @@ public class LoginView extends Menu {
 
     }
     public Matcher getCommandMatcher(){
-
+        return null;
     }
     public void showMenu(Matcher matcher){
 

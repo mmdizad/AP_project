@@ -34,6 +34,8 @@ public class DuelView extends StartDuelView{
     protected void selectField(Matcher matcher){}
     protected void selectOpponentField(Matcher matcher){}
     protected void selectHand(Matcher matcher){}
-    protected Matcher getCommandMatcher(String command,String regex){}
+    protected Matcher getCommandMatcher(String command,String regex){
+        return null;
+    }
 
 }

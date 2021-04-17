@@ -15,11 +15,11 @@ public class ProfileController extends LoginController {
     }
 
     public String changeNickName(Matcher matcher){
-
+        return null;
     }
 
     public String changePassword(Matcher matcher){
-
+        return null;
     }
 
 }

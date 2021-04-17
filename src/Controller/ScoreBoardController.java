@@ -15,7 +15,7 @@ public class ScoreBoardController extends LoginController {
     }
 
     public ArrayList<String> scoreBoard(){
-
+        return null;
     }
 
 }

@@ -15,23 +15,23 @@ public class ShopController extends LoginController {
     }
 
     public String buyCard(Matcher matcher){
-
+        return null;
     }
 
     public ArrayList<String> checkCard(Matcher matcher){
-
+        return null;
     }
 
     private ArrayList<String> showMonster(String cardName){
-
+        return null;
     }
 
     private ArrayList<String> showSpell(String cardName){
-
+        return null;
     }
 
     private ArrayList<String> showTrap(String cardName){
-
+        return null;
     }
 
 }

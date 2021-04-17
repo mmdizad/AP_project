@@ -13,6 +13,7 @@ public class MainMenu {
     }
 
     protected Matcher getCommandMatcher(String command, String regex) {
+        return null;
     }
 
 }
