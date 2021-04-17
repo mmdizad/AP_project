@@ -1,7 +1,9 @@
 package Controller;
 
-public class LoginController {
+import Model.User;
 
+public class LoginController {
+    public User user;
     public String createUser(String command) {
 
     }

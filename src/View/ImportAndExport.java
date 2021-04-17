@@ -18,7 +18,7 @@ public class ImportAndExport extends MainMenu {
     public void importCard(Matcher matcher) {
     }
 
-    public void expordCard(Matcher matcher) {
+    public void exportCard(Matcher matcher) {
     }
 
 }
