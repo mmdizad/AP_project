@@ -25,7 +25,6 @@ public class DuelView extends StartDuelView{
     }
     public void surrender(){}
     protected void select(Matcher matcher){
-
     }
     protected  void selectMonster(Matcher matcher){}
     protected void selectOpponentMonster(Matcher matcher){}
