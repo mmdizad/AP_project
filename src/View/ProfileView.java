@@ -3,12 +3,15 @@ package View;
 import java.util.regex.Matcher;
 
 public class ProfileView extends MainMenu {
-    private ProfileView profileView;
+    private static ProfileView profileView = new ProfileView();
 
-    private ProfileView(){}
-    public static ProfileView getIstance(){
-        return null;
+    private ProfileView(){
+
     }
+    public static ProfileView getInstance(){
+        return profileView;
+    }
+
     public void run(){
 
     }

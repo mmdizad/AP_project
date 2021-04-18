@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User {
+    public static HashMap<String,User> users;
+    public static ArrayList<User> allUsers;
     private String username;
     private String password;
+    private String nickname;
     private int coins;
     private int score;
     private int wins;
@@ -13,12 +16,16 @@ public class User {
     private ArrayList<Deck> decks;
     private Deck activeDeck;
     private ArrayList<Card> cards;
-    public static HashMap<String,User> users;
 
+    static {
+        users = new HashMap<>();
+        allUsers = new ArrayList<>();
+    }
 
-    public User(String username,String password){
-
-
+    public User(String username,String nickname,String password){
+        setUsername(username);
+        setNickname(nickname);
+        setPassword(password);
     }
 
     public String getUsername() {
@@ -39,6 +46,24 @@ public class User {
 
     public static User getUserByUsername(String username){
         return users.get(username);
+    }
+
+    public static boolean isUserWithThisUsernameExists(String username){
+        for (User user : allUsers){
+            if (user.getUsername().equals(username)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isUserWithThisNicknameExists(String nickname){
+        for (User user : allUsers){
+            if (user.getNickname().equals(nickname)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void increaseScore(){
@@ -93,5 +118,17 @@ public class User {
 
     public void decreaseCoins(int coins){
 
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public static ArrayList<User> getAllUsers() {
+        return allUsers;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 }
