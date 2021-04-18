@@ -15,6 +15,7 @@ public class LoginView extends Menu {
             String input = scanner.nextLine();
             isCreateUserParametersValid(getCommandMatcher(input,"^user create (\\S+) (\\S+) " +
                     "(\\S+) (\\S+) (\\S+) (\\S+)$"));
+            showMenu(getCommandMatcher(input,"menu show-current"));
             if (input.equals("menu exit")) {
                 break;
             }
@@ -37,7 +38,9 @@ public class LoginView extends Menu {
     }
 
     public void showMenu(Matcher matcher) {
-
+        if (matcher.find()){
+            System.out.println("Login Menu");
+        }
     }
 
     public void isCreateUserParametersValid(Matcher matcher){
