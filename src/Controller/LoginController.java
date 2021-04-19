@@ -131,6 +131,27 @@ public class LoginController {
                 , "Normal", 2500, "spell", "Limited");
         Spell spell4 = new Spell("Raigeki", "Destroy all monsters your opponent controls."
                 , "Normal", 2500, "spell", "Limited");
+        Spell spell5 = new Spell("Change of Heart", "Target 1 monster your opponent controls;" +
+                " take control of it until the End Phase."
+                , "Normal", 2500, "spell", "Limited");
+        Spell spell6 = new Spell("Dark Hole", "Destroy all monsters on the field."
+                , "Normal", 2500, "spell", "Unlimited");
+        Spell spell7 = new Spell("Swords of Revealing Light", "After this card's activation," +
+                " it remains on the field, but destroy it during the End Phase of your opponent's 3rd turn." +
+                " When this card is activated: If your opponent controls a face-down monster, flip all monsters they control face-up." +
+                " While this card is face-up on the field, your opponent's monsters cannot declare an attack."
+                , "Normal", 2500, "spell", "Unlimited");
+        Spell spell8 = new Spell("Harpie's Feather Duster", "Destroy all Spells and Traps your opponent controls."
+                , "Normal", 2500, "spell", "Limited");
+        Spell spell9 = new Spell("Twin Twisters", "Discard 1 card, then target up to 2 Spells/Traps on the field;" +
+                " destroy them."
+                , "Quick-play", 3500, "spell", "Unlimited");
+        Spell spell10 = new Spell("Forest", "All Insect, Beast, Plant, and Beast-Warrior " +
+                "monsters on the field gain 200 ATK/DEF."
+                , "Field", 4300, "spell", "Unlimited");
+        Spell spell11 = new Spell("United We Stand", "The equipped monster gains 800 ATK/DEF for each" +
+                " face-up monster you control."
+                , "Equip", 4300, "spell", "Unlimited");
     }
 
     public void createTrap() {
