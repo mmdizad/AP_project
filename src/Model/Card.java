@@ -3,17 +3,33 @@ package Model;
 import java.util.HashMap;
 
 public class Card {
-    private String name;
-    private String description;
-    private int price;
-    private String category;
-    private String type;
-    private String cardID;
-    private HashMap<String,Card> cards;
+    protected static HashMap<String, Card> cards;
+    protected String name;
+    protected String description;
+    protected int price;
+    protected String category;
+    protected String cardType;
+    protected String cardID;
 
+    static {
+        cards = new HashMap<>();
+    }
 
-    public Card(String name,String description,String type,int price,String category){
+    public Card(String name, String description, String cardType, int price, String category) {
+        setName(name);
+        setDescription(description);
+        setCardType(cardType);
+        setPrice(price);
+        setCategory(category);
+        cards.put(name, this);
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getName() {
@@ -28,12 +44,16 @@ public class Card {
         return category;
     }
 
+    public void setCardType(String cardType) {
+        this.cardType = cardType;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    public String getType() {
-        return type;
+    public String getCardType() {
+        return cardType;
     }
 
     public void setPrice(int price) {
@@ -52,7 +72,7 @@ public class Card {
         return cardID;
     }
 
-    public static Card getCardByName(String cardName){
+    public static Card getCardByName(String cardName) {
         return null;
         //جایگزین شود
     }

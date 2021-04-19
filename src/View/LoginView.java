@@ -133,5 +133,4 @@ public class LoginView extends Menu {
             System.out.println("invalid command");
         }
     }
-
-}
+    }
