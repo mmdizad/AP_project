@@ -1,15 +1,15 @@
 package Model;
 
-public class Monster extends Card{
+public class Monster extends Card {
     private int defensePower;
     private int attackPower;
     private int level;
     private String monsterType;
     private String attribute;
 
-    public Monster(String name,String description,String cardType,int price,String category,int defensePower,int attackPower
-            ,String monsterType,String attribute,int level){
-        super(name,description,cardType,price,category);
+    public Monster(String name, String description, String cardType, int price, String category, int defensePower, int attackPower
+            , String monsterType, String attribute, int level) {
+        super(name, description, cardType, price, category);
         setDefensePower(defensePower);
         setAttackPower(attackPower);
         setMonsterType(monsterType);

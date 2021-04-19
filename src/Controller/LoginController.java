@@ -121,16 +121,16 @@ public class LoginController {
 
     public void createSpell() {
         // type : icon(property)
-        Spell spell = new Spell("Monster Reborn","Target 1 monster in either GY; Special Summon it."
-               ,"Normal",2500,"spell","Limited");
-        Spell spell1 = new Spell("Terraforming","Add 1 Field Spell from your Deck to your hand."
-                ,"Normal",2500,"spell","Limited");
-        Spell spell2 = new Spell("Pot of Greed","Draw 2 cards."
-                ,"Normal",2500,"spell","Limited");
-        Spell spell3 = new Spell("Raigeki","Destroy all monsters your opponent controls."
-                ,"Normal",2500,"spell","Limited");
-        Spell spell4 = new Spell("Raigeki","Destroy all monsters your opponent controls."
-                ,"Normal",2500,"spell","Limited");
+        Spell spell = new Spell("Monster Reborn", "Target 1 monster in either GY; Special Summon it."
+                , "Normal", 2500, "spell", "Limited");
+        Spell spell1 = new Spell("Terraforming", "Add 1 Field Spell from your Deck to your hand."
+                , "Normal", 2500, "spell", "Limited");
+        Spell spell2 = new Spell("Pot of Greed", "Draw 2 cards."
+                , "Normal", 2500, "spell", "Limited");
+        Spell spell3 = new Spell("Raigeki", "Destroy all monsters your opponent controls."
+                , "Normal", 2500, "spell", "Limited");
+        Spell spell4 = new Spell("Raigeki", "Destroy all monsters your opponent controls."
+                , "Normal", 2500, "spell", "Limited");
     }
 
     public void createTrap() {
