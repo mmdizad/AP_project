@@ -3,8 +3,8 @@ package Model;
 public class Spell extends Card {
     private String status;
 
-    public Spell(String name, String description, String type, int price, String category, String status) {
-        super(name, description, type, price, category);
+    public Spell(String name, String description, String cardType, int price, String category, String status) {
+        super(name, description, cardType, price, category);
         setStatus(status);
     }
 
