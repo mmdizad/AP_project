@@ -13,6 +13,7 @@ public class Card {
 
     static {
         cards = new HashMap<>();
+
     }
 
     public Card(String name, String description, String cardType, int price, String category) {
