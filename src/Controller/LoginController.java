@@ -156,6 +156,7 @@ public class LoginController {
 
     public void createTrap() {
            //spellCard
+
     }
 
 }
