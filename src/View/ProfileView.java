@@ -18,21 +18,26 @@ public class ProfileView extends MainMenu {
     }
 
     public void run(Scanner scanner) {
-        String input = scanner.nextLine();
-        Pattern patternChangeNickName = Pattern.compile("profile change -n (\\S+)");
-        Matcher matcherChangeNickName = patternChangeNickName.matcher(input);
-        Pattern patternChangePassword = Pattern.compile("profile change -password (\\S+) (\\S+) (\\S+) (\\S+)");
-        Matcher matcherChangePassword = patternChangePassword.matcher(input);
+        //chwck profile
+        System.out.println("profile run");
 
-        if (matcherChangeNickName.find()) {
-            ProfileController profileController = new ProfileController();
-            System.out.println(profileController.changeNickName(matcherChangeNickName));
+        while (true) {
+            String input = scanner.nextLine();
+            Pattern patternChangeNickName = Pattern.compile("profile change -n (\\S+)");
+            Matcher matcherChangeNickName = patternChangeNickName.matcher(input);
+            Pattern patternChangePassword = Pattern.compile("profile change -password (\\S+) (\\S+) (\\S+) (\\S+)");
+            Matcher matcherChangePassword = patternChangePassword.matcher(input);
 
-        } else if (matcherChangePassword.find()) {
-            changePassword(matcherChangePassword);
+            if (matcherChangeNickName.find()) {
+                ProfileController profileController = new ProfileController();
+                System.out.println(profileController.changeNickName(matcherChangeNickName));
 
-        } else System.out.println("invalid command!");
+            } else if (matcherChangePassword.find()) {
+                changePassword(matcherChangePassword);
 
+            } else if (input.equals("menu exit")) break;
+            else System.out.println("invalid command!");
+        }
     }
 
     public void changeNickName(String nickName) {
