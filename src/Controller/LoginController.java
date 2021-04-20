@@ -6,7 +6,7 @@ import Model.Trap;
 import Model.User;
 
 public class LoginController {
-    public User user;
+     public static User user;
 
     public String createUser(String username, String nickname, String password) {
         if (User.isUserWithThisUsernameExists(username)) {
@@ -15,6 +15,7 @@ public class LoginController {
             return "user with nickname " + nickname + " already exists";
         } else {
             User newUser = new User(username, nickname, password);
+            user=newUser;
             return "user created successfully!";
         }
     }

@@ -1,11 +1,14 @@
 package Model;
 
+import java.util.HashMap;
+
 public class Monster extends Card {
     private int defensePower;
     private int attackPower;
     private int level;
     private String monsterType;
     private String attribute;
+    public static HashMap<String,Monster> monsters = new HashMap<>();
 
     public Monster(String name, String description, String cardType, int price, String category, int defensePower, int attackPower
             , String monsterType, String attribute, int level) {
@@ -15,6 +18,7 @@ public class Monster extends Card {
         setMonsterType(monsterType);
         setAttribute(attribute);
         setLevel(level);
+        monsters.put(name,this);
     }
 
     public int getDefensePower() {
@@ -55,6 +59,10 @@ public class Monster extends Card {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public static Monster getMonsterByName(String name){
+        return monsters.get(name);
     }
 
 }
