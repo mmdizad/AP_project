@@ -21,7 +21,7 @@ public class LoginView extends Menu {
             isLoginParametersValid(getCommandMatcher(input, "^user login (\\S+) (\\S+) (\\S+)" +
                     " (\\S+)$"), scanner);
             showMenu(getCommandMatcher(input, "^menu show-current$"));
-            enterMenu(getCommandMatcher(input,"^menu enter \\S+$"));
+            enterMenu(getCommandMatcher(input, "^menu enter \\S+$"));
 
             if (input.equals("menu exit")) {
                 break;
@@ -32,8 +32,8 @@ public class LoginView extends Menu {
         }
     }
 
-    public void enterMenu(Matcher matcher){
-        if (matcher.find()){
+    public void enterMenu(Matcher matcher) {
+        if (matcher.find()) {
             invalidCommand = false;
             System.out.println("menu navigation is not possible");
         }

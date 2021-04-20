@@ -1,5 +1,5 @@
 package View;
 
-public class StandByPhaseView extends DuelView{
+public class StandByPhaseView extends DuelView {
 
 }

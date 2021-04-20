@@ -1,7 +1,8 @@
 package View;
 
-public class DrawPhaseView extends DuelView{
+public class DrawPhaseView extends DuelView {
 
-    public void newCard(){}
+    public void newCard() {
+    }
 
 }

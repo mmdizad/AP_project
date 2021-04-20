@@ -2,8 +2,7 @@ package View;
 
 import java.util.regex.Matcher;
 
-public class MainPhase1View extends DuelView implements Set,Summon{
-
+public class MainPhase1View extends DuelView implements Set, Summon {
 
 
     @Override
