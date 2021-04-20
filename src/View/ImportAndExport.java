@@ -1,18 +1,21 @@
 package View;
 
+import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ImportAndExport extends MainMenu {
-    private ImportAndExport importAndExport;
+    private static ImportAndExport importAndExport = new ImportAndExport();
 
     private ImportAndExport() {
+
     }
 
     public static ImportAndExport getInstance() {
-        return null;
+        return importAndExport;
     }
 
-    public void run() {
+    public void run(Scanner scanner) {
+
     }
 
     public void importCard(Matcher matcher) {

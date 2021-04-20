@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 
 public class ProfileView extends MainMenu {
     private static ProfileView profileView = new ProfileView();
-    Scanner scanner = new Scanner(System.in);
 
     private ProfileView() {
 
@@ -18,19 +17,19 @@ public class ProfileView extends MainMenu {
         return profileView;
     }
 
-    public void run() {
+    public void run(Scanner scanner) {
         String input = scanner.nextLine();
-        Pattern patternchangeNickName = Pattern.compile("profile change -n (\\S+)");
-        Matcher matcherchangeNickName = patternchangeNickName.matcher(input);
-        Pattern patternchangePassword = Pattern.compile("profile change -password (\\S+) (\\S+) (\\S+) (\\S+)");
-        Matcher matcherchangePassword = patternchangePassword.matcher(input);
+        Pattern patternChangeNickName = Pattern.compile("profile change -n (\\S+)");
+        Matcher matcherChangeNickName = patternChangeNickName.matcher(input);
+        Pattern patternChangePassword = Pattern.compile("profile change -password (\\S+) (\\S+) (\\S+) (\\S+)");
+        Matcher matcherChangePassword = patternChangePassword.matcher(input);
 
-        if (matcherchangeNickName.find()) {
+        if (matcherChangeNickName.find()) {
             ProfileController profileController = new ProfileController();
-            System.out.println(profileController.changeNickName(matcherchangeNickName));
+            System.out.println(profileController.changeNickName(matcherChangeNickName));
 
-        } else if (matcherchangePassword.find()) {
-            changePassword(matcherchangePassword);
+        } else if (matcherChangePassword.find()) {
+            changePassword(matcherChangePassword);
 
         } else System.out.println("invalid command!");
 
@@ -38,8 +37,6 @@ public class ProfileView extends MainMenu {
 
     public void changeNickName(String nickName) {
         //کارایی خاصی نداشت:)
-
-
     }
 
     public void changePassword(Matcher matcher) {

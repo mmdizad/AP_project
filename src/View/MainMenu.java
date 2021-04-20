@@ -48,8 +48,16 @@ public class MainMenu {
                 ScoreBoardView scoreBoardView = ScoreBoardView.getInstance();
                 scoreBoardView.run(scanner);
             }else if (menuName.equals("Profile")){
-                ScoreBoardView scoreBoardView = ScoreBoardView.getInstance();
-                scoreBoardView.run(scanner);
+                ProfileView profileView = ProfileView.getInstance();
+                profileView.run(scanner);
+            }else if (menuName.equals("Shop")){
+                ShopView shopView = ShopView.getInstance();
+                shopView.run(scanner);
+            }else if (menuName.equals("ImportAndExport")){
+                ImportAndExport importAndExport = ImportAndExport.getInstance();
+                importAndExport.run(scanner);
+            }else {
+                System.out.println("invalid command");
             }
         }
     }
