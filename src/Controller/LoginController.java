@@ -154,8 +154,7 @@ public class LoginController {
                 , "Equip", 4300, "spell", "Unlimited");
     }
 
-    public void createTrap() {
-           //spellCard
+    public void createTrap(){
 
     }
 
