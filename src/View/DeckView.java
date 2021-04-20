@@ -19,29 +19,39 @@ public class DeckView extends MainMenu {
 
     @Override
     public void run(Scanner scanner) {
-        String command = scanner.nextLine();
-        if (getCommandMatcher(command,"^deck create (\\S+)$").find()){
-            deckCreate(getCommandMatcher(command,"^deck create (\\S+)$"));
-        }else if (getCommandMatcher(command,"^deck delete (\\S+)$").find()){
-            deckDelete(getCommandMatcher(command,"^deck delete (\\S+)$"));
-        }else if (getCommandMatcher(command,"^deck set-activate (\\S+)$").find()){
-            deckSetActive(getCommandMatcher(command,"^deck set-activate (\\S+)$"));
-        }else if (getCommandMatcher(command,"^deck add-card --card (\\S+) --deck (\\S+)$").find()){
-            addCard(getCommandMatcher(command,"^deck add-card --card (\\S+) --deck (\\S+)$"));
-        }else if (getCommandMatcher(command,"^deck add-card --card (\\S+) --deck (\\S+) --(side)$").find()){
-            addCard(getCommandMatcher(command,"^deck add-card --card (\\S+) --deck (\\S+) --(side)$"));
-        }else if (getCommandMatcher(command,"^deck rm-card --card (\\S+) --deck (\\S+)$").find()){
-            deleteCard(getCommandMatcher(command,"^deck rm-card --card (\\S+) --deck (\\S+)$"));
-        }else if (getCommandMatcher(command,"^deck rm-card --card (\\S+) --deck (\\S+) --(side)$").find()){
-            deleteCard(getCommandMatcher(command,"^deck rm-card --card (\\S+) --deck (\\S+) --(side)$"));
-        }else if (getCommandMatcher(command,"^deck show --all$").find()){
-            showAllDeck();
-        }else if (getCommandMatcher(command,"^deck show --deck-name (\\S+)$").find()){
-            deckShow(getCommandMatcher(command,"^deck show --deck-name (\\S+)$"));
-        }else if (getCommandMatcher(command,"^deck rm-card --card (\\S+) --deck (\\S+) --(side)$").find()){
-            deckShow(getCommandMatcher(command,"^deck rm-card --card (\\S+) --deck (\\S+) --(side)$"));
-        }else if (getCommandMatcher(command,"^deck show --cards$").find()){
-            showCard(getCommandMatcher(command,"^deck show --cards$"));
+        while (true) {
+            String command = scanner.nextLine();
+            if (getCommandMatcher(command, "^deck create (\\S+)$").find()) {
+                deckCreate(getCommandMatcher(command, "^deck create (\\S+)$"));
+            } else if (getCommandMatcher(command, "^deck delete (\\S+)$").find()) {
+                deckDelete(getCommandMatcher(command, "^deck delete (\\S+)$"));
+            } else if (getCommandMatcher(command, "^deck set-activate (\\S+)$").find()) {
+                deckSetActive(getCommandMatcher(command, "^deck set-activate (\\S+)$"));
+            } else if (getCommandMatcher(command, "^deck add-card --card (\\S+) --deck (\\S+)$").find()) {
+                addCard(getCommandMatcher(command, "^deck add-card --card (\\S+) --deck (\\S+)$"));
+            } else if (getCommandMatcher(command, "^deck add-card --card (\\S+) --deck (\\S+) --(side)$").find()) {
+                addCard(getCommandMatcher(command, "^deck add-card --card (\\S+) --deck (\\S+) --(side)$"));
+            } else if (getCommandMatcher(command, "^deck rm-card --card (\\S+) --deck (\\S+)$").find()) {
+                deleteCard(getCommandMatcher(command, "^deck rm-card --card (\\S+) --deck (\\S+)$"));
+            } else if (getCommandMatcher(command, "^deck rm-card --card (\\S+) --deck (\\S+) --(side)$").find()) {
+                deleteCard(getCommandMatcher(command, "^deck rm-card --card (\\S+) --deck (\\S+) --(side)$"));
+            } else if (getCommandMatcher(command, "^deck show --all$").find()) {
+                showAllDeck();
+            } else if (getCommandMatcher(command, "^deck show --deck-name (\\S+)$").find()) {
+                deckShow(getCommandMatcher(command, "^deck show --deck-name (\\S+)$"));
+            } else if (getCommandMatcher(command, "^deck rm-card --card (\\S+) --deck (\\S+) --(side)$").find()) {
+                deckShow(getCommandMatcher(command, "^deck rm-card --card (\\S+) --deck (\\S+) --(side)$"));
+            } else if (getCommandMatcher(command, "^deck show --cards$").find()) {
+                showCard(getCommandMatcher(command, "^deck show --cards$"));
+            } else if (command.equals("menu show-current")) {
+                System.out.println("Deck munu");
+            } else if (command.equals("menu exit")) {
+                return;
+            }else if (getCommandMatcher(command,"^menu enter (\\S+)$").find()){
+                System.out.println("menu navigation is not possible");
+            }else {
+                System.out.println("Invalid command");
+            }
         }
     }
     public void deckCreate(Matcher matcher){

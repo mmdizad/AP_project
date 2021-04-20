@@ -84,6 +84,10 @@ public class User {
         score++;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     public void increaseWins() {
         wins++;
     }
