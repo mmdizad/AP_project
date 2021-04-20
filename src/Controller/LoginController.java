@@ -155,32 +155,32 @@ public class LoginController {
                 , "Equip", 4300, "spell", "Unlimited");
     }
 
-    public void createTrap(){
+    public void createTrap() {
         // cardType : icon(property)
-        Trap trap = new Trap("Trap Hole","When your opponent Normal or Flip Summons 1 monster with 1000" +
+        Trap trap = new Trap("Trap Hole", "When your opponent Normal or Flip Summons 1 monster with 1000" +
                 " or more ATK: Target that monster; destroy that target."
-                ,"Normal",2000,"trap","Unlimited");
-        Trap trap1 = new Trap("Mirror Force","When an opponent's monster declares an attack:" +
+                , "Normal", 2000, "trap", "Unlimited");
+        Trap trap1 = new Trap("Mirror Force", "When an opponent's monster declares an attack:" +
                 " Destroy all your opponent's Attack Position monsters."
-                ,"Normal",2000,"trap","Unlimited");
-        Trap trap2 = new Trap("Magic Cylinder","When an opponent's monster declares an attack:" +
+                , "Normal", 2000, "trap", "Unlimited");
+        Trap trap2 = new Trap("Magic Cylinder", "When an opponent's monster declares an attack:" +
                 " Target the attacking monster; negate the attack, and if you do," +
                 " inflict damage to your opponent equal to its ATK."
-                ,"Normal",2000,"trap","Unlimited");
-        Trap trap3 = new Trap("Mind Crush","Declare 1 card name; if that card is in your opponent's hand," +
+                , "Normal", 2000, "trap", "Unlimited");
+        Trap trap3 = new Trap("Mind Crush", "Declare 1 card name; if that card is in your opponent's hand," +
                 " they must discard all copies of it, otherwise you discard 1 random card."
-                ,"Normal",2000,"trap","Unlimited");
-        Trap trap4 = new Trap("Torrential Tribute","When a monster(s) is Summoned: Destroy all monsters on the field."
-                ,"Normal",2000,"trap","Unlimited");
-        Trap trap5 = new Trap("Time Seal","Skip the Draw Phase of your opponent's next turn."
-                ,"Normal",2000,"trap","Limited");
-        Trap trap6 = new Trap("Magic Jammer","When a Spell Card is activated: Discard 1 card;" +
+                , "Normal", 2000, "trap", "Unlimited");
+        Trap trap4 = new Trap("Torrential Tribute", "When a monster(s) is Summoned: Destroy all monsters on the field."
+                , "Normal", 2000, "trap", "Unlimited");
+        Trap trap5 = new Trap("Time Seal", "Skip the Draw Phase of your opponent's next turn."
+                , "Normal", 2000, "trap", "Limited");
+        Trap trap6 = new Trap("Magic Jammer", "When a Spell Card is activated: Discard 1 card;" +
                 " negate the activation, and if you do, destroy it."
-                ,"Counter",3000,"trap","Unlimited");
-        Trap trap7 = new Trap("Call of The Haunted","Activate this card by targeting 1 monster in your GY;" +
+                , "Counter", 3000, "trap", "Unlimited");
+        Trap trap7 = new Trap("Call of The Haunted", "Activate this card by targeting 1 monster in your GY;" +
                 " Special Summon that target in Attack Position. When this card leaves the field, destroy that monster." +
                 " When that monster is destroyed, destroy this card."
-                ,"Continuous",3500,"trap","Unlimited");
+                , "Continuous", 3500, "trap", "Unlimited");
 
     }
 

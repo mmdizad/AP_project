@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User {
-    public static HashMap<String,User> users;
+    public static HashMap<String, User> users;
     public static ArrayList<User> allUsers;
     private String username;
     private String password;
@@ -22,7 +22,7 @@ public class User {
         allUsers = new ArrayList<>();
     }
 
-    public User(String username,String nickname,String password){
+    public User(String username, String nickname, String password) {
         setUsername(username);
         setNickname(nickname);
         setPassword(password);
@@ -44,66 +44,66 @@ public class User {
         this.password = password;
     }
 
-    public static User getUserByUsername(String username){
+    public static User getUserByUsername(String username) {
         return users.get(username);
     }
 
-    public static boolean isUserWithThisUsernameExists(String username){
-        for (User user : allUsers){
-            if (user.getUsername().equals(username)){
+    public static boolean isUserWithThisUsernameExists(String username) {
+        for (User user : allUsers) {
+            if (user.getUsername().equals(username)) {
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean isUserWithThisNicknameExists(String nickname){
-        for (User user : allUsers){
-            if (user.getNickname().equals(nickname)){
+    public static boolean isUserWithThisNicknameExists(String nickname) {
+        for (User user : allUsers) {
+            if (user.getNickname().equals(nickname)) {
                 return true;
             }
         }
         return false;
     }
 
-    public void increaseScore(){
+    public void increaseScore() {
         score++;
     }
 
-    public void increaseWins(){
+    public void increaseWins() {
         wins++;
     }
 
-    public void increaseLosses(){
+    public void increaseLosses() {
         losses++;
     }
 
-    public void addDeck(Deck addingDeck){
+    public void addDeck(Deck addingDeck) {
 
     }
 
-    public ArrayList<Deck> getDecks(){
+    public ArrayList<Deck> getDecks() {
         return decks;
     }
 
-    public void deleteDeck(Deck deletingDeck){
+    public void deleteDeck(Deck deletingDeck) {
 
     }
 
-    public void setActiveDeck(Deck activatingDeck){
+    public void setActiveDeck(Deck activatingDeck) {
 
     }
 
-    public Deck getActiveDeck(){
+    public Deck getActiveDeck() {
         return activeDeck;
     }
 
-    public Card getCardByName(String cardName){
+    public Card getCardByName(String cardName) {
         //اینو گذاشتم که ارور نداشته باشه.جایگزین شه
         return null;
     }
 
-    public Deck getDeckByName(String deckName){
+    public Deck getDeckByName(String deckName) {
         //اینو گذاشتم که ارور نداشته باشه.جایگزین شه
         return null;
     }
@@ -112,11 +112,11 @@ public class User {
         return coins;
     }
 
-    public void increaseCoins(int coins){
+    public void increaseCoins(int coins) {
 
     }
 
-    public void decreaseCoins(int coins){
+    public void decreaseCoins(int coins) {
 
     }
 
