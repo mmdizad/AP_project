@@ -17,71 +17,71 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> handCards;
     private ArrayList<Card> field;
 
-    public DuelModel(String playerUser,String opponentUser){
+    public DuelModel(String playerUser, String opponentUser) {
 
     }
 
-    public void decreaseLifePoint(int lifePoint,int turn){
+    public void decreaseLifePoint(int lifePoint, int turn) {
 
     }
 
-    public void increaseLifePoint(int lifePoint,int turn){
+    public void increaseLifePoint(int lifePoint, int turn) {
 
     }
 
-    public void addCardToHand(int turn){
+    public void addCardToHand(int turn) {
 
     }
 
-    public void addMonsterFromHandToGame(int turn,String condition,Card card){
+    public void addMonsterFromHandToGame(int turn, String condition, Card card) {
 
     }
 
-    public void addSpellAndTrapFromHandToGame(int turn,String condition,Card card){
+    public void addSpellAndTrapFromHandToGame(int turn, String condition, Card card) {
 
     }
 
-    public void changeAttackAndDefense(int place){
+    public void changeAttackAndDefense(int place) {
 
     }
 
-    public void deleteMonster(int turn,int place){
+    public void deleteMonster(int turn, int place) {
 
     }
 
-    public void deleteSpellAndTrap(int turn,int place){
+    public void deleteSpellAndTrap(int turn, int place) {
 
     }
 
-    public void activateSpell(int turn,int place){
+    public void activateSpell(int turn, int place) {
 
     }
 
-    public void changeSetToFaceUp(int place){
+    public void changeSetToFaceUp(int place) {
 
     }
 
-    public String getGraveyard(){
+    public String getGraveyard() {
         return null;
         //جایگزین شود
     }
 
-    public Card getMonster(int turn,int place){
+    public Card getMonster(int turn, int place) {
         return null;
         //جایگزین شود
     }
 
-    public Card getSpellAndTrap(int turn,int place){
+    public Card getSpellAndTrap(int turn, int place) {
         return null;
         //جایگزین شود
     }
 
-    public String getBoard(){
+    public String getBoard() {
         return null;
         //جایگزین شود
     }
 
-    public void changeUser(){
+    public void changeUser() {
 
     }
 }
