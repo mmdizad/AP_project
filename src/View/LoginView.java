@@ -19,8 +19,10 @@ public class LoginView extends Menu {
             isCreateUserParametersValid(getCommandMatcher(input, "^user create (\\S+) (\\S+) " +
                     "(\\S+) (\\S+) (\\S+) (\\S+)$"));
             isLoginParametersValid(getCommandMatcher(input, "^user login (\\S+) (\\S+) (\\S+)" +
-                    " (\\S+)$"));
+                    " (\\S+)$"), scanner);
             showMenu(getCommandMatcher(input, "^menu show-current$"));
+            enterMenu(getCommandMatcher(input,"^menu enter \\S+$"));
+
             if (input.equals("menu exit")) {
                 break;
             }
@@ -30,14 +32,23 @@ public class LoginView extends Menu {
         }
     }
 
+    public void enterMenu(Matcher matcher){
+        if (matcher.find()){
+            invalidCommand = false;
+            System.out.println("menu navigation is not possible");
+        }
+    }
+
     public void createUser(String username, String nickname, String password) {
         LoginController loginController = new LoginController();
         System.out.println(loginController.createUser(username, nickname, password));
     }
 
-    public void login(String username, String password) {
+    public void login(String username, String password, Scanner scanner) {
         LoginController loginController = new LoginController();
         System.out.println(loginController.login(username, password));
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.run(scanner);
     }
 
     public Matcher getCommandMatcher(String input, String regex) {
@@ -102,7 +113,7 @@ public class LoginView extends Menu {
         }
     }
 
-    public void isLoginParametersValid(Matcher matcher) {
+    public void isLoginParametersValid(Matcher matcher, Scanner scanner) {
         if (matcher.find()) {
             invalidCommand = false;
             int validParameter = 1;
@@ -117,18 +128,18 @@ public class LoginView extends Menu {
                 }
             }
             if (validParameter == 1) {
-                isLoginParametersUnique(matcher, parameters);
+                isLoginParametersUnique(matcher, parameters, scanner);
             }
         }
     }
 
-    public void isLoginParametersUnique(Matcher matcher, ArrayList<String> parameters) {
+    public void isLoginParametersUnique(Matcher matcher, ArrayList<String> parameters, Scanner scanner) {
         String parameter1 = parameters.get(0);
         String parameter2 = parameters.get(1);
         if (parameter1.equals("-p") && parameter2.equals("-u")) {
-            login(matcher.group(4), matcher.group(2));
+            login(matcher.group(4), matcher.group(2), scanner);
         } else if (parameter1.equals("-u") && parameter2.equals("-p")) {
-            login(matcher.group(2), matcher.group(4));
+            login(matcher.group(2), matcher.group(4), scanner);
         } else {
             System.out.println("invalid command");
         }

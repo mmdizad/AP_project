@@ -1,15 +1,22 @@
 package View;
 
+import java.util.Scanner;
+
 public class ScoreBoardView extends MainMenu{
-    private ScoreBoardView scoreBoardView ;
+    private static ScoreBoardView scoreBoardView = new ScoreBoardView() ;
 
+    private ScoreBoardView(){
 
-    private ScoreBoardView(){}
-    public ScoreBoardView getInstance(){
-        return null;
     }
-    public void run(){}
-    public void showScoreboard(){}
+    public static ScoreBoardView getInstance(){
+        return scoreBoardView;
+    }
+    public void run(Scanner scanner){
+
+    }
+    public void showScoreboard(){
+
+    }
 
 
 }

@@ -1,19 +1,22 @@
 package View;
 
+import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class DeckView extends MainMenu{
-    private DeckView deckView;
+    private static DeckView deckView = new DeckView();
 
-    public DeckView(){}
-    public DeckView getInstance(){
-        return null;
+    private DeckView(){
+
+    }
+    public static DeckView getInstance(){
+        return deckView;
     }
 
-    @Override
-    public void run() {
-        super.run();
+    public void run(Scanner scanner){
+
     }
+
     public void deckCreate(Matcher matcher){
 
     }

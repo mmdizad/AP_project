@@ -8,7 +8,7 @@ public class ImportAndExport extends MainMenu {
     private ImportAndExport() {
     }
 
-    public static ImportAndExport getInstans() {
+    public static ImportAndExport getInstance() {
         return null;
     }
 

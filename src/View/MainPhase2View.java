@@ -3,11 +3,6 @@ package View;
 import java.util.regex.Matcher;
 
 public class MainPhase2View extends DuelView implements Set{
-    @Override
-    public void run() {
-        super.run();
-    }
-
 
     @Override
     public void set() {

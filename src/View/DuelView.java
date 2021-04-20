@@ -1,14 +1,15 @@
 package View;
 
+import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class DuelView extends StartDuelView{
+public class DuelView{
+
+    public void run(Scanner scanner){
+
+    }
     public void selectFirstPlayer(){}
 
-    @Override
-    public void run() {
-        super.run();
-    }
     protected void deselect(Matcher matcher){
 
     }

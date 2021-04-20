@@ -3,10 +3,7 @@ package View;
 import java.util.regex.Matcher;
 
 public class MainPhase1View extends DuelView implements Set,Summon{
-    @Override
-    public void run() {
-        super.run();
-    }
+
 
 
     @Override
