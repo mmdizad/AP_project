@@ -47,11 +47,11 @@ public class ProfileView extends MainMenu {
         if (matcher.group(1).equals("-current") && matcher.group(3).equals("-new")) {
             String currentPassword = matcher.group(2);
             String newPassword = matcher.group(4);
-            profileController.changePassword(currentPassword, newPassword);
+            System.out.println(profileController.changePassword(currentPassword, newPassword));
         } else if (matcher.group(1).equals("-new") && matcher.group(3).equals("-current")) {
             String currentPassword = matcher.group(4);
             String newPassword = matcher.group(2);
-            profileController.changePassword(currentPassword, newPassword);
+            System.out.println(profileController.changePassword(currentPassword, newPassword));
         } else System.out.println("invalid command!");
     }
 
