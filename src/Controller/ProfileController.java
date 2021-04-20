@@ -30,5 +30,6 @@ public class ProfileController extends LoginController {
             user.setPassword(newPassword);
             return "password changed successfully!";
         }
+
     }
 }
