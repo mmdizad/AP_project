@@ -26,6 +26,8 @@ public class User {
         setUsername(username);
         setNickname(nickname);
         setPassword(password);
+        users.put(username,this);
+        allUsers.add(this);
     }
 
     public String getUsername() {
