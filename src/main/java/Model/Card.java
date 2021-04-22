@@ -5,11 +5,12 @@ import java.util.HashMap;
 
 public class Card {
     protected static HashMap<String, Card> cards;
-    public static ArrayList<Card> shopCard;
-    private static ArrayList<Card> firstCards;
+    public static ArrayList<Card> allCards;
+    private static final ArrayList<Card> firstCards;
     static {
         cards = new HashMap<>();
-        shopCard = new ArrayList<>();
+        allCards = new ArrayList<>();
+        firstCards = new ArrayList<>();
     }
 
     protected String name;
@@ -26,7 +27,7 @@ public class Card {
         setPrice(price);
         setCategory(category);
         cards.put(name, this);
-        shopCard.add(this);
+        allCards.add(this);
     }
     public static void addFirstCards(ArrayList<Card> addFirstCards){
         firstCards.addAll(addFirstCards);
@@ -40,8 +41,8 @@ public class Card {
         return cards.get(cardName);
     }
 
-    public static ArrayList<Card> getShopCard() {
-        return shopCard;
+    public static ArrayList<Card> getAllCardsCard() {
+        return allCards;
     }
 
     public String getName() {
