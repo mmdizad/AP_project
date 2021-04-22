@@ -13,6 +13,7 @@ public class LoginView extends Menu {
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
+        LoginController.createCard();
         while (true) {
             invalidCommand = true;
             String input = scanner.nextLine();
