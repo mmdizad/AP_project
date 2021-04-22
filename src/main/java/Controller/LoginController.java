@@ -36,12 +36,15 @@ public class LoginController {
     }
 
     public static void createCard() {
-        createMonster();
-        createSpell();
-        createTrap();
+        createFirstMonster();
+        createFirstSpell();
+        createFirstTrap();
+        createOtherMonsters();
+        createOtherSpells();
+        createOtherTraps();
     }
 
-    public static void createMonster() {
+    public static void createFirstMonster() {
         ArrayList<Card> theFirstMonsterCards = new ArrayList<>();
         List<String[]> list = new ArrayList<>();
         try (CSVReader reader = new CSVReader(new FileReader("C:\\Users\\Monster.csv"))) {
@@ -138,7 +141,7 @@ public class LoginController {
         Card.addFirstCards(theFirstMonsterCards);
     }
 
-    public static void createSpell() {
+    public static void createFirstSpell() {
         ArrayList<Card> theFirstSpellCards = new ArrayList<>();
         List<String[]> list = new ArrayList<>();
         try (CSVReader reader = new CSVReader(new FileReader("C:\\Users\\SpellTrap.csv"))) {
@@ -187,10 +190,10 @@ public class LoginController {
         Spell spell11 = new Spell(list.get(25)[0], list.get(25)[3], list.get(25)[2], Integer.parseInt(list.get(25)[5])
                 , list.get(25)[1], list.get(25)[4]);
         theFirstSpellCards.add(spell11);
-         Card.addFirstCards(theFirstSpellCards);
+        Card.addFirstCards(theFirstSpellCards);
     }
 
-    public static void createTrap() {
+    public static void createFirstTrap() {
         ArrayList<Card> theFirstTrapCards = new ArrayList<>();
         List<String[]> list = new ArrayList<>();
         try (CSVReader reader = new CSVReader(new FileReader("C:\\Users\\SpellTrap.csv"))) {
@@ -229,4 +232,139 @@ public class LoginController {
         theFirstTrapCards.add(trap7);
         Card.addFirstCards(theFirstTrapCards);
     }
+
+    public static void createOtherMonsters() {
+        List<String[]> list = new ArrayList<>();
+        try (CSVReader reader = new CSVReader(new FileReader("C:\\Users\\Monster.csv"))) {
+            list = reader.readAll();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CsvException e) {
+            e.printStackTrace();
+        }
+        Monster monster20 = new Monster(list.get(2)[0], list.get(2)[7], list.get(2)[4], Integer.parseInt(list.get(2)[8])
+                , "Monster", Integer.parseInt(list.get(2)[6]), Integer.parseInt(list.get(2)[5])
+                , list.get(2)[3], list.get(2)[2], Integer.parseInt(list.get(2)[1]));
+        Monster monster21 = new Monster(list.get(3)[0], list.get(3)[7], list.get(3)[4], Integer.parseInt(list.get(3)[8])
+                , "Monster", Integer.parseInt(list.get(3)[6]), Integer.parseInt(list.get(3)[5])
+                , list.get(3)[3], list.get(3)[2], Integer.parseInt(list.get(3)[1]));
+        Monster monster22 = new Monster(list.get(4)[0], list.get(4)[7], list.get(4)[4], Integer.parseInt(list.get(4)[8])
+                , "Monster", Integer.parseInt(list.get(4)[6]), Integer.parseInt(list.get(4)[5])
+                , list.get(4)[3], list.get(4)[2], Integer.parseInt(list.get(4)[1]));
+        Monster monster23 = new Monster(list.get(6)[0], list.get(6)[7], list.get(6)[4], Integer.parseInt(list.get(6)[8])
+                , "Monster", Integer.parseInt(list.get(6)[6]), Integer.parseInt(list.get(6)[5])
+                , list.get(6)[3], list.get(6)[2], Integer.parseInt(list.get(6)[1]));
+        Monster monster24 = new Monster(list.get(10)[0], list.get(10)[7], list.get(10)[4], Integer.parseInt(list.get(10)[8])
+                , "Monster", Integer.parseInt(list.get(10)[6]), Integer.parseInt(list.get(10)[5])
+                , list.get(10)[3], list.get(10)[2], Integer.parseInt(list.get(10)[1]));
+        Monster monster25 = new Monster(list.get(14)[0], list.get(14)[7], list.get(14)[4], Integer.parseInt(list.get(14)[8])
+                , "Monster", Integer.parseInt(list.get(14)[6]), Integer.parseInt(list.get(14)[5])
+                , list.get(14)[3], list.get(14)[2], Integer.parseInt(list.get(14)[1]));
+        Monster monster26 = new Monster(list.get(16)[0], list.get(16)[7], list.get(16)[4], Integer.parseInt(list.get(16)[8])
+                , "Monster", Integer.parseInt(list.get(16)[6]), Integer.parseInt(list.get(16)[5])
+                , list.get(16)[3], list.get(16)[2], Integer.parseInt(list.get(16)[1]));
+        Monster monster27 = new Monster(list.get(17)[0], list.get(17)[7], list.get(17)[4], Integer.parseInt(list.get(17)[8])
+                , "Monster", Integer.parseInt(list.get(17)[6]), Integer.parseInt(list.get(17)[5])
+                , list.get(17)[3], list.get(17)[2], Integer.parseInt(list.get(17)[1]));
+        Monster monster28 = new Monster(list.get(19)[0], list.get(19)[7], list.get(19)[4], Integer.parseInt(list.get(19)[8])
+                , "Monster", Integer.parseInt(list.get(19)[6]), Integer.parseInt(list.get(19)[5])
+                , list.get(19)[3], list.get(19)[2], Integer.parseInt(list.get(19)[1]));
+        Monster monster29 = new Monster(list.get(20)[0], list.get(20)[7], list.get(20)[4], Integer.parseInt(list.get(20)[8])
+                , "Monster", Integer.parseInt(list.get(20)[6]), Integer.parseInt(list.get(20)[5])
+                , list.get(20)[3], list.get(20)[2], Integer.parseInt(list.get(20)[1]));
+        Monster monster30 = new Monster(list.get(23)[0], list.get(23)[7], list.get(23)[4], Integer.parseInt(list.get(23)[8])
+                , ",Monster", Integer.parseInt(list.get(23)[6]), Integer.parseInt(list.get(23)[5])
+                , list.get(23)[3], list.get(23)[2], Integer.parseInt(list.get(23)[1]));
+        Monster monster31 = new Monster(list.get(27)[0], list.get(27)[7], list.get(27)[4], Integer.parseInt(list.get(27)[8])
+                , "Monster", Integer.parseInt(list.get(27)[6]), Integer.parseInt(list.get(27)[5])
+                , list.get(27)[3], list.get(27)[2], Integer.parseInt(list.get(27)[1]));
+        Monster monster32 = new Monster(list.get(31)[0], list.get(31)[7], list.get(31)[4], Integer.parseInt(list.get(31)[8])
+                , "Monster", Integer.parseInt(list.get(31)[6]), Integer.parseInt(list.get(31)[5])
+                , list.get(31)[3], list.get(31)[2], Integer.parseInt(list.get(31)[1]));
+        Monster monster33 = new Monster(list.get(32)[0], list.get(32)[7], list.get(32)[4], Integer.parseInt(list.get(32)[8])
+                , "Monster", Integer.parseInt(list.get(32)[6]), Integer.parseInt(list.get(32)[5])
+                , list.get(32)[3], list.get(32)[2], Integer.parseInt(list.get(32)[1]));
+        Monster monster34 = new Monster(list.get(33)[0], list.get(33)[7], list.get(33)[4], Integer.parseInt(list.get(33)[8])
+                , "Monster", Integer.parseInt(list.get(33)[6]), Integer.parseInt(list.get(33)[5])
+                , list.get(33)[3], list.get(33)[2], Integer.parseInt(list.get(33)[1]));
+        Monster monster35 = new Monster(list.get(34)[0], list.get(34)[7], list.get(34)[4], Integer.parseInt(list.get(34)[8])
+                , "Monster", Integer.parseInt(list.get(34)[6]), Integer.parseInt(list.get(34)[5])
+                , list.get(34)[3], list.get(34)[2], Integer.parseInt(list.get(34)[1]));
+        Monster monster36 = new Monster(list.get(36)[0], list.get(36)[7], list.get(36)[4], Integer.parseInt(list.get(36)[8])
+                , "Monster", Integer.parseInt(list.get(36)[6]), Integer.parseInt(list.get(36)[5])
+                , list.get(36)[3], list.get(36)[2], Integer.parseInt(list.get(36)[1]));
+        Monster monster37 = new Monster(list.get(37)[0], list.get(37)[7], list.get(37)[4], Integer.parseInt(list.get(37)[8])
+                , "Monster", Integer.parseInt(list.get(37)[6]), Integer.parseInt(list.get(37)[5])
+                , list.get(37)[3], list.get(37)[2], Integer.parseInt(list.get(37)[1]));
+        Monster monster38 = new Monster(list.get(38)[0], list.get(38)[7], list.get(38)[4], Integer.parseInt(list.get(38)[8])
+                , "Monster", Integer.parseInt(list.get(38)[6]), Integer.parseInt(list.get(38)[5])
+                , list.get(38)[3], list.get(38)[2], Integer.parseInt(list.get(38)[1]));
+        Monster monster39 = new Monster(list.get(39)[0], list.get(39)[7], list.get(39)[4], Integer.parseInt(list.get(39)[8])
+                , "Monster", Integer.parseInt(list.get(39)[6]), Integer.parseInt(list.get(39)[5])
+                , list.get(39)[3], list.get(39)[2], Integer.parseInt(list.get(39)[1]));
+        Monster monster40 = new Monster(list.get(40)[0], list.get(40)[7], list.get(40)[4], Integer.parseInt(list.get(40)[8])
+                , "Monster", Integer.parseInt(list.get(40)[6]), Integer.parseInt(list.get(40)[5])
+                , list.get(40)[3], list.get(40)[2], Integer.parseInt(list.get(40)[1]));
+    }
+
+    public static void createOtherSpells() {
+        List<String[]> list = new ArrayList<>();
+        try (CSVReader reader = new CSVReader(new FileReader("C:\\Users\\SpellTrap.csv"))) {
+            list = reader.readAll();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CsvException e) {
+            e.printStackTrace();
+        }
+        Spell spell12 = new Spell(list.get(21)[0], list.get(21)[3], list.get(21)[2], Integer.parseInt(list.get(21)[5])
+                , list.get(21)[1], list.get(21)[4]);
+        Spell spell13 = new Spell(list.get(22)[0], list.get(22)[3], list.get(22)[2], Integer.parseInt(list.get(22)[5])
+                , list.get(22)[1], list.get(22)[4]);
+        Spell spell14 = new Spell(list.get(23)[0], list.get(23)[3], list.get(23)[2], Integer.parseInt(list.get(23)[5])
+                , list.get(23)[1], list.get(23)[4]);
+        Spell spell15 = new Spell(list.get(26)[0], list.get(26)[3], list.get(26)[2], Integer.parseInt(list.get(26)[5])
+                , list.get(26)[1], list.get(26)[4]);
+        Spell spell16 = new Spell(list.get(27)[0], list.get(27)[3], list.get(27)[2], Integer.parseInt(list.get(27)[5])
+                , list.get(27)[1], list.get(27)[4]);
+        Spell spell17 = new Spell(list.get(29)[0], list.get(29)[3], list.get(29)[2], Integer.parseInt(list.get(29)[5])
+                , list.get(29)[1], list.get(29)[4]);
+        Spell spell18 = new Spell(list.get(30)[0], list.get(30)[3], list.get(30)[2], Integer.parseInt(list.get(30)[5])
+                , list.get(30)[1], list.get(30)[4]);
+        Spell spell19 = new Spell(list.get(31)[0], list.get(31)[3], list.get(31)[2], Integer.parseInt(list.get(31)[5])
+                , list.get(31)[1], list.get(31)[4]);
+        Spell spell20 = new Spell(list.get(32)[0], list.get(32)[3], list.get(32)[2], Integer.parseInt(list.get(32)[5])
+                , list.get(32)[1], list.get(32)[4]);
+        Spell spell21 = new Spell(list.get(34)[0], list.get(34)[3], list.get(34)[2], Integer.parseInt(list.get(34)[5])
+                , list.get(34)[1], list.get(34)[4]);
+        Spell spell22 = new Spell(list.get(35)[0], list.get(35)[3], list.get(35)[2], Integer.parseInt(list.get(35)[5])
+                , list.get(35)[1], list.get(35)[4]);
+    }
+
+    public static void createOtherTraps() {
+        List<String[]> list = new ArrayList<>();
+        try (CSVReader reader = new CSVReader(new FileReader("C:\\Users\\SpellTrap.csv"))) {
+            list = reader.readAll();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CsvException e) {
+            e.printStackTrace();
+        }
+
+        Trap trap8 = new Trap(list.get(7)[0], list.get(7)[3], list.get(7)[2], Integer.parseInt(list.get(7)[5])
+                , list.get(7)[1], list.get(7)[4]);
+        Trap trap9 = new Trap(list.get(8)[0], list.get(8)[3], list.get(8)[2], Integer.parseInt(list.get(8)[5])
+                , list.get(8)[1], list.get(8)[4]);
+        Trap trap10 = new Trap(list.get(11)[0], list.get(11)[3], list.get(11)[2], Integer.parseInt(list.get(11)[5])
+                , list.get(11)[1], list.get(11)[4]);
+        Trap trap11 = new Trap(list.get(12)[0], list.get(12)[3], list.get(12)[2], Integer.parseInt(list.get(12)[5])
+                , list.get(12)[1], list.get(12)[4]);
+    }
+
 }

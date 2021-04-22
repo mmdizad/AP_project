@@ -7,6 +7,7 @@ public class Card {
     protected static HashMap<String, Card> cards;
     public static ArrayList<Card> allCards;
     private static final ArrayList<Card> firstCards;
+
     static {
         cards = new HashMap<>();
         allCards = new ArrayList<>();
@@ -29,11 +30,12 @@ public class Card {
         cards.put(name, this);
         allCards.add(this);
     }
-    public static void addFirstCards(ArrayList<Card> addFirstCards){
+
+    public static void addFirstCards(ArrayList<Card> addFirstCards) {
         firstCards.addAll(addFirstCards);
         allCards.addAll(addFirstCards);
-        for (Card firstCard : addFirstCards){
-            cards.put(firstCard.name,firstCard);
+        for (Card firstCard : addFirstCards) {
+            cards.put(firstCard.getName(), firstCard);
         }
     }
 
@@ -50,7 +52,7 @@ public class Card {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -58,7 +60,7 @@ public class Card {
     }
 
     public String getCategory() {
-        return category;
+        return this.category;
     }
 
     public void setCategory(String category) {
@@ -66,7 +68,7 @@ public class Card {
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public void setDescription(String description) {
@@ -74,7 +76,7 @@ public class Card {
     }
 
     public String getCardType() {
-        return cardType;
+        return this.cardType;
     }
 
     public void setCardType(String cardType) {
@@ -82,7 +84,7 @@ public class Card {
     }
 
     public int getPrice() {
-        return price;
+        return this.price;
     }
 
     public void setPrice(int price) {
@@ -90,7 +92,7 @@ public class Card {
     }
 
     public String getCardID() {
-        return cardID;
+        return this.cardID;
     }
 
     public void setCardID(String cardID) {
