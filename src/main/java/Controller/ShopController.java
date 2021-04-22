@@ -20,7 +20,7 @@ public class ShopController extends LoginController {
 
     public String buyCard(Matcher matcher) {
         String cardName = matcher.group(1);
-        ArrayList<Card> cards = Card.getShopCard();
+        ArrayList<Card> cards = Card.getAllCardsCard();
         boolean cardNameExist = false;
         for (Card value : cards) {
             if (cardName.equals(value.getName())) {
@@ -44,7 +44,7 @@ public class ShopController extends LoginController {
 
     public ArrayList<String> getAllCard() {
         ArrayList<String> output = new ArrayList<>();
-        ArrayList<Card> cards = Card.getShopCard();
+        ArrayList<Card> cards = Card.getAllCardsCard();
         cards.sort(Comparator.comparing(Card::getName));
 
         for (Card card : cards) {
