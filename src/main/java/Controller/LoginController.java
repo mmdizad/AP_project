@@ -44,7 +44,7 @@ public class LoginController {
     public static void createMonster() {
         ArrayList<Card> theFirstMonsterCards = new ArrayList<>();
         List<String[]> list = new ArrayList<>();
-        try (CSVReader reader = new CSVReader(new FileReader("C:\\Users\\ae\\IdeaProjects\\Monster.csv"))) {
+        try (CSVReader reader = new CSVReader(new FileReader("C:\\Users\\Monster.csv"))) {
             list = reader.readAll();
 
         } catch (FileNotFoundException e) {
@@ -141,7 +141,7 @@ public class LoginController {
     public static void createSpell() {
         ArrayList<Card> theFirstSpellCards = new ArrayList<>();
         List<String[]> list = new ArrayList<>();
-        try (CSVReader reader = new CSVReader(new FileReader("C:\\Users\\ae\\IdeaProjects\\SpellTrap.csv"))) {
+        try (CSVReader reader = new CSVReader(new FileReader("C:\\Users\\SpellTrap.csv"))) {
             list = reader.readAll();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -193,7 +193,7 @@ public class LoginController {
     public static void createTrap() {
         ArrayList<Card> theFirstTrapCards = new ArrayList<>();
         List<String[]> list = new ArrayList<>();
-        try (CSVReader reader = new CSVReader(new FileReader("C:\\Users\\ae\\IdeaProjects\\SpellTrap.csv"))) {
+        try (CSVReader reader = new CSVReader(new FileReader("C:\\Users\\SpellTrap.csv"))) {
             list = reader.readAll();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

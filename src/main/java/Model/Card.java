@@ -31,6 +31,10 @@ public class Card {
     }
     public static void addFirstCards(ArrayList<Card> addFirstCards){
         firstCards.addAll(addFirstCards);
+        allCards.addAll(addFirstCards);
+        for (Card firstCard : addFirstCards){
+            cards.put(firstCard.name,firstCard);
+        }
     }
 
     public static ArrayList<Card> getFirstCards() {

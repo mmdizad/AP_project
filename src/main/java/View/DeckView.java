@@ -21,8 +21,9 @@ public class DeckView extends MainMenu {
     public void run(Scanner scanner) {
         while (true) {
             String command = scanner.nextLine();
-            if (getCommandMatcher(command, "^deck create (\\S+)$").find()) {
-                deckCreate(getCommandMatcher(command, "^deck create (\\S+)$"));
+            Matcher matcher = getCommandMatcher(command, "^deck create (\\S+)$");
+            if (matcher.find()) {
+                deckCreate(matcher);
             } else if (getCommandMatcher(command, "^deck delete (\\S+)$").find()) {
                 deckDelete(getCommandMatcher(command, "^deck delete (\\S+)$"));
             } else if (getCommandMatcher(command, "^deck set-activate (\\S+)$").find()) {
@@ -54,18 +55,22 @@ public class DeckView extends MainMenu {
             }
         }
     }
+
     public void deckCreate(Matcher matcher){
         DeckController deckController = DeckController.getInstance();
         System.out.println(deckController.deckCreate(matcher));
     }
+
     public void deckDelete(Matcher matcher){
         DeckController deckController = DeckController.getInstance();
         System.out.println(deckController.deckDelete(matcher));
     }
+
     public void deckSetActive(Matcher matcher){
         DeckController deckController = DeckController.getInstance();
         System.out.println(deckController.deckSetActivate(matcher));
     }
+
     public void addCard(Matcher matcher){
         DeckController deckController = DeckController.getInstance();
         System.out.println(deckController.addCard(matcher));
