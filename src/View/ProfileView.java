@@ -18,21 +18,24 @@ public class ProfileView extends MainMenu {
     }
 
     public void run(Scanner scanner) {
-        String input = scanner.nextLine();
-        Pattern patternChangeNickName = Pattern.compile("profile change -n (\\S+)");
-        Matcher matcherChangeNickName = patternChangeNickName.matcher(input);
-        Pattern patternChangePassword = Pattern.compile("profile change -password (\\S+) (\\S+) (\\S+) (\\S+)");
-        Matcher matcherChangePassword = patternChangePassword.matcher(input);
+        while (true) {
+            String input = scanner.nextLine();
+            Pattern patternChangeNickName = Pattern.compile("profile change -n (\\S+)");
+            Matcher matcherChangeNickName = patternChangeNickName.matcher(input);
+            Pattern patternChangePassword = Pattern.compile("profile change -password (\\S+) (\\S+) (\\S+) (\\S+)");
+            Matcher matcherChangePassword = patternChangePassword.matcher(input);
 
-        if (matcherChangeNickName.find()) {
-            ProfileController profileController = new ProfileController();
-            System.out.println(profileController.changeNickName(matcherChangeNickName));
+            if (matcherChangeNickName.find()) {
+                ProfileController profileController = ProfileController.getInstance();
+                System.out.println(profileController.changeNickName(matcherChangeNickName));
 
-        } else if (matcherChangePassword.find()) {
-            changePassword(matcherChangePassword);
+            } else if (matcherChangePassword.find()) {
+                changePassword(matcherChangePassword);
 
-        } else System.out.println("invalid command!");
-
+            } else if (input.equals("menu exit")) break;
+            else if(input.equals("menu show-current")) System.out.println("ProfileMenu");
+            else System.out.println("invalid command!");
+        }
     }
 
     public void changeNickName(String nickName) {
@@ -40,7 +43,7 @@ public class ProfileView extends MainMenu {
     }
 
     public void changePassword(Matcher matcher) {
-        ProfileController profileController = new ProfileController();
+        ProfileController profileController =ProfileController.getInstance();
         if (matcher.group(1).equals("-current") && matcher.group(3).equals("-new")) {
             String currentPassword = matcher.group(2);
             String newPassword = matcher.group(4);
