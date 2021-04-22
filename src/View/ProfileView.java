@@ -18,9 +18,6 @@ public class ProfileView extends MainMenu {
     }
 
     public void run(Scanner scanner) {
-        //chwck profile
-        System.out.println("profile run");
-
         while (true) {
             String input = scanner.nextLine();
             Pattern patternChangeNickName = Pattern.compile("profile change -n (\\S+)");
@@ -29,13 +26,14 @@ public class ProfileView extends MainMenu {
             Matcher matcherChangePassword = patternChangePassword.matcher(input);
 
             if (matcherChangeNickName.find()) {
-                ProfileController profileController = new ProfileController();
+                ProfileController profileController = ProfileController.getInstance();
                 System.out.println(profileController.changeNickName(matcherChangeNickName));
 
             } else if (matcherChangePassword.find()) {
                 changePassword(matcherChangePassword);
 
             } else if (input.equals("menu exit")) break;
+            else if(input.equals("menu show-current")) System.out.println("ProfileMenu");
             else System.out.println("invalid command!");
         }
     }
@@ -45,7 +43,7 @@ public class ProfileView extends MainMenu {
     }
 
     public void changePassword(Matcher matcher) {
-        ProfileController profileController = new ProfileController();
+        ProfileController profileController =ProfileController.getInstance();
         if (matcher.group(1).equals("-current") && matcher.group(3).equals("-new")) {
             String currentPassword = matcher.group(2);
             String newPassword = matcher.group(4);
