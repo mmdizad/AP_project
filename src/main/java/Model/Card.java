@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 public class Card {
     protected static HashMap<String, Card> cards;
-    static ArrayList<Card> shopCard;
-
+    public static ArrayList<Card> shopCard;
+    private static ArrayList<Card> firstCards;
     static {
         cards = new HashMap<>();
         shopCard = new ArrayList<>();
@@ -27,6 +27,13 @@ public class Card {
         setCategory(category);
         cards.put(name, this);
         shopCard.add(this);
+    }
+    public static void addFirstCards(ArrayList<Card> addFirstCards){
+        firstCards.addAll(addFirstCards);
+    }
+
+    public static ArrayList<Card> getFirstCards() {
+        return firstCards;
     }
 
     public static Card getCardByName(String cardName) {

@@ -28,10 +28,16 @@ public class User {
         setPassword(password);
         users.put(username,this);
         allUsers.add(this);
+        this.cards = new ArrayList<>();
+        this.addFirstCards(Card.getFirstCards());
     }
 
     public void addCard(Card card){
-        cards.add(card);
+        this.cards.add(card);
+    }
+
+    public void addFirstCards(ArrayList<Card> firstCards){
+        this.cards.addAll(firstCards);
     }
 
     public ArrayList<Card> getCards(){

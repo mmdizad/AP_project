@@ -31,7 +31,6 @@ public class LoginController {
             return "Username and password didn't match!";
         } else {
             user = User.getUserByUsername(username);
-            createCard();
             return "user logged in successfully!";
         }
     }
@@ -136,11 +135,7 @@ public class LoginController {
                 , "Monster", Integer.parseInt(list.get(7)[6]), Integer.parseInt(list.get(7)[5])
                 , list.get(7)[3], list.get(7)[2], Integer.parseInt(list.get(7)[1]));
         theFirstMonsterCards.add(monster19);
-        if (user != null) {
-            for (Card theFirstMonsterCard : theFirstMonsterCards) {
-                user.addCard(theFirstMonsterCard);
-            }
-        }
+        Card.addFirstCards(theFirstMonsterCards);
     }
 
     public static void createSpell() {
@@ -192,11 +187,7 @@ public class LoginController {
         Spell spell11 = new Spell(list.get(25)[0], list.get(25)[3], list.get(25)[2], Integer.parseInt(list.get(25)[5])
                 , list.get(25)[1], list.get(25)[4]);
         theFirstSpellCards.add(spell11);
-        if (user != null) {
-            for (Card theFirstSpellCard : theFirstSpellCards) {
-                user.addCard(theFirstSpellCard);
-            }
-        }
+         Card.addFirstCards(theFirstSpellCards);
     }
 
     public static void createTrap() {
@@ -236,12 +227,6 @@ public class LoginController {
         Trap trap7 = new Trap(list.get(10)[0], list.get(10)[3], list.get(10)[2], Integer.parseInt(list.get(10)[5])
                 , list.get(10)[1], list.get(10)[4]);
         theFirstTrapCards.add(trap7);
-
-        if (user != null) {
-            for (Card theFirstTrapCard : theFirstTrapCards) {
-                user.addCard(theFirstTrapCard);
-            }
-        }
-
+        Card.addFirstCards(theFirstTrapCards);
     }
 }
