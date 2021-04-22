@@ -30,6 +30,7 @@ public class ShopView extends MainMenu {
             else if (input.equals("shop show -all"))
                 showCard();
             else if (input.equals("menu exit")) break;
+            else if (input.equals("menu show-current")) System.out.println("ShopMenu");
             else System.out.println("invalid command!");
         }
     }
