@@ -134,63 +134,58 @@ public class LoginController {
         // cardType : icon(property)
         Spell spell = new Spell(list.get(13)[0],list.get(13)[3],list.get(13)[2],Integer.parseInt(list.get(13)[5])
         ,list.get(13)[1],list.get(13)[4]);
-        Spell spell1 = new Spell("Terraforming", "Add 1 Field Spell from your Deck to your hand."
-                , "Normal", 2500, "spell", "Limited");
-        Spell spell2 = new Spell("Pot of Greed", "Draw 2 cards."
-                , "Normal", 2500, "spell", "Limited");
-        Spell spell3 = new Spell("Raigeki", "Destroy all monsters your opponent controls."
-                , "Normal", 2500, "spell", "Limited");
-        Spell spell4 = new Spell("Raigeki", "Destroy all monsters your opponent controls."
-                , "Normal", 2500, "spell", "Limited");
-        Spell spell5 = new Spell("Change of Heart", "Target 1 monster your opponent controls;" +
-                " take control of it until the End Phase."
-                , "Normal", 2500, "spell", "Limited");
-        Spell spell6 = new Spell("Dark Hole", "Destroy all monsters on the field."
-                , "Normal", 2500, "spell", "Unlimited");
-        Spell spell7 = new Spell("Swords of Revealing Light", "After this card's activation," +
-                " it remains on the field, but destroy it during the End Phase of your opponent's 3rd turn." +
-                " When this card is activated: If your opponent controls a face-down monster, flip all monsters they control face-up." +
-                " While this card is face-up on the field, your opponent's monsters cannot declare an attack."
-                , "Normal", 2500, "spell", "Unlimited");
-        Spell spell8 = new Spell("Harpie's Feather Duster", "Destroy all Spells and Traps your opponent controls."
-                , "Normal", 2500, "spell", "Limited");
-        Spell spell9 = new Spell("Twin Twisters", "Discard 1 card, then target up to 2 Spells/Traps on the field;" +
-                " destroy them."
-                , "Quick-play", 3500, "spell", "Unlimited");
-        Spell spell10 = new Spell("Forest", "All Insect, Beast, Plant, and Beast-Warrior " +
-                "monsters on the field gain 200 ATK/DEF."
-                , "Field", 4300, "spell", "Unlimited");
-        Spell spell11 = new Spell("United We Stand", "The equipped monster gains 800 ATK/DEF for each" +
-                " face-up monster you control."
-                , "Equip", 4300, "spell", "Unlimited");
-    }
+        Spell spell1 = new Spell(list.get(14)[0],list.get(14)[3],list.get(14)[2],Integer.parseInt(list.get(14)[5])
+                ,list.get(14)[1],list.get(14)[4]);
+        Spell spell2 = new Spell(list.get(15)[0],list.get(15)[3],list.get(15)[2],Integer.parseInt(list.get(15)[5])
+                ,list.get(15)[1],list.get(15)[4]);
+        Spell spell3 = new Spell(list.get(16)[0],list.get(16)[3],list.get(16)[2],Integer.parseInt(list.get(16)[5])
+                ,list.get(16)[1],list.get(16)[4]);
+        Spell spell4 = new Spell(list.get(17)[0],list.get(17)[3],list.get(17)[2],Integer.parseInt(list.get(17)[5])
+                ,list.get(17)[1],list.get(17)[4]);
+        Spell spell5 = new Spell(list.get(20)[0],list.get(20)[3],list.get(20)[2],Integer.parseInt(list.get(20)[5])
+                ,list.get(20)[1],list.get(20)[4]);
+        Spell spell6 = new Spell(list.get(18)[0],list.get(18)[3],list.get(18)[2],Integer.parseInt(list.get(18)[5])
+                ,list.get(18)[1],list.get(18)[4]);
+        Spell spell7 = new Spell(list.get(19)[0],list.get(19)[3],list.get(19)[2],Integer.parseInt(list.get(19)[5])
+                ,list.get(19)[1],list.get(19)[4]);
+        Spell spell8 = new Spell(list.get(24)[0],list.get(24)[3],list.get(24)[2],Integer.parseInt(list.get(24)[5])
+                ,list.get(24)[1],list.get(24)[4]);
+        Spell spell9 = new Spell(list.get(28)[0],list.get(28)[3],list.get(28)[2],Integer.parseInt(list.get(28)[5])
+                ,list.get(28)[1],list.get(28)[4]);
+        Spell spell10 = new Spell(list.get(33)[0],list.get(33)[3],list.get(33)[2],Integer.parseInt(list.get(33)[5])
+                ,list.get(33)[1],list.get(33)[4]);
+        Spell spell11 = new Spell(list.get(25)[0],list.get(25)[3],list.get(25)[2],Integer.parseInt(list.get(25)[5])
+                ,list.get(25)[1],list.get(25)[4]);
+     }
 
     public static void createTrap() {
+        List<String[]> list = new ArrayList<>();
+        try (CSVReader reader = new CSVReader(new FileReader("C:\\Users\\ae\\IdeaProjects\\SpellTrap.csv"))) {
+            list = reader.readAll();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CsvException e) {
+            e.printStackTrace();
+        }
         // cardType : icon(property)
-        Trap trap = new Trap("Trap Hole", "When your opponent Normal or Flip Summons 1 monster with 1000" +
-                " or more ATK: Target that monster; destroy that target."
-                , "Normal", 2000, "trap", "Unlimited");
-        Trap trap1 = new Trap("Mirror Force", "When an opponent's monster declares an attack:" +
-                " Destroy all your opponent's Attack Position monsters."
-                , "Normal", 2000, "trap", "Unlimited");
-        Trap trap2 = new Trap("Magic Cylinder", "When an opponent's monster declares an attack:" +
-                " Target the attacking monster; negate the attack, and if you do," +
-                " inflict damage to your opponent equal to its ATK."
-                , "Normal", 2000, "trap", "Unlimited");
-        Trap trap3 = new Trap("Mind Crush", "Declare 1 card name; if that card is in your opponent's hand," +
-                " they must discard all copies of it, otherwise you discard 1 random card."
-                , "Normal", 2000, "trap", "Unlimited");
-        Trap trap4 = new Trap("Torrential Tribute", "When a monster(s) is Summoned: Destroy all monsters on the field."
-                , "Normal", 2000, "trap", "Unlimited");
-        Trap trap5 = new Trap("Time Seal", "Skip the Draw Phase of your opponent's next turn."
-                , "Normal", 2000, "trap", "Limited");
-        Trap trap6 = new Trap("Magic Jammer", "When a Spell Card is activated: Discard 1 card;" +
-                " negate the activation, and if you do, destroy it."
-                , "Counter", 3000, "trap", "Unlimited");
-        Trap trap7 = new Trap("Call of The Haunted", "Activate this card by targeting 1 monster in your GY;" +
-                " Special Summon that target in Attack Position. When this card leaves the field, destroy that monster." +
-                " When that monster is destroyed, destroy this card."
-                , "Continuous", 3500, "trap", "Unlimited");
+        Trap trap = new Trap(list.get(1)[0],list.get(1)[3],list.get(1)[2],Integer.parseInt(list.get(1)[5])
+                ,list.get(1)[1],list.get(1)[4]);
+        Trap trap1 = new Trap(list.get(2)[0],list.get(2)[3],list.get(2)[2],Integer.parseInt(list.get(2)[5])
+                ,list.get(2)[1],list.get(2)[4]);
+        Trap trap2 = new Trap(list.get(3)[0],list.get(3)[3],list.get(3)[2],Integer.parseInt(list.get(3)[5])
+                ,list.get(3)[1],list.get(3)[4]);
+        Trap trap3 = new Trap(list.get(4)[0],list.get(4)[3],list.get(4)[2],Integer.parseInt(list.get(4)[5])
+                ,list.get(4)[1],list.get(4)[4]);
+        Trap trap4 = new Trap(list.get(5)[0],list.get(5)[3],list.get(5)[2],Integer.parseInt(list.get(5)[5])
+                ,list.get(5)[1],list.get(5)[4]);
+        Trap trap5 = new Trap(list.get(6)[0],list.get(6)[3],list.get(6)[2],Integer.parseInt(list.get(6)[5])
+                ,list.get(6)[1],list.get(6)[4]);
+        Trap trap6 = new Trap(list.get(9)[0],list.get(9)[3],list.get(9)[2],Integer.parseInt(list.get(9)[5])
+                ,list.get(9)[1],list.get(9)[4]);
+        Trap trap7 = new Trap(list.get(10)[0],list.get(10)[3],list.get(10)[2],Integer.parseInt(list.get(10)[5])
+                ,list.get(10)[1],list.get(10)[4]);
 
     }
 
