@@ -54,6 +54,7 @@ public class StartDuelView extends MainMenu {
                     } else System.out.println("number of rounds is not supported");
                 }
             }else if (input.equals("menu exit"))break;
+            else if (input.equals("menu show-current")) System.out.println("StartDuel");
                 else System.out.println("invalid command!");
 
 

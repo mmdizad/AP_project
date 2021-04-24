@@ -73,7 +73,7 @@ public class MainMenu {
         Matcher matcher = pattern.matcher(input);
         return matcher;
     }
-    
+
 
 
 }
