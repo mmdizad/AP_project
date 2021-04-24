@@ -19,7 +19,7 @@ public class MainMenu {
             input = scanner.nextLine();
             showMenu(getCommandMatcher(input, "^menu show-current$"));
             enterMenu(getCommandMatcher(input, "^menu enter (\\S+)$"), scanner);
-            newduel(getCommandMatcher(input, "duel -new -second-player (\\S+) -rounds (\\d+)"),scanner);
+
 
             if (input.equals("user logout") || input.equals("menu exit")) {
                 break;
@@ -45,9 +45,8 @@ public class MainMenu {
                 LoginView loginView = new LoginView();
                 loginView.run();
             } else if (menuName.equals("Duel")) {
-
-                DuelView duelView = new DuelView();
-                duelView.run(scanner);
+               StartDuelView startDuelView =new StartDuelView();
+               startDuelView.run(scanner);
             } else if (menuName.equals("Deck")) {
                 DeckView deckView = DeckView.getInstance();
                 deckView.run(scanner);

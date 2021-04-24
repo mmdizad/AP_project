@@ -10,7 +10,7 @@ public class DuelController {
 
     public void run(Scanner scanner){
 
-        
+
     }
     public void selectFirstPlayer(){
 

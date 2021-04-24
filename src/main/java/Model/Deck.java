@@ -10,7 +10,7 @@ public class Deck {
     private ArrayList<Card> cardsSide;
     private ArrayList<Card> allMonsters;
     private ArrayList<Card> allSpellsAndTraps;
-    public static HashMap<String,Deck> decks;
+    public static HashMap<String,Deck> decks=new HashMap<>();
 
     public Deck(String name,String creatorName){
         this.name = name;
