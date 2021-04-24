@@ -1,8 +1,6 @@
 package Controller;
 
-import Model.Card;
-import Model.Deck;
-import Model.Monster;
+import Model.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -70,7 +68,7 @@ public class DeckController extends LoginController {
     }
 
     public String addCard(Matcher matcher) {
-        if (Card.getCardByName(matcher.group(1)) == null) {
+        if (Card.getCardByName(matcher.group(1)) == null || user.getCardByName(matcher.group(1)) == null) {
             return "card with name " + matcher.group(1) + " does not exist";
         } else {
             ArrayList<Deck> decks = user.getDecks();
@@ -275,19 +273,52 @@ public class DeckController extends LoginController {
 
 
     public ArrayList<String> checkCard(Matcher matcher) {
-        return null;
+        ArrayList<String> output = new ArrayList<>();
+        if (Card.getCardByName(matcher.group(1)) == null){
+            output.add("card with name " + matcher.group(1) + " does not exist");
+        }else {
+            Card card = Card.getCardByName(matcher.group(1));
+            if (card.getCategory().equals("Monster")){
+                output = showMonster(matcher.group(1));
+            }else if (card.getCategory().equals("Spell")){
+                output = showSpell(matcher.group(1));
+            }else {
+                output = showTrap(matcher.group(1));
+            }
+        }
+        return output;
     }
 
     private ArrayList<String> showMonster(String cardName) {
-        return null;
+        Monster monster = Monster.getMonsterByName(cardName);
+        ArrayList<String> output = new ArrayList<>();
+        output.add("Name: " + monster.getName());
+        output.add("Level: " + monster.getLevel());
+        output.add("Type: " + monster.getMonsterType());
+        output.add("ATK: " + monster.getAttackPower());
+        output.add("DEF: " + monster.getDefensePower());
+        output.add("Description: " + monster.getDescription());
+        return output;
     }
 
     private ArrayList<String> showSpell(String cardName) {
-        return null;
+        Spell spell = Spell.getSpellByName(cardName);
+        ArrayList<String> output = new ArrayList<>();
+        output.add("Name: " + spell.getName());
+        output.add("Spell");
+        output.add("Type: " + spell.getCardType());
+        output.add("Description: " + spell.getDescription());
+        return output;
     }
 
     private ArrayList<String> showTrap(String cardName) {
-        return null;
+        Trap trap = Trap.getTrapByName(cardName);
+        ArrayList<String> output = new ArrayList<>();
+        output.add("Name: " + trap.getName());
+        output.add("Trap");
+        output.add("Type: " + trap.getCardType());
+        output.add("Description: " + trap.getDescription());
+        return output;
     }
 
     public ArrayList<String> showAllDeck() {
@@ -318,7 +349,7 @@ public class DeckController extends LoginController {
                 validation = "valid";
             }
             output.add(decks.get(i).getName() + ":  main deck " + decks.get(i).getCardsMain().size()
-                    + ", side deck" + decks.get(i).getCardsSide().size() + validation);
+                    + ", side deck" + decks.get(i).getCardsSide().size() + ", " +  validation);
         }
         return output;
     }
