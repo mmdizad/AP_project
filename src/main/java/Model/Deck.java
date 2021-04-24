@@ -12,10 +12,16 @@ public class Deck {
     private ArrayList<Card> allSpellsAndTraps;
     public static HashMap<String,Deck> decks=new HashMap<>();
 
+    static {
+        decks = new HashMap<>();
+    }
+
     public Deck(String name,String creatorName){
         this.name = name;
         this.creatorName = creatorName;
         decks.put(name,this);
+        cardsMain = new ArrayList<>();
+        cardsSide = new ArrayList<>();
     }
 
     public void addCardToMain(Card card){

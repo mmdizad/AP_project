@@ -73,26 +73,4 @@ public class MainMenu {
         Matcher matcher = pattern.matcher(input);
         return matcher;
     }
-
-    private void newduel(Matcher matcher,Scanner scanner) {
-        if (matcher.find()) {
-            String secondPlayerUserName = matcher.group(1);
-            int round = Integer.parseInt(matcher.group(2));
-            if (!User.isUserWithThisUsernameExists(secondPlayerUserName))
-                System.out.println("there is no player with this username");
-        else{
-                User secondUser = User.getUserByUsername(secondPlayerUserName);
-                if (LoginController.user.getActiveDeck() == null)
-                    System.out.println(LoginController.user.getUsername() + " has no active deck");
-                else if (secondUser.getActiveDeck() == null)
-                    System.out.println(secondUser.getUsername() + " has no active deck");
-                else if(round==3||round==1){
-                    DuelController duelController=new DuelController();
-                    duelController.run(scanner);
-                }else System.out.println("number of rounds is not supported");
-            }
-        }
-    }
-
-
 }

@@ -2,6 +2,7 @@ package View;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DuelView {
 
@@ -10,6 +11,7 @@ public class DuelView {
     }
 
     public void selectFirstPlayer() {
+
     }
 
     protected void deselect(Matcher matcher) {
@@ -46,7 +48,7 @@ public class DuelView {
     protected void selectOpponentMonster(Matcher matcher) {
     }
 
-    protected void selectSpell(Matcher matcher) {
+    protected void selectSpellOrTrap(Matcher matcher) {
     }
 
     protected void selectOpponentSpell(Matcher matcher) {
@@ -62,7 +64,9 @@ public class DuelView {
     }
 
     protected Matcher getCommandMatcher(String command, String regex) {
-        return null;
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(command);
+        return matcher;
     }
 
 }
