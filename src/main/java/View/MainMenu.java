@@ -1,5 +1,9 @@
 package View;
 
+import Controller.DuelController;
+import Controller.LoginController;
+import Model.User;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +19,7 @@ public class MainMenu {
             input = scanner.nextLine();
             showMenu(getCommandMatcher(input, "^menu show-current$"));
             enterMenu(getCommandMatcher(input, "^menu enter (\\S+)$"), scanner);
+            newduel(getCommandMatcher(input, "duel -new -second-player (\\S+) -rounds (\\d+)"),scanner);
 
             if (input.equals("user logout") || input.equals("menu exit")) {
                 break;
@@ -40,6 +45,7 @@ public class MainMenu {
                 LoginView loginView = new LoginView();
                 loginView.run();
             } else if (menuName.equals("Duel")) {
+
                 DuelView duelView = new DuelView();
                 duelView.run(scanner);
             } else if (menuName.equals("Deck")) {
@@ -68,5 +74,26 @@ public class MainMenu {
         Matcher matcher = pattern.matcher(input);
         return matcher;
     }
+
+    private void newduel(Matcher matcher,Scanner scanner) {
+        if (matcher.find()) {
+            String secondPlayerUserName = matcher.group(1);
+            int round = Integer.parseInt(matcher.group(2));
+            if (!User.isUserWithThisUsernameExists(secondPlayerUserName))
+                System.out.println("there is no player with this username");
+        else{
+                User secondUser = User.getUserByUsername(secondPlayerUserName);
+                if (LoginController.user.getActiveDeck() == null)
+                    System.out.println(LoginController.user.getUsername() + " has no active deck");
+                else if (secondUser.getActiveDeck() == null)
+                    System.out.println(secondUser.getUsername() + " has no active deck");
+                else if(round==3||round==1){
+                    DuelController duelController=new DuelController();
+                    duelController.run(scanner);
+                }else System.out.println("number of rounds is not supported");
+            }
+        }
+    }
+
 
 }

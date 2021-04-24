@@ -1,10 +1,17 @@
 package Controller;
 
+import Model.User;
+
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class DuelController {
 
+    public void run(Scanner scanner){
+
+        
+    }
     public void selectFirstPlayer(){
 
     }
