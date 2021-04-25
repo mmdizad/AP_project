@@ -13,7 +13,7 @@ public class User {
     private int score;
     private int wins;
     private int losses;
-    private ArrayList<Deck> decks;
+    private ArrayList<Deck> decks = new ArrayList<>();
     private Deck activeDeck;
     private ArrayList<Card> cards;
 
@@ -103,7 +103,7 @@ public class User {
     }
 
     public void addDeck(Deck addingDeck) {
-
+        decks.add(addingDeck);
     }
 
     public ArrayList<Deck> getDecks() {
@@ -111,11 +111,11 @@ public class User {
     }
 
     public void deleteDeck(Deck deletingDeck) {
-
+        decks.remove(deletingDeck);
     }
 
     public void setActiveDeck(Deck activatingDeck) {
-
+        activeDeck = activatingDeck;
     }
 
     public Deck getActiveDeck() {
@@ -123,12 +123,20 @@ public class User {
     }
 
     public Card getCardByName(String cardName) {
-        //اینو گذاشتم که ارور نداشته باشه.جایگزین شه
+        for (Card card : cards){
+            if (card.getName().equals(cardName)){
+                return card;
+            }
+        }
         return null;
     }
 
     public Deck getDeckByName(String deckName) {
-        //اینو گذاشتم که ارور نداشته باشه.جایگزین شه
+        for (Deck deck : decks){
+            if (deck.getName().equals(deckName)){
+                return deck;
+            }
+        }
         return null;
     }
 
@@ -137,11 +145,11 @@ public class User {
     }
 
     public void increaseCoins(int coins) {
-
+        this.coins += coins;
     }
 
     public void decreaseCoins(int coins) {
-
+        this.coins -= coins;
     }
 
     public void setNickname(String nickname) {

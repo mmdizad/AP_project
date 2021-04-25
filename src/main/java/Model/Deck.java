@@ -6,11 +6,11 @@ import java.util.HashMap;
 public class Deck {
     private String name;
     private String creatorName;
-    private ArrayList<Card> cardsMain;
-    private ArrayList<Card> cardsSide;
-    private ArrayList<Card> allMonsters;
-    private ArrayList<Card> allSpellsAndTraps;
-    public static HashMap<String,Deck> decks=new HashMap<>();
+    private ArrayList<Card> cardsMain = new ArrayList<>();
+    private ArrayList<Card> cardsSide = new ArrayList<>();
+    private ArrayList<Card> allMonsters = new ArrayList<>();
+    private ArrayList<Card> allSpellsAndTraps = new ArrayList<>();
+    public static HashMap<String,Deck> decks;
 
     static {
         decks = new HashMap<>();
