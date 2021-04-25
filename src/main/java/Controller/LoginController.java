@@ -19,7 +19,6 @@ public class LoginController {
             return "user with nickname " + nickname + " already exists";
         } else {
             User newUser = new User(username, nickname, password);
-            user = newUser;
             return "user created successfully!";
         }
     }

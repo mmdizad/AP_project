@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.DuelModel;
 import Model.User;
 
 import java.util.ArrayList;
@@ -7,11 +8,12 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class DuelController {
+     protected DuelModel duelModel;
 
-    public void run(Scanner scanner){
-
-
+    public void setDuelModel(DuelModel duelModel) {
+         this.duelModel = duelModel;
     }
+
     public void selectFirstPlayer(){
 
     }

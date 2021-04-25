@@ -22,7 +22,7 @@ public class ShopView extends MainMenu {
         while (true) {
             String input = scanner.nextLine();
 
-            //trim macher later!
+            //trim matcher later!
             Pattern patternBuy = Pattern.compile("shop buy (.+)");
             Matcher matcherBuy = patternBuy.matcher(input);
             if (matcherBuy.find())
