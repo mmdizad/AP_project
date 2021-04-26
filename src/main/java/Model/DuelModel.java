@@ -15,18 +15,50 @@ public class DuelModel {
     private int lifePointUser = 8000;
     private int lifePointOpponent = 8000;
     private ArrayList<String> usernames;
-    private static int turn = 0;
+    public int turn = 0;
 
     static {
         selectedCards = new ArrayList<>();
+        ArrayList<Card> selectCard1 = new ArrayList<>();
+        ArrayList<Card> selectCard2 = new ArrayList<>();
+        selectedCards.add(selectCard1);
+        selectedCards.add(selectCard2);
         playersCards = new ArrayList<>();
+        ArrayList<Card> playerCard1 = new ArrayList<>();
+        ArrayList<Card> playerCard2 = new ArrayList<>();
+        playersCards.add(playerCard1);
+        playersCards.add(playerCard2);
         monstersInField = new ArrayList<>();
+        ArrayList<Card> monstersInField1 = new ArrayList<>();
+        ArrayList<Card> monstersInField2 = new ArrayList<>();
+        monstersInField.add(monstersInField1);
+        monstersInField.add(monstersInField2);
         spellsAndTraps = new ArrayList<>();
+        ArrayList<Card> spellsAndTraps1 = new ArrayList<>();
+        ArrayList<Card> spellsAndTraps2 = new ArrayList<>();
+        spellsAndTraps.add(spellsAndTraps1);
+        spellsAndTraps.add(spellsAndTraps2);
         monsterCondition = new ArrayList<>();
+        ArrayList<String> monsterCondition1  = new ArrayList<>();
+        ArrayList<String> monsterCondition2 = new ArrayList<>();
+        monsterCondition.add(monsterCondition1);
+        monsterCondition.add(monsterCondition2);
         spellAndTrapCondition = new ArrayList<>();
+        ArrayList<String> spellAndTrapCondition1  = new ArrayList<>();
+        ArrayList<String> spellAndTrapCondition2 = new ArrayList<>();
+        spellAndTrapCondition.add(spellAndTrapCondition1);
+        spellAndTrapCondition.add(spellAndTrapCondition2);
         graveyard = new ArrayList<>();
+        ArrayList<Card> graveyard1 = new ArrayList<>();
+        ArrayList<Card> graveyard2 = new ArrayList<>();
+        graveyard.add(graveyard1);
+        graveyard.add(graveyard2);
         handCards = new ArrayList<>();
         field = new ArrayList<>();
+        ArrayList<Card> field1 = new ArrayList<>();
+        ArrayList<Card> field2 = new ArrayList<>();
+        field.add(field1);
+        field.add(field2);
     }
 
     public DuelModel(String playerUsername, String opponentUsername) {
@@ -55,19 +87,23 @@ public class DuelModel {
 
     }
 
-    public void addCardToHand() {
+    public ArrayList<Card> addCardToHand() {
         if (handCards.size() <= turn) {
-            //بچه ها چک کردم اینجا چون array list توی hand card رو نیو نکردیم اینجا بهتون خطا میده و نمیتونید ایندکس صفرشو بگیرید
+            ArrayList<Card> handCardsPlayer = new ArrayList<>();
+            handCards.add(handCardsPlayer);
             ArrayList<Card> firstCardsInPlayerHand = new ArrayList<>();
             for (int i = 0; i < 5; i++) {
                 firstCardsInPlayerHand.add(playersCards.get(turn).get(playersCards.get(turn).size() - 1));
                 playersCards.get(turn).remove(playersCards.get(turn).get(playersCards.get(turn).size() - 1));
             }
             handCards.get(turn).addAll(firstCardsInPlayerHand);
-
+            return firstCardsInPlayerHand;
         } else {
-            handCards.get(turn).add(playersCards.get(turn).get(playersCards.get(turn).size()-1));
+            ArrayList<Card> cardAddedInPlayerHand = new ArrayList<>();
+            handCards.get(turn).add(playersCards.get(turn).get(playersCards.get(turn).size() - 1));
+            cardAddedInPlayerHand.add(playersCards.get(turn).get(playersCards.get(turn).size() - 1));
             playersCards.get(turn).remove(playersCards.get(turn).get(playersCards.get(turn).size() - 1));
+            return cardAddedInPlayerHand;
         }
     }
 

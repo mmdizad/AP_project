@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 public class DuelView {
     protected DuelController duelController;
     protected DuelModel duelModel;
+
     public void selectFirstPlayer(String secondPlayerUsername) {
         ArrayList<Integer> someRandomNumbers = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
@@ -19,15 +20,24 @@ public class DuelView {
         }
         Collections.shuffle(someRandomNumbers);
         int starterGame = someRandomNumbers.get(0);
-        if (starterGame%2==0){
-             duelModel = new DuelModel(LoginController.user.getUsername(),secondPlayerUsername);
-             DrawPhaseView drawPhaseView=DrawPhaseView.getInstance();
-             drawPhaseView.newCard(LoginController.user.getUsername());
-
-        }else {
-            duelModel = new DuelModel(secondPlayerUsername,LoginController.user.getUsername());
-            DrawPhaseView drawPhaseView=DrawPhaseView.getInstance();
+        if (starterGame % 2 == 0) {
+            duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
+            DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
+            drawPhaseView.newCard(LoginController.user.getUsername());
+            System.out.println("EndPhase");
+            duelModel.turn = 1 - duelModel.turn;
             drawPhaseView.newCard(secondPlayerUsername);
+            System.out.println("EndPhase");
+            duelModel.turn = 1 - duelModel.turn;
+        } else {
+            duelModel = new DuelModel(secondPlayerUsername, LoginController.user.getUsername());
+            DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
+            drawPhaseView.newCard(secondPlayerUsername);
+            System.out.println("EndPhase");
+            duelModel.turn = 1 - duelModel.turn;
+            drawPhaseView.newCard(LoginController.user.getUsername());
+            System.out.println("EndPhase");
+            duelModel.turn = 1 - duelModel.turn;
         }
         duelController = new DuelController();
         duelController.setDuelModel(duelModel);
