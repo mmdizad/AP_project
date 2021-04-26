@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Card;
 import Model.DuelModel;
 import Model.User;
 
@@ -32,7 +33,16 @@ public class DuelController {
 
 
     public ArrayList<String> showGraveYard(){
-        return null;
+        ArrayList<Card> graveyardCards = duelModel.getGraveyard(0);
+        ArrayList<String> output = new ArrayList<>();
+        for (int i = 0;i < graveyardCards.size();i++){
+            int j = i+1;
+            output.add(j + ". " + graveyardCards.get(i).getName() + ": " + graveyardCards.get(i).getDescription());
+        }
+        if (graveyardCards.size() == 0){
+            output.add("graveyard empty");
+        }
+        return output;
     }
 
     public ArrayList<String> checkCard(Matcher matcher){
@@ -64,8 +74,13 @@ public class DuelController {
     }
 
 
-    public ArrayList<String> selectOpponentMonster(Matcher matcher){
-        return null;
+    public String selectOpponentMonster(Matcher matcher){
+        if (duelModel.getMonster(1,Integer.parseInt(matcher.group(1))) == null){
+            return "no card found in the given position";
+        }else {
+         duelModel.setSelectedCard(0,duelModel.getMonster(1,Integer.parseInt(matcher.group(1))));
+         return "card selected";
+        }
     }
 
 
@@ -74,8 +89,13 @@ public class DuelController {
     }
 
 
-    public ArrayList<String> selectOpponentSpellOrTrap(Matcher matcher){
-        return null;
+    public String selectOpponentSpellOrTrap(Matcher matcher){
+        if (duelModel.getSpellAndTrap(1,Integer.parseInt(matcher.group(1))) == null){
+            return "no card found in the given position";
+        }else {
+            duelModel.setSelectedCard(0,duelModel.getSpellAndTrap(1,Integer.parseInt(matcher.group(1))));
+            return "card selected";
+        }
     }
 
     public ArrayList<String> selectFieldZone(Matcher matcher){
@@ -83,8 +103,13 @@ public class DuelController {
     }
 
 
-    public ArrayList<String> selectOpponentFieldZone(Matcher matcher){
-        return null;
+    public String selectOpponentFieldZone(Matcher matcher){
+        if (duelModel.getFieldZoneCard(1) == null){
+            return "no card found in the given position";
+        }else {
+            duelModel.setSelectedCard(0,duelModel.getFieldZoneCard(1));
+            return "card selected";
+        }
     }
 
 

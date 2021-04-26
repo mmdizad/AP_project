@@ -44,7 +44,10 @@ public class DuelView {
     }
 
     protected void showGraveyard() {
-
+        ArrayList<String> output = duelController.showGraveYard();
+        for (String s : output) {
+            System.out.println(s);
+        }
     }
 
     protected void showCard() {
@@ -69,18 +72,21 @@ public class DuelView {
     }
 
     protected void selectOpponentMonster(Matcher matcher) {
+        System.out.println(duelController.selectOpponentMonster(matcher));
     }
 
     protected void selectSpellOrTrap(Matcher matcher) {
     }
 
     protected void selectOpponentSpell(Matcher matcher) {
+        System.out.println(duelController.selectOpponentSpellOrTrap(matcher));
     }
 
     protected void selectField(Matcher matcher) {
     }
 
     protected void selectOpponentField(Matcher matcher) {
+        System.out.println(duelController.selectOpponentFieldZone(matcher));
     }
 
     protected void selectHand(Matcher matcher) {

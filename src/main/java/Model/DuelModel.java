@@ -3,6 +3,7 @@ package Model;
 import java.util.ArrayList;
 
 public class DuelModel {
+    private static ArrayList<ArrayList<Card>> selectedCards;
     private static ArrayList<ArrayList<Card>> playersCards;
     private static ArrayList<ArrayList<Card>> monstersInField;
     private static ArrayList<ArrayList<Card>> spellsAndTraps;
@@ -10,13 +11,14 @@ public class DuelModel {
     private static ArrayList<ArrayList<String>> spellAndTrapCondition;
     private static ArrayList<ArrayList<Card>> graveyard;
     private static ArrayList<ArrayList<Card>> handCards;
-    private static ArrayList<Card> field;
+    private static ArrayList<ArrayList<Card>> field;
     private int lifePointUser = 8000;
     private int lifePointOpponent = 8000;
     private ArrayList<String> usernames;
     private static int turn = 0;
 
     static {
+        selectedCards = new ArrayList<>();
         playersCards = new ArrayList<>();
         monstersInField = new ArrayList<>();
         spellsAndTraps = new ArrayList<>();
@@ -77,6 +79,10 @@ public class DuelModel {
 
     }
 
+    public Card getFieldZoneCard(int turn){
+        return field.get(turn).get(0);
+    }
+
     public void deleteMonster(int turn, int place) {
 
     }
@@ -93,19 +99,23 @@ public class DuelModel {
 
     }
 
-    public String getGraveyard() {
-        return null;
-        //جایگزین شود
+    public ArrayList<Card> getGraveyard(int turn) {
+        return graveyard.get(turn);
     }
 
     public Card getMonster(int turn, int place) {
-        return null;
-        //جایگزین شود
+        return monstersInField.get(turn).get(place-1);
     }
 
     public Card getSpellAndTrap(int turn, int place) {
-        return null;
-        //جایگزین شود
+        return spellsAndTraps.get(turn).get(place-1);
+    }
+
+    public void setSelectedCard(int turn,Card card){
+        if (selectedCards.get(turn).get(0) != null) {
+            selectedCards.get(turn).remove(0);
+        }
+        selectedCards.get(turn).add(card);
     }
 
     public String getBoard() {
