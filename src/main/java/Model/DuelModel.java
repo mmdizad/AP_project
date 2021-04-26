@@ -57,6 +57,7 @@ public class DuelModel {
 
     public void addCardToHand() {
         if (handCards.size()<=turn) {
+            //بچه ها چک کردم اینجا چون array list توی hand card رو نیو نکردیم اینجا بهتون خطا میده و نمیتونید ایندکس صفرشو بگیرید
             ArrayList<Card> cardsInPlayerHand = handCards.get(turn);
             User user = User.getUserByUsername(usernames.get(turn));
             Deck deck = user.getActiveDeck();

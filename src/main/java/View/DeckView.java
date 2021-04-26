@@ -38,6 +38,7 @@ public class DeckView extends MainMenu {
                 deckSetActive(matcher);
                 isCommandValid = true;
             }
+            // esme kartha mitone 2 ghesmati bashe!
             matcher = getCommandMatcher(command, "^deck add-card --card (\\S+) --deck (\\S+)$");
             if (matcher.find()) {
                 addCard(matcher);

@@ -33,7 +33,7 @@ public class ShopController extends LoginController {
         else {
             Card card = Card.getCardByName(cardName);
             if (user.getCoins() >= card.getPrice()) {
-                user.increaseCoins(card.getPrice() * -1);
+                user.decreaseCoins(card.getPrice());
                 user.addCard(card);
                 //check shavad
                 return "card bought!";

@@ -36,8 +36,8 @@ public class DuelController {
         ArrayList<Card> graveyardCards = duelModel.getGraveyard(0);
         ArrayList<String> output = new ArrayList<>();
         for (int i = 0;i < graveyardCards.size();i++){
-            int j = i+1;
-            output.add(j + ". " + graveyardCards.get(i).getName() + ": " + graveyardCards.get(i).getDescription());
+
+            output.add(i+1 + ". " + graveyardCards.get(i).getName() + ": " + graveyardCards.get(i).getDescription());
         }
         if (graveyardCards.size() == 0){
             output.add("graveyard empty");
