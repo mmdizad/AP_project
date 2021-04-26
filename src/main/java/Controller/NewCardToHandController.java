@@ -21,11 +21,11 @@ public class NewCardToHandController extends DuelController {
         return newCardToHandController;
     }
 
-    public void newCardToHand(String playerUsername , DuelModel duelModel) {
+    public void newCardToHand(String playerUsername, DuelModel duelModel) {
         User user = User.getUserByUsername(playerUsername);
         Deck deck = user.getActiveDeck();
         ArrayList<Card> cardsInDeck = deck.getCardsMain();
-        if (cardsInDeck.size()>=1){
+        if (cardsInDeck.size() >= 1) {
             duelModel.addCardToHand();
         }
     }
