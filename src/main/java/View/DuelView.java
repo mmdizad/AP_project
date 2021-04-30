@@ -44,7 +44,9 @@ public class DuelView {
     }
 
     protected void deselect(Matcher matcher) {
-
+        if (matcher.find()) {
+            System.out.println(duelController.deselect());
+        }
     }
 
     public void nextPhase() {
@@ -96,7 +98,7 @@ public class DuelView {
     }
 
     protected void selectField(Matcher matcher) {
-        if (matcher.find()){
+        if (matcher.find()) {
             System.out.println(duelController.selectFieldZone());
         }
     }
@@ -106,7 +108,7 @@ public class DuelView {
     }
 
     protected void selectHand(Matcher matcher) {
-        if (matcher.find()){
+        if (matcher.find()) {
             System.out.println(duelController.selectHand(matcher));
         }
     }

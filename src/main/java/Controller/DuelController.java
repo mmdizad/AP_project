@@ -9,63 +9,68 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class DuelController {
-     protected DuelModel duelModel;
+    protected DuelModel duelModel;
 
     public void setDuelModel(DuelModel duelModel) {
-         this.duelModel = duelModel;
+        this.duelModel = duelModel;
     }
 
-    public void selectFirstPlayer(){
+    public void selectFirstPlayer() {
 
     }
 
-    public String deselect(){
+    public String deselect() {
+        if (DuelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
+            return "no card is selected yet";
+        } else {
+            duelModel.deSelectedCard();
+            return "card deselected";
+        }
+    }
+
+    public String nextPhase() {
         return null;
     }
 
-    public String nextPhase(){
-        return null;
-    }
-
-    public String activateEffect(Matcher matcher){
+    public String activateEffect(Matcher matcher) {
         return null;
     }
 
 
-    public ArrayList<String> showGraveYard(){
+    public ArrayList<String> showGraveYard() {
         ArrayList<Card> graveyardCards = duelModel.getGraveyard(0);
         ArrayList<String> output = new ArrayList<>();
-        for (int i = 0;i < graveyardCards.size();i++){
+        for (int i = 0; i < graveyardCards.size(); i++) {
 
-            output.add(i+1 + ". " + graveyardCards.get(i).getName() + ": " + graveyardCards.get(i).getDescription());
+            output.add(i + 1 + ". " + graveyardCards.get(i).getName() + ": " + graveyardCards.get(i).getDescription());
         }
-        if (graveyardCards.size() == 0){
+        if (graveyardCards.size() == 0) {
             output.add("graveyard empty");
         }
         return output;
     }
 
-    public ArrayList<String> checkCard(Matcher matcher){
+    public ArrayList<String> checkCard(Matcher matcher) {
         return null;
     }
 
-    public ArrayList<String> checkSelectedCard(Matcher matcher){
+    public ArrayList<String> checkSelectedCard(Matcher matcher) {
         return null;
     }
 
-    private ArrayList<String> showMonster(String cardName){
+    private ArrayList<String> showMonster(String cardName) {
         return null;
     }
 
-    private ArrayList<String> showSpell(String cardName){
+    private ArrayList<String> showSpell(String cardName) {
         return null;
     }
 
-    private ArrayList<String> showTrap(String cardName){
+    private ArrayList<String> showTrap(String cardName) {
         return null;
     }
 
-    public String surrender(){
+    public String surrender() {
         return null;
     }
 
@@ -132,13 +137,13 @@ public class DuelController {
 
 
     public String selectHand(Matcher matcher) {
-         if (DuelModel.getHandCards().get(duelModel.turn).size() < Integer.parseInt(matcher.group(1))){
+        if (DuelModel.getHandCards().get(duelModel.turn).size() < Integer.parseInt(matcher.group(1))) {
             return "invalid selection";
-         }else {
-             duelModel.setSelectedCard(duelModel.turn, DuelModel.getHandCards().get(duelModel.turn).
-                     get(Integer.parseInt(matcher.group(1))- 1));
-             return "card selected";
-         }
+        } else {
+            duelModel.setSelectedCard(duelModel.turn, DuelModel.getHandCards().get(duelModel.turn).
+                    get(Integer.parseInt(matcher.group(1)) - 1));
+            return "card selected";
+        }
     }
 
 }

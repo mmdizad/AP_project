@@ -39,12 +39,12 @@ public class DuelModel {
         spellsAndTraps.add(spellsAndTraps1);
         spellsAndTraps.add(spellsAndTraps2);
         monsterCondition = new ArrayList<>();
-        ArrayList<String> monsterCondition1  = new ArrayList<>();
+        ArrayList<String> monsterCondition1 = new ArrayList<>();
         ArrayList<String> monsterCondition2 = new ArrayList<>();
         monsterCondition.add(monsterCondition1);
         monsterCondition.add(monsterCondition2);
         spellAndTrapCondition = new ArrayList<>();
-        ArrayList<String> spellAndTrapCondition1  = new ArrayList<>();
+        ArrayList<String> spellAndTrapCondition1 = new ArrayList<>();
         ArrayList<String> spellAndTrapCondition2 = new ArrayList<>();
         spellAndTrapCondition.add(spellAndTrapCondition1);
         spellAndTrapCondition.add(spellAndTrapCondition2);
@@ -119,7 +119,7 @@ public class DuelModel {
 
     }
 
-    public Card getFieldZoneCard(int turn){
+    public Card getFieldZoneCard(int turn) {
         return field.get(turn).get(0);
     }
 
@@ -144,18 +144,22 @@ public class DuelModel {
     }
 
     public Card getMonster(int turn, int place) {
-        return monstersInField.get(turn).get(place-1);
+        return monstersInField.get(turn).get(place - 1);
     }
 
     public Card getSpellAndTrap(int turn, int place) {
         return spellsAndTraps.get(turn).get(place - 1);
     }
 
-    public void setSelectedCard(int turn,Card card){
+    public void setSelectedCard(int turn, Card card) {
         if (selectedCards.get(turn).get(0) != null) {
-            selectedCards.get(turn).remove(0);
+            deSelectedCard();
         }
         selectedCards.get(turn).add(card);
+    }
+
+    public void deSelectedCard() {
+        selectedCards.get(turn).remove(0);
     }
 
     public static ArrayList<ArrayList<Card>> getHandCards() {
@@ -166,12 +170,15 @@ public class DuelModel {
         return playersCards;
     }
 
+    public static ArrayList<ArrayList<Card>> getSelectedCards() {
+        return selectedCards;
+    }
+
     public String getBoard() {
         return null;
         //جایگزین شود
     }
 
     public void changeUser() {
-
     }
 }
