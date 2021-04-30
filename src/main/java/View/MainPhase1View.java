@@ -25,6 +25,18 @@ public class MainPhase1View extends DuelView implements Set, Summon {
             selectField(getCommandMatcher(command, "^select --field"));
             selectOpponentField(getCommandMatcher(command, "^select --opponent --filed"));
             selectOpponentField(getCommandMatcher(command, "^select --field --opponent"));
+            if (command.equals("enterPhase")) {
+                String newPhase = enterPhase("MainPhase1", scanner);
+                if (newPhase.equals("MainPhase2")) {
+                    MainPhase2View mainPhase2View = MainPhase2View.getInstance();
+                    mainPhase2View.run(scanner);
+                    break;
+                } else if (newPhase.equals("BattlePhase")) {
+                    BattlePhaseView battlePhaseView = BattlePhaseView.getInstance();
+                    battlePhaseView.run(scanner);
+                    break;
+                }
+            }
         }
     }
 
