@@ -6,6 +6,7 @@ import Model.DuelModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,7 +14,7 @@ public class DuelView {
     protected DuelController duelController;
     protected DuelModel duelModel;
 
-    public void selectFirstPlayer(String secondPlayerUsername) {
+    public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner) {
         ArrayList<Integer> someRandomNumbers = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             someRandomNumbers.add(i + 1);
@@ -29,6 +30,7 @@ public class DuelView {
             drawPhaseView.newCard(secondPlayerUsername);
             System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
+            drawPhaseView.run(scanner);
         } else {
             duelModel = new DuelModel(secondPlayerUsername, LoginController.user.getUsername());
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
@@ -38,6 +40,7 @@ public class DuelView {
             drawPhaseView.newCard(LoginController.user.getUsername());
             System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
+            drawPhaseView.run(scanner);
         }
         duelController = new DuelController();
         duelController.setDuelModel(duelModel);
@@ -49,7 +52,22 @@ public class DuelView {
         }
     }
 
-    public void nextPhase() {
+    public String enterPhase(String currentPhase, Scanner scanner) {
+        String newPhase = scanner.nextLine();
+        if (newPhase.equals(currentPhase)) {
+            System.out.println("please enter another phase.");
+        } else {
+            if (newPhase.equals("MainPhase1")) {
+                return newPhase;
+            } else if (newPhase.equals("MainPhase2")) {
+                return newPhase;
+            } else if (newPhase.equals("BattlePhase")) {
+                return newPhase;
+            } else {
+                System.out.println("please enter correct phase.");
+            }
+        }
+        return null;
     }
 
     protected void activateEffect() {
@@ -84,7 +102,9 @@ public class DuelView {
     }
 
     protected void selectOpponentMonster(Matcher matcher) {
-        System.out.println(duelController.selectOpponentMonster(matcher));
+        if (matcher.find()) {
+            System.out.println(duelController.selectOpponentMonster(matcher));
+        }
     }
 
     protected void selectSpellOrTrap(Matcher matcher) {
@@ -94,7 +114,9 @@ public class DuelView {
     }
 
     protected void selectOpponentSpell(Matcher matcher) {
-        System.out.println(duelController.selectOpponentSpellOrTrap(matcher));
+        if (matcher.find()) {
+            System.out.println(duelController.selectOpponentSpellOrTrap(matcher));
+        }
     }
 
     protected void selectField(Matcher matcher) {
@@ -104,7 +126,9 @@ public class DuelView {
     }
 
     protected void selectOpponentField(Matcher matcher) {
-        System.out.println(duelController.selectOpponentFieldZone());
+        if (matcher.find()) {
+            System.out.println(duelController.selectOpponentFieldZone());
+        }
     }
 
     protected void selectHand(Matcher matcher) {
@@ -118,5 +142,6 @@ public class DuelView {
         Matcher matcher = pattern.matcher(command);
         return matcher;
     }
+
 
 }
