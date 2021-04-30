@@ -148,7 +148,7 @@ public class DuelModel {
     }
 
     public Card getSpellAndTrap(int turn, int place) {
-        return spellsAndTraps.get(turn).get(place-1);
+        return spellsAndTraps.get(turn).get(place - 1);
     }
 
     public void setSelectedCard(int turn,Card card){
@@ -156,6 +156,14 @@ public class DuelModel {
             selectedCards.get(turn).remove(0);
         }
         selectedCards.get(turn).add(card);
+    }
+
+    public static ArrayList<ArrayList<Card>> getHandCards() {
+        return handCards;
+    }
+
+    public static ArrayList<ArrayList<Card>> getPlayersCards() {
+        return playersCards;
     }
 
     public String getBoard() {

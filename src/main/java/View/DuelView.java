@@ -77,7 +77,7 @@ public class DuelView {
 
     protected void selectMonster(Matcher matcher) {
         if (matcher.find()) {
-            duelController.selectMonster(matcher);
+            System.out.println(duelController.selectMonster(matcher));
         }
     }
 
@@ -86,6 +86,9 @@ public class DuelView {
     }
 
     protected void selectSpellOrTrap(Matcher matcher) {
+        if (matcher.find()) {
+            System.out.println(duelController.selectSpellOrTrap(matcher));
+        }
     }
 
     protected void selectOpponentSpell(Matcher matcher) {
@@ -93,13 +96,19 @@ public class DuelView {
     }
 
     protected void selectField(Matcher matcher) {
+        if (matcher.find()){
+            System.out.println(duelController.selectFieldZone());
+        }
     }
 
     protected void selectOpponentField(Matcher matcher) {
-        System.out.println(duelController.selectOpponentFieldZone(matcher));
+        System.out.println(duelController.selectOpponentFieldZone());
     }
 
     protected void selectHand(Matcher matcher) {
+        if (matcher.find()){
+            System.out.println(duelController.selectHand(matcher));
+        }
     }
 
     protected Matcher getCommandMatcher(String command, String regex) {
