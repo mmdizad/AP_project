@@ -30,20 +30,31 @@ public class MainPhaseController extends DuelController {
     }
 
     public String setTrapOrSpell(/*Matcher matcher*/) {
-        return null;
+        if (duelModel.getSpellsAndTraps().get(duelModel.turn).get(0) == null)
+            duelModel.addSpellAndTrapFromHandToGame("set", 0);
+        else if (duelModel.getSpellsAndTraps().get(duelModel.turn).get(1) == null)
+            duelModel.addSpellAndTrapFromHandToGame("set", 1);
+        else if (duelModel.getSpellsAndTraps().get(duelModel.turn).get(2) == null)
+            duelModel.addSpellAndTrapFromHandToGame("set", 2);
+        else if (duelModel.getSpellsAndTraps().get(duelModel.turn).get(3) == null)
+            duelModel.addSpellAndTrapFromHandToGame("set", 3);
+        else if (duelModel.getSpellsAndTraps().get(duelModel.turn).get(4) == null)
+            duelModel.addSpellAndTrapFromHandToGame("set", 4);
+        else return "monster card zone is full";
+        return "set successfully";
     }
 
 
     public String setMonster(/*Matcher matcher*/) {
-        if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null)
+        if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null)
             duelModel.addMonsterFromHandToGame("set", 0);
-        else if (duelModel.getSelectedCards().get(duelModel.turn).get(1) == null)
+        else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null)
             duelModel.addMonsterFromHandToGame("set", 1);
-        else if (duelModel.getSelectedCards().get(duelModel.turn).get(2) == null)
+        else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null)
             duelModel.addMonsterFromHandToGame("set", 2);
-        else if (duelModel.getSelectedCards().get(duelModel.turn).get(3) == null)
+        else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null)
             duelModel.addMonsterFromHandToGame("set", 3);
-        else if (duelModel.getSelectedCards().get(duelModel.turn).get(4) == null)
+        else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null)
             duelModel.addMonsterFromHandToGame("set", 4);
 else return "monster card zone is full";
 return "set successfully";

@@ -86,6 +86,14 @@ public class DuelModel {
 
     }
 
+    public ArrayList<ArrayList<Card>> getMonstersInField() {
+        return monstersInField;
+    }
+
+    public ArrayList<ArrayList<Card>> getSpellsAndTraps() {
+        return spellsAndTraps;
+    }
+
     public ArrayList<Card> addCardToHand() {
         if (handCards.size() <= turn) {
             ArrayList<Card> handCardsPlayer = new ArrayList<>();
