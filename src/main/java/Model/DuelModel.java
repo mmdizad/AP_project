@@ -179,6 +179,10 @@ public class DuelModel {
         //جایگزین شود
     }
 
+    public ArrayList<String> getUsernames() {
+        return usernames;
+    }
+
     public void changeUser() {
     }
 }

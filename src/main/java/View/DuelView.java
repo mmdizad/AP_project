@@ -24,23 +24,25 @@ public class DuelView {
         if (starterGame % 2 == 0) {
             duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
-            drawPhaseView.newCard(LoginController.user.getUsername());
+            drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);
             System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
-            drawPhaseView.newCard(secondPlayerUsername);
+            drawPhaseView.newCard(scanner, secondPlayerUsername, true);
             System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
-            drawPhaseView.run(scanner);
+            StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
+            standByPhaseView.run(scanner);
         } else {
             duelModel = new DuelModel(secondPlayerUsername, LoginController.user.getUsername());
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
-            drawPhaseView.newCard(secondPlayerUsername);
+            drawPhaseView.newCard(scanner, secondPlayerUsername, true);
             System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
-            drawPhaseView.newCard(LoginController.user.getUsername());
+            drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);
             System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
-            drawPhaseView.run(scanner);
+            StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
+            standByPhaseView.run(scanner);
         }
         duelController = new DuelController();
         duelController.setDuelModel(duelModel);
@@ -50,24 +52,6 @@ public class DuelView {
         if (matcher.find()) {
             System.out.println(duelController.deselect());
         }
-    }
-
-    public String enterPhase(String currentPhase, Scanner scanner) {
-        String newPhase = scanner.nextLine();
-        if (newPhase.equals(currentPhase)) {
-            System.out.println("please enter another phase.");
-        } else {
-            if (newPhase.equals("MainPhase1")) {
-                return newPhase;
-            } else if (newPhase.equals("MainPhase2")) {
-                return newPhase;
-            } else if (newPhase.equals("BattlePhase")) {
-                return newPhase;
-            } else {
-                System.out.println("please enter correct phase.");
-            }
-        }
-        return null;
     }
 
     protected void activateEffect() {
