@@ -3,21 +3,37 @@ package Model;
 import java.util.ArrayList;
 
 public class DuelModel {
-    private static ArrayList<ArrayList<Card>> selectedCards;
-    private static ArrayList<ArrayList<Card>> playersCards;
-    private static ArrayList<ArrayList<Card>> monstersInField;
-    private static ArrayList<ArrayList<Card>> spellsAndTraps;
-    private static ArrayList<ArrayList<String>> monsterCondition;
-    private static ArrayList<ArrayList<String>> spellAndTrapCondition;
-    private static ArrayList<ArrayList<Card>> graveyard;
-    private static ArrayList<ArrayList<Card>> handCards;
-    private static ArrayList<ArrayList<Card>> field;
+    private ArrayList<ArrayList<Card>> selectedCards;
+    private ArrayList<ArrayList<Card>> playersCards;
+    private ArrayList<ArrayList<Card>> monstersInField;
+    private ArrayList<ArrayList<Card>> spellsAndTraps;
+    private ArrayList<ArrayList<String>> monsterCondition;
+    private ArrayList<ArrayList<String>> spellAndTrapCondition;
+    private ArrayList<ArrayList<Card>> graveyard;
+    private ArrayList<ArrayList<Card>> handCards;
+    private ArrayList<ArrayList<Card>> field;
     private int lifePointUser = 8000;
     private int lifePointOpponent = 8000;
     private ArrayList<String> usernames;
     public int turn = 0;
 
-    static {
+
+    public DuelModel(String playerUsername, String opponentUsername) {
+        usernames = new ArrayList<>();
+        usernames.add(playerUsername);
+        usernames.add(opponentUsername);
+        User user = User.getUserByUsername(playerUsername);
+        Deck activeDeck = user.getActiveDeck();
+        ArrayList<Card> cardsInPlayerActiveDeck = activeDeck.getCardsMain();
+        for (Card card : cardsInPlayerActiveDeck) {
+            playersCards.get(0).add(card);
+        }
+        User opponentUser = User.getUserByUsername(opponentUsername);
+        Deck activeOpponentDeck = opponentUser.getActiveDeck();
+        ArrayList<Card> cardsInOpponentActiveDeck = activeOpponentDeck.getCardsMain();
+        for (Card card : cardsInOpponentActiveDeck) {
+            playersCards.get(1).add(card);
+        }
         selectedCards = new ArrayList<>();
         ArrayList<Card> selectCard1 = new ArrayList<>();
         ArrayList<Card> selectCard2 = new ArrayList<>();
@@ -59,24 +75,6 @@ public class DuelModel {
         ArrayList<Card> field2 = new ArrayList<>();
         field.add(field1);
         field.add(field2);
-    }
-
-    public DuelModel(String playerUsername, String opponentUsername) {
-        usernames = new ArrayList<>();
-        usernames.add(playerUsername);
-        usernames.add(opponentUsername);
-        User user = User.getUserByUsername(playerUsername);
-        Deck activeDeck = user.getActiveDeck();
-        ArrayList<Card> cardsInPlayerActiveDeck = activeDeck.getCardsMain();
-        for (Card card : cardsInPlayerActiveDeck) {
-            playersCards.get(0).add(card);
-        }
-        User opponentUser = User.getUserByUsername(opponentUsername);
-        Deck activeOpponentDeck = opponentUser.getActiveDeck();
-        ArrayList<Card> cardsInOpponentActiveDeck = activeOpponentDeck.getCardsMain();
-        for (Card card : cardsInOpponentActiveDeck) {
-            playersCards.get(1).add(card);
-        }
     }
 
     public void decreaseLifePoint(int lifePoint, int turn) {
@@ -162,15 +160,15 @@ public class DuelModel {
         selectedCards.get(turn).remove(0);
     }
 
-    public static ArrayList<ArrayList<Card>> getHandCards() {
+    public ArrayList<ArrayList<Card>> getHandCards() {
         return handCards;
     }
 
-    public static ArrayList<ArrayList<Card>> getPlayersCards() {
+    public ArrayList<ArrayList<Card>> getPlayersCards() {
         return playersCards;
     }
 
-    public static ArrayList<ArrayList<Card>> getSelectedCards() {
+    public ArrayList<ArrayList<Card>> getSelectedCards() {
         return selectedCards;
     }
 

@@ -1,8 +1,6 @@
 package View;
-
-import Model.DuelModel;
-
 import java.util.Scanner;
+import java.util.regex.Matcher;
 
 
 public class MainPhaseView extends DuelView implements Set, Summon {
@@ -34,6 +32,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             selectField(getCommandMatcher(command, "^select --field"));
             selectOpponentField(getCommandMatcher(command, "^select --opponent --filed"));
             selectOpponentField(getCommandMatcher(command, "^select --field --opponent"));
+            summon(getCommandMatcher(command,"matcher"));
             if (command.equals("enterPhase")) {
                 enterPhase(scanner);
                 break;
@@ -42,8 +41,10 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     }
 
     @Override
-    public void summon() {
+    public void summon(Matcher matcher) {
+        if (matcher.find()){
 
+        }
     }
 
     @Override

@@ -3,10 +3,6 @@ package Controller;
 import java.util.regex.Matcher;
 
 public class MainPhaseController extends DuelController {
-    @Override
-    public String nextPhase() {
-        return null;
-    }
 
     public String set(Matcher matcher) {
         return null;

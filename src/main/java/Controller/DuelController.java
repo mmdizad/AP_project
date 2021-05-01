@@ -2,10 +2,7 @@ package Controller;
 
 import Model.Card;
 import Model.DuelModel;
-import Model.User;
-
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class DuelController {
@@ -20,16 +17,12 @@ public class DuelController {
     }
 
     public String deselect() {
-        if (DuelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
+        if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
             return "no card is selected yet";
         } else {
             duelModel.deSelectedCard();
             return "card deselected";
         }
-    }
-
-    public String nextPhase() {
-        return null;
     }
 
     public String activateEffect(Matcher matcher) {
@@ -137,10 +130,10 @@ public class DuelController {
 
 
     public String selectHand(Matcher matcher) {
-        if (DuelModel.getHandCards().get(duelModel.turn).size() < Integer.parseInt(matcher.group(1))) {
+        if (duelModel.getHandCards().get(duelModel.turn).size() < Integer.parseInt(matcher.group(1))) {
             return "invalid selection";
         } else {
-            duelModel.setSelectedCard(duelModel.turn, DuelModel.getHandCards().get(duelModel.turn).
+            duelModel.setSelectedCard(duelModel.turn, duelModel.getHandCards().get(duelModel.turn).
                     get(Integer.parseInt(matcher.group(1)) - 1));
             return "card selected";
         }
