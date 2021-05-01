@@ -6,7 +6,7 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> selectedCards;
     private ArrayList<ArrayList<Card>> playersCards;
     private ArrayList<ArrayList<Card>> monstersInField;
-    private ArrayList<ArrayList<Card>> spellsAndTraps;
+    private ArrayList<ArrayList<Card>> spellsAndTrapsInFiled;
     private ArrayList<ArrayList<String>> monsterCondition;
     private ArrayList<ArrayList<String>> spellAndTrapCondition;
     private ArrayList<ArrayList<Card>> graveyard;
@@ -47,13 +47,21 @@ public class DuelModel {
         monstersInField = new ArrayList<>();
         ArrayList<Card> monstersInField1 = new ArrayList<>();
         ArrayList<Card> monstersInField2 = new ArrayList<>();
+        for (int i=0; i<5; i++){
+            monstersInField1.add(null);
+            monstersInField2.add(null);
+        }
         monstersInField.add(monstersInField1);
         monstersInField.add(monstersInField2);
-        spellsAndTraps = new ArrayList<>();
+        spellsAndTrapsInFiled = new ArrayList<>();
         ArrayList<Card> spellsAndTraps1 = new ArrayList<>();
         ArrayList<Card> spellsAndTraps2 = new ArrayList<>();
-        spellsAndTraps.add(spellsAndTraps1);
-        spellsAndTraps.add(spellsAndTraps2);
+        for (int i=0; i<5; i++){
+            spellsAndTraps1.add(null);
+            spellsAndTraps2.add(null);
+        }
+        spellsAndTrapsInFiled.add(spellsAndTraps1);
+        spellsAndTrapsInFiled.add(spellsAndTraps2);
         monsterCondition = new ArrayList<>();
         ArrayList<String> monsterCondition1 = new ArrayList<>();
         ArrayList<String> monsterCondition2 = new ArrayList<>();
@@ -105,12 +113,16 @@ public class DuelModel {
         }
     }
 
-    public void addMonsterFromHandToGame(int turn, String condition, Card card) {
-
+    public void addMonsterFromHandToGame(String condition,int index) {
+        monstersInField.get(turn).add(index,selectedCards.get(turn).get(0));
+        monsterCondition.get(turn).add(index,condition);
+        selectedCards.get(turn).remove(0);
     }
 
-    public void addSpellAndTrapFromHandToGame(int turn, String condition, Card card) {
-
+    public void addSpellAndTrapFromHandToGame(String condition,int index) {
+        spellsAndTrapsInFiled.get(turn).add(index,selectedCards.get(turn).get(0));
+        spellAndTrapCondition.get(turn).add(index,condition);
+        selectedCards.get(turn).remove(0);
     }
 
     public void changeAttackAndDefense(int place) {
@@ -146,7 +158,7 @@ public class DuelModel {
     }
 
     public Card getSpellAndTrap(int turn, int place) {
-        return spellsAndTraps.get(turn).get(place - 1);
+        return spellsAndTrapsInFiled.get(turn).get(place - 1);
     }
 
     public void setSelectedCard(int turn, Card card) {

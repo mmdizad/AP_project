@@ -1,4 +1,5 @@
 package Controller;
+
 import Model.Card;
 import Model.Monster;
 
@@ -57,8 +58,23 @@ public class MainPhaseController extends DuelController {
                 return "you can’t summon this card";
             } else if (duelModel.getMonstersInField().get(duelModel.turn).size() >= 5) {
                 return "monster card zone is full";
-            }else if (duelModel.monsterSetOrSummonInThisTurn!=null){
+            } else if (duelModel.monsterSetOrSummonInThisTurn != null) {
                 return "you already summoned/set on this turn";
+            } else {
+                Monster monster = (Monster) card;
+                if (monster.getLevel() <= 4) {
+                    duelModel.setMonsterSetOrSummonInThisTurn(monster);
+                    if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null)
+                        duelModel.addMonsterFromHandToGame("OO", 0);
+                    else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null)
+                        duelModel.addMonsterFromHandToGame("OO", 1);
+                    else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null)
+                        duelModel.addMonsterFromHandToGame("OO", 2);
+                    else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null)
+                        duelModel.addMonsterFromHandToGame("OO", 3);
+                    else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null)
+                        duelModel.addMonsterFromHandToGame("OO", 4);
+                }
             }
         }
         return null;
