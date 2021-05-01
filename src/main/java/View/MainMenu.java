@@ -1,9 +1,4 @@
 package View;
-
-import Controller.DuelController;
-import Controller.LoginController;
-import Model.User;
-
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

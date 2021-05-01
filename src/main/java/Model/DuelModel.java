@@ -16,7 +16,7 @@ public class DuelModel {
     private int lifePointOpponent = 8000;
     private ArrayList<String> usernames;
     public int turn = 0;
-
+    public Card monsterSetOrSummonInThisTurn;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         usernames = new ArrayList<>();
@@ -179,6 +179,22 @@ public class DuelModel {
 
     public ArrayList<String> getUsernames() {
         return usernames;
+    }
+
+    public ArrayList<ArrayList<Card>> getMonstersInField() {
+        return monstersInField;
+    }
+
+    public void setMonsterSetOrSummonInThisTurn(Card monsterSetOrSummonInThisTurn) {
+        this.monsterSetOrSummonInThisTurn = monsterSetOrSummonInThisTurn;
+    }
+
+    public Card getMonsterSetOrSummonInThisTurn() {
+        return monsterSetOrSummonInThisTurn;
+    }
+
+    public void deleteMonsterSetOrSummonInThisTurn(){
+        monsterSetOrSummonInThisTurn = null;
     }
 
     public void changeUser() {
