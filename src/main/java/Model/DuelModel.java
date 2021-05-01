@@ -16,7 +16,8 @@ public class DuelModel {
     private int lifePointOpponent = 8000;
     private ArrayList<String> usernames;
     public int turn = 0;
-
+    //ما تو هر مرحله فقط میتونیم یک کارت ست یا سامان کنیم اینو برای اون زدم فقط یادتون باشه  اند فاز زدید اینو بکنید فالز
+    public boolean moneterCardSetOrSummonThisTurn =false;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         usernames = new ArrayList<>();
@@ -104,13 +105,17 @@ public class DuelModel {
             return cardAddedInPlayerHand;
         }
     }
-
-    public void addMonsterFromHandToGame(int turn, String condition, Card card) {
-
+//این تابع تغییر دادم اینجا برای اینکه ما نیاز به ترن نداشتیم و همینجا داریمش و اینکه کارت هم از سلکت کارت ها میگیریم ولی برای اینکه ببینیم کجا قرارش بدیم یه عدد به عنوان هیندکس فرستادم
+    public void addMonsterFromHandToGame( String condition,int index) {
+         monstersInField.get(turn).add(index,selectedCards.get(turn).get(0));
+         monsterCondition.get(turn).add(index,condition);
+         selectedCards.get(turn).remove(0);
     }
 
-    public void addSpellAndTrapFromHandToGame(int turn, String condition, Card card) {
-
+    public void addSpellAndTrapFromHandToGame( String condition,int index) {
+ spellsAndTraps.get(turn).add(index,selectedCards.get(turn).get(0));
+ spellAndTrapCondition.get(turn).add(index,condition);
+ selectedCards.get(turn).remove(0);
     }
 
     public void changeAttackAndDefense(int place) {
@@ -160,7 +165,7 @@ public class DuelModel {
         selectedCards.get(turn).remove(0);
     }
 
-    public ArrayList<ArrayList<Card>> getHandCards() {
+    public  ArrayList<ArrayList<Card>> getHandCards() {
         return handCards;
     }
 

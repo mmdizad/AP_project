@@ -1,4 +1,6 @@
 package View;
+import Controller.MainPhaseController;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -64,7 +66,8 @@ public class MainPhaseView extends DuelView implements Set, Summon {
 
     @Override
     public void set() {
-
+            MainPhaseController mainPhase1Controller = MainPhaseController.getInstance();
+            System.out.println(mainPhase1Controller.set());
     }
 
     @Override
