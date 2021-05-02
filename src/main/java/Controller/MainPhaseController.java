@@ -18,20 +18,53 @@ public class MainPhaseController extends DuelController {
         return mainPhaseController;
     }
 
-    public String set(Matcher matcher) {
-        return null;
+    public String set() {
+        ArrayList<ArrayList<Card>> selectedCards = this.duelModel.getSelectedCards();
+        if (selectedCards.get(this.duelModel.turn) == null) {
+            return "no card is selected yet";
+        } else {
+            if (!(duelModel.getHandCards().get(this.duelModel.turn)).contains((selectedCards.get(this.duelModel.turn)).get(0))) {
+                return "you can’t set this card";
+            } else if (this.duelModel.monsterSetOrSummonInThisTurn==null) {
+                return "you already summoned/set on this turn";
+            } else if ((selectedCards.get(this.duelModel.turn).get(0)).getCardType().equals("Monster")) {
+                return this.setMonster();
+            } else
+                return setTrapOrSpell();
+
+        }
     }
 
-    public String setTrap(Matcher matcher) {
-        return null;
+    public String setTrapOrSpell() {
+        if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(0) == null)
+            duelModel.addSpellAndTrapFromHandToGame("H", 0);
+        else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(1) == null)
+            duelModel.addSpellAndTrapFromHandToGame("H", 1);
+        else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(2) == null)
+            duelModel.addSpellAndTrapFromHandToGame("H", 2);
+        else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(3) == null)
+            duelModel.addSpellAndTrapFromHandToGame("H", 3);
+        else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(4) == null)
+            duelModel.addSpellAndTrapFromHandToGame("H", 4);
+        else return "monster card zone is full";
+        return "set successfully";
     }
 
-    public String setSpell(Matcher matcher) {
-        return null;
-    }
-
-    public String setMonster(Matcher matcher) {
-        return null;
+    public String setMonster() {
+        if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null)
+            duelModel.addMonsterFromHandToGame("DH", 0);
+        else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null)
+            duelModel.addMonsterFromHandToGame("DH", 1);
+        else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null)
+            duelModel.addMonsterFromHandToGame("DH", 2);
+        else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null)
+            duelModel.addMonsterFromHandToGame("DH", 3);
+        else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null)
+            duelModel.addMonsterFromHandToGame("DH", 4);
+        else {
+            return "monster card zone is full";
+        }
+        return "summoned successfully";
     }
 
     public String setPosition(Matcher matcher) {
