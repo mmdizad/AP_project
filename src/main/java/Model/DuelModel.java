@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class DuelModel {
     private ArrayList<ArrayList<Card>> selectedCards;
-    private ArrayList<HashMap<Card,String>> detailOfSelectedCard;
+    private ArrayList<HashMap<Card, String>> detailOfSelectedCard;
     private ArrayList<ArrayList<Card>> playersCards;
     private ArrayList<ArrayList<Card>> monstersInField;
     private ArrayList<ArrayList<Card>> spellsAndTrapsInFiled;
@@ -19,6 +19,7 @@ public class DuelModel {
     private ArrayList<String> usernames;
     public int turn = 0;
     public Card monsterSetOrSummonInThisTurn;
+    public int thePlaceOfMonsterSetOrSummonInThisTurn;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         usernames = new ArrayList<>();
@@ -49,7 +50,7 @@ public class DuelModel {
         monstersInField = new ArrayList<>();
         ArrayList<Card> monstersInField1 = new ArrayList<>();
         ArrayList<Card> monstersInField2 = new ArrayList<>();
-        for (int i=0; i<5; i++){
+        for (int i = 0; i < 5; i++) {
             monstersInField1.add(null);
             monstersInField2.add(null);
         }
@@ -58,7 +59,7 @@ public class DuelModel {
         spellsAndTrapsInFiled = new ArrayList<>();
         ArrayList<Card> spellsAndTraps1 = new ArrayList<>();
         ArrayList<Card> spellsAndTraps2 = new ArrayList<>();
-        for (int i=0; i<5; i++){
+        for (int i = 0; i < 5; i++) {
             spellsAndTraps1.add(null);
             spellsAndTraps2.add(null);
         }
@@ -86,8 +87,8 @@ public class DuelModel {
         field.add(field1);
         field.add(field2);
         detailOfSelectedCard = new ArrayList<>();
-        HashMap<Card,String> detailOfSelectedCard1 = new HashMap<>();
-        HashMap<Card,String> detailOfSelectedCard2 = new HashMap<>();
+        HashMap<Card, String> detailOfSelectedCard1 = new HashMap<>();
+        HashMap<Card, String> detailOfSelectedCard2 = new HashMap<>();
         detailOfSelectedCard.add(detailOfSelectedCard1);
         detailOfSelectedCard.add(detailOfSelectedCard2);
     }
@@ -120,16 +121,16 @@ public class DuelModel {
         }
     }
 
-    public void addMonsterFromHandToGame(String condition,int index) {
-        monstersInField.get(turn).add(index,selectedCards.get(turn).get(0));
-        monsterCondition.get(turn).add(index,condition);
-        selectedCards.get(turn).remove(0);
+    public void addMonsterFromHandToGame(String condition, int index) {
+        monstersInField.get(turn).add(index, selectedCards.get(turn).get(0));
+        monsterCondition.get(turn).add(index, condition);
+        deSelectedCard();
     }
 
-    public void addSpellAndTrapFromHandToGame(String condition,int index) {
-        spellsAndTrapsInFiled.get(turn).add(index,selectedCards.get(turn).get(0));
-        spellAndTrapCondition.get(turn).add(index,condition);
-        selectedCards.get(turn).remove(0);
+    public void addSpellAndTrapFromHandToGame(String condition, int index) {
+        spellsAndTrapsInFiled.get(turn).add(index, selectedCards.get(turn).get(0));
+        spellAndTrapCondition.get(turn).add(index, condition);
+        deSelectedCard();
     }
 
     public void changeAttackAndDefense(int place) {
@@ -141,7 +142,7 @@ public class DuelModel {
     }
 
     public void deleteMonster(int turn, int place) {
-        monstersInField.get(turn).add(place,null);
+        monstersInField.get(turn).add(place, null);
     }
 
     public void deleteSpellAndTrap(int turn, int place) {
@@ -176,12 +177,12 @@ public class DuelModel {
         return spellAndTrapCondition.get(turn).get(place - 1);
     }
 
-    public void setSelectedCard(int turn, Card card,String condition) {
+    public void setSelectedCard(int turn, Card card, String condition) {
         if (selectedCards.get(turn).get(0) != null) {
             deSelectedCard();
         }
         selectedCards.get(turn).add(card);
-        detailOfSelectedCard.get(turn).put(card,condition);
+        detailOfSelectedCard.get(turn).put(card, condition);
     }
 
 
@@ -202,7 +203,7 @@ public class DuelModel {
         return selectedCards;
     }
 
-    public ArrayList<HashMap<Card,String>> getDetailOfSelectedCard(){
+    public ArrayList<HashMap<Card, String>> getDetailOfSelectedCard() {
         return detailOfSelectedCard;
     }
 
@@ -219,18 +220,25 @@ public class DuelModel {
         return monstersInField;
     }
 
-    public void setMonsterSetOrSummonInThisTurn(Card monsterSetOrSummonInThisTurn) {
+    public void setMonsterSetOrSummonInThisTurn(Card monsterSetOrSummonInThisTurn, int place) {
         this.monsterSetOrSummonInThisTurn = monsterSetOrSummonInThisTurn;
+        this.thePlaceOfMonsterSetOrSummonInThisTurn = place;
     }
 
     public Card getMonsterSetOrSummonInThisTurn() {
         return monsterSetOrSummonInThisTurn;
     }
 
-    public void deleteMonsterSetOrSummonInThisTurn(){
+    public void deleteMonsterSetOrSummonInThisTurn() {
         monsterSetOrSummonInThisTurn = null;
     }
 
     public void changeUser() {
     }
+
+    public void flipSummon(int place) {
+        monsterCondition.get(turn).add(place, "OO/" + place + 1);
+        deSelectedCard();
+    }
+
 }

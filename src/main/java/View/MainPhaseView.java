@@ -1,4 +1,5 @@
 package View;
+
 import Controller.DuelController;
 import Controller.MainPhaseController;
 
@@ -10,6 +11,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     private static MainPhaseView mainPhaseView = new MainPhaseView();
     private String phaseName;
     Scanner scanner1;
+
     private MainPhaseView() {
 
     }
@@ -37,10 +39,10 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             selectOpponentField(getCommandMatcher(command, "^select --opponent --filed"));
             selectOpponentField(getCommandMatcher(command, "^select --field --opponent"));
             showCard(getCommandMatcher(command, "^card show (.+)$"));
-            showSelectedCard(getCommandMatcher(command,"card show --selected"));
-            showGraveyard(getCommandMatcher(command,"show graveyard"));
-            summon(getCommandMatcher(command,"^summon$"));
-            flipSummon(getCommandMatcher(command,"^flip-summon$"));
+            showSelectedCard(getCommandMatcher(command, "card show --selected"));
+            showGraveyard(getCommandMatcher(command, "show graveyard"));
+            summon(getCommandMatcher(command, "^summon$"));
+            flipSummon(getCommandMatcher(command, "^flip-summon$"));
             if (command.equals("enterPhase")) {
                 enterPhase(scanner);
                 break;
@@ -50,13 +52,13 @@ public class MainPhaseView extends DuelView implements Set, Summon {
 
     @Override
     public void summon(Matcher matcher) {
-        if (matcher.find()){
+        if (matcher.find()) {
             MainPhaseController mainPhaseController = MainPhaseController.getInstance();
             System.out.println(mainPhaseController.summon());
         }
     }
 
-    public Integer getMonsterAddressForTribute(){
+    public Integer getMonsterAddressForTribute() {
         return scanner1.nextInt();
     }
 
@@ -116,7 +118,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
                 duelModel.turn = 1 - duelModel.turn;
                 DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
                 drawPhaseView.newCard(scanner, duelModel.getUsernames().get(duelModel.turn), false);
-                duelModel.setMonsterSetOrSummonInThisTurn(null);
+                duelModel.deleteMonsterSetOrSummonInThisTurn();
             } else {
                 System.out.println("please enter another or correct phase");
                 run(scanner, phaseName, false);
@@ -127,7 +129,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
                 duelModel.turn = 1 - duelModel.turn;
                 DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
                 drawPhaseView.newCard(scanner, duelModel.getUsernames().get(duelModel.turn), false);
-                duelModel.setMonsterSetOrSummonInThisTurn(null);
+                duelModel.deleteMonsterSetOrSummonInThisTurn();
             } else {
                 System.out.println("please enter another or correct phase");
                 run(scanner, phaseName, false);

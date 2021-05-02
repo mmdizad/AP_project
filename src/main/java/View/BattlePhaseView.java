@@ -43,7 +43,7 @@ public class BattlePhaseView extends DuelView {
             duelModel.turn = 1 - duelModel.turn;
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, duelModel.getUsernames().get(duelModel.turn), false);
-            duelModel.setMonsterSetOrSummonInThisTurn(null);
+            duelModel.deleteMonsterSetOrSummonInThisTurn();
         } else {
             System.out.println("please enter another or correct phase");
             run(scanner, false);

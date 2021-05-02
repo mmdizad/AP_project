@@ -49,12 +49,11 @@ public class MainPhaseController extends DuelController {
             Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
             ArrayList<Card> cardsInHandsOfPlayer = duelModel.getHandCards().get(duelModel.turn);
             String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
-            if (!detailsOfSelectedCard.equals("myHand")){
+            if (!detailsOfSelectedCard.equals("myHand")) {
                 return "you can’t summon this card";
-            }
-           else if (card.getCardType().equals("Ritual")) {
+            } else if (card.getCardType().equals("Ritual")) {
                 return "you can’t summon this card";
-            } else if (duelModel.getMonsterSetOrSummonInThisTurn()!= null) {
+            } else if (duelModel.getMonsterSetOrSummonInThisTurn() != null) {
                 return "you already summoned/set on this turn";
             } else {
                 Monster monster = (Monster) card;
@@ -109,51 +108,64 @@ public class MainPhaseController extends DuelController {
     }
 
     public String setMonsterOnField(Monster monster) {
-        if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null)
-            duelModel.addMonsterFromHandToGame("OO", 0);
-        else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null)
-            duelModel.addMonsterFromHandToGame("OO", 1);
-        else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null)
-            duelModel.addMonsterFromHandToGame("OO", 2);
-        else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null)
-            duelModel.addMonsterFromHandToGame("OO", 3);
-        else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null)
-            duelModel.addMonsterFromHandToGame("OO", 4);
-        else {
+        if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
+            duelModel.addMonsterFromHandToGame("OO/1", 0);
+            duelModel.setMonsterSetOrSummonInThisTurn(monster, 1);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null) {
+            duelModel.addMonsterFromHandToGame("OO/2", 1);
+            duelModel.setMonsterSetOrSummonInThisTurn(monster, 2);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null) {
+            duelModel.addMonsterFromHandToGame("OO/3", 2);
+            duelModel.setMonsterSetOrSummonInThisTurn(monster, 3);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null) {
+            duelModel.addMonsterFromHandToGame("OO/4", 3);
+            duelModel.setMonsterSetOrSummonInThisTurn(monster, 4);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null) {
+            duelModel.addMonsterFromHandToGame("OO/5", 4);
+            duelModel.setMonsterSetOrSummonInThisTurn(monster, 5);
+        } else {
             return "monster card zone is full";
         }
-        duelModel.setMonsterSetOrSummonInThisTurn(monster);
         return "summoned successfully";
     }
 
     public String flipSummon() {
         if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
             return "no card is selected yet";
-        } {
-            boolean existSelectedCardInPlayerMonsterZone = false;
-            ArrayList<Card> monstersInPlayerMonsterZone = duelModel.getMonstersInField().get(duelModel.turn);
-            for (Card card : monstersInPlayerMonsterZone){
-                if (card == duelModel.getSelectedCards().get(duelModel.turn).get(0)){
-                    existSelectedCardInPlayerMonsterZone = true;
-                    break;
-                }
-            }
-            if (!existSelectedCardInPlayerMonsterZone){
+        } else {
+            Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+            String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
+            String[] details = detailsOfSelectedCard.split("/");
+            if (details[0].equals("Hand") || details[0].equals("Opponent")) {
                 return "you can’t change this card position";
-            }else{
-                Monster monster = (Monster) duelModel.getSelectedCards().get(duelModel.turn).get(0);
-                if (monster == duelModel.getMonsterSetOrSummonInThisTurn()){
-                    return "you can’t flip summon this card";
+            } else if (!details[1].equals("DO") && !details[1].equals("DH") && !details[1].equals("OO")) {
+                return "you can’t change this card position";
+            } else if (!details[1].equals("DH")) {
+                return "you can’t flip summon this card";
+            } else {
+                int placeOfSummonCard = Integer.parseInt(details[2]);
+                if (duelModel.getMonsterSetOrSummonInThisTurn() == null) {
+                    duelModel.flipSummon(placeOfSummonCard - 1);
+                    return "flip summoned successfully";
+                } else {
+                    String detailsOfCardSummonedOrSetInThisTurn = duelModel.getMonsterCondition(duelModel.turn,
+                            duelModel.thePlaceOfMonsterSetOrSummonInThisTurn - 1);
+                    String[] details1 = detailsOfCardSummonedOrSetInThisTurn.split("/");
+                    int placeOfCardSummonedOrSetInThisTurn = Integer.parseInt(details1[1]);
+                    if (placeOfCardSummonedOrSetInThisTurn == placeOfSummonCard) {
+                        return "you can’t flip summon this card";
+                    } else {
+                        duelModel.flipSummon(placeOfSummonCard - 1);
+                        return "flip summoned successfully";
+                    }
                 }
             }
         }
-        return null;
     }
 
     public String specialSummon(Matcher matcher) {
         return null;
     }
-
 
     public String ritualSummon(Matcher matcher) {
         return null;

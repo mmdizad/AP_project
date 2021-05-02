@@ -45,15 +45,15 @@ public class DuelController {
 
     public ArrayList<String> checkCard(Matcher matcher) {
         ArrayList<String> output = new ArrayList<>();
-        if (Card.getCardByName(matcher.group(1)) == null){
+        if (Card.getCardByName(matcher.group(1)) == null) {
             output.add("card with name " + matcher.group(1) + " does not exist");
-        }else {
+        } else {
             Card card = Card.getCardByName(matcher.group(1));
-            if (card.getCategory().equals("Monster")){
+            if (card.getCategory().equals("Monster")) {
                 output = showMonster(matcher.group(1));
-            }else if (card.getCategory().equals("Spell")){
+            } else if (card.getCategory().equals("Spell")) {
                 output = showSpell(matcher.group(1));
-            }else {
+            } else {
                 output = showTrap(matcher.group(1));
             }
         }
@@ -63,19 +63,19 @@ public class DuelController {
     public ArrayList<String> checkSelectedCard(Matcher matcher) {
         ArrayList<String> output = new ArrayList<>();
         ArrayList<ArrayList<Card>> selectedCards = duelModel.getSelectedCards();
-        ArrayList<HashMap<Card,String>> detailsOfSelectedCards = duelModel.getDetailOfSelectedCard();
-        if (selectedCards.get(duelModel.turn).get(0) == null){
+        ArrayList<HashMap<Card, String>> detailsOfSelectedCards = duelModel.getDetailOfSelectedCard();
+        if (selectedCards.get(duelModel.turn).get(0) == null) {
             output.add("no card is selected yet");
-        }else {
+        } else {
             Card card = selectedCards.get(duelModel.turn).get(0);
-            if (detailsOfSelectedCards.get(duelModel.turn).get(card).equals("opponentH")){
+            if (detailsOfSelectedCards.get(duelModel.turn).get(card).equals("opponentH")) {
                 output.add("card is not visible");
-            }else {
-                if (card.getCategory().equals("Monster")){
+            } else {
+                if (card.getCategory().equals("Monster")) {
                     output = showMonster(card.getName());
-                }else if (card.getCategory().equals("Spell")){
+                } else if (card.getCategory().equals("Spell")) {
                     output = showSpell(card.getName());
-                }else {
+                } else {
                     output = showTrap(card.getName());
                 }
             }
@@ -123,10 +123,10 @@ public class DuelController {
         if (duelModel.getMonster(duelModel.turn, Integer.parseInt(matcher.group(1))) == null) {
             return "no card found in the given position";
         } else {
-            String condition = "my";
-            condition = condition + duelModel.getMonsterCondition(duelModel.turn,Integer.parseInt(matcher.group(1))).charAt(1);
+            String condition = "My/";
+            condition = condition + duelModel.getMonsterCondition(duelModel.turn, Integer.parseInt(matcher.group(1)));
             duelModel.setSelectedCard(duelModel.turn, duelModel.getMonster(duelModel.turn,
-                    Integer.parseInt(matcher.group(1))),condition);
+                    Integer.parseInt(matcher.group(1))), condition);
             return "card selected";
         }
     }
@@ -136,10 +136,10 @@ public class DuelController {
         if (duelModel.getMonster(duelModel.turn - 1, Integer.parseInt(matcher.group(1))) == null) {
             return "no card found in the given position";
         } else {
-            String condition = "opponent";
-            condition = condition + duelModel.getMonsterCondition(duelModel.turn - 1,Integer.parseInt(matcher.group(1))).charAt(1);
+            String condition = "Opponent/";
+            condition = condition + duelModel.getMonsterCondition(duelModel.turn - 1, Integer.parseInt(matcher.group(1)));
             duelModel.setSelectedCard(duelModel.turn, duelModel.getMonster(duelModel.turn - 1,
-                    Integer.parseInt(matcher.group(1))),condition);
+                    Integer.parseInt(matcher.group(1))), condition);
             return "card selected";
         }
     }
@@ -149,10 +149,10 @@ public class DuelController {
         if (duelModel.getSpellAndTrap(duelModel.turn, Integer.parseInt(matcher.group(1))) == null) {
             return "no card found in the given position";
         } else {
-            String condition = "my";
-            condition = condition + duelModel.getMonsterCondition(duelModel.turn,Integer.parseInt(matcher.group(1))).charAt(0);
+            String condition = "My/";
+            condition = condition + duelModel.getMonsterCondition(duelModel.turn, Integer.parseInt(matcher.group(1)));
             duelModel.setSelectedCard(duelModel.turn, duelModel.getSpellAndTrap(duelModel.turn,
-                    Integer.parseInt(matcher.group(1))),condition);
+                    Integer.parseInt(matcher.group(1))), condition);
             return "card selected";
         }
     }
@@ -161,10 +161,10 @@ public class DuelController {
         if (duelModel.getSpellAndTrap(duelModel.turn - 1, Integer.parseInt(matcher.group(1))) == null) {
             return "no card found in the given position";
         } else {
-            String condition = "opponent";
-            condition = condition + duelModel.getMonsterCondition(duelModel.turn - 1,Integer.parseInt(matcher.group(1))).charAt(0);
+            String condition = "Opponent/";
+            condition = condition + duelModel.getMonsterCondition(duelModel.turn - 1, Integer.parseInt(matcher.group(1)));
             duelModel.setSelectedCard(duelModel.turn, duelModel.getSpellAndTrap(duelModel.turn - 1,
-                    Integer.parseInt(matcher.group(1))),condition);
+                    Integer.parseInt(matcher.group(1))), condition);
             return "card selected";
         }
     }
@@ -173,7 +173,7 @@ public class DuelController {
         if (duelModel.getFieldZoneCard(duelModel.turn) == null) {
             return "no card found in the given position";
         } else {
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn),"myO");
+            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn), "My/Filed");
             return "card selected";
         }
     }
@@ -183,7 +183,7 @@ public class DuelController {
         if (duelModel.getFieldZoneCard(duelModel.turn - 1) == null) {
             return "no card found in the given position";
         } else {
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn - 1),"opponentO");
+            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn - 1), "Opponent/Field");
             return "card selected";
         }
     }
@@ -194,7 +194,7 @@ public class DuelController {
             return "invalid selection";
         } else {
             duelModel.setSelectedCard(duelModel.turn, duelModel.getHandCards().get(duelModel.turn).
-                    get(Integer.parseInt(matcher.group(1)) - 1),"myHand");
+                    get(Integer.parseInt(matcher.group(1)) - 1), "Hand");
             return "card selected";
         }
     }
