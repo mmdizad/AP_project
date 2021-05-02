@@ -68,7 +68,7 @@ public class DuelController {
             output.add("no card is selected yet");
         } else {
             Card card = selectedCards.get(duelModel.turn).get(0);
-            if (detailsOfSelectedCards.get(duelModel.turn).get(card).equals("opponentH")) {
+            if (detailsOfSelectedCards.get(duelModel.turn).get(card).equals("Opponent/H")) {
                 output.add("card is not visible");
             } else {
                 if (card.getCategory().equals("Monster")) {

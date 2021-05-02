@@ -91,7 +91,7 @@ public class MainPhaseController extends DuelController {
             } else {
                 Monster monster = (Monster) card;
                 if (monster.getLevel() <= 4) {
-                    return setMonsterOnField(monster);
+                    return summonMonsterOnField(monster);
                 } else if (monster.getLevel() == 5 || monster.getLevel() == 6) {
                     for (Card cardInHandOfPlayer : cardsInHandsOfPlayer) {
                         if (cardInHandOfPlayer.getCategory().equals("monster")) {
@@ -109,7 +109,7 @@ public class MainPhaseController extends DuelController {
                             return "there no monsters one this address";
                         } else {
                             duelModel.deleteMonster(duelModel.turn, address - 1);
-                            return setMonsterOnField(monster);
+                            return summonMonsterOnField(monster);
                         }
                     }
                 } else if (monster.getLevel() >= 7) {
@@ -132,7 +132,7 @@ public class MainPhaseController extends DuelController {
                     } else {
                         duelModel.deleteMonster(duelModel.turn, address - 1);
                         duelModel.deleteMonster(duelModel.turn, address1 - 1);
-                        return setMonsterOnField(monster);
+                        return summonMonsterOnField(monster);
                     }
                 }
             }
@@ -140,7 +140,7 @@ public class MainPhaseController extends DuelController {
         return null;
     }
 
-    public String setMonsterOnField(Monster monster) {
+    public String summonMonsterOnField(Monster monster) {
         if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
             duelModel.addMonsterFromHandToGame("OO/1", 0);
             duelModel.setMonsterSetOrSummonInThisTurn(monster, 1);
