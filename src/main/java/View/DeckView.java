@@ -38,23 +38,22 @@ public class DeckView extends MainMenu {
                 deckSetActive(matcher);
                 isCommandValid = true;
             }
-            // esme kartha mitone 2 ghesmati bashe!
-            matcher = getCommandMatcher(command, "^deck add-card --card (\\S+) --deck (\\S+)$");
+            matcher = getCommandMatcher(command, "^deck add-card --card ([^-]+) --deck (\\S+)$");
             if (matcher.find()) {
                 addCard(matcher);
                 isCommandValid = true;
             }
-            matcher = getCommandMatcher(command, "^deck add-card --card (\\S+) --deck (\\S+) --(side)$");
+            matcher = getCommandMatcher(command, "^deck add-card --card ([^-]+) --deck (\\S+) --(side)$");
             if (matcher.find()) {
                 addCard(matcher);
                 isCommandValid = true;
             }
-            matcher = getCommandMatcher(command, "^deck rm-card --card (\\S+) --deck (\\S+)$");
+            matcher = getCommandMatcher(command, "^deck rm-card --card ([^-]+) --deck (\\S+)$");
             if (matcher.find()) {
                 deleteCard(matcher);
                 isCommandValid = true;
             }
-            matcher = getCommandMatcher(command, "^deck rm-card --card (\\S+) --deck (\\S+) --(side)$");
+            matcher = getCommandMatcher(command, "^deck rm-card --card ([^-]+) --deck (\\S+) --(side)$");
             if (matcher.find()) {
                 deleteCard(matcher);
                 isCommandValid = true;
@@ -79,7 +78,7 @@ public class DeckView extends MainMenu {
                 showCard(matcher);
                 isCommandValid = true;
             }
-            matcher = getCommandMatcher(command, "^card show (\\S+)$");
+            matcher = getCommandMatcher(command, "^card show (.+)$");
             if (matcher.find()) {
                 showOneCard(matcher);
                 isCommandValid = true;

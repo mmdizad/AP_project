@@ -1,9 +1,11 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DuelModel {
     private ArrayList<ArrayList<Card>> selectedCards;
+    private ArrayList<HashMap<Card,String>> detailOfSelectedCard;
     private ArrayList<ArrayList<Card>> playersCards;
     private ArrayList<ArrayList<Card>> monstersInField;
     private ArrayList<ArrayList<Card>> spellsAndTrapsInFiled;
@@ -83,6 +85,11 @@ public class DuelModel {
         ArrayList<Card> field2 = new ArrayList<>();
         field.add(field1);
         field.add(field2);
+        detailOfSelectedCard = new ArrayList<>();
+        HashMap<Card,String> detailOfSelectedCard1 = new HashMap<>();
+        HashMap<Card,String> detailOfSelectedCard2 = new HashMap<>();
+        detailOfSelectedCard.add(detailOfSelectedCard1);
+        detailOfSelectedCard.add(detailOfSelectedCard2);
     }
 
     public void decreaseLifePoint(int lifePoint, int turn) {
@@ -157,19 +164,30 @@ public class DuelModel {
         return monstersInField.get(turn).get(place - 1);
     }
 
+    public String getMonsterCondition(int turn, int place) {
+        return monsterCondition.get(turn).get(place - 1);
+    }
+
     public Card getSpellAndTrap(int turn, int place) {
         return spellsAndTrapsInFiled.get(turn).get(place - 1);
     }
 
-    public void setSelectedCard(int turn, Card card) {
+    public String getSpellAndTrapCondition(int turn, int place) {
+        return spellAndTrapCondition.get(turn).get(place - 1);
+    }
+
+    public void setSelectedCard(int turn, Card card,String condition) {
         if (selectedCards.get(turn).get(0) != null) {
             deSelectedCard();
         }
         selectedCards.get(turn).add(card);
+        detailOfSelectedCard.get(turn).put(card,condition);
     }
+
 
     public void deSelectedCard() {
         selectedCards.get(turn).remove(0);
+        detailOfSelectedCard.get(turn).clear();
     }
 
     public ArrayList<ArrayList<Card>> getHandCards() {
@@ -182,6 +200,10 @@ public class DuelModel {
 
     public ArrayList<ArrayList<Card>> getSelectedCards() {
         return selectedCards;
+    }
+
+    public ArrayList<HashMap<Card,String>> getDetailOfSelectedCard(){
+        return detailOfSelectedCard;
     }
 
     public String getBoard() {

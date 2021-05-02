@@ -57,19 +57,25 @@ public class DuelView {
     protected void activateEffect() {
     }
 
-    protected void showGraveyard() {
+    protected void showGraveyard(Matcher matcher) {
         ArrayList<String> output = duelController.showGraveYard();
         for (String s : output) {
             System.out.println(s);
         }
     }
 
-    protected void showCard() {
-
+    protected void showCard(Matcher matcher) {
+        ArrayList<String> output = duelController.checkCard(matcher);
+        for (String s : output) {
+            System.out.println(s);
+        }
     }
 
-    protected void showSelectedCard() {
-
+    protected void showSelectedCard(Matcher matcher) {
+        ArrayList<String> output = duelController.checkSelectedCard(matcher);
+        for (String s : output) {
+            System.out.println(s);
+        }
     }
 
     public void surrender() {

@@ -79,10 +79,28 @@ public class DeckController extends LoginController {
                 if (!decks.contains(deck)) {
                     return "deck with name " + matcher.group(2) + " does not exist";
                 } else {
-                    if (matcher.groupCount() == 2) {
-                        return addCardToMain(matcher);
-                    } else {
-                        return addCardToSide(matcher);
+                    ArrayList<Card> mainCards = deck.getCardsMain();
+                    ArrayList<Card> sideCards = deck.getCardsSide();
+                    ArrayList<Card> userCards = user.getCards();
+                    int numberOfCardsInDeck = 0;
+                    int numberOfCardsInPlayerCards = 0;
+                    for (Card card : sideCards){
+                        if (card.getName().equals(matcher.group(1))) numberOfCardsInDeck++;
+                    }
+                    for (Card card : mainCards){
+                        if (card.getName().equals(matcher.group(1))) numberOfCardsInDeck++;
+                    }
+                    for (Card card : userCards){
+                        if (card.getName().equals(matcher.group(1))) numberOfCardsInPlayerCards++;
+                    }
+                    if (numberOfCardsInDeck >= numberOfCardsInPlayerCards){
+                        return "card with name " + matcher.group(1) + " does not exist";
+                    }else {
+                        if (matcher.groupCount() == 2) {
+                            return addCardToMain(matcher);
+                        } else {
+                            return addCardToSide(matcher);
+                        }
                     }
                 }
             }
@@ -111,7 +129,6 @@ public class DeckController extends LoginController {
                 return "there are already three cards with name " + matcher.group(1) + " in deck " + matcher.group(2);
             } else {
                 Card card = Card.getCardByName(matcher.group(1));
-                user.deleteCard(card);
                 deck.addCardToMain(card);
                 return "card added to deck successfully";
             }
@@ -140,7 +157,6 @@ public class DeckController extends LoginController {
                 return "there are already three cards with name " + matcher.group(1) + " in deck " + matcher.group(2);
             } else {
                 Card card = Card.getCardByName(matcher.group(1));
-                user.deleteCard(card);
                 deck.addCardToSide(card);
                 return "card added to deck successfully";
             }

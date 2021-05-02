@@ -36,6 +36,9 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             selectField(getCommandMatcher(command, "^select --field"));
             selectOpponentField(getCommandMatcher(command, "^select --opponent --filed"));
             selectOpponentField(getCommandMatcher(command, "^select --field --opponent"));
+            showCard(getCommandMatcher(command, "^card show (.+)$"));
+            showSelectedCard(getCommandMatcher(command,"card show --selected"));
+            showGraveyard(getCommandMatcher(command,"show graveyard"));
             summon(getCommandMatcher(command,"matcher"));
             if (command.equals("enterPhase")) {
                 enterPhase(scanner);
