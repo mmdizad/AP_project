@@ -220,6 +220,10 @@ public class DuelModel {
         return monstersInField;
     }
 
+    public ArrayList<ArrayList<Card>> getSpellsAndTrapsInFiled() {
+        return spellsAndTrapsInFiled;
+    }
+
     public void setMonsterSetOrSummonInThisTurn(Card monsterSetOrSummonInThisTurn, int place) {
         this.monsterSetOrSummonInThisTurn = monsterSetOrSummonInThisTurn;
         this.thePlaceOfMonsterSetOrSummonInThisTurn = place;

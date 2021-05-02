@@ -1,8 +1,6 @@
 package View;
 
-import Controller.DuelController;
 import Controller.MainPhaseController;
-
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
