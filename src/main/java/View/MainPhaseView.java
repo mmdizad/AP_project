@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 public class MainPhaseView extends DuelView implements Set, Summon {
     private static MainPhaseView mainPhaseView = new MainPhaseView();
     private String phaseName;
-
+    Scanner scanner1;
     private MainPhaseView() {
 
     }
@@ -19,6 +19,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     }
 
     public void run(Scanner scanner, String nameOfPhase, boolean startOfPhase) {
+        scanner1 = scanner;
         phaseName = nameOfPhase;
         if (startOfPhase) {
             System.out.println(phaseName);
@@ -49,6 +50,10 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             MainPhaseController mainPhaseController = MainPhaseController.getInstance();
             System.out.println(mainPhaseController.summon());
         }
+    }
+
+    public Integer getMonsterAddressForTribute(){
+        return scanner1.nextInt();
     }
 
     @Override

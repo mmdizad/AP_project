@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Card;
 import Model.Monster;
+import View.MainPhaseView;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -38,7 +39,9 @@ public class MainPhaseController extends DuelController {
     }
 
     public String summon() {
+        MainPhaseView mainPhaseView = MainPhaseView.getInstance();
         boolean existSelectedCardInHandOfPlayer = false;
+        boolean existMonsterOnField = false;
         if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
             return "no card is selected yet";
         } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Monster")) {
@@ -56,28 +59,76 @@ public class MainPhaseController extends DuelController {
                 return "you can’t summon this card";
             } else if (card.getCardType().equals("Ritual")) {
                 return "you can’t summon this card";
-            } else if (duelModel.getMonstersInField().get(duelModel.turn).size() >= 5) {
-                return "monster card zone is full";
-            } else if (duelModel.monsterSetOrSummonInThisTurn != null) {
+            } else if (duelModel.getMonsterSetOrSummonInThisTurn()!= null) {
                 return "you already summoned/set on this turn";
             } else {
                 Monster monster = (Monster) card;
                 if (monster.getLevel() <= 4) {
-                    duelModel.setMonsterSetOrSummonInThisTurn(monster);
-                    if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null)
-                        duelModel.addMonsterFromHandToGame("OO", 0);
-                    else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null)
-                        duelModel.addMonsterFromHandToGame("OO", 1);
-                    else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null)
-                        duelModel.addMonsterFromHandToGame("OO", 2);
-                    else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null)
-                        duelModel.addMonsterFromHandToGame("OO", 3);
-                    else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null)
-                        duelModel.addMonsterFromHandToGame("OO", 4);
+                    return setMonsterOnField(monster);
+                } else if (monster.getLevel() == 5 || monster.getLevel() == 6) {
+                    for (Card cardInHandOfPlayer : cardsInHandsOfPlayer) {
+                        if (cardInHandOfPlayer.getCategory().equals("monster")) {
+                            existMonsterOnField = true;
+                            break;
+                        }
+                    }
+                    if (!existMonsterOnField) {
+                        return "there are not enough cards for tribute";
+                    } else {
+                        int address = mainPhaseView.getMonsterAddressForTribute();
+                        if (address > 5) {
+                            return "there no monsters one this address";
+                        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(address - 1) == null) {
+                            return "there no monsters one this address";
+                        } else {
+                            duelModel.deleteMonster(duelModel.turn, address - 1);
+                            return setMonsterOnField(monster);
+                        }
+                    }
+                } else if (monster.getLevel() >= 7) {
+                    int numberOfPlayerMonsterOnField = 0;
+                    for (Card cardInHandOfPlayer : cardsInHandsOfPlayer) {
+                        if (cardInHandOfPlayer.getCategory().equals("monster")) {
+                            numberOfPlayerMonsterOnField++;
+                        }
+                    }
+                    if (numberOfPlayerMonsterOnField < 2) {
+                        return "there are not enough cards for tribute";
+                    }
+                    int address = mainPhaseView.getMonsterAddressForTribute();
+                    int address1 = mainPhaseView.getMonsterAddressForTribute();
+                    if (address > 5 || address1 > 5) {
+                        return "there is no monster on one of these addresses";
+                    } else if (duelModel.getMonstersInField().get(duelModel.turn).get(address - 1) == null
+                            || duelModel.getMonstersInField().get(duelModel.turn).get(address1 - 1) == null) {
+                        return "there is no monster on one of these addresses";
+                    } else {
+                        duelModel.deleteMonster(duelModel.turn, address - 1);
+                        duelModel.deleteMonster(duelModel.turn, address1 - 1);
+                        return setMonsterOnField(monster);
+                    }
                 }
             }
         }
         return null;
+    }
+
+    public String setMonsterOnField(Monster monster) {
+        if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null)
+            duelModel.addMonsterFromHandToGame("OO", 0);
+        else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null)
+            duelModel.addMonsterFromHandToGame("OO", 1);
+        else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null)
+            duelModel.addMonsterFromHandToGame("OO", 2);
+        else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null)
+            duelModel.addMonsterFromHandToGame("OO", 3);
+        else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null)
+            duelModel.addMonsterFromHandToGame("OO", 4);
+        else {
+            return "monster card zone is full";
+        }
+        duelModel.setMonsterSetOrSummonInThisTurn(monster);
+        return "summoned successfully";
     }
 
     public String flipSummon(Matcher matcher) {
@@ -92,5 +143,4 @@ public class MainPhaseController extends DuelController {
     public String ritualSummon(Matcher matcher) {
         return null;
     }
-
 }

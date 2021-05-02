@@ -134,7 +134,7 @@ public class DuelModel {
     }
 
     public void deleteMonster(int turn, int place) {
-
+        monstersInField.get(turn).add(place,null);
     }
 
     public void deleteSpellAndTrap(int turn, int place) {
