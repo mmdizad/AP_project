@@ -227,6 +227,14 @@ public class DuelModel {
         return monsterSetOrSummonInThisTurn;
     }
 
+    public ArrayList<ArrayList<String>> getSpellAndTrapCondition() {
+        return spellAndTrapCondition;
+    }
+
+    public ArrayList<ArrayList<Card>> getSpellsAndTrapsInFiled() {
+        return spellsAndTrapsInFiled;
+    }
+
     public void deleteMonsterSetOrSummonInThisTurn(){
         monsterSetOrSummonInThisTurn = null;
     }
