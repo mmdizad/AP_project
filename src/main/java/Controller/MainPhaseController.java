@@ -25,7 +25,7 @@ public class MainPhaseController extends DuelController {
         } else {
             if (!(duelModel.getHandCards().get(this.duelModel.turn)).contains((selectedCards.get(this.duelModel.turn)).get(0))) {
                 return "you can’t set this card";
-            } else if (this.duelModel.monsterSetOrSummonInThisTurn==null) {
+            } else if (this.duelModel.monsterSetOrSummonInThisTurn == null) {
                 return "you already summoned/set on this turn";
             } else if ((selectedCards.get(this.duelModel.turn).get(0)).getCardType().equals("Monster")) {
                 return this.setMonster();
@@ -36,6 +36,7 @@ public class MainPhaseController extends DuelController {
     }
 
     public String setTrapOrSpell() {
+
         if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(0) == null)
             duelModel.addSpellAndTrapFromHandToGame("H", 0);
         else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(1) == null)
@@ -51,17 +52,24 @@ public class MainPhaseController extends DuelController {
     }
 
     public String setMonster() {
-        if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null)
-            duelModel.addMonsterFromHandToGame("DH", 0);
-        else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null)
-            duelModel.addMonsterFromHandToGame("DH", 1);
-        else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null)
-            duelModel.addMonsterFromHandToGame("DH", 2);
-        else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null)
-            duelModel.addMonsterFromHandToGame("DH", 3);
-        else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null)
-            duelModel.addMonsterFromHandToGame("DH", 4);
-        else {
+        Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        Monster monster = (Monster) card;
+        if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
+            duelModel.addMonsterFromHandToGame("DH/1", 0);
+            duelModel.setMonsterSetOrSummonInThisTurn(monster, 1);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null) {
+            duelModel.addMonsterFromHandToGame("DH/2", 1);
+            duelModel.setMonsterSetOrSummonInThisTurn(monster, 2);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null) {
+            duelModel.addMonsterFromHandToGame("DH/3", 2);
+            duelModel.setMonsterSetOrSummonInThisTurn(monster, 3);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null) {
+            duelModel.addMonsterFromHandToGame("DH/4", 3);
+            duelModel.setMonsterSetOrSummonInThisTurn(monster, 4);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null) {
+            duelModel.addMonsterFromHandToGame("DH/5", 4);
+            duelModel.setMonsterSetOrSummonInThisTurn(monster, 5);
+        } else {
             return "monster card zone is full";
         }
         return "summoned successfully";
