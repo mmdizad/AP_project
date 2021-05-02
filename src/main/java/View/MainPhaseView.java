@@ -39,7 +39,8 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             showCard(getCommandMatcher(command, "^card show (.+)$"));
             showSelectedCard(getCommandMatcher(command,"card show --selected"));
             showGraveyard(getCommandMatcher(command,"show graveyard"));
-            summon(getCommandMatcher(command,"matcher"));
+            summon(getCommandMatcher(command,"^summon$"));
+            flipSummon(getCommandMatcher(command,"^flip-summon$"));
             if (command.equals("enterPhase")) {
                 enterPhase(scanner);
                 break;
@@ -60,8 +61,11 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     }
 
     @Override
-    public void flipSummon() {
-
+    public void flipSummon(Matcher matcher) {
+        if (matcher.find()) {
+            MainPhaseController mainPhaseController = MainPhaseController.getInstance();
+            System.out.println(mainPhaseController.flipSummon());
+        }
     }
 
     @Override

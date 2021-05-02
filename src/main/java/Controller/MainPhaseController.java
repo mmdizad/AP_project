@@ -40,7 +40,6 @@ public class MainPhaseController extends DuelController {
 
     public String summon() {
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
-        boolean existSelectedCardInHandOfPlayer = false;
         boolean existMonsterOnField = false;
         if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
             return "no card is selected yet";
@@ -49,15 +48,11 @@ public class MainPhaseController extends DuelController {
         } else {
             Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
             ArrayList<Card> cardsInHandsOfPlayer = duelModel.getHandCards().get(duelModel.turn);
-            for (Card cardInHandOfPlayer : cardsInHandsOfPlayer) {
-                if (card == cardInHandOfPlayer) {
-                    existSelectedCardInHandOfPlayer = true;
-                    break;
-                }
-            }
-            if (!existSelectedCardInHandOfPlayer) {
+            String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
+            if (!detailsOfSelectedCard.equals("myHand")){
                 return "you can’t summon this card";
-            } else if (card.getCardType().equals("Ritual")) {
+            }
+           else if (card.getCardType().equals("Ritual")) {
                 return "you can’t summon this card";
             } else if (duelModel.getMonsterSetOrSummonInThisTurn()!= null) {
                 return "you already summoned/set on this turn";
@@ -131,7 +126,27 @@ public class MainPhaseController extends DuelController {
         return "summoned successfully";
     }
 
-    public String flipSummon(Matcher matcher) {
+    public String flipSummon() {
+        if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
+            return "no card is selected yet";
+        } {
+            boolean existSelectedCardInPlayerMonsterZone = false;
+            ArrayList<Card> monstersInPlayerMonsterZone = duelModel.getMonstersInField().get(duelModel.turn);
+            for (Card card : monstersInPlayerMonsterZone){
+                if (card == duelModel.getSelectedCards().get(duelModel.turn).get(0)){
+                    existSelectedCardInPlayerMonsterZone = true;
+                    break;
+                }
+            }
+            if (!existSelectedCardInPlayerMonsterZone){
+                return "you can’t change this card position";
+            }else{
+                Monster monster = (Monster) duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                if (monster == duelModel.getMonsterSetOrSummonInThisTurn()){
+                    return "you can’t flip summon this card";
+                }
+            }
+        }
         return null;
     }
 

@@ -194,7 +194,7 @@ public class DuelController {
             return "invalid selection";
         } else {
             duelModel.setSelectedCard(duelModel.turn, duelModel.getHandCards().get(duelModel.turn).
-                    get(Integer.parseInt(matcher.group(1)) - 1),"myO");
+                    get(Integer.parseInt(matcher.group(1)) - 1),"myHand");
             return "card selected";
         }
     }
