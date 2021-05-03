@@ -278,13 +278,13 @@ public class MainPhaseController extends DuelController {
                     if (!stateOfCard.equals("Defence") && !stateOfCard.equals("Attack")) {
                         return "please enter the appropriate state (Defence or Attack)";
                     } else {
-                        duelModel.deleteMonster(duelModel.turn, address);
+                        duelModel.deleteMonster(duelModel.turn, address - 1);
                         duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
                                 address));
-                        duelModel.deleteMonster(duelModel.turn, address1);
+                        duelModel.deleteMonster(duelModel.turn, address1 - 1);
                         duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
                                 address1));
-                        duelModel.deleteMonster(duelModel.turn, address2);
+                        duelModel.deleteMonster(duelModel.turn, address2 - 1);
                         duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
                                 address2));
                         return summonMonsterOnField(monster, stateOfCard);
