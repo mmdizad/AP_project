@@ -3,6 +3,7 @@ package View;
 import Controller.MainPhaseController;
 import java.util.Scanner;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class MainPhaseView extends DuelView implements Set, Summon {
@@ -41,10 +42,12 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             showGraveyard(getCommandMatcher(command, "show graveyard"));
             summon(getCommandMatcher(command, "^summon$"));
             flipSummon(getCommandMatcher(command, "^flip-summon$"));
+
             if (command.equals("enterPhase")) {
                 enterPhase(scanner);
                 break;
-            }
+            }else if (command.equals("set"))
+                set();
         }
     }
 

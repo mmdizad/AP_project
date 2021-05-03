@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DuelModel {
+    public int turn = 0;
+    public Card monsterSetOrSummonInThisTurn;
+    public int thePlaceOfMonsterSetOrSummonInThisTurn;
     private ArrayList<ArrayList<Card>> selectedCards;
     private ArrayList<HashMap<Card, String>> detailOfSelectedCard;
     private ArrayList<ArrayList<Card>> playersCards;
@@ -17,9 +20,6 @@ public class DuelModel {
     private int lifePointUser = 8000;
     private int lifePointOpponent = 8000;
     private ArrayList<String> usernames;
-    public int turn = 0;
-    public Card monsterSetOrSummonInThisTurn;
-    public int thePlaceOfMonsterSetOrSummonInThisTurn;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         usernames = new ArrayList<>();
@@ -94,9 +94,9 @@ public class DuelModel {
     }
 
     public void decreaseLifePoint(int lifePoint, int turn) {
-        if (turn == 1){
+        if (turn == 1) {
             lifePointOpponent -= lifePoint;
-        }else {
+        } else {
             lifePointUser -= lifePoint;
         }
     }
@@ -129,6 +129,7 @@ public class DuelModel {
         monstersInField.get(turn).add(index, selectedCards.get(turn).get(0));
         monsterCondition.get(turn).add(index, condition);
         deSelectedCard();
+
     }
 
     public void addSpellAndTrapFromHandToGame(String condition, int index) {
@@ -181,7 +182,7 @@ public class DuelModel {
         return spellAndTrapCondition.get(turn).get(place - 1);
     }
 
-    public void addCardToGraveyard(int turn,Card card){
+    public void addCardToGraveyard(int turn, Card card) {
         graveyard.get(turn).add(card);
     }
 
@@ -215,9 +216,53 @@ public class DuelModel {
         return detailOfSelectedCard;
     }
 
-    public String getBoard() {
-        return null;
-        //جایگزین شود
+
+    public ArrayList<String> getBoard() {
+        ArrayList<String> board = new ArrayList<>();
+
+        String handCardOpponent =  "    ";
+        String handCardUser = "    ";
+        for (int i = 0; i < handCards.get(1 - turn).size(); i++) {
+            handCardOpponent = handCardOpponent + "c    ";
+        }
+        for (int i = 0; i < handCards.get(turn).size(); i++) {
+            handCardUser = handCardUser + "c    ";
+        }
+
+
+        ArrayList<String[]> spellConditionOpponent = new ArrayList<>();
+        ArrayList<String[]> spellConditionUser = new ArrayList<>();
+        ArrayList<String[]> conditionMonsterOpponent = new ArrayList<>();
+        ArrayList<String[]> conditionMonsterUser = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            conditionMonsterOpponent.add(monsterCondition.get(1 - turn).get(i).split("/"));
+            conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/"));
+            spellConditionOpponent.add(spellAndTrapCondition.get(1 - turn).get(i).split("/"));
+            spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/"));
+        }
+
+        String spellFieldofOpponet = "    " + spellConditionOpponent.get(4)[0] + "    " + spellConditionOpponent.get(2)[0] + "    " + spellConditionOpponent.get(1)[0] + "    " + spellConditionOpponent.get(3)[0] + "    " + spellConditionOpponent.get(5)[0];
+        String spellFieldUser = "    " + spellConditionUser.get(5)[0] + "    " + spellConditionUser.get(3)[0] + "    " + spellConditionUser.get(1)[0] + "    " + spellConditionUser.get(2)[0] + "    " + spellConditionUser.get(4)[0];
+        String monsterFieldUser = "    " + conditionMonsterUser.get(5)[0] + "    " + conditionMonsterUser.get(3)[0] + "    " + conditionMonsterUser.get(1)[0] + "    " + conditionMonsterUser.get(2)[0] + "    " + conditionMonsterUser.get(4)[0];
+        String monsterFieldOpponent = "    " + conditionMonsterOpponent.get(4)[0] + "    " + conditionMonsterOpponent.get(2)[0] + "    " + conditionMonsterOpponent.get(1)[0] + "    " + conditionMonsterOpponent.get(3)[0] + "    " + conditionMonsterOpponent.get(5)[0];
+        board.add(usernames.get(turn - 1) + ":" + lifePointOpponent);
+        board.add(handCardOpponent);
+        board.add(String.valueOf(playersCards.get(1 - turn).size()));
+        board.add(spellFieldofOpponet);
+        board.add(monsterFieldOpponent);
+        if (field.get(1 - turn) == null)
+            board.add(graveyard.get(1 - turn).size() + "                        " + "E");
+        else board.add(graveyard.get(1 - turn).size() + "                        " + "O");
+        board.add("----------------------------------------");
+        if (field.get(turn) == null)
+            board.add( "E"+"                        " +graveyard.get(turn).size() );
+        else board.add( "O"+ "                        " + graveyard.get(1 - turn).size());
+        board.add(monsterFieldUser);
+        board.add(spellFieldUser);
+        board.add(handCardUser);
+        board.add(usernames.get(turn) + ":" + lifePointUser);
+ return board;
+
     }
 
     public ArrayList<String> getUsernames() {
