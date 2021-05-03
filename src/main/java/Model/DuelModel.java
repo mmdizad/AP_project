@@ -217,7 +217,7 @@ public class DuelModel {
         return detailOfSelectedCard;
     }
 
-    public String getBoard() {
+    public ArrayList<String> getBoard() {
         ArrayList<String> board = new ArrayList<>();
 
         String handCardOpponent =  "    ";
