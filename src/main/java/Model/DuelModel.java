@@ -129,12 +129,14 @@ public class DuelModel {
         monstersInField.get(turn).add(index, selectedCards.get(turn).get(0));
         monsterCondition.get(turn).add(index, condition);
         deSelectedCard();
+        deleteCardFromHand(getMonster(turn,index + 1));
     }
 
     public void addSpellAndTrapFromHandToGame(String condition, int index) {
         spellsAndTrapsInFiled.get(turn).add(index, selectedCards.get(turn).get(0));
         spellAndTrapCondition.get(turn).add(index, condition);
         deSelectedCard();
+        deleteCardFromHand(getSpellAndTrap(turn,index + 1));
     }
 
     public void changeAttackAndDefense(int place) {
@@ -260,6 +262,5 @@ public class DuelModel {
     public void deleteCardFromHandWithIndex(int index){
         handCards.get(turn).remove(index);
     }
-
 
 }

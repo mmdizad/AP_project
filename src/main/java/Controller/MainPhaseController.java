@@ -121,7 +121,7 @@ public class MainPhaseController extends DuelController {
                             } else {
                                 duelModel.deleteMonster(duelModel.turn, address - 1);
                                 duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
-                                        address - 1));
+                                        address));
                                 return summonMonsterOnField(monster, stateOfCard);
                             }
                         }
@@ -151,9 +151,9 @@ public class MainPhaseController extends DuelController {
                             duelModel.deleteMonster(duelModel.turn, address - 1);
                             duelModel.deleteMonster(duelModel.turn, address1 - 1);
                             duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
-                                    address - 1));
+                                    address));
                             duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
-                                    address1 - 1));
+                                    address1));
                             return summonMonsterOnField(monster, stateOfCard);
                         }
 
@@ -174,23 +174,18 @@ public class MainPhaseController extends DuelController {
         if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
             duelModel.addMonsterFromHandToGame(stateOfCard + "/1", 0);
             duelModel.setMonsterSetOrSummonInThisTurn(monster, 1);
-            duelModel.deleteCardFromHand(monster);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null) {
             duelModel.addMonsterFromHandToGame(stateOfCard + "/2", 1);
             duelModel.setMonsterSetOrSummonInThisTurn(monster, 2);
-            duelModel.deleteCardFromHand(monster);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null) {
             duelModel.addMonsterFromHandToGame(stateOfCard + "/3", 2);
             duelModel.setMonsterSetOrSummonInThisTurn(monster, 3);
-            duelModel.deleteCardFromHand(monster);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null) {
             duelModel.addMonsterFromHandToGame(stateOfCard + "/4", 3);
             duelModel.setMonsterSetOrSummonInThisTurn(monster, 4);
-            duelModel.deleteCardFromHand(monster);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null) {
             duelModel.addMonsterFromHandToGame(stateOfCard + "/5", 4);
             duelModel.setMonsterSetOrSummonInThisTurn(monster, 5);
-            duelModel.deleteCardFromHand(monster);
         } else {
             return "monster card zone is full";
         }
@@ -276,15 +271,15 @@ public class MainPhaseController extends DuelController {
                     if (!stateOfCard.equals("Defence") && !stateOfCard.equals("Attack")) {
                         return "please enter the appropriate state (Defence or Attack)";
                     } else {
-                        duelModel.deleteMonster(duelModel.turn, address - 1);
+                        duelModel.deleteMonster(duelModel.turn, address);
                         duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
-                                address - 1));
-                        duelModel.deleteMonster(duelModel.turn, address1 - 1);
+                                address));
+                        duelModel.deleteMonster(duelModel.turn, address1);
                         duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
-                                address1 - 1));
-                        duelModel.deleteMonster(duelModel.turn, address2 - 1);
+                                address1));
+                        duelModel.deleteMonster(duelModel.turn, address2);
                         duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
-                                address2 - 1));
+                                address2));
                         return summonMonsterOnField(monster, stateOfCard);
                     }
                 }
