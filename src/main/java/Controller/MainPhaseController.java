@@ -36,7 +36,6 @@ public class MainPhaseController extends DuelController {
     }
 
     public String setTrapOrSpell() {
-
         if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(0) == null)
             duelModel.addSpellAndTrapFromHandToGame("H", 0);
         else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(1) == null)
@@ -90,14 +89,14 @@ public class MainPhaseController extends DuelController {
             Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
             ArrayList<Card> cardsInHandsOfPlayer = duelModel.getHandCards().get(duelModel.turn);
             String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
-            if (!detailsOfSelectedCard.equals("myHand")) {
+            Monster monster = (Monster) card;
+            if (!detailsOfSelectedCard.equals("Hand")) {
                 return "you can’t summon this card";
-            } else if (card.getCardType().equals("Ritual")) {
+            } else if (card.getCardType().equals("Ritual") || monster.isHasSpecialSummon()) {
                 return "you can’t summon this card";
             } else if (duelModel.getMonsterSetOrSummonInThisTurn() != null) {
                 return "you already summoned/set on this turn";
             } else {
-                Monster monster = (Monster) card;
                 if (monster.getLevel() <= 4) {
                     return summonMonsterOnField(monster);
                 } else if (monster.getLevel() == 5 || monster.getLevel() == 6) {
@@ -110,13 +109,14 @@ public class MainPhaseController extends DuelController {
                     if (!existMonsterOnField) {
                         return "there are not enough cards for tribute";
                     } else {
-                        int address = mainPhaseView.getMonsterAddressForTribute();
+                        int address = mainPhaseView.getCardAddressForTribute();
                         if (address > 5) {
                             return "there no monsters one this address";
                         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(address - 1) == null) {
                             return "there no monsters one this address";
                         } else {
                             duelModel.deleteMonster(duelModel.turn, address - 1);
+                            duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,address - 1));
                             return summonMonsterOnField(monster);
                         }
                     }
@@ -130,9 +130,9 @@ public class MainPhaseController extends DuelController {
                     if (numberOfPlayerMonsterOnField < 2) {
                         return "there are not enough cards for tribute";
                     }
-                    int address = mainPhaseView.getMonsterAddressForTribute();
-                    int address1 = mainPhaseView.getMonsterAddressForTribute();
-                    if (address > 5 || address1 > 5) {
+                    int address = mainPhaseView.getCardAddressForTribute();
+                    int address1 = mainPhaseView.getCardAddressForTribute();
+                    if (address > 5 || address1 > 5 || address1 == address) {
                         return "there is no monster on one of these addresses";
                     } else if (duelModel.getMonstersInField().get(duelModel.turn).get(address - 1) == null
                             || duelModel.getMonstersInField().get(duelModel.turn).get(address1 - 1) == null) {
@@ -140,6 +140,8 @@ public class MainPhaseController extends DuelController {
                     } else {
                         duelModel.deleteMonster(duelModel.turn, address - 1);
                         duelModel.deleteMonster(duelModel.turn, address1 - 1);
+                        duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,address - 1));
+                        duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,address1 - 1));
                         return summonMonsterOnField(monster);
                     }
                 }
@@ -152,18 +154,23 @@ public class MainPhaseController extends DuelController {
         if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
             duelModel.addMonsterFromHandToGame("OO/1", 0);
             duelModel.setMonsterSetOrSummonInThisTurn(monster, 1);
+            duelModel.deleteCardFromHand(monster);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null) {
             duelModel.addMonsterFromHandToGame("OO/2", 1);
             duelModel.setMonsterSetOrSummonInThisTurn(monster, 2);
+            duelModel.deleteCardFromHand(monster);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null) {
             duelModel.addMonsterFromHandToGame("OO/3", 2);
             duelModel.setMonsterSetOrSummonInThisTurn(monster, 3);
+            duelModel.deleteCardFromHand(monster);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null) {
             duelModel.addMonsterFromHandToGame("OO/4", 3);
             duelModel.setMonsterSetOrSummonInThisTurn(monster, 4);
+            duelModel.deleteCardFromHand(monster);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null) {
             duelModel.addMonsterFromHandToGame("OO/5", 4);
             duelModel.setMonsterSetOrSummonInThisTurn(monster, 5);
+            duelModel.deleteCardFromHand(monster);
         } else {
             return "monster card zone is full";
         }
@@ -204,7 +211,50 @@ public class MainPhaseController extends DuelController {
         }
     }
 
-    public String specialSummon(Matcher matcher) {
+    public String specialSummon() {
+        MainPhaseView mainPhaseView = MainPhaseView.getInstance();
+        if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
+            return "there is no way you could special summon a monster";
+        } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Monster")) {
+            return "there is no way you could special summon a monster";
+        } else {
+            Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+            String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
+            Monster monster = (Monster) card;
+            if (!detailsOfSelectedCard.equals("Hand")) {
+                return "there is no way you could special summon a monster";
+            } else if (!monster.isHasSpecialSummon()) {
+                return "there is no way you could special summon a monster";
+            } else if (monster.getName().equals("The Tricky")) {
+                int address = mainPhaseView.getCardAddressForTribute();
+                if (address > duelModel.getHandCards().get(duelModel.turn).size()) {
+                    return "there is no way you could special summon a monster";
+                } else {
+                    duelModel.deleteCardFromHandWithIndex(address - 1);
+                    return summonMonsterOnField(monster);
+                }
+            } else if (monster.getName().equals("Gate Guardian")) {
+                int address = mainPhaseView.getCardAddressForTribute();
+                int address1 = mainPhaseView.getCardAddressForTribute();
+                int address2 = mainPhaseView.getCardAddressForTribute();
+                if (address > 5 || address1 > 5 || address2 > 5 || address == address1 || address == address2
+                        || address1 == address2) {
+                    return "there is no way you could special summon a monster";
+                } else if (duelModel.getMonstersInField().get(duelModel.turn).get(address - 1) == null
+                        || duelModel.getMonstersInField().get(duelModel.turn).get(address1 - 1) == null ||
+                        duelModel.getMonstersInField().get(duelModel.turn).get(address2 - 1) == null) {
+                    return "there is no way you could special summon a monster";
+                }else {
+                    duelModel.deleteMonster(duelModel.turn, address - 1);
+                    duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,address - 1));
+                    duelModel.deleteMonster(duelModel.turn, address1 - 1);
+                    duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,address1 - 1));
+                    duelModel.deleteMonster(duelModel.turn, address2 - 1);
+                    duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,address2 - 1));
+                    return summonMonsterOnField(monster);
+                }
+            }
+        }
         return null;
     }
 

@@ -253,4 +253,13 @@ public class DuelModel {
         deSelectedCard();
     }
 
+    public void deleteCardFromHand(Card card){
+        handCards.get(turn).remove(card);
+    }
+
+    public void deleteCardFromHandWithIndex(int index){
+        handCards.get(turn).remove(index);
+    }
+
+
 }
