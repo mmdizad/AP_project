@@ -7,7 +7,7 @@ public interface Summon {
 
     public void flipSummon(Matcher matcher);
 
-    public void specialSummon();
+    public void specialSummon(Matcher matcher);
 
     public void ritualSummon();
 

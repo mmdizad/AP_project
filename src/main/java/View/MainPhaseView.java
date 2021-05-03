@@ -42,7 +42,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             showGraveyard(getCommandMatcher(command, "show graveyard"));
             summon(getCommandMatcher(command, "^summon$"));
             flipSummon(getCommandMatcher(command, "^flip-summon$"));
-
+            specialSummon(getCommandMatcher(command, "^special-summon$"));
             if (command.equals("enterPhase")) {
                 enterPhase(scanner);
                 break;
@@ -59,8 +59,12 @@ public class MainPhaseView extends DuelView implements Set, Summon {
         }
     }
 
-    public Integer getMonsterAddressForTribute() {
+    public Integer getCardAddressForTribute() {
         return scanner1.nextInt();
+    }
+
+    public String getStateOfCardForSummon(){
+        return scanner1.nextLine();
     }
 
     @Override
@@ -72,8 +76,11 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     }
 
     @Override
-    public void specialSummon() {
-
+    public void specialSummon(Matcher matcher) {
+        if (matcher.find()) {
+            MainPhaseController mainPhaseController = MainPhaseController.getInstance();
+            System.out.println(mainPhaseController.specialSummon());
+        }
     }
 
     @Override
