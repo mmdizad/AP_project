@@ -61,6 +61,10 @@ public class MainPhaseView extends DuelView implements Set, Summon {
         return scanner1.nextInt();
     }
 
+    public String getStateOfCardForSummon(){
+        return scanner1.nextLine();
+    }
+
     @Override
     public void flipSummon(Matcher matcher) {
         if (matcher.find()) {
