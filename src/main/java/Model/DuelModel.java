@@ -95,9 +95,9 @@ public class DuelModel {
     }
 
     public void decreaseLifePoint(int lifePoint, int turn) {
-        if (turn == 1){
+        if (turn == 1) {
             lifePointOpponent -= lifePoint;
-        }else {
+        } else {
             lifePointUser -= lifePoint;
         }
     }
@@ -130,14 +130,14 @@ public class DuelModel {
         monstersInField.get(turn).add(index, selectedCards.get(turn).get(0));
         monsterCondition.get(turn).add(index, condition);
         deSelectedCard();
-        deleteCardFromHand(getMonster(turn,index + 1));
+        deleteCardFromHand(getMonster(turn, index + 1));
     }
 
     public void addSpellAndTrapFromHandToGame(String condition, int index) {
         spellsAndTrapsInFiled.get(turn).add(index, selectedCards.get(turn).get(0));
         spellAndTrapCondition.get(turn).add(index, condition);
         deSelectedCard();
-        deleteCardFromHand(getSpellAndTrap(turn,index + 1));
+        deleteCardFromHand(getSpellAndTrap(turn, index + 1));
     }
 
     public void changeAttackAndDefense(int place) {
@@ -155,7 +155,7 @@ public class DuelModel {
     }
 
     public void deleteSpellAndTrap(int turn, int place) {
-
+        spellsAndTrapsInFiled.get(turn).add(place, null);
     }
 
     public void activateSpell(int turn, int place) {
@@ -186,7 +186,7 @@ public class DuelModel {
         return spellAndTrapCondition.get(turn).get(place - 1);
     }
 
-    public void addCardToGraveyard(int turn,Card card){
+    public void addCardToGraveyard(int turn, Card card) {
         graveyard.get(turn).add(card);
     }
 
@@ -223,7 +223,7 @@ public class DuelModel {
     public ArrayList<String> getBoard() {
         ArrayList<String> board = new ArrayList<>();
 
-        String handCardOpponent =  "    ";
+        String handCardOpponent = "    ";
         String handCardUser = "    ";
         for (int i = 0; i < handCards.get(1 - turn).size(); i++) {
             handCardOpponent = handCardOpponent + "c    ";
@@ -258,8 +258,8 @@ public class DuelModel {
         else board.add(graveyard.get(1 - turn).size() + "                        " + "O");
         board.add("----------------------------------------");
         if (field.get(turn) == null)
-            board.add( "E"+"                        " +graveyard.get(turn).size() );
-        else board.add( "O"+ "                        " + graveyard.get(1 - turn).size());
+            board.add("E" + "                        " + graveyard.get(turn).size());
+        else board.add("O" + "                        " + graveyard.get(1 - turn).size());
         board.add(monsterFieldUser);
         board.add(spellFieldUser);
         board.add(handCardUser);
@@ -301,11 +301,11 @@ public class DuelModel {
         deSelectedCard();
     }
 
-    public void deleteCardFromHand(Card card){
+    public void deleteCardFromHand(Card card) {
         handCards.get(turn).remove(card);
     }
 
-    public void deleteCardFromHandWithIndex(int index){
+    public void deleteCardFromHandWithIndex(int index) {
         handCards.get(turn).remove(index);
     }
 
