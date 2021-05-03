@@ -1,6 +1,8 @@
 package View;
 
 import Controller.MainPhaseController;
+import Model.Monster;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,7 +48,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             if (command.equals("enterPhase")) {
                 enterPhase(scanner);
                 break;
-            }else if (command.equals("set"))
+            } else if (command.equals("set"))
                 set();
         }
     }
@@ -63,7 +65,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
         return scanner1.nextInt();
     }
 
-    public String getStateOfCardForSummon(){
+    public String getStateOfCardForSummon() {
         return scanner1.nextLine();
     }
 
@@ -83,6 +85,11 @@ public class MainPhaseView extends DuelView implements Set, Summon {
         }
     }
 
+    public String summonMonsterHasTwoMethods() {
+        System.out.println("Do you want to Summon this card with tribute?");
+        return scanner1.nextLine();
+    }
+
     @Override
     public void ritualSummon() {
 
@@ -90,7 +97,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
 
     @Override
     public void set() {
-     MainPhaseController mainPhaseController =MainPhaseController.getInstance();
+        MainPhaseController mainPhaseController = MainPhaseController.getInstance();
         System.out.println(mainPhaseController.set());
     }
 

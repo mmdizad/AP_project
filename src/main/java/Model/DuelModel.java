@@ -152,7 +152,7 @@ public class DuelModel {
     }
 
     public void deleteSpellAndTrap(int turn, int place) {
-
+        spellsAndTrapsInFiled.get(turn).add(place, null);
     }
 
     public void activateSpell(int turn, int place) {
