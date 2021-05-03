@@ -81,7 +81,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     @Override
     public void set() {
      MainPhaseController mainPhaseController =MainPhaseController.getInstance();
-     mainPhaseController.set();
+        System.out.println(mainPhaseController.set());
     }
 
     @Override

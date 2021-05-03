@@ -38,15 +38,15 @@ public class MainPhaseController extends DuelController {
     public String setTrapOrSpell() {
 
         if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(0) == null)
-            duelModel.addSpellAndTrapFromHandToGame("H", 0);
+            duelModel.addSpellAndTrapFromHandToGame("H/1", 0);
         else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(1) == null)
-            duelModel.addSpellAndTrapFromHandToGame("H", 1);
+            duelModel.addSpellAndTrapFromHandToGame("H/2", 1);
         else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(2) == null)
-            duelModel.addSpellAndTrapFromHandToGame("H", 2);
+            duelModel.addSpellAndTrapFromHandToGame("H/3", 2);
         else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(3) == null)
-            duelModel.addSpellAndTrapFromHandToGame("H", 3);
+            duelModel.addSpellAndTrapFromHandToGame("H/4", 3);
         else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(4) == null)
-            duelModel.addSpellAndTrapFromHandToGame("H", 4);
+            duelModel.addSpellAndTrapFromHandToGame("H/5", 4);
         else return "monster card zone is full";
         return "set successfully";
     }
