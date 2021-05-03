@@ -94,7 +94,11 @@ public class DuelModel {
     }
 
     public void decreaseLifePoint(int lifePoint, int turn) {
-
+        if (turn == 1){
+            lifePointOpponent -= lifePoint;
+        }else {
+            lifePointUser -= lifePoint;
+        }
     }
 
     public void increaseLifePoint(int lifePoint, int turn) {
@@ -175,6 +179,10 @@ public class DuelModel {
 
     public String getSpellAndTrapCondition(int turn, int place) {
         return spellAndTrapCondition.get(turn).get(place - 1);
+    }
+
+    public void addCardToGraveyard(int turn,Card card){
+        graveyard.get(turn).add(card);
     }
 
     public void setSelectedCard(int turn, Card card, String condition) {
