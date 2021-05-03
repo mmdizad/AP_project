@@ -86,10 +86,14 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     }
 
     public String summonMonsterHasTwoMethods() {
-        System.out.println("Do you want to Summon this card with tribute?");
+        System.out.println("Do you want to summon this card with tribute?");
         return scanner1.nextLine();
     }
 
+    public String normalSummonCardThatCanSummonAnotherCard(){
+        System.out.println("Do you want to summon another monster in defence?");
+        return scanner1.nextLine();
+    }
     @Override
     public void ritualSummon() {
 

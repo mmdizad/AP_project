@@ -86,6 +86,7 @@ public class MainPhaseController extends DuelController {
     }
 
     public String summon() {
+        String response = "";
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
         boolean existMonsterOnField = false;
         if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
@@ -105,7 +106,11 @@ public class MainPhaseController extends DuelController {
                 return "you already summoned/set on this turn";
             } else {
                 if (monster.getLevel() <= 4) {
-                    return normalSummonMonsterOnField(monster, "Attack");
+                    response = normalSummonMonsterOnField(monster, "Attack");
+                    return response;
+                }
+                if (monster.getName().equals("Terratiger, the Empowered Warrior")) {
+                    return normalSummonCardThatCanSummonAnotherCard(response);
                 } else if (monster.getLevel() == 5 || monster.getLevel() == 6) {
                     for (Card cardInHandOfPlayer : cardsInHandsOfPlayer) {
                         if (cardInHandOfPlayer.getCategory().equals("monster")) {
@@ -361,6 +366,37 @@ public class MainPhaseController extends DuelController {
                 }
             }
         }
+    }
+
+    public String normalSummonCardThatCanSummonAnotherCard(String response) {
+        MainPhaseView mainPhaseView = MainPhaseView.getInstance();
+        if (response.equals("summoned successfully")) {
+            String response1 = mainPhaseView.normalSummonCardThatCanSummonAnotherCard();
+            if (!response1.equals("NO") && !response1.equals("YES")) {
+                return "Please enter correct response";
+            } else if (response1.equals("YES")) {
+                if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
+                    return "no card is selected yet";
+                } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Monster")) {
+                    return "you can’t summon this card";
+                } else {
+                    Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                    ArrayList<Card> cardsInHandsOfPlayer = duelModel.getHandCards().get(duelModel.turn);
+                    String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
+                    Monster monster = (Monster) card;
+                    if (!detailsOfSelectedCard.equals("Hand")) {
+                        return "you can’t summon this card";
+                    } else if (card.getCardType().equals("Ritual") || monster.isHasSpecialSummon()) {
+                        return "you can’t summon this card";
+                    } else if (monster.getLevel() > 4) {
+                        return "you can’t summon this card";
+                    } else {
+                        return normalSummonMonsterOnField(monster, "Defence");
+                    }
+                }
+            }
+        }
+        return "";
     }
 
     public String ritualSummon(Matcher matcher) {
