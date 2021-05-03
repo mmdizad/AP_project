@@ -75,6 +75,13 @@ public class MainPhaseController extends DuelController {
     }
 
     public String setPosition(Matcher matcher) {
+//        String newPosition=matcher.group(1);
+//        if(duelModel.getSelectedCards().get(duelModel.turn).get(0)==null)return "no card is selected yet";
+//        else if(!duelModel.getMonstersInField().get(duelModel.turn).contains(duelModel.getSelectedCards().get(duelModel.turn).get(0)))return "you can’t change this card position";
+//        else if(newPosition.equals("attack")){
+//
+//
+//        }
         return null;
     }
 
