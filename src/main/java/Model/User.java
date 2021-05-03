@@ -26,26 +26,26 @@ public class User {
         setUsername(username);
         setNickname(nickname);
         setPassword(password);
-        users.put(username,this);
+        users.put(username, this);
         allUsers.add(this);
-        coins=100000;
+        coins = 100000;
         this.cards = new ArrayList<>();
         this.addFirstCards(Card.getFirstCards());
     }
 
-    public void addCard(Card card){
+    public void addCard(Card card) {
         this.cards.add(card);
     }
 
-    public void addFirstCards(ArrayList<Card> firstCards){
+    public void addFirstCards(ArrayList<Card> firstCards) {
         this.cards.addAll(firstCards);
     }
 
-    public ArrayList<Card> getCards(){
+    public ArrayList<Card> getCards() {
         return cards;
     }
 
-    public void deleteCard(Card card){
+    public void deleteCard(Card card) {
         cards.remove(card);
     }
 
@@ -124,8 +124,8 @@ public class User {
     }
 
     public Card getCardByName(String cardName) {
-        for (Card card : cards){
-            if (card.getName().equals(cardName)){
+        for (Card card : cards) {
+            if (card.getName().equals(cardName)) {
                 return card;
             }
         }
@@ -133,8 +133,8 @@ public class User {
     }
 
     public Deck getDeckByName(String deckName) {
-        for (Deck deck : decks){
-            if (deck.getName().equals(deckName)){
+        for (Deck deck : decks) {
+            if (deck.getName().equals(deckName)) {
                 return deck;
             }
         }

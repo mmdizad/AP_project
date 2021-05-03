@@ -75,25 +75,30 @@ public class MainPhaseController extends DuelController {
     }
 
     public String setPosition(Matcher matcher) {
-        String newPosition=matcher.group(1);
-        int place= duelModel.getMonstersInField().get(duelModel.turn).indexOf(duelModel.getSelectedCards().get(duelModel.turn).get(0));
-        if(duelModel.getSelectedCards().get(duelModel.turn).get(0)==null)return "no card is selected yet";
-        else if(!duelModel.getMonstersInField().get(duelModel.turn).contains(duelModel.getSelectedCards().get(duelModel.turn).get(0)))return "you can’t change this card position";
-        else if(newPosition.equals("attack")){
-          if(duelModel.getMonsterCondition(duelModel.turn,place).equals("OO"))
-              return "this card is already in the wanted position";
-          else if(duelModel.setposition[place-1]==true)
-              return "you already changed this card position in this turn";
-           else{duelModel.changeAttackAndDefense(place);
-              return "monster card position changed successfully";}
-
-        }else {
-            if(duelModel.getMonsterCondition(duelModel.turn,place).equals("DO"))
+        String newPosition = matcher.group(1);
+        int place = duelModel.getMonstersInField().get(duelModel.turn).indexOf(duelModel.getSelectedCards().get(duelModel.turn).get(0));
+        if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) return "no card is selected yet";
+        else if (!duelModel.getMonstersInField().get(duelModel.turn).contains(duelModel.getSelectedCards().get(duelModel.turn).get(0)))
+            return "you can’t change this card position";
+        else if (newPosition.equals("attack")) {
+            if (duelModel.getMonsterCondition(duelModel.turn, place).equals("OO"))
                 return "this card is already in the wanted position";
-            else if(duelModel.setposition[place-1]==true)
+            else if (duelModel.setposition[place - 1] == true)
                 return "you already changed this card position in this turn";
-            else{duelModel.changeAttackAndDefense(place);
-                return "monster card position changed successfully";}
+            else {
+                duelModel.changeAttackAndDefense(place);
+                return "monster card position changed successfully";
+            }
+
+        } else {
+            if (duelModel.getMonsterCondition(duelModel.turn, place).equals("DO"))
+                return "this card is already in the wanted position";
+            else if (duelModel.setposition[place - 1] == true)
+                return "you already changed this card position in this turn";
+            else {
+                duelModel.changeAttackAndDefense(place);
+                return "monster card position changed successfully";
+            }
 
 
         }
@@ -367,10 +372,10 @@ public class MainPhaseController extends DuelController {
                     duelModel.deleteMonster(duelModel.turn, address1 - 1);
                     duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
                             address1));
-                    duelModel.deleteMonster(duelModel.turn, address1 - 1);
+                    duelModel.deleteMonster(duelModel.turn, address2 - 1);
                     duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
                             address2));
-                    duelModel.deleteMonster(duelModel.turn, address2 - 1);
+                    duelModel.deleteMonster(duelModel.turn, address3 - 1);
                     duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
                             address3));
                     for (int i = 0; i < 5; i++) {
@@ -396,7 +401,6 @@ public class MainPhaseController extends DuelController {
                     return "you can’t summon this card";
                 } else {
                     Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-                    ArrayList<Card> cardsInHandsOfPlayer = duelModel.getHandCards().get(duelModel.turn);
                     String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
                     Monster monster = (Monster) card;
                     if (!detailsOfSelectedCard.equals("Hand")) {

@@ -10,41 +10,41 @@ public class Deck {
     private ArrayList<Card> cardsSide = new ArrayList<>();
     private ArrayList<Card> allMonsters = new ArrayList<>();
     private ArrayList<Card> allSpellsAndTraps = new ArrayList<>();
-    public static HashMap<String,Deck> decks;
+    public static HashMap<String, Deck> decks;
 
     static {
         decks = new HashMap<>();
     }
 
-    public Deck(String name,String creatorName){
+    public Deck(String name, String creatorName) {
         this.name = name;
         this.creatorName = creatorName;
-        decks.put(name,this);
+        decks.put(name, this);
         cardsMain = new ArrayList<>();
         cardsSide = new ArrayList<>();
     }
 
-    public void addCardToMain(Card card){
+    public void addCardToMain(Card card) {
         cardsMain.add(card);
     }
 
-    public void addCardToSide(Card card){
+    public void addCardToSide(Card card) {
         cardsSide.add(card);
     }
 
-    public void deleteCardFromMain(Card card){
+    public void deleteCardFromMain(Card card) {
         cardsMain.remove(card);
     }
 
-    public void deleteCardFromSide(Card card){
+    public void deleteCardFromSide(Card card) {
         cardsSide.remove(card);
     }
 
-    public static void deleteDeck(Deck deck){
+    public static void deleteDeck(Deck deck) {
         decks.remove(deck);
     }
 
-    public static Deck getDeckByName(String name){
+    public static Deck getDeckByName(String name) {
         return decks.get(name);
     }
 
@@ -56,7 +56,7 @@ public class Deck {
         return cardsSide;
     }
 
-    public void sortCards(){
+    public void sortCards() {
 
     }
 
@@ -64,7 +64,7 @@ public class Deck {
         return name;
     }
 
-    public boolean isDeckValid(){
+    public boolean isDeckValid() {
         //جایگزین شود
         return true;
     }

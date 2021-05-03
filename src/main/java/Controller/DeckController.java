@@ -84,18 +84,18 @@ public class DeckController extends LoginController {
                     ArrayList<Card> userCards = user.getCards();
                     int numberOfCardsInDeck = 0;
                     int numberOfCardsInPlayerCards = 0;
-                    for (Card card : sideCards){
+                    for (Card card : sideCards) {
                         if (card.getName().equals(matcher.group(1))) numberOfCardsInDeck++;
                     }
-                    for (Card card : mainCards){
+                    for (Card card : mainCards) {
                         if (card.getName().equals(matcher.group(1))) numberOfCardsInDeck++;
                     }
-                    for (Card card : userCards){
+                    for (Card card : userCards) {
                         if (card.getName().equals(matcher.group(1))) numberOfCardsInPlayerCards++;
                     }
-                    if (numberOfCardsInDeck >= numberOfCardsInPlayerCards){
+                    if (numberOfCardsInDeck >= numberOfCardsInPlayerCards) {
                         return "card with name " + matcher.group(1) + " does not exist";
-                    }else {
+                    } else {
                         if (matcher.groupCount() == 2) {
                             return addCardToMain(matcher);
                         } else {
@@ -226,7 +226,7 @@ public class DeckController extends LoginController {
                 output.add("Deck: " + matcher.group(1));
                 if (matcher.groupCount() == 1) {
                     return showDeckMain(output, deck);
-                }else {
+                } else {
                     return showDeckSide(output, deck);
                 }
             }
@@ -238,10 +238,10 @@ public class DeckController extends LoginController {
         ArrayList<Card> monsters = new ArrayList<>();
         ArrayList<Card> spellsAndTraps = new ArrayList<>();
         ArrayList<Card> mainCards = deck.getCardsMain();
-        for (int i = 0;i < mainCards.size();i++){
-            if (mainCards.get(i).getCategory().equals("monster")){
+        for (int i = 0; i < mainCards.size(); i++) {
+            if (mainCards.get(i).getCategory().equals("monster")) {
                 monsters.add(mainCards.get(i));
-            }else {
+            } else {
                 spellsAndTraps.add(mainCards.get(i));
             }
         }
@@ -250,11 +250,11 @@ public class DeckController extends LoginController {
         monsters.sort(compareForShow);
         spellsAndTraps.sort(compareForShow);
         output.add("Monsters:");
-        for (int i = 0;i < monsters.size();i++){
+        for (int i = 0; i < monsters.size(); i++) {
             output.add(monsters.get(i).getName() + ": " + monsters.get(i).getDescription());
         }
         output.add("Spell and Traps:");
-        for (int i = 0;i < spellsAndTraps.size();i++){
+        for (int i = 0; i < spellsAndTraps.size(); i++) {
             output.add(spellsAndTraps.get(i).getName() + ": " + spellsAndTraps.get(i).getDescription());
         }
         return output;
@@ -265,10 +265,10 @@ public class DeckController extends LoginController {
         ArrayList<Card> monsters = new ArrayList<>();
         ArrayList<Card> spellsAndTraps = new ArrayList<>();
         ArrayList<Card> sideCards = deck.getCardsSide();
-        for (int i = 0;i < sideCards.size();i++){
-            if (sideCards.get(i).getCategory().equals("monster")){
+        for (int i = 0; i < sideCards.size(); i++) {
+            if (sideCards.get(i).getCategory().equals("monster")) {
                 monsters.add(sideCards.get(i));
-            }else {
+            } else {
                 spellsAndTraps.add(sideCards.get(i));
             }
         }
@@ -277,11 +277,11 @@ public class DeckController extends LoginController {
         monsters.sort(compareForShow);
         spellsAndTraps.sort(compareForShow);
         output.add("Monsters:");
-        for (int i = 0;i < monsters.size();i++){
+        for (int i = 0; i < monsters.size(); i++) {
             output.add(monsters.get(i).getName() + ": " + monsters.get(i).getDescription());
         }
         output.add("Spell and Traps:");
-        for (int i = 0;i < spellsAndTraps.size();i++){
+        for (int i = 0; i < spellsAndTraps.size(); i++) {
             output.add(spellsAndTraps.get(i).getName() + ": " + spellsAndTraps.get(i).getDescription());
         }
         return output;
@@ -290,15 +290,15 @@ public class DeckController extends LoginController {
 
     public ArrayList<String> checkCard(Matcher matcher) {
         ArrayList<String> output = new ArrayList<>();
-        if (Card.getCardByName(matcher.group(1)) == null){
+        if (Card.getCardByName(matcher.group(1)) == null) {
             output.add("card with name " + matcher.group(1) + " does not exist");
-        }else {
+        } else {
             Card card = Card.getCardByName(matcher.group(1));
-            if (card.getCategory().equals("Monster")){
+            if (card.getCategory().equals("Monster")) {
                 output = showMonster(matcher.group(1));
-            }else if (card.getCategory().equals("Spell")){
+            } else if (card.getCategory().equals("Spell")) {
                 output = showSpell(matcher.group(1));
-            }else {
+            } else {
                 output = showTrap(matcher.group(1));
             }
         }
@@ -365,7 +365,7 @@ public class DeckController extends LoginController {
                 validation = "valid";
             }
             output.add(decks.get(i).getName() + ":  main deck " + decks.get(i).getCardsMain().size()
-                    + ", side deck" + decks.get(i).getCardsSide().size() + ", " +  validation);
+                    + ", side deck" + decks.get(i).getCardsSide().size() + ", " + validation);
         }
         return output;
     }
@@ -376,7 +376,7 @@ public class DeckController extends LoginController {
         Comparator<Card> compareForShow = Comparator
                 .comparing(Card::getName);
         cards.sort(compareForShow);
-        for (int i = 0;i < cards.size();i++){
+        for (int i = 0; i < cards.size(); i++) {
             output.add(cards.get(i).getName() + ": " + cards.get(i).getDescription());
         }
         return output;

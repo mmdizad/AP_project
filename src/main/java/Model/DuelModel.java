@@ -20,7 +20,7 @@ public class DuelModel {
     public int turn = 0;
     public Card monsterSetOrSummonInThisTurn;
     public int thePlaceOfMonsterSetOrSummonInThisTurn;
-    public boolean[] setposition=new boolean[5];
+    public boolean[] setposition = new boolean[5];
 
     public DuelModel(String playerUsername, String opponentUsername) {
         usernames = new ArrayList<>();
@@ -141,9 +141,9 @@ public class DuelModel {
     }
 
     public void changeAttackAndDefense(int place) {
-             if(monsterCondition.get(turn).get(place)=="OO")
-                 monsterCondition.get(turn).add(place,"DO");
-             else monsterCondition.get(turn).add(place,"OO");
+        if (monsterCondition.get(turn).get(place) == "OO")
+            monsterCondition.get(turn).add(place, "DO");
+        else monsterCondition.get(turn).add(place, "OO");
     }
 
     public Card getFieldZoneCard(int turn) {

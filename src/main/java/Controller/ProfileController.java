@@ -16,7 +16,7 @@ public class ProfileController extends LoginController {
         String nickName = matcher.group(1);
         if (User.isUserWithThisNicknameExists(nickName)) return "user with nickname " + nickName + "already exists";
         else {
-         ProfileController.user.setNickname(nickName);
+            ProfileController.user.setNickname(nickName);
             return "nickname changed successfully!";
         }
 

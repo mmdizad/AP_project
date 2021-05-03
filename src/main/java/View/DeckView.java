@@ -90,69 +90,69 @@ public class DeckView extends MainMenu {
             if (command.equals("menu exit")) {
                 return;
             }
-            matcher = getCommandMatcher(command,"^menu enter (\\S+)$");
-            if (matcher.find()){
+            matcher = getCommandMatcher(command, "^menu enter (\\S+)$");
+            if (matcher.find()) {
                 System.out.println("menu navigation is not possible");
             }
-            if (!isCommandValid){
+            if (!isCommandValid) {
                 System.out.println("Invalid command");
             }
         }
     }
 
-    public void deckCreate(Matcher matcher){
+    public void deckCreate(Matcher matcher) {
         DeckController deckController = DeckController.getInstance();
         System.out.println(deckController.deckCreate(matcher));
     }
 
-    public void deckDelete(Matcher matcher){
+    public void deckDelete(Matcher matcher) {
         DeckController deckController = DeckController.getInstance();
         System.out.println(deckController.deckDelete(matcher));
     }
 
-    public void deckSetActive(Matcher matcher){
+    public void deckSetActive(Matcher matcher) {
         DeckController deckController = DeckController.getInstance();
         System.out.println(deckController.deckSetActivate(matcher));
     }
 
-    public void addCard(Matcher matcher){
+    public void addCard(Matcher matcher) {
         DeckController deckController = DeckController.getInstance();
         System.out.println(deckController.addCard(matcher));
     }
 
-    public void deleteCard(Matcher matcher){
+    public void deleteCard(Matcher matcher) {
         DeckController deckController = DeckController.getInstance();
         System.out.println(deckController.deleteCard(matcher));
     }
 
-    public void deckShow(Matcher matcher){
+    public void deckShow(Matcher matcher) {
         DeckController deckController = DeckController.getInstance();
         ArrayList<String> output = deckController.deckShow(matcher);
-        for (int i = 0;i < output.size();i++){
+        for (int i = 0; i < output.size(); i++) {
             System.out.println(output.get(i));
         }
     }
 
-    public void showCard(Matcher matcher){
+    public void showCard(Matcher matcher) {
         DeckController deckController = DeckController.getInstance();
         ArrayList<String> output = deckController.showAllOwnedCards();
-        for (int i = 0;i < output.size();i++){
+        for (int i = 0; i < output.size(); i++) {
             System.out.println(output.get(i));
         }
     }
 
-    public void showOneCard(Matcher matcher){
+    public void showOneCard(Matcher matcher) {
         DeckController deckController = DeckController.getInstance();
         ArrayList<String> output = deckController.checkCard(matcher);
-        for (int i = 0;i < output.size();i++){
+        for (int i = 0; i < output.size(); i++) {
             System.out.println(output.get(i));
         }
     }
 
-    public void showAllDeck(){
+    public void showAllDeck() {
         DeckController deckController = DeckController.getInstance();
         ArrayList<String> output = deckController.showAllDeck();
-        for (int i = 0;i < output.size();i++){
+        for (int i = 0; i < output.size(); i++) {
             System.out.println(output.get(i));
         }
 

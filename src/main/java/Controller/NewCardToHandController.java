@@ -4,7 +4,6 @@ import Model.Card;
 import Model.Deck;
 import Model.DuelModel;
 import Model.User;
-import View.DrawPhaseView;
 
 import java.util.ArrayList;
 
@@ -27,7 +26,7 @@ public class NewCardToHandController extends DuelController {
         ArrayList<Card> cardsInDeck = deck.getCardsMain();
         if (cardsInDeck.size() >= 1) {
             return duelModel.addCardToHand();
-        }else {
+        } else {
             return null;
             // جایگزین دارد
         }

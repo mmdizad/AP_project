@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class StartDuelView extends MainMenu {
     @Override
     public void run(Scanner scanner) {
-        while(true) {
+        while (true) {
             String input = scanner.nextLine();
             Pattern pattern = Pattern.compile("duel -new -second-player (\\S+) -rounds (\\d+)");
             Matcher matcher = pattern.matcher(input);
@@ -54,9 +54,9 @@ public class StartDuelView extends MainMenu {
                         duelView.selectFirstPlayer(secondPlayerUserName, scanner);
                     } else System.out.println("number of rounds is not supported");
                 }
-            }else if (input.equals("menu exit"))break;
+            } else if (input.equals("menu exit")) break;
             else if (input.equals("menu show-current")) System.out.println("StartDuel");
-                else System.out.println("invalid command!");
+            else System.out.println("invalid command!");
 
 
         }

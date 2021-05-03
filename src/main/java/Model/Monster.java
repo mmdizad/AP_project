@@ -3,13 +3,14 @@ package Model;
 import java.util.HashMap;
 
 public class Monster extends Card {
-    public static HashMap<String,Monster> monsters = new HashMap<>();
+    public static HashMap<String, Monster> monsters = new HashMap<>();
     private int defensePower;
     private int attackPower;
     private int level;
     private String monsterType;
     private String attribute;
     private boolean hasSpecialSummon;
+
     public Monster(String name, String description, String cardType, int price, String category, int defensePower, int attackPower
             , String monsterType, String attribute, int level, boolean hasSpecialSummon) {
         super(name, description, cardType, price, category);
@@ -19,7 +20,7 @@ public class Monster extends Card {
         setAttribute(attribute);
         setLevel(level);
         setHasSpecialSummon(hasSpecialSummon);
-        monsters.put(name,this);
+        monsters.put(name, this);
     }
 
     public int getDefensePower() {
@@ -70,7 +71,7 @@ public class Monster extends Card {
         return hasSpecialSummon;
     }
 
-    public static Monster getMonsterByName(String name){
+    public static Monster getMonsterByName(String name) {
         return monsters.get(name);
     }
 

@@ -1,4 +1,5 @@
 package View;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,8 +41,8 @@ public class MainMenu {
                 LoginView loginView = new LoginView();
                 loginView.run();
             } else if (menuName.equals("Duel")) {
-               StartDuelView startDuelView =new StartDuelView();
-               startDuelView.run(scanner);
+                StartDuelView startDuelView = new StartDuelView();
+                startDuelView.run(scanner);
             } else if (menuName.equals("Deck")) {
                 DeckView deckView = DeckView.getInstance();
                 deckView.run(scanner);
