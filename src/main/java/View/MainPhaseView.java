@@ -74,6 +74,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     }
 
     public String getStateOfCardForSummon() {
+        System.out.println("please enter the state of card you want for summon (Attack or Defence)");
         return scanner1.nextLine();
     }
 

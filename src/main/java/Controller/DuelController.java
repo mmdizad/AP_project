@@ -2,6 +2,7 @@ package Controller;
 
 import Model.*;
 import View.DuelView;
+import View.MainPhaseView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,14 +68,71 @@ public class DuelController {
     }
 
     public String effectOfMonsterReborn() {
+        MainPhaseController mainPhaseController = MainPhaseController.getInstance();
+        MainPhaseView mainPhaseView = MainPhaseView.getInstance();
         String kindOfGraveyard = duelView.scanKindOfGraveyardForActiveEffect();
         int numberOfCard = duelView.scanNumberOfCardForActiveEffect();
-        if (kindOfGraveyard.equals("My")) {
+        if (!kindOfGraveyard.equals("My") && !kindOfGraveyard.equals("Opponent")) {
+            return "you must enter correct state of card for summon";
+        } else if (kindOfGraveyard.equals("My")) {
             if (numberOfCard > duelModel.getGraveyard(duelModel.turn).size()) {
                 return "card with this number not available";
+            } else if (!duelModel.getGraveyard(duelModel.turn).get(numberOfCard - 1).getCategory()
+                    .equals("Monster")) {
+                return "you cant summon this card";
+            } else {
+                String state = mainPhaseView.getStateOfCardForSummon();
+                if (!state.equals("Defence") && !state.equals("Attack")) {
+                    return "please enter the appropriate state (Defence or Attack)";
+                } else {
+                    return mainPhaseController.specialSummonMonsterOnFieldFromGraveyard(duelModel.turn
+                            , state, numberOfCard - 1);
+                }
+            }
+        } else {
+            if (numberOfCard > duelModel.getGraveyard(1 - duelModel.turn).size()) {
+                return "card with this number not available";
+            } else if (!duelModel.getGraveyard(1 - duelModel.turn).get(numberOfCard - 1).getCategory()
+                    .equals("Monster")) {
+                return "you cant summon this card";
+            } else {
+                String state = mainPhaseView.getStateOfCardForSummon();
+                if (!state.equals("Defence") && !state.equals("Attack")) {
+                    return "please enter the appropriate state (Defence or Attack)";
+                } else {
+                    return mainPhaseController.specialSummonMonsterOnFieldFromGraveyard(1 - duelModel.turn
+                            , state, numberOfCard - 1);
+                }
             }
         }
-        return "";
+    }
+
+    public String specialSummonMonsterOnFieldFromGraveyard(int turn, String state, int indexOfCardOfGraveyard) {
+        String stateOfCard = "OO";
+        if (state.equals("Attack")) {
+            stateOfCard = "OO";
+        } else if (state.equals("Defence")) {
+            stateOfCard = "DO";
+        }
+        if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
+            duelModel.addMonsterFromGraveyardToGame(stateOfCard + "/1", 0);
+            duelModel.deleteCardFromGraveyard(turn, indexOfCardOfGraveyard);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null) {
+            duelModel.addMonsterFromGraveyardToGame(stateOfCard + "/2", 1);
+            duelModel.deleteCardFromGraveyard(turn, indexOfCardOfGraveyard);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null) {
+            duelModel.addMonsterFromGraveyardToGame(stateOfCard + "/3", 2);
+            duelModel.deleteCardFromGraveyard(turn, indexOfCardOfGraveyard);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null) {
+            duelModel.addMonsterFromGraveyardToGame(stateOfCard + "/4", 3);
+            duelModel.deleteCardFromGraveyard(turn, indexOfCardOfGraveyard);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null) {
+            duelModel.addMonsterFromGraveyardToGame(stateOfCard + "/5", 4);
+            duelModel.deleteCardFromGraveyard(turn, indexOfCardOfGraveyard);
+        } else {
+            return "monster card zone is full";
+        }
+        return "summoned successfully";
     }
 
     public String opponentActiveTrap() {

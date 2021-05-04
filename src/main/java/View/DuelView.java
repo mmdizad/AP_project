@@ -72,6 +72,7 @@ public class DuelView {
         }
         if (response.equals("YES")) {
             System.out.println(duelController.opponentActiveSpellOrTrap());
+            duelModel.turn = 1 - duelModel.turn;
         }
         if (response.equals("NO")) {
             duelModel.turn = 1 - duelModel.turn;

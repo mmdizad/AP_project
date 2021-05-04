@@ -309,4 +309,15 @@ public class DuelModel {
         handCards.get(turn).remove(index);
     }
 
+
+    public void addMonsterFromGraveyardToGame(String condition, int index) {
+        monstersInField.get(turn).add(index, selectedCards.get(turn).get(0));
+        monsterCondition.get(turn).add(index, condition);
+        deSelectedCard();
+    }
+
+    public void deleteCardFromGraveyard(int turn,int indexOfCard){
+        graveyard.get(turn).remove(indexOfCard);
+    }
+
 }
