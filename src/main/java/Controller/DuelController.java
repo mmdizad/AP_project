@@ -64,6 +64,12 @@ public class DuelController {
         Spell spell = (Spell) card;
         if (spell.getName().equals("Monster Reborn"))
             return effectOfMonsterReborn();
+        else if (spell.getName().equals("Terraforming"))
+            return effectOfTerraforming();
+        else if (spell.getName().equals("Pot of Greed"))
+            return effectOfPotOfGreed();
+        else if (spell.getName().equals("Raigeki"))
+            return effectOfRaigeki();
         return "";
     }
 
@@ -106,6 +112,60 @@ public class DuelController {
             }
         }
     }
+
+    public String effectOfTerraforming() {
+        Card card = null;
+        ArrayList<Card> cardsInDeckOfPlayer = duelModel.getPlayersCards().get(duelModel.turn);
+        for (Card card1 : cardsInDeckOfPlayer) {
+            if (card1.getCategory().equals("Spell")) {
+                if (card1.getCardType().equals("Field")) {
+                    card = card1;
+                    break;
+                }
+            }
+        }
+        if (card == null) {
+            return "you dont have any FieldCard for add to your hand";
+        } else {
+            duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn, card);
+            return "Filed card added to your hand successfully";
+        }
+
+    }
+
+    public String effectOfPotOfGreed() {
+        ArrayList<Card> cardsInDeckOfPlayer = duelModel.getPlayersCards().get(duelModel.turn);
+        if (cardsInDeckOfPlayer.size() < 2) {
+            return "you dont have enough card for add to your hand";
+        } else {
+            duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
+                    , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
+                            getPlayersCards().get(duelModel.turn).size() - 1));
+            duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
+                    , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
+                            getPlayersCards().get(duelModel.turn).size() - 1));
+        }
+        return "two card from deck added to your hand";
+    }
+
+    public String effectOfRaigeki() {
+        boolean opponentHasAnyMonster = false;
+        ArrayList<Card> monstersInFieldOfPlayer = duelModel.getMonstersInField().get(duelModel.turn);
+        int i = 0;
+        for (Card card : monstersInFieldOfPlayer) {
+            if (card != null) {
+                opponentHasAnyMonster = true;
+                duelModel.deleteMonster(1 -duelModel.turn, i);
+                duelModel.addCardToGraveyard(1 - duelModel.turn, card);
+            }
+            i++;
+        }
+        if (opponentHasAnyMonster)
+            return "all of monsters that your opponent control destroyed";
+        else
+            return "your opponent dont have any monster";
+    }
+
 
     public String specialSummonMonsterOnFieldFromGraveyard(int turn, String state, int indexOfCardOfGraveyard) {
         String stateOfCard = "OO";
