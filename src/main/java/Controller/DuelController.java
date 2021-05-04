@@ -57,7 +57,7 @@ public class DuelController {
     }
 
     public String opponentActiveSpell(){
-        return null;
+         return null;
     }
 
     public String opponentActiveTrap(){

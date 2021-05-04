@@ -62,13 +62,20 @@ public class DuelView {
 
     public void opponentActiveEffect(boolean hasAnySpellOrTrap) {
         if (hasAnySpellOrTrap) {
+            duelModel.turn = 1 - duelModel.turn;
+            System.out.println("now it will be " + duelModel.getUsernames().get(duelModel.turn) + " turn");
             System.out.println("do you want to activate your trap and spell?");
         }
         String response = scanner1.nextLine();
         if (!response.equals("NO") && !response.equals("YES")) {
             System.out.println("you must enter NO or YES");
-        } else if (response.equals("YES")) {
+        }
+        if (response.equals("YES")) {
             System.out.println(duelController.opponentActiveSpellOrTrap());
+        }
+        if (response.equals("NO")) {
+            duelModel.turn = 1 - duelModel.turn;
+            System.out.println("now it will be " + duelModel.getUsernames().get(duelModel.turn) + " turn");
         }
     }
 
