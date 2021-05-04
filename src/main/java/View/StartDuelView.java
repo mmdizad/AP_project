@@ -33,7 +33,7 @@ public class StartDuelView extends MainMenu {
                         System.out.println(secondUser.getUsername() + " has no active deck");
                     else if (round == 3 || round == 1) {
                         DuelView duelView = new DuelView();
-                        duelView.selectFirstPlayer(secondPlayerUserName, scanner);
+                        duelView.selectFirstPlayer(secondPlayerUserName, scanner, duelView);
                     } else System.out.println("number of rounds is not supported");
                 }
 
@@ -51,7 +51,7 @@ public class StartDuelView extends MainMenu {
                         System.out.println(secondUser.getUsername() + " has no active deck");
                     else if (round == 3 || round == 1) {
                         DuelView duelView = new DuelView();
-                        duelView.selectFirstPlayer(secondPlayerUserName, scanner);
+                        duelView.selectFirstPlayer(secondPlayerUserName, scanner, duelView);
                     } else System.out.println("number of rounds is not supported");
                 }
             } else if (input.equals("menu exit")) break;

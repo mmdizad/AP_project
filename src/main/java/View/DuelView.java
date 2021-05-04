@@ -13,8 +13,10 @@ import java.util.regex.Pattern;
 public class DuelView {
     protected DuelController duelController;
     protected DuelModel duelModel;
+    protected Scanner scanner1;
 
-    public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner) {
+    public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView) {
+        scanner1 = scanner;
         ArrayList<Integer> someRandomNumbers = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             someRandomNumbers.add(i + 1);
@@ -45,7 +47,7 @@ public class DuelView {
             standByPhaseView.run(scanner);
         }
         duelController = new DuelController();
-        duelController.setDuelModel(duelModel);
+        duelController.setDuelModel(duelModel, duelView);
     }
 
     protected void deselect(Matcher matcher) {
@@ -55,6 +57,24 @@ public class DuelView {
     }
 
     protected void activateEffect() {
+
+    }
+
+    public void opponentActiveEffect(boolean hasAnySpellOrTrap) {
+        if (hasAnySpellOrTrap) {
+            System.out.println("do you want to activate your trap and spell?");
+        }
+        String response = scanner1.nextLine();
+        if (!response.equals("NO") && !response.equals("YES")) {
+            System.out.println("you must enter NO or YES");
+        } else if (response.equals("YES")) {
+            System.out.println(duelController.opponentActiveSpellOrTrap());
+        }
+    }
+
+    public boolean scanCommandForActiveSpell() {
+        String command = scanner1.nextLine();
+        return getCommandMatcher(command, "^select --spell (\\d+)$").find();
     }
 
     protected void showGraveyard(Matcher matcher) {

@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import View.DuelView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,9 +9,11 @@ import java.util.regex.Matcher;
 
 public class DuelController {
     protected DuelModel duelModel;
+    protected DuelView duelView;
 
-    public void setDuelModel(DuelModel duelModel) {
+    public void setDuelModel(DuelModel duelModel, DuelView duelView) {
         this.duelModel = duelModel;
+        this.duelView = duelView;
     }
 
     public void selectFirstPlayer() {
@@ -27,6 +30,37 @@ public class DuelController {
     }
 
     public String activateEffect(Matcher matcher) {
+        return null;
+    }
+
+    public void isOpponentHasAnySpellOrTrapForActivate() {
+        boolean hasAnySpellOrTrap = false;
+        for (int i = 1; i <= 5; i++) {
+            if (duelModel.getSpellAndTrap(1-duelModel.turn,i)!=null){
+                hasAnySpellOrTrap = true;
+                break;
+            }
+        }
+        duelView.opponentActiveEffect(hasAnySpellOrTrap);
+    }
+
+    public String opponentActiveSpellOrTrap() {
+        duelModel.turn = 1 - duelModel.turn;
+        if (duelView.scanCommandForActiveSpell()) {
+            if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Spell")) {
+                return opponentActiveSpell();
+            } else {
+                return opponentActiveTrap();
+            }
+        }
+        return "it’s not your turn to play this kind of moves";
+    }
+
+    public String opponentActiveSpell(){
+        return null;
+    }
+
+    public String opponentActiveTrap(){
         return null;
     }
 

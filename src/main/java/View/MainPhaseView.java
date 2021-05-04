@@ -39,6 +39,8 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             selectField(getCommandMatcher(command, "^select --field"));
             selectOpponentField(getCommandMatcher(command, "^select --opponent --filed"));
             selectOpponentField(getCommandMatcher(command, "^select --field --opponent"));
+            deselect(getCommandMatcher(command, "^select -d$"));
+            selectHand(getCommandMatcher(command, "^select --hand (\\d+)$"));
             showCard(getCommandMatcher(command, "^card show (.+)$"));
             showSelectedCard(getCommandMatcher(command, "card show --selected"));
             showGraveyard(getCommandMatcher(command, "show graveyard"));
@@ -57,7 +59,13 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     public void summon(Matcher matcher) {
         if (matcher.find()) {
             MainPhaseController mainPhaseController = MainPhaseController.getInstance();
-            System.out.println(mainPhaseController.summon());
+            String result = mainPhaseController.summon();
+            if (result.equals("summoned successfully")){
+                System.out.println(result);
+                duelController.isOpponentHasAnySpellOrTrapForActivate();
+            }else {
+                System.out.println(result);
+            }
         }
     }
 
@@ -81,7 +89,13 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     public void specialSummon(Matcher matcher) {
         if (matcher.find()) {
             MainPhaseController mainPhaseController = MainPhaseController.getInstance();
-            System.out.println(mainPhaseController.specialSummon());
+            String result = mainPhaseController.specialSummon();
+            if (result.equals("summon successfully")){
+                System.out.println(result);
+                duelController.isOpponentHasAnySpellOrTrapForActivate();
+            }else {
+                System.out.println(result);
+            }
         }
     }
 
@@ -103,7 +117,13 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     @Override
     public void set() {
         MainPhaseController mainPhaseController = MainPhaseController.getInstance();
-        System.out.println(mainPhaseController.set());
+        String result = mainPhaseController.set();
+        if (result.equals("set successfully")){
+            System.out.println(result);
+            duelController.isOpponentHasAnySpellOrTrapForActivate();
+        }else {
+            System.out.println(result);
+        }
     }
 
     @Override
