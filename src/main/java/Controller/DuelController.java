@@ -36,7 +36,7 @@ public class DuelController {
     public void isOpponentHasAnySpellOrTrapForActivate() {
         boolean hasAnySpellOrTrap = false;
         for (int i = 1; i <= 5; i++) {
-            if (duelModel.getSpellAndTrap(1-duelModel.turn,i)!=null){
+            if (duelModel.getSpellAndTrap(1 - duelModel.turn, i) != null) {
                 hasAnySpellOrTrap = true;
                 break;
             }
@@ -46,7 +46,9 @@ public class DuelController {
 
     public String opponentActiveSpellOrTrap() {
         duelModel.turn = 1 - duelModel.turn;
-        if (duelView.scanCommandForActiveSpell()) {
+        Matcher matcher = duelView.scanCommandForActiveSpell();
+        if (matcher.find()) {
+            System.out.println(selectSpellOrTrap(matcher));
             if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Spell")) {
                 return opponentActiveSpell();
             } else {
@@ -56,11 +58,26 @@ public class DuelController {
         return "it’s not your turn to play this kind of moves";
     }
 
-    public String opponentActiveSpell(){
-         return null;
+    public String opponentActiveSpell() {
+        Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        Spell spell = (Spell) card;
+        if (spell.getName().equals("Monster Reborn"))
+            return effectOfMonsterReborn();
+        return "";
     }
 
-    public String opponentActiveTrap(){
+    public String effectOfMonsterReborn() {
+        String kindOfGraveyard = duelView.scanKindOfGraveyardForActiveEffect();
+        int numberOfCard = duelView.scanNumberOfCardForActiveEffect();
+        if (kindOfGraveyard.equals("My")) {
+            if (numberOfCard > duelModel.getGraveyard(duelModel.turn).size()) {
+                return "card with this number not available";
+            }
+        }
+        return "";
+    }
+
+    public String opponentActiveTrap() {
         return null;
     }
 

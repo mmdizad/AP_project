@@ -79,9 +79,20 @@ public class DuelView {
         }
     }
 
-    public boolean scanCommandForActiveSpell() {
+    public Matcher scanCommandForActiveSpell() {
         String command = scanner1.nextLine();
-        return getCommandMatcher(command, "^select --spell (\\d+)$").find();
+        return getCommandMatcher(command, "^select --spell (\\d+)$");
+    }
+
+    public String scanKindOfGraveyardForActiveEffect() {
+        System.out.println("please specify the graveyard(My/Opponent)");
+        return scanner1.nextLine();
+    }
+
+
+    public Integer scanNumberOfCardForActiveEffect() {
+        System.out.println("please specify the number of card you want from graveyard");
+        return scanner1.nextInt();
     }
 
     protected void showGraveyard(Matcher matcher) {
