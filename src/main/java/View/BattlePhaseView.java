@@ -20,6 +20,7 @@ public class BattlePhaseView extends DuelView {
         if (startOfPhase) {
             System.out.println("BattlePhase");
         }
+
         while (true) {
             String command = scanner.nextLine();
             attack(getCommandMatcher(command, "^attack ([1-5]{1})$"));

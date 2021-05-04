@@ -18,6 +18,7 @@ public class MainPhaseController extends DuelController {
         return mainPhaseController;
     }
 
+
     public String set() {
         ArrayList<ArrayList<Card>> selectedCards = this.duelModel.getSelectedCards();
         if (selectedCards.get(this.duelModel.turn) == null) {
@@ -83,7 +84,7 @@ public class MainPhaseController extends DuelController {
         else if (newPosition.equals("attack")) {
             if (duelModel.getMonsterCondition(duelModel.turn, place).equals("OO"))
                 return "this card is already in the wanted position";
-            else if (duelModel.setposition[place - 1] == true)
+            else if (duelModel.setposition[place - 1])
                 return "you already changed this card position in this turn";
             else {
                 duelModel.changeAttackAndDefense(place);
@@ -93,7 +94,7 @@ public class MainPhaseController extends DuelController {
         } else {
             if (duelModel.getMonsterCondition(duelModel.turn, place).equals("DO"))
                 return "this card is already in the wanted position";
-            else if (duelModel.setposition[place - 1] == true)
+            else if (duelModel.setposition[place - 1])
                 return "you already changed this card position in this turn";
             else {
                 duelModel.changeAttackAndDefense(place);

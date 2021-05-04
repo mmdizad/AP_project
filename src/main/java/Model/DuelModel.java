@@ -142,8 +142,8 @@ public class DuelModel {
 
     public void changeAttackAndDefense(int place) {
         if (monsterCondition.get(turn).get(place) == "OO")
-            monsterCondition.get(turn).add(place, "DO");
-        else monsterCondition.get(turn).add(place, "OO");
+            monsterCondition.get(turn).set(place,"DO");
+        else monsterCondition.get(turn).set(place, "OO");
     }
 
     public Card getFieldZoneCard(int turn) {
