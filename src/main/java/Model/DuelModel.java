@@ -349,5 +349,12 @@ public class DuelModel {
         handCards.get(turn).add(card);
         playersCards.get(turn).remove(card);
     }
-
+  public int findEmptySpellField(){
+      for (int i = 0; i < 5; i++) {
+          if(spellsAndTrapsInFiled.get(turn).get(i)==null){
+              return i;
+          }
+      }
+      return -1;
+  }
 }
