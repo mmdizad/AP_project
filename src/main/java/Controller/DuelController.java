@@ -166,12 +166,65 @@ public class DuelController {
             return "your opponent dont have any monster";
     }
 
-//    public String effectOfUnitedWeStand(){
-//        ArrayList<Card> monsterField=duelModel.getMonstersInField().get(duelModel.turn);
-//
-//        }
-//
-//    }
+    public String effectOfChangeOfHeart() {
+        int numberOfMonsterCard = duelView.scanNumberOfCardForActiveEffect();
+        if (numberOfMonsterCard > 5) {
+            return "you cant get card with this address";
+        } else if (duelModel.getMonstersInField().get(1 - duelModel.turn).get(numberOfMonsterCard - 1) == null) {
+            return "you cant get card with this address";
+        } else {
+            Card borrowCard = duelModel.getMonstersInField().get(1 - duelModel.turn).get(numberOfMonsterCard - 1);
+            String detailsOfBorrowCard = duelModel.getMonsterCondition(1 - duelModel.turn, numberOfMonsterCard);
+            String[] details = detailsOfBorrowCard.split("/");
+            String stateOfBorrowCard = details[0];
+            int placeOfFieldThatBorrowCardSet;
+            if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
+                duelModel.getMonstersInField().get(duelModel.turn).add(0, borrowCard);
+                duelModel.addMonsterCondition(duelModel.turn, 0, stateOfBorrowCard + "/1");
+                placeOfFieldThatBorrowCardSet = 1;
+            } else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null) {
+                duelModel.getMonstersInField().get(duelModel.turn).add(1, borrowCard);
+                duelModel.addMonsterCondition(duelModel.turn, 1, stateOfBorrowCard + "/2");
+                placeOfFieldThatBorrowCardSet = 2;
+            } else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null) {
+                duelModel.getMonstersInField().get(duelModel.turn).add(2, borrowCard);
+                duelModel.addMonsterCondition(duelModel.turn, 2, stateOfBorrowCard + "/3");
+                placeOfFieldThatBorrowCardSet = 3;
+            } else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null) {
+                duelModel.getMonstersInField().get(duelModel.turn).add(3, borrowCard);
+                duelModel.addMonsterCondition(duelModel.turn, 3, stateOfBorrowCard + "/4");
+                placeOfFieldThatBorrowCardSet = 4;
+            } else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null) {
+                duelModel.getMonstersInField().get(duelModel.turn).add(4, borrowCard);
+                duelModel.addMonsterCondition(duelModel.turn, 4, stateOfBorrowCard + "/5");
+                placeOfFieldThatBorrowCardSet = 5;
+            } else {
+                return "monster card zone is full";
+            }
+            duelModel.addBorrowCard(borrowCard, detailsOfBorrowCard + "/" + placeOfFieldThatBorrowCardSet);
+            duelModel.deleteMonster(1 - duelModel.turn, numberOfMonsterCard - 1);
+            return "monster card added to your field successfully";
+        }
+    }
+
+    public void refundsTheBorrowCards() {
+        ArrayList<Card> borrowCards = duelModel.getBorrowCards();
+        ArrayList<String> conditionsOfBorrowCards = duelModel.getConditionOfBorrowCards();
+        int i = 0;
+        for (Card borrowCard : borrowCards) {
+            String[] detailsOfBorrowCard = conditionsOfBorrowCards.get(i).split("/");
+            String stateOfBorrowCard = detailsOfBorrowCard[0];
+            int placeOfBorrowCard = Integer.parseInt(detailsOfBorrowCard[1]);
+            int placeOfFieldThatBorrowCardSet = Integer.parseInt(detailsOfBorrowCard[2]);
+            duelModel.deleteMonster(1 - duelModel.turn, placeOfFieldThatBorrowCardSet - 1);
+            duelModel.getMonstersInField().get(duelModel.turn).add(placeOfBorrowCard - 1, borrowCard);
+            duelModel.addMonsterCondition(duelModel.turn, placeOfBorrowCard - 1, stateOfBorrowCard
+                    + "/" + placeOfBorrowCard);
+            i++;
+        }
+        duelModel.deleteBorrowCard();
+    }
+
 
     public String specialSummonMonsterOnFieldFromGraveyard(int turn, String state, int indexOfCardOfGraveyard) {
         String stateOfCard = "OO";

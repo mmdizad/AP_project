@@ -92,7 +92,7 @@ public class DuelView {
 
 
     public Integer scanNumberOfCardForActiveEffect() {
-        System.out.println("please specify the number of card you want from graveyard");
+        System.out.println("please specify the number of card you want");
         return scanner1.nextInt();
     }
 
