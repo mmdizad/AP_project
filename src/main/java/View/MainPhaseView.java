@@ -167,6 +167,10 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             }
         } else if (phaseName.equals("MainPhase2")) {
             if (newPhase.equals("EndPhase")) {
+                if (duelModel.getBorrowCards().size()>0)
+                {
+                    duelController.refundsTheBorrowCards();
+                }
                 System.out.println("EndPhase");
                 duelModel.turn = 1 - duelModel.turn;
                 DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();

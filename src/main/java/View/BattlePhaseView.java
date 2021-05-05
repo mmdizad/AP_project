@@ -50,6 +50,10 @@ public class BattlePhaseView extends DuelView {
             MainPhaseView mainPhaseView = MainPhaseView.getInstance();
             mainPhaseView.run(scanner, "MainPhase2", true);
         } else if (newPhase.equals("EndPhase")) {
+            if (duelModel.getBorrowCards().size()>0)
+            {
+                duelController.refundsTheBorrowCards();
+            }
             System.out.println("EndPhase");
             BattlePhaseController.getInstance().attackedCards.clear();
             duelModel.turn = 1 - duelModel.turn;

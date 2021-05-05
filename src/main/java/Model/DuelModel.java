@@ -21,6 +21,8 @@ public class DuelModel {
     public Card monsterSetOrSummonInThisTurn;
     public int thePlaceOfMonsterSetOrSummonInThisTurn;
     public boolean[] setposition = new boolean[5];
+    private ArrayList<Card> borrowCards;
+    private ArrayList<String> conditionOfBorrowCards;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         usernames = new ArrayList<>();
@@ -92,6 +94,8 @@ public class DuelModel {
         HashMap<Card, String> detailOfSelectedCard2 = new HashMap<>();
         detailOfSelectedCard.add(detailOfSelectedCard1);
         detailOfSelectedCard.add(detailOfSelectedCard2);
+        borrowCards = new ArrayList<>();
+        conditionOfBorrowCards = new ArrayList<>();
     }
 
     public void decreaseLifePoint(int lifePoint, int turn) {
@@ -104,6 +108,24 @@ public class DuelModel {
 
     public void increaseLifePoint(int lifePoint, int turn) {
 
+    }
+
+    public void addBorrowCard(Card card, String condition) {
+        borrowCards.add(card);
+        conditionOfBorrowCards.add(condition);
+    }
+
+    public ArrayList<Card> getBorrowCards() {
+        return borrowCards;
+    }
+
+    public ArrayList<String> getConditionOfBorrowCards() {
+        return conditionOfBorrowCards;
+    }
+
+    public void deleteBorrowCard(){
+        borrowCards.clear();
+        conditionOfBorrowCards.clear();
     }
 
     public ArrayList<Card> addCardToHand() {
@@ -138,6 +160,10 @@ public class DuelModel {
         spellAndTrapCondition.get(turn).add(index, condition);
         deSelectedCard();
         deleteCardFromHand(getSpellAndTrap(turn, index + 1));
+    }
+
+    public void addMonsterCondition(int turn, int index, String condition) {
+        monsterCondition.get(turn).add(index, condition);
     }
 
     public void changeAttackAndDefense(int place) {
