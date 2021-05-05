@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Card {
-    protected static HashMap<String, Card> cards;
-    public static ArrayList<Card> allCards;
     private static final ArrayList<Card> firstCards;
+    public static ArrayList<Card> allCards;
+    protected static HashMap<String, Card> cards;
 
     static {
         cards = new HashMap<>();
@@ -38,9 +38,15 @@ public class Card {
             cards.put(firstCard.getName(), firstCard);
         }
     }
-
+//روی این تابع یه فور بزن و یک کپی ازش بساز بفرس مثل پایین
     public static ArrayList<Card> getFirstCards() {
         return firstCards;
+    }
+//این تابع رو با تابع گت کار بای نیم که توی دک زدی جایگزین کن رضا
+    public static Card getNewCardBYName(String cardName) {
+        Card card = cards.get(cardName);
+        Card newCard = new Card(card.name,card.description,card.cardType,card.price,card.category);
+        return newCard;
     }
 
     public static Card getCardByName(String cardName) {

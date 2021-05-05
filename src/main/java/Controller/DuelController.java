@@ -166,6 +166,12 @@ public class DuelController {
             return "your opponent dont have any monster";
     }
 
+//    public String effectOfUnitedWeStand(){
+//        ArrayList<Card> monsterField=duelModel.getMonstersInField().get(duelModel.turn);
+//
+//        }
+//
+//    }
 
     public String specialSummonMonsterOnFieldFromGraveyard(int turn, String state, int indexOfCardOfGraveyard) {
         String stateOfCard = "OO";
