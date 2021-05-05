@@ -123,7 +123,7 @@ public class DuelModel {
         return conditionOfBorrowCards;
     }
 
-    public void deleteBorrowCard(){
+    public void deleteBorrowCard() {
         borrowCards.clear();
         conditionOfBorrowCards.clear();
     }
@@ -168,7 +168,7 @@ public class DuelModel {
 
     public void changeAttackAndDefense(int place) {
         if (monsterCondition.get(turn).get(place) == "OO")
-            monsterCondition.get(turn).set(place,"DO");
+            monsterCondition.get(turn).set(place, "DO");
         else monsterCondition.get(turn).set(place, "OO");
     }
 
@@ -210,6 +210,13 @@ public class DuelModel {
 
     public String getSpellAndTrapCondition(int turn, int place) {
         return spellAndTrapCondition.get(turn).get(place - 1);
+    }
+
+    public void changePositionOfSpellOrTrapCard(int turn, int place) {
+        String[] condition = spellAndTrapCondition.get(turn).get(place - 1).split("/");
+        if (condition[0].equals("H")) {
+            spellAndTrapCondition.get(turn).add(place - 1, "O/" + place);
+        }
     }
 
     public void addCardToGraveyard(int turn, Card card) {
