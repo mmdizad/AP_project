@@ -25,6 +25,7 @@ public class NewCardToHandController extends DuelController {
         Deck deck = user.getActiveDeck();
         ArrayList<Card> cardsInDeck = deck.getCardsMain();
         if (cardsInDeck.size() >= 1) {
+            //ما اینجا duelmodelنول هست چک کنید 
             return duelModel.addCardToHand();
         } else {
             return null;
