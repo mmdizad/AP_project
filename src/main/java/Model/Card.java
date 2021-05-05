@@ -38,7 +38,16 @@ public class Card {
             cards.put(firstCard.getName(), firstCard);
         }
     }
+    public static ArrayList<Card> getNewFirstCard(){
+        ArrayList<Card> newFirstCards= new ArrayList<>();
+        for (int i = 1; i < firstCards.size(); i++) {
+            Card card= new Card(firstCards.get(i).name,firstCards.get(i).description,firstCards.get(i).cardType,firstCards.get(i).price,firstCards.get(i).category);
+          newFirstCards.add(card);
+        }
+        return newFirstCards;
+    }
 //روی این تابع یه فور بزن و یک کپی ازش بساز بفرس مثل پایین
+
     public static ArrayList<Card> getFirstCards() {
         return firstCards;
     }
