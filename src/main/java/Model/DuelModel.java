@@ -31,6 +31,11 @@ public class DuelModel {
         User user = User.getUserByUsername(playerUsername);
         Deck activeDeck = user.getActiveDeck();
         ArrayList<Card> cardsInPlayerActiveDeck = activeDeck.getCardsMain();
+        playersCards = new ArrayList<>();
+        ArrayList<Card> playerCard1 = new ArrayList<>();
+        ArrayList<Card> playerCard2 = new ArrayList<>();
+        playersCards.add(playerCard1);
+        playersCards.add(playerCard2);
         for (Card card : cardsInPlayerActiveDeck) {
             playersCards.get(0).add(card);
         }
@@ -45,11 +50,7 @@ public class DuelModel {
         ArrayList<Card> selectCard2 = new ArrayList<>();
         selectedCards.add(selectCard1);
         selectedCards.add(selectCard2);
-        playersCards = new ArrayList<>();
-        ArrayList<Card> playerCard1 = new ArrayList<>();
-        ArrayList<Card> playerCard2 = new ArrayList<>();
-        playersCards.add(playerCard1);
-        playersCards.add(playerCard2);
+
         monstersInField = new ArrayList<>();
         ArrayList<Card> monstersInField1 = new ArrayList<>();
         ArrayList<Card> monstersInField2 = new ArrayList<>();
@@ -356,5 +357,12 @@ public class DuelModel {
         handCards.get(turn).add(card);
         playersCards.get(turn).remove(card);
     }
-
+  public int findEmptySpellField(){
+      for (int i = 0; i < 5; i++) {
+          if(spellsAndTrapsInFiled.get(turn).get(i)==null){
+              return i;
+          }
+      }
+      return -1;
+  }
 }
