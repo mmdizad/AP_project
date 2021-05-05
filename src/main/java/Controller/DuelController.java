@@ -72,6 +72,8 @@ public class DuelController {
             return effectOfRaigeki(placeOfSpell);
         else if (spell.getName().equals("Change of Heart"))
             return effectOfChangeOfHeart(placeOfSpell);
+        else if (spell.getName().equals("Harpie’s Feather Duster"))
+            return effectOfHarpiesFeatherDuster(placeOfSpell);
         return "";
     }
 
@@ -213,6 +215,7 @@ public class DuelController {
     }
 
     public String effectOfChangeOfHeart(int placeOfSpell) {
+        duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
         int numberOfMonsterCard = duelView.scanNumberOfCardForActiveEffect();
         if (numberOfMonsterCard > 5) {
             duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
@@ -282,6 +285,11 @@ public class DuelController {
             i++;
         }
         duelModel.deleteBorrowCard();
+    }
+
+    public String effectOfHarpiesFeatherDuster(int placeOfSpell){
+        duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+        return "";
     }
 
 
