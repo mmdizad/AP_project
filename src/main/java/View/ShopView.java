@@ -27,7 +27,7 @@ public class ShopView extends MainMenu {
             Matcher matcherBuy = patternBuy.matcher(input);
             if (matcherBuy.find())
                 buyCard(matcherBuy);
-            else if (input.equals("shop show -all"))
+            else if (input.equals("shop show --all"))
                 showCard();
             else if (input.equals("menu exit")) break;
             else if (input.equals("menu show-current")) System.out.println("ShopMenu");

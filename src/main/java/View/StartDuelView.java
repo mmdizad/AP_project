@@ -14,9 +14,9 @@ public class StartDuelView extends MainMenu {
     public void run(Scanner scanner) {
         while (true) {
             String input = scanner.nextLine();
-            Pattern pattern = Pattern.compile("duel -new -second-player (\\S+) -rounds (\\d+)");
+            Pattern pattern = Pattern.compile("duel --new --second-player (\\S+) --rounds (\\d+)");
             Matcher matcher = pattern.matcher(input);
-            Pattern pattern1 = Pattern.compile("duel -new -rounds (\\d+) -second-player (\\S+)");
+            Pattern pattern1 = Pattern.compile("duel --new --rounds (\\d+) --second-player (\\S+)");
             Matcher matcher1 = pattern1.matcher(input);
 
             if (matcher.find()) {
