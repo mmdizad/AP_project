@@ -26,6 +26,7 @@ public class DuelModel {
     private ArrayList<HashMap<Card, Integer>> swordsCard;
     private ArrayList<ArrayList<Card>> supplySquadCards;
     private ArrayList<ArrayList<Card>> monsterDestroyedInThisTurn;
+    private ArrayList<ArrayList<Card>> spellAbsorptionCards;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         usernames = new ArrayList<>();
@@ -115,6 +116,11 @@ public class DuelModel {
         ArrayList<Card> supplySquadCards2 = new ArrayList<>();
         supplySquadCards.add(supplySquadCards1);
         supplySquadCards.add(supplySquadCards2);
+        spellAbsorptionCards = new ArrayList<>();
+        ArrayList<Card> spellAbsorptionCards1 = new ArrayList<>();
+        ArrayList<Card> spellAbsorptionCards2 = new ArrayList<>();
+        spellAbsorptionCards.add(spellAbsorptionCards1);
+        spellAbsorptionCards.add(spellAbsorptionCards2);
     }
 
     public void decreaseLifePoint(int lifePoint, int turn) {
@@ -420,6 +426,25 @@ public class DuelModel {
         spellsAndTrapsInFiled.get(turn).remove(card);
         addCardToGraveyard(turn, card);
     }
+
+    public void setSpellAbsorptionCards(int turn, Card card) {
+        spellAbsorptionCards.get(turn).add(card);
+    }
+
+    public void deleteSpellAbsorptionCards(int turn, Card card) {
+        spellAbsorptionCards.get(turn).remove(card);
+        spellsAndTrapsInFiled.get(turn).remove(card);
+        addCardToGraveyard(turn, card);
+    }
+
+    public void effectOfSpellAbsorptionCards() {
+        if (spellAbsorptionCards.get(turn).size() > 0) {
+            lifePointUser += 500;
+        } else if (spellAbsorptionCards.get(1 - turn).size() > 0) {
+            lifePointOpponent += 500;
+        }
+    }
+
 
     public int findEmptySpellField() {
         for (int i = 0; i < 5; i++) {

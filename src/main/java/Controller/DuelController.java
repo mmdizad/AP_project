@@ -91,12 +91,12 @@ public class DuelController {
             return effectOfDarkHole(placeOfSpell);
         } else if (spell.getName().equals("Supply Squad")) {
             return effectOfSupplySquad(placeOfSpell);
-        }
+        } else if (spell.getName().equals("Spell Absorption"))
+            return effectOfSpellAbsorption(placeOfSpell);
         return "";
     }
 
     public String effectOfMonsterReborn(int placeOfSpell) {
-        MainPhaseController mainPhaseController = MainPhaseController.getInstance();
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
         String kindOfGraveyard = duelView.scanKindOfGraveyardForActiveEffect();
         int numberOfCard = duelView.scanNumberOfCardForActiveEffect();
@@ -117,6 +117,7 @@ public class DuelController {
                             , state, numberOfCard - 1);
                     if (response.equals("activated and summoned successfully")) {
                         duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+                        duelModel.effectOfSpellAbsorptionCards();
                         duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
                         duelModel.addCardToGraveyard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
                                 .get(0));
@@ -139,6 +140,7 @@ public class DuelController {
                             , state, numberOfCard - 1);
                     if (response.equals("activated and summoned successfully")) {
                         duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+                        duelModel.effectOfSpellAbsorptionCards();
                         duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
                         duelModel.addCardToGraveyard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
                                 .get(0));
@@ -164,6 +166,7 @@ public class DuelController {
             return "you dont have any FieldCard for add to your hand";
         } else {
             duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+            duelModel.effectOfSpellAbsorptionCards();
             duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn, card);
             duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
             duelModel.addCardToGraveyard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
@@ -179,6 +182,7 @@ public class DuelController {
             return "you dont have enough card for add to your hand";
         } else {
             duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+            duelModel.effectOfSpellAbsorptionCards();
             duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
                     , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
                             getPlayersCards().get(duelModel.turn).size() - 1));
@@ -206,6 +210,7 @@ public class DuelController {
         }
         if (opponentHasAnyMonster) {
             duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+            duelModel.effectOfSpellAbsorptionCards();
             duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
             duelModel.addCardToGraveyard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
                     .get(0));
@@ -254,6 +259,7 @@ public class DuelController {
                 return "monster card zone is full";
             }
             duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+            duelModel.effectOfSpellAbsorptionCards();
             duelModel.addBorrowCard(borrowCard, detailsOfBorrowCard + "/" + placeOfFieldThatBorrowCardSet);
             duelModel.deleteMonster(1 - duelModel.turn, numberOfMonsterCard - 1);
             duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
@@ -303,6 +309,7 @@ public class DuelController {
             return "dont have any spell or trap";
         } else {
             duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+            duelModel.effectOfSpellAbsorptionCards();
             duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
             duelModel.addCardToGraveyard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
                     .get(0));
@@ -313,6 +320,7 @@ public class DuelController {
     public String effectOfSwordsOfRevealingLight(int placeOfSpell) {
         // not complete it needs a change in battlePhase
         duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+        duelModel.effectOfSpellAbsorptionCards();
         duelModel.setSwordsCard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn).get(0));
         changeStateOfMonsterWithSwordsCard(1 - duelModel.turn);
         return "spell activated";
@@ -358,6 +366,7 @@ public class DuelController {
         }
         if (opponentHasAnyMonster || youHaveAnyMonster) {
             duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+            duelModel.effectOfSpellAbsorptionCards();
             duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
             duelModel.addCardToGraveyard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
                     .get(0));
@@ -369,7 +378,16 @@ public class DuelController {
 
     public String effectOfSupplySquad(int placeOfSpell) {
         duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+        duelModel.effectOfSpellAbsorptionCards();
         duelModel.setSupplySquad(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
+                .get(0));
+        return "spell activated";
+    }
+
+    public String effectOfSpellAbsorption(int placeOfSpell) {
+        duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+        duelModel.effectOfSpellAbsorptionCards();
+        duelModel.setSpellAbsorptionCards(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
                 .get(0));
         return "spell activated";
     }
