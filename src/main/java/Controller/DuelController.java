@@ -298,6 +298,8 @@ public class DuelController {
                     duelModel.deleteSwordsCard(1 - duelModel.turn, card);
                 } else if (card.getName().equals("Supply Squad")) {
                     duelModel.deleteSupplySquadCard(1 - duelModel.turn, card);
+                } else if (card.getName().equals("Spell Absorption")) {
+                    duelModel.deleteSpellAbsorptionCards(1 - duelModel.turn, card);
                 } else {
                     duelModel.deleteSpellAndTrap(1 - duelModel.turn, i);
                     duelModel.addCardToGraveyard(1 - duelModel.turn, card);
