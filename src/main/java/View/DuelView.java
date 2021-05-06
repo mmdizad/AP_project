@@ -95,7 +95,14 @@ public class DuelView {
         System.out.println("please specify the number of card you want");
         return scanner1.nextInt();
     }
-
+ public Integer scanForChoseMonsterForEquip(ArrayList<Integer> placeOfCard){
+     System.out.print("chose which Monster Want to equip ");
+    for( Integer integer:placeOfCard){
+        System.out.print(integer+" ");
+    }
+    int place = scanner1.nextInt();
+        return place;
+ }
     protected void showGraveyard(Matcher matcher) {
         if (matcher.find()) {
             ArrayList<String> output = duelController.showGraveYard();

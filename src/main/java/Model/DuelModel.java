@@ -307,7 +307,10 @@ public class DuelModel {
         return board;
 
     }
-
+  public void setField(Card card){
+        field.get(turn).remove(0);
+        field.get(turn).add(card);
+  }
     public ArrayList<String> getUsernames() {
         return usernames;
     }
