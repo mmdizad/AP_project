@@ -1,8 +1,11 @@
 package View;
 
 import Controller.MainPhaseController;
+import Model.Card;
 import Model.Monster;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -167,10 +170,10 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             }
         } else if (phaseName.equals("MainPhase2")) {
             if (newPhase.equals("EndPhase")) {
-                if (duelModel.getBorrowCards().size()>0)
-                {
+                if (duelModel.getBorrowCards().size() > 0) {
                     duelController.refundsTheBorrowCards();
                 }
+                hasSwordCard();
                 System.out.println("EndPhase");
                 duelModel.turn = 1 - duelModel.turn;
                 DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
@@ -179,6 +182,27 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             } else {
                 System.out.println("please enter another or correct phase");
                 run(scanner, phaseName, false);
+            }
+        }
+    }
+
+    public void hasSwordCard() {
+        for (Map.Entry<Card, Integer> entry : duelModel.getSwordsCard().get(duelModel.turn).entrySet()) {
+            Card swordCard = entry.getKey();
+            int numberOfTurnExist = entry.getValue();
+            if (numberOfTurnExist >= 2) {
+                duelModel.deleteSwordsCard(duelModel.turn, swordCard);
+            } else {
+                entry.setValue(numberOfTurnExist + 1);
+            }
+        }
+        for (Map.Entry<Card, Integer> entry : duelModel.getSwordsCard().get(1 - duelModel.turn).entrySet()) {
+            Card swordCard = entry.getKey();
+            int numberOfTurnExist = entry.getValue();
+            if (numberOfTurnExist >= 2) {
+                duelModel.deleteSwordsCard(1 - duelModel.turn, swordCard);
+            } else {
+                entry.setValue(numberOfTurnExist + 1);
             }
         }
     }

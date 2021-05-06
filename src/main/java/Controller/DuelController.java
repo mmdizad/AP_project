@@ -6,15 +6,18 @@ import View.MainPhaseView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 
 public class DuelController {
     protected DuelModel duelModel;
     protected DuelView duelView;
+    protected DuelController duelController;
 
-    public void setDuelModel(DuelModel duelModel, DuelView duelView) {
+    public void setDuelModel(DuelModel duelModel, DuelView duelView, DuelController duelController) {
         this.duelModel = duelModel;
         this.duelView = duelView;
+        this.duelController = duelController;
     }
 
     public void selectFirstPlayer() {
@@ -74,6 +77,9 @@ public class DuelController {
             return effectOfChangeOfHeart(placeOfSpell);
         else if (spell.getName().equals("Harpie’s Feather Duster"))
             return effectOfHarpiesFeatherDuster(placeOfSpell);
+        else if (spell.getName().equals("Swords of Revealing Light")) {
+            return effectOfSwordsOfRevealingLight(placeOfSpell);
+        }
         return "";
     }
 
@@ -254,7 +260,48 @@ public class DuelController {
     }
 
     public String effectOfHarpiesFeatherDuster(int placeOfSpell) {
+        ArrayList<Card> spellAndTraps = duelModel.getSpellsAndTrapsInFiled().get(1 - duelModel.turn);
+        boolean hasSpellOrTrapCard = false;
+        int i = 0;
+        for (Card card : spellAndTraps) {
+            if (card != null) {
+                hasSpellOrTrapCard = true;
+                duelModel.deleteSpellAndTrap(1 - duelModel.turn, i);
+                duelModel.addCardToGraveyard(1 - duelModel.turn, card);
+            }
+            i++;
+        }
+        if (!hasSpellOrTrapCard) {
+            return "dont have any spell or trap";
+        } else {
+            duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+            duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
+            duelModel.addCardToGraveyard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
+                    .get(0));
+            return "all of spells and traps your opponent destroyed";
+        }
+    }
+
+    public String effectOfSwordsOfRevealingLight(int placeOfSpell) {
+        duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+        duelModel.setSwordsCard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn).get(0));
+        changeStateOfMonsterWithSwordsCard(1 - duelModel.turn);
         return "";
+    }
+
+    public void changeStateOfMonsterWithSwordsCard(int turn) {
+        ArrayList<Card> monstersInField = duelModel.getMonstersInField().get(turn);
+        int i = 1;
+        for (Card card : monstersInField) {
+            if (card != null) {
+                String[] detailsOfMonsterCard = duelModel.getMonsterCondition(turn, i)
+                        .split("/");
+                if (detailsOfMonsterCard[0].equals("DH")) {
+                    duelModel.addMonsterCondition(turn, i - 1, "DO" + i);
+                }
+            }
+            i++;
+        }
     }
 
 

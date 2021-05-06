@@ -47,7 +47,7 @@ public class DuelView {
             standByPhaseView.run(scanner);
         }
         duelController = new DuelController();
-        duelController.setDuelModel(duelModel, duelView);
+        duelController.setDuelModel(duelModel, duelView,duelController);
     }
 
     protected void deselect(Matcher matcher) {

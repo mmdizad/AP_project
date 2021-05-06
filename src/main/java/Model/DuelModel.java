@@ -23,6 +23,7 @@ public class DuelModel {
     public boolean[] setposition = new boolean[5];
     private ArrayList<Card> borrowCards;
     private ArrayList<String> conditionOfBorrowCards;
+    private ArrayList<HashMap<Card, Integer>> swordsCard;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         usernames = new ArrayList<>();
@@ -97,6 +98,11 @@ public class DuelModel {
         detailOfSelectedCard.add(detailOfSelectedCard2);
         borrowCards = new ArrayList<>();
         conditionOfBorrowCards = new ArrayList<>();
+        swordsCard = new ArrayList<>();
+        HashMap<Card, Integer> swordsCard1 = new HashMap<>();
+        HashMap<Card, Integer> swordsCard2 = new HashMap<>();
+        swordsCard.add(swordsCard1);
+        swordsCard.add(swordsCard2);
     }
 
     public void decreaseLifePoint(int lifePoint, int turn) {
@@ -357,12 +363,27 @@ public class DuelModel {
         handCards.get(turn).add(card);
         playersCards.get(turn).remove(card);
     }
-  public int findEmptySpellField(){
-      for (int i = 0; i < 5; i++) {
-          if(spellsAndTrapsInFiled.get(turn).get(i)==null){
-              return i;
-          }
-      }
-      return -1;
-  }
+
+    public void setSwordsCard(int turn, Card swordCard) {
+        swordsCard.get(turn).put(swordCard, 0);
+    }
+
+    public void deleteSwordsCard(int turn, Card swordCard) {
+        swordsCard.get(turn).remove(swordCard);
+        spellsAndTrapsInFiled.get(turn).remove(swordCard);
+        addCardToGraveyard(turn, swordCard);
+    }
+
+    public ArrayList<HashMap<Card, Integer>> getSwordsCard() {
+        return swordsCard;
+    }
+
+    public int findEmptySpellField() {
+        for (int i = 0; i < 5; i++) {
+            if (spellsAndTrapsInFiled.get(turn).get(i) == null) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

@@ -72,7 +72,15 @@ public class MainPhaseController extends DuelController {
         } else {
             return "monster card zone is full";
         }
-        return "summoned successfully";
+        for (Card spellCard : duelModel.getSpellsAndTrapsInFiled().get(1 - duelModel.turn)) {
+            if (spellCard != null) {
+                if (spellCard.getName().equals("Swords of Revealing Light")) {
+                    duelController.changeStateOfMonsterWithSwordsCard(duelModel.turn);
+                    break;
+                }
+            }
+        }
+        return "set successfully";
     }
 
     public String setPosition(Matcher matcher) {
