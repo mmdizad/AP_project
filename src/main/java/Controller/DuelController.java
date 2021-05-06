@@ -91,8 +91,11 @@ public class DuelController {
             return effectOfDarkHole(placeOfSpell);
         } else if (spell.getName().equals("Supply Squad")) {
             return effectOfSupplySquad(placeOfSpell);
-        } else if (spell.getName().equals("Spell Absorption"))
+        } else if (spell.getName().equals("Spell Absorption")) {
             return effectOfSpellAbsorption(placeOfSpell);
+        } else if (spell.getName().equals("Messenger of peace")) {
+            return effectOfMessengerOfPeace(placeOfSpell);
+        }
         return "";
     }
 
@@ -300,6 +303,8 @@ public class DuelController {
                     duelModel.deleteSupplySquadCard(1 - duelModel.turn, card);
                 } else if (card.getName().equals("Spell Absorption")) {
                     duelModel.deleteSpellAbsorptionCards(1 - duelModel.turn, card);
+                } else if (card.getName().equals("Messenger of peace")) {
+                    duelModel.deleteMessengerOfPeaceCards(1 - duelModel.turn);
                 } else {
                     duelModel.deleteSpellAndTrap(1 - duelModel.turn, i);
                     duelModel.addCardToGraveyard(1 - duelModel.turn, card);
@@ -393,6 +398,16 @@ public class DuelController {
                 .get(0));
         return "spell activated";
     }
+
+    public String effectOfMessengerOfPeace(int placeOfSpell) {
+        // not complete it needs a change in battlePhase
+        duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+        duelModel.effectOfSpellAbsorptionCards();
+        duelModel.setMessengerOfPeace(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
+                .get(0));
+        return "spell activated";
+    }
+
 
     public String effectOfMagnumShield(int placeOfSpellInField) {
         boolean isWarriorExist = false;
@@ -663,7 +678,7 @@ public class DuelController {
         for (Map.Entry<Card, Integer> entry : duelModel.getSwordsCard().get(duelModel.turn).entrySet()) {
             Card swordCard = entry.getKey();
             int numberOfTurnExist = entry.getValue();
-            if (numberOfTurnExist >= 2) {
+            if (numberOfTurnExist >= 5) {
                 duelModel.deleteSwordsCard(duelModel.turn, swordCard);
             } else {
                 entry.setValue(numberOfTurnExist + 1);
@@ -672,7 +687,7 @@ public class DuelController {
         for (Map.Entry<Card, Integer> entry : duelModel.getSwordsCard().get(1 - duelModel.turn).entrySet()) {
             Card swordCard = entry.getKey();
             int numberOfTurnExist = entry.getValue();
-            if (numberOfTurnExist >= 2) {
+            if (numberOfTurnExist >= 5) {
                 duelModel.deleteSwordsCard(1 - duelModel.turn, swordCard);
             } else {
                 entry.setValue(numberOfTurnExist + 1);

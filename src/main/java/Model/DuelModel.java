@@ -27,6 +27,7 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> supplySquadCards;
     private ArrayList<ArrayList<Card>> monsterDestroyedInThisTurn;
     private ArrayList<ArrayList<Card>> spellAbsorptionCards;
+    private ArrayList<ArrayList<Card>> messengerOfPeace;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         usernames = new ArrayList<>();
@@ -121,6 +122,11 @@ public class DuelModel {
         ArrayList<Card> spellAbsorptionCards2 = new ArrayList<>();
         spellAbsorptionCards.add(spellAbsorptionCards1);
         spellAbsorptionCards.add(spellAbsorptionCards2);
+        messengerOfPeace = new ArrayList<>();
+        ArrayList<Card> messengerOfPeace1 = new ArrayList<>();
+        ArrayList<Card> messengerOfPeace2 = new ArrayList<>();
+        messengerOfPeace.add(messengerOfPeace1);
+        messengerOfPeace.add(messengerOfPeace2);
     }
 
     public void decreaseLifePoint(int lifePoint, int turn) {
@@ -445,6 +451,22 @@ public class DuelModel {
         }
     }
 
+    public void setMessengerOfPeace(int turn, Card card) {
+        messengerOfPeace.get(turn).add(card);
+    }
+
+    public void deleteMessengerOfPeaceCards(int turn) {
+        // maybe has a bug
+        for (Card card : messengerOfPeace.get(turn)) {
+            spellsAndTrapsInFiled.get(turn).remove(card);
+            addCardToGraveyard(turn, card);
+        }
+        messengerOfPeace.get(turn).clear();
+    }
+
+    public ArrayList<ArrayList<Card>> getMessengerOfPeace() {
+        return messengerOfPeace;
+    }
 
     public int findEmptySpellField() {
         for (int i = 0; i < 5; i++) {
