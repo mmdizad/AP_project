@@ -6,6 +6,7 @@ import View.MainPhaseView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 
@@ -88,6 +89,8 @@ public class DuelController {
             return effectOfSwordsOfRevealingLight(placeOfSpell);
         } else if (spell.getName().equals("Dark Hole")) {
             return effectOfDarkHole(placeOfSpell);
+        } else if (spell.getName().equals("Supply Squad")) {
+            return effectOfSupplySquad(placeOfSpell);
         }
         return "";
     }
@@ -285,8 +288,14 @@ public class DuelController {
         for (Card card : spellAndTraps) {
             if (card != null) {
                 hasSpellOrTrapCard = true;
-                duelModel.deleteSpellAndTrap(1 - duelModel.turn, i);
-                duelModel.addCardToGraveyard(1 - duelModel.turn, card);
+                if (card.getName().equals("Swords of Revealing Light")) {
+                    duelModel.deleteSwordsCard(1 - duelModel.turn, card);
+                } else if (card.getName().equals("Supply Squad")) {
+                    duelModel.deleteSupplySquadCard(1 - duelModel.turn, card);
+                } else {
+                    duelModel.deleteSpellAndTrap(1 - duelModel.turn, i);
+                    duelModel.addCardToGraveyard(1 - duelModel.turn, card);
+                }
             }
             i++;
         }
@@ -306,7 +315,7 @@ public class DuelController {
         duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
         duelModel.setSwordsCard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn).get(0));
         changeStateOfMonsterWithSwordsCard(1 - duelModel.turn);
-        return "";
+        return "spell activated";
     }
 
     public void changeStateOfMonsterWithSwordsCard(int turn) {
@@ -358,65 +367,72 @@ public class DuelController {
         }
     }
 
-    public String effectOfMagnumShield(int placeOfSpellInField){
-        boolean isWarriorExist=false;
-        ArrayList<Integer> placeOfWarriorCard=new ArrayList<>();
-        for (int i = 0; i <5 ; i++) {
-            Card card =duelModel.getMonstersInField().get(duelModel.turn).get(i);
+    public String effectOfSupplySquad(int placeOfSpell) {
+        duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+        duelModel.setSupplySquad(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
+                .get(0));
+        return "spell activated";
+    }
+
+    public String effectOfMagnumShield(int placeOfSpellInField) {
+        boolean isWarriorExist = false;
+        ArrayList<Integer> placeOfWarriorCard = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            Card card = duelModel.getMonstersInField().get(duelModel.turn).get(i);
             if (card != null)
                 //check it
                 if (card.getCategory().equals("Warrior")) {
-                    if(duelModel.getMonsterCondition(duelModel.turn,i).equals("DO")||duelModel.getMonsterCondition(duelModel.turn,i).equals("OO"))
-                    isWarriorExist = true;
+                    if (duelModel.getMonsterCondition(duelModel.turn, i).equals("DO") || duelModel.getMonsterCondition(duelModel.turn, i).equals("OO"))
+                        isWarriorExist = true;
                     placeOfWarriorCard.add(i);
                 }
         }
-            if(isWarriorExist){
-                int place=duelView.scanForChoseMonsterForEquip(placeOfWarriorCard);
-                //فرض میکنیم که عدد درست وارد شده
-                Monster monster =(Monster) duelModel.getMonstersInField().get(duelModel.turn).get(place);
-                if(duelModel.getMonsterCondition(duelModel.turn,place).startsWith("D"))
-                { monster.setAttackPower(monster.getAttackPower()+monster.getDefensePower());
+        if (isWarriorExist) {
+            int place = duelView.scanForChoseMonsterForEquip(placeOfWarriorCard);
+            //فرض میکنیم که عدد درست وارد شده
+            Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(place);
+            if (duelModel.getMonsterCondition(duelModel.turn, place).startsWith("D")) {
+                monster.setAttackPower(monster.getAttackPower() + monster.getDefensePower());
 
-                  duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).set(placeOfSpellInField,duelModel.getSelectedCards().get(duelModel.turn).get(0));
+                duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).set(placeOfSpellInField, duelModel.getSelectedCards().get(duelModel.turn).get(0));
                 //پر شود
 
 
+                return "spell activated";
+            } else {
+                monster.setDefensePower(monster.getAttackPower() + monster.getDefensePower());
 
-                    return "spell activated";
-                }else {monster.setDefensePower(monster.getAttackPower()+ monster.getDefensePower());
+                return "spell activated";
 
-return "spell activated";
-
-                }
-            }else return "you don't have any Warrior monster to equip ";
+            }
+        } else return "you don't have any Warrior monster to equip ";
     }
-    public  String effectOfUmiiruka(){
 
+    public String effectOfUmiiruka() {
         duelModel.setField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
         duelModel.getHandCards().get(duelModel.turn).remove(duelModel.getSelectedCards().get(duelModel.turn).get(0));
         for (int i = 0; i < 5; i++) {
-        Monster monster =(Monster)   duelModel.getMonstersInField().get(duelModel.turn).get(i);
-        Monster monster1= (Monster)   duelModel.getMonstersInField().get(duelModel.turn).get(i);
-        if(monster!=null) {
-            monster.setDefensePower(monster.getDefensePower() - 400);
-            monster.setAttackPower(monster.getAttackPower() + 500);
+            Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            Monster monster1 = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            if (monster != null) {
+                monster.setDefensePower(monster.getDefensePower() - 400);
+                monster.setAttackPower(monster.getAttackPower() + 500);
+            }
+            if (monster1 != null) {
+                monster1.setDefensePower(monster1.getDefensePower() - 400);
+                monster1.setAttackPower(monster1.getAttackPower() + 500);
+            }
         }
-        if(monster1!=null) {
-            monster1.setDefensePower(monster1.getDefensePower() - 400);
-            monster1.setAttackPower(monster1.getAttackPower() + 500);
-        }
-        }
-      return "spell activated";
+        return "spell activated";
     }
-    public String effectOfClosedForest(){
 
+    public String effectOfClosedForest() {
         duelModel.getHandCards().get(duelModel.turn).remove(duelModel.getSelectedCards().get(duelModel.turn).get(0));
         duelModel.setField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
         for (int i = 0; i < 5; i++) {
-            Monster monster =(Monster)   duelModel.getMonstersInField().get(duelModel.turn).get(i);
-            if(monster!=null)
-                monster.setAttackPower(monster.getAttackPower()+duelModel.getGraveyard(duelModel.turn).size()*100);
+            Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            if (monster != null)
+                monster.setAttackPower(monster.getAttackPower() + duelModel.getGraveyard(duelModel.turn).size() * 100);
         }
         deselect();
         return "spell activated";
@@ -622,5 +638,49 @@ return "spell activated";
             return "card selected";
         }
     }
+
+    public void hasSwordCard() {
+        for (Map.Entry<Card, Integer> entry : duelModel.getSwordsCard().get(duelModel.turn).entrySet()) {
+            Card swordCard = entry.getKey();
+            int numberOfTurnExist = entry.getValue();
+            if (numberOfTurnExist >= 2) {
+                duelModel.deleteSwordsCard(duelModel.turn, swordCard);
+            } else {
+                entry.setValue(numberOfTurnExist + 1);
+            }
+        }
+        for (Map.Entry<Card, Integer> entry : duelModel.getSwordsCard().get(1 - duelModel.turn).entrySet()) {
+            Card swordCard = entry.getKey();
+            int numberOfTurnExist = entry.getValue();
+            if (numberOfTurnExist >= 2) {
+                duelModel.deleteSwordsCard(1 - duelModel.turn, swordCard);
+            } else {
+                entry.setValue(numberOfTurnExist + 1);
+            }
+        }
+    }
+
+    public void hasSupplySquadCard() {
+        ArrayList<Card> monsterDestroyedInThisTurn1 = duelModel.getMonsterDestroyedInThisTurn()
+                .get(duelModel.turn);
+        ArrayList<Card> monsterDestroyedInThisTurn2 = duelModel.getMonsterDestroyedInThisTurn()
+                .get(1 - duelModel.turn);
+        ArrayList<Card> supplyCards1 = duelModel.getSupplySquadCards().get(duelModel.turn);
+        ArrayList<Card> supplyCards2 = duelModel.getSupplySquadCards().get(1 - duelModel.turn);
+        if (monsterDestroyedInThisTurn1.size() > 0) {
+            if (supplyCards1.size() > 0) {
+                duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
+                        , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
+                                getPlayersCards().get(duelModel.turn).size() - 1));
+            }
+        } else if (monsterDestroyedInThisTurn2.size() > 0) {
+            if (supplyCards2.size() > 0) {
+                duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
+                        , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
+                                getPlayersCards().get(duelModel.turn).size() - 1));
+            }
+        }
+    }
+
 
 }

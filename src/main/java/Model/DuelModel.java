@@ -24,6 +24,8 @@ public class DuelModel {
     private ArrayList<Card> borrowCards;
     private ArrayList<String> conditionOfBorrowCards;
     private ArrayList<HashMap<Card, Integer>> swordsCard;
+    private ArrayList<ArrayList<Card>> supplySquadCards;
+    private ArrayList<ArrayList<Card>> monsterDestroyedInThisTurn;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         usernames = new ArrayList<>();
@@ -103,6 +105,16 @@ public class DuelModel {
         HashMap<Card, Integer> swordsCard2 = new HashMap<>();
         swordsCard.add(swordsCard1);
         swordsCard.add(swordsCard2);
+        monsterDestroyedInThisTurn = new ArrayList<>();
+        ArrayList<Card> monsterDestroyedInThisTurn1 = new ArrayList<>();
+        ArrayList<Card> monsterDestroyedInThisTurn2 = new ArrayList<>();
+        monsterDestroyedInThisTurn.add(monsterDestroyedInThisTurn1);
+        monsterDestroyedInThisTurn.add(monsterDestroyedInThisTurn2);
+        supplySquadCards = new ArrayList<>();
+        ArrayList<Card> supplySquadCards1 = new ArrayList<>();
+        ArrayList<Card> supplySquadCards2 = new ArrayList<>();
+        supplySquadCards.add(supplySquadCards1);
+        supplySquadCards.add(supplySquadCards2);
     }
 
     public void decreaseLifePoint(int lifePoint, int turn) {
@@ -227,8 +239,12 @@ public class DuelModel {
     }
 
     public void addCardToGraveyard(int turn, Card card) {
+        if (card.getCategory().equals("Monster")) {
+            monsterDestroyedInThisTurn.get(turn).add(card);
+        }
         graveyard.get(turn).add(card);
     }
+
 
     public void setSelectedCard(int turn, Card card, String condition) {
         if (selectedCards.get(turn).get(0) != null) {
@@ -307,10 +323,12 @@ public class DuelModel {
         return board;
 
     }
-  public void setField(Card card){
+
+    public void setField(Card card) {
         field.get(turn).remove(0);
         field.get(turn).add(card);
-  }
+    }
+
     public ArrayList<String> getUsernames() {
         return usernames;
     }
@@ -379,6 +397,28 @@ public class DuelModel {
 
     public ArrayList<HashMap<Card, Integer>> getSwordsCard() {
         return swordsCard;
+    }
+
+    public ArrayList<ArrayList<Card>> getMonsterDestroyedInThisTurn() {
+        return monsterDestroyedInThisTurn;
+    }
+
+    public void deleteMonstersDestroyedInThisTurn() {
+        monsterDestroyedInThisTurn.clear();
+    }
+
+    public void setSupplySquad(int turn, Card card) {
+        supplySquadCards.get(turn).add(card);
+    }
+
+    public ArrayList<ArrayList<Card>> getSupplySquadCards() {
+        return supplySquadCards;
+    }
+
+    public void deleteSupplySquadCard(int turn, Card card) {
+        supplySquadCards.get(turn).remove(card);
+        spellsAndTrapsInFiled.get(turn).remove(card);
+        addCardToGraveyard(turn, card);
     }
 
     public int findEmptySpellField() {

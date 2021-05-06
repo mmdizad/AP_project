@@ -173,7 +173,9 @@ public class MainPhaseView extends DuelView implements Set, Summon {
                 if (duelModel.getBorrowCards().size() > 0) {
                     duelController.refundsTheBorrowCards();
                 }
-                hasSwordCard();
+                duelController.hasSwordCard();
+                duelController.hasSupplySquadCard();
+                duelModel.deleteMonstersDestroyedInThisTurn();
                 System.out.println("EndPhase");
                 duelModel.turn = 1 - duelModel.turn;
                 DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
@@ -186,25 +188,5 @@ public class MainPhaseView extends DuelView implements Set, Summon {
         }
     }
 
-    public void hasSwordCard() {
-        for (Map.Entry<Card, Integer> entry : duelModel.getSwordsCard().get(duelModel.turn).entrySet()) {
-            Card swordCard = entry.getKey();
-            int numberOfTurnExist = entry.getValue();
-            if (numberOfTurnExist >= 2) {
-                duelModel.deleteSwordsCard(duelModel.turn, swordCard);
-            } else {
-                entry.setValue(numberOfTurnExist + 1);
-            }
-        }
-        for (Map.Entry<Card, Integer> entry : duelModel.getSwordsCard().get(1 - duelModel.turn).entrySet()) {
-            Card swordCard = entry.getKey();
-            int numberOfTurnExist = entry.getValue();
-            if (numberOfTurnExist >= 2) {
-                duelModel.deleteSwordsCard(1 - duelModel.turn, swordCard);
-            } else {
-                entry.setValue(numberOfTurnExist + 1);
-            }
-        }
-    }
 
 }
