@@ -79,6 +79,8 @@ public class DuelController {
             return effectOfHarpiesFeatherDuster(placeOfSpell);
         else if (spell.getName().equals("Swords of Revealing Light")) {
             return effectOfSwordsOfRevealingLight(placeOfSpell);
+        } else if (spell.getName().equals("Dark Hole")) {
+            return effectOfDarkHole(placeOfSpell);
         }
         return "";
     }
@@ -172,7 +174,7 @@ public class DuelController {
 
     public String effectOfRaigeki(int placeOfSpell) {
         boolean opponentHasAnyMonster = false;
-        ArrayList<Card> monstersInFieldOfPlayer = duelModel.getMonstersInField().get(duelModel.turn);
+        ArrayList<Card> monstersInFieldOfPlayer = duelModel.getMonstersInField().get(1 - duelModel.turn);
         int i = 0;
         for (Card card : monstersInFieldOfPlayer) {
             if (card != null) {
@@ -183,12 +185,12 @@ public class DuelController {
             i++;
         }
         if (opponentHasAnyMonster) {
-            return "all of monsters that your opponent control destroyed";
-        } else {
             duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
             duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
             duelModel.addCardToGraveyard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
                     .get(0));
+            return "all of monsters that your opponent control destroyed";
+        } else {
             return "your opponent dont have any monster";
         }
     }
@@ -283,6 +285,7 @@ public class DuelController {
     }
 
     public String effectOfSwordsOfRevealingLight(int placeOfSpell) {
+        // not complete it needs a change in battlePhase
         duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
         duelModel.setSwordsCard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn).get(0));
         changeStateOfMonsterWithSwordsCard(1 - duelModel.turn);
@@ -304,6 +307,39 @@ public class DuelController {
         }
     }
 
+    public String effectOfDarkHole(int placeOfSpell) {
+        boolean opponentHasAnyMonster = false;
+        boolean youHaveAnyMonster = false;
+        ArrayList<Card> monstersInField1 = duelModel.getMonstersInField().get(1 - duelModel.turn);
+        int i = 0;
+        for (Card card : monstersInField1) {
+            if (card != null) {
+                opponentHasAnyMonster = true;
+                duelModel.deleteMonster(1 - duelModel.turn, i);
+                duelModel.addCardToGraveyard(1 - duelModel.turn, card);
+            }
+            i++;
+        }
+        ArrayList<Card> monstersInField2 = duelModel.getMonstersInField().get(duelModel.turn);
+        i = 0;
+        for (Card card : monstersInField2) {
+            if (card != null) {
+                youHaveAnyMonster = true;
+                duelModel.deleteMonster(duelModel.turn, i);
+                duelModel.addCardToGraveyard(duelModel.turn, card);
+            }
+            i++;
+        }
+        if (opponentHasAnyMonster || youHaveAnyMonster) {
+            duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+            duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
+            duelModel.addCardToGraveyard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
+                    .get(0));
+            return "all of monsters in field destroyed";
+        } else {
+            return "you and your opponent dont have any monsters";
+        }
+    }
 
     public String specialSummonMonsterOnFieldFromGraveyard(int turn, String state, int indexOfCardOfGraveyard) {
         String stateOfCard = "OO";
