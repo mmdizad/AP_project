@@ -21,6 +21,7 @@ public class StandByPhaseView extends DuelView {
             int i = scanner.nextInt();
             System.out.println(standByPhaseController.effectOfSpellInThisPhase(i));
         }
+
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
         mainPhaseView.run(scanner, "MainPhase1", true);
     }
