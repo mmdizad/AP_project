@@ -341,6 +341,70 @@ public class DuelController {
         }
     }
 
+    public String effectOfMagnumShield(int placeOfSpellInField){
+        boolean isWarriorExist=false;
+        ArrayList<Integer> placeOfWarriorCard=new ArrayList<>();
+        for (int i = 0; i <5 ; i++) {
+            Card card =duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            if (card != null)
+                //check it
+                if (card.getCategory().equals("Warrior")) {
+                    if(duelModel.getMonsterCondition(duelModel.turn,i).equals("DO")||duelModel.getMonsterCondition(duelModel.turn,i).equals("OO"))
+                    isWarriorExist = true;
+                    placeOfWarriorCard.add(i);
+                }
+        }
+            if(isWarriorExist){
+                int place=duelView.scanForChoseMonsterForEquip(placeOfWarriorCard);
+                //فرض میکنیم که عدد درست وارد شده
+                Monster monster =(Monster) duelModel.getMonstersInField().get(duelModel.turn).get(place);
+                if(duelModel.getMonsterCondition(duelModel.turn,place).startsWith("D"))
+                { monster.setAttackPower(monster.getAttackPower()+monster.getDefensePower());
+
+                  duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).set(placeOfSpellInField,duelModel.getSelectedCards().get(duelModel.turn).get(0));
+                //پر شود
+
+
+
+                    return "spell activated";
+                }else {monster.setDefensePower(monster.getAttackPower()+ monster.getDefensePower());
+
+return "spell activated";
+
+                }
+            }else return "you don't have any Warrior monster to equip ";
+    }
+    public  String effectOfUmiiruka(){
+
+        duelModel.setField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
+        duelModel.getHandCards().get(duelModel.turn).remove(duelModel.getSelectedCards().get(duelModel.turn).get(0));
+        for (int i = 0; i < 5; i++) {
+        Monster monster =(Monster)   duelModel.getMonstersInField().get(duelModel.turn).get(i);
+        Monster monster1= (Monster)   duelModel.getMonstersInField().get(duelModel.turn).get(i);
+        if(monster!=null) {
+            monster.setDefensePower(monster.getDefensePower() - 400);
+            monster.setAttackPower(monster.getAttackPower() + 500);
+        }
+        if(monster1!=null) {
+            monster1.setDefensePower(monster1.getDefensePower() - 400);
+            monster1.setAttackPower(monster1.getAttackPower() + 500);
+        }
+        }
+      return "spell activated";
+    }
+    public String effectOfClosedForest(){
+
+        duelModel.getHandCards().get(duelModel.turn).remove(duelModel.getSelectedCards().get(duelModel.turn).get(0));
+        duelModel.setField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
+        for (int i = 0; i < 5; i++) {
+            Monster monster =(Monster)   duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            if(monster!=null)
+                monster.setAttackPower(monster.getAttackPower()+duelModel.getGraveyard(duelModel.turn).size()*100);
+        }
+        deselect();
+        return "spell activated";
+    }
+
     public String specialSummonMonsterOnFieldFromGraveyard(int turn, String state, int indexOfCardOfGraveyard) {
         String stateOfCard = "OO";
         if (state.equals("Attack")) {
