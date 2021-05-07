@@ -28,6 +28,7 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> monsterDestroyedInThisTurn;
     private ArrayList<ArrayList<Card>> spellAbsorptionCards;
     private ArrayList<ArrayList<Card>> messengerOfPeace;
+    private ArrayList<ArrayList<Card>> spellsAndTarpsSetInThisTurn;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         usernames = new ArrayList<>();
@@ -127,6 +128,11 @@ public class DuelModel {
         ArrayList<Card> messengerOfPeace2 = new ArrayList<>();
         messengerOfPeace.add(messengerOfPeace1);
         messengerOfPeace.add(messengerOfPeace2);
+        spellsAndTarpsSetInThisTurn = new ArrayList<>();
+        ArrayList<Card> spellsAndTarpsSetInThisTurn1 = new ArrayList<>();
+        ArrayList<Card> spellsAndTarpsSetInThisTurn2 = new ArrayList<>();
+        spellsAndTarpsSetInThisTurn.add(spellsAndTarpsSetInThisTurn1);
+        spellsAndTarpsSetInThisTurn.add(spellsAndTarpsSetInThisTurn2);
     }
 
     public void decreaseLifePoint(int lifePoint, int turn) {
@@ -423,7 +429,8 @@ public class DuelModel {
 
     public void deleteSwordsCard(int turn, Card swordCard) {
         swordsCard.get(turn).remove(swordCard);
-        spellsAndTrapsInFiled.get(turn).remove(swordCard);
+        int index = spellsAndTrapsInFiled.get(turn).indexOf(swordCard);
+        deleteSpellAndTrap(turn, index);
         addCardToGraveyard(turn, swordCard);
     }
 
@@ -449,7 +456,8 @@ public class DuelModel {
 
     public void deleteSupplySquadCard(int turn, Card card) {
         supplySquadCards.get(turn).remove(card);
-        spellsAndTrapsInFiled.get(turn).remove(card);
+        int index = spellsAndTrapsInFiled.get(turn).indexOf(card);
+        deleteSpellAndTrap(turn, index);
         addCardToGraveyard(turn, card);
     }
 
@@ -459,7 +467,8 @@ public class DuelModel {
 
     public void deleteSpellAbsorptionCards(int turn, Card card) {
         spellAbsorptionCards.get(turn).remove(card);
-        spellsAndTrapsInFiled.get(turn).remove(card);
+        int index = spellsAndTrapsInFiled.get(turn).indexOf(card);
+        deleteSpellAndTrap(turn, index);
         addCardToGraveyard(turn, card);
     }
 
@@ -478,7 +487,8 @@ public class DuelModel {
     public void deleteMessengerOfPeaceCards(int turn) {
         // maybe has a bug
         for (Card card : messengerOfPeace.get(turn)) {
-            spellsAndTrapsInFiled.get(turn).remove(card);
+            int index = spellsAndTrapsInFiled.get(turn).indexOf(card);
+            deleteSpellAndTrap(turn, index);
             addCardToGraveyard(turn, card);
         }
         messengerOfPeace.get(turn).clear();
@@ -486,6 +496,18 @@ public class DuelModel {
 
     public ArrayList<ArrayList<Card>> getMessengerOfPeace() {
         return messengerOfPeace;
+    }
+
+    public void setSpellsAndTrapsSetInThisTurn(int turn, Card spellOrTrapCard) {
+        spellsAndTarpsSetInThisTurn.get(turn).add(spellOrTrapCard);
+    }
+
+    public ArrayList<ArrayList<Card>> getSpellsAndTarpsSetInThisTurn() {
+        return spellsAndTarpsSetInThisTurn;
+    }
+
+    public void deleteSpellAndTrapsSetInThisTurn() {
+        spellsAndTarpsSetInThisTurn.clear();
     }
 
     public int findEmptySpellField() {

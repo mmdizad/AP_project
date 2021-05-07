@@ -176,6 +176,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
                 duelController.hasSwordCard();
                 duelController.hasSupplySquadCard();
                 duelModel.deleteMonstersDestroyedInThisTurn();
+                duelModel.deleteSpellAndTrapsSetInThisTurn();
                 System.out.println("EndPhase");
                 duelModel.turn = 1 - duelModel.turn;
                 DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();

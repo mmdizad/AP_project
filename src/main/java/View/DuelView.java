@@ -47,7 +47,7 @@ public class DuelView {
             standByPhaseView.run(scanner);
         }
         duelController = new DuelController();
-        duelController.setDuelModel(duelModel, duelView,duelController);
+        duelController.setDuelModel(duelModel, duelView, duelController);
     }
 
     protected void deselect(Matcher matcher) {
@@ -100,14 +100,32 @@ public class DuelView {
         System.out.println("please specify the number of card you want");
         return scanner1.nextInt();
     }
- public Integer scanForChoseMonsterForEquip(ArrayList<Integer> placeOfCard){
-     System.out.print("chose which Monster Want to equip ");
-    for( Integer integer:placeOfCard){
-        System.out.print(integer+" ");
+
+    public Integer scanNumberOfCardForDeleteFromHand() {
+        System.out.println("please specify the place of card you want for delete from your hand");
+        return scanner1.nextInt();
     }
-    int place = scanner1.nextInt();
+
+    public Integer scanNumberOfCardThatWouldBeDelete() {
+        System.out.println("please enter number of the  cards you want to destroyed (0 or 1 or 2)");
+        return scanner1.nextInt();
+    }
+
+    public String scanPlaceOfCardWantToDestroyed() {
+        System.out.println("please specify the filed and place of cards you want to destroyed" +
+                "(separate it with space ex: my/opponent 1)");
+        return scanner1.nextLine();
+    }
+
+    public Integer scanForChoseMonsterForEquip(ArrayList<Integer> placeOfCard) {
+        System.out.print("chose which Monster Want to equip ");
+        for (Integer integer : placeOfCard) {
+            System.out.print(integer + " ");
+        }
+        int place = scanner1.nextInt();
         return place;
- }
+    }
+
     protected void showGraveyard(Matcher matcher) {
         if (matcher.find()) {
             ArrayList<String> output = duelController.showGraveYard();

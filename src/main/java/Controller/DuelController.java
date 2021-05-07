@@ -96,6 +96,8 @@ public class DuelController {
             return effectOfSpellAbsorption(placeOfSpell);
         } else if (spell.getName().equals("Messenger of peace")) {
             return effectOfMessengerOfPeace(placeOfSpell);
+        } else if (spell.getName().equals("Twin Twisters")) {
+            return effectOfTwinTwisters(placeOfSpell);
         }
         return "";
     }
@@ -407,6 +409,114 @@ public class DuelController {
         duelModel.setMessengerOfPeace(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
                 .get(0));
         return "spell activated";
+    }
+
+    public String effectOfTwinTwisters(int placeOfSpell) {
+        ArrayList<Card> spellsAndTrapsSetInThisTurn = duelModel.getSpellsAndTarpsSetInThisTurn()
+                .get(duelModel.turn);
+        for (Card card : spellsAndTrapsSetInThisTurn) {
+            if (card.getCategory().equals("Spell")) {
+                if (card == duelModel.getSelectedCards().get(duelModel.turn).get(0)) {
+                    return "preparations of this spell are not done yet";
+                }
+            }
+        }
+        int placeOfCardInHand = duelView.scanNumberOfCardForDeleteFromHand();
+        if (placeOfCardInHand > duelModel.getHandCards().get(duelModel.turn).size()) {
+            return "you cant delete card with this address from your hand";
+        } else {
+            Card card = duelModel.getHandCards().get(duelModel.turn)
+                    .get(placeOfCardInHand - 1);
+            duelModel.deleteCardFromHand(card);
+            duelModel.addCardToGraveyard(duelModel.turn, card);
+            int numberOfCardsPlayerWantToDestroyed = duelView.scanNumberOfCardThatWouldBeDelete();
+            if (numberOfCardsPlayerWantToDestroyed == 0) {
+                duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+                duelModel.effectOfSpellAbsorptionCards();
+                duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
+                duelModel.addCardToGraveyard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
+                        .get(0));
+                return "card activated";
+            } else if (numberOfCardsPlayerWantToDestroyed == 1) {
+                String response = duelView.scanPlaceOfCardWantToDestroyed();
+                String[] splitResponse = response.split(" ");
+                int placeOfSpellOrTrapCard = Integer.parseInt(splitResponse[1]);
+                if (splitResponse[0].equals("my")) {
+                    return deleteSpellCardsInActiveTwinTwisters(duelModel.turn, placeOfSpell,
+                            placeOfSpellOrTrapCard);
+                } else if (splitResponse[0].equals("opponent")) {
+                    return deleteSpellCardsInActiveTwinTwisters(1 - duelModel.turn, placeOfSpell,
+                            placeOfSpellOrTrapCard);
+                } else {
+                    return "you must enter my/opponent";
+                }
+            } else if (numberOfCardsPlayerWantToDestroyed == 2) {
+                String response1 = duelView.scanPlaceOfCardWantToDestroyed();
+                String response2 = duelView.scanPlaceOfCardWantToDestroyed();
+                String[] splitResponse1 = response1.split(" ");
+                String[] splitResponse2 = response2.split(" ");
+                int placeOfSpellOrTrapCard1 = Integer.parseInt(splitResponse1[1]);
+                int placeOfSpellOrTrapCard2 = Integer.parseInt(splitResponse2[1]);
+                if (splitResponse1[0].equals("my") && splitResponse2[0].equals("my")) {
+                    deleteSpellCardsInActiveTwinTwisters(duelModel.turn, placeOfSpell,
+                            placeOfSpellOrTrapCard1);
+                    deleteSpellCardsInActiveTwinTwisters(duelModel.turn, placeOfSpell,
+                            placeOfSpellOrTrapCard2);
+                } else if (splitResponse1[0].equals("opponent") && splitResponse2[0].equals("opponent")) {
+                    deleteSpellCardsInActiveTwinTwisters(1 - duelModel.turn, placeOfSpell,
+                            placeOfSpellOrTrapCard1);
+                    deleteSpellCardsInActiveTwinTwisters(1 - duelModel.turn, placeOfSpell,
+                            placeOfSpellOrTrapCard2);
+                } else if (splitResponse1[0].equals("my") && splitResponse2[0].equals("opponent")) {
+                    deleteSpellCardsInActiveTwinTwisters(duelModel.turn, placeOfSpell,
+                            placeOfSpellOrTrapCard1);
+                    deleteSpellCardsInActiveTwinTwisters(1 - duelModel.turn, placeOfSpell,
+                            placeOfSpellOrTrapCard2);
+                } else if (splitResponse1[0].equals("opponent") && splitResponse2[0].equals("my")) {
+                    deleteSpellCardsInActiveTwinTwisters(1 - duelModel.turn, placeOfSpell,
+                            placeOfSpellOrTrapCard1);
+                    deleteSpellCardsInActiveTwinTwisters(duelModel.turn, placeOfSpell,
+                            placeOfSpellOrTrapCard2);
+                } else {
+                    return "you must enter my/opponent";
+                }
+            } else {
+                return "you cant destroy spell in this number";
+            }
+        }
+        return "";
+    }
+
+
+    public String deleteSpellCardsInActiveTwinTwisters(int turn, int placeOfSpell, int placeOfSpellOrTrapCard) {
+        if (placeOfSpellOrTrapCard > 5) {
+            return "you must enter correct address";
+        } else {
+            Card card1 = duelModel.getSpellsAndTrapsInFiled().get(turn)
+                    .get(placeOfSpellOrTrapCard - 1);
+            if (card1 == null) {
+                return "you cant destroyed card with this address";
+            } else {
+                if (card1.getName().equals("Swords of Revealing Light")) {
+                    duelModel.deleteSwordsCard(turn, card1);
+                } else if (card1.getName().equals("Supply Squad")) {
+                    duelModel.deleteSupplySquadCard(turn, card1);
+                } else if (card1.getName().equals("Spell Absorption")) {
+                    duelModel.deleteSpellAbsorptionCards(turn, card1);
+                } else if (card1.getName().equals("Messenger of peace")) {
+                    duelModel.deleteMessengerOfPeaceCards(turn);
+                } else {
+                    duelModel.deleteSpellAndTrap(turn, placeOfSpellOrTrapCard - 1);
+                    duelModel.addCardToGraveyard(turn, card1);
+                }
+                duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+                duelModel.effectOfSpellAbsorptionCards();
+                duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
+                duelModel.addCardToGraveyard(duelModel.turn, duelModel.getSelectedCards().get(duelModel.turn)
+                        .get(0));
+                return "card activated";
+            }
+        }
     }
 
 

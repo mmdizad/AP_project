@@ -48,6 +48,8 @@ public class MainPhaseController extends DuelController {
         else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(4) == null)
             duelModel.addSpellAndTrapFromHandToGame("H/5", 4);
         else return "monster card zone is full";
+        duelModel.setSpellsAndTrapsSetInThisTurn(duelModel.turn, duelModel.getSelectedCards()
+                .get(duelModel.turn).get(0));
         return "set successfully";
     }
 
