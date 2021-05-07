@@ -30,6 +30,7 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> messengerOfPeace;
     private ArrayList<ArrayList<Card>> spellsAndTarpsSetInThisTurn;
     private ArrayList<ArrayList<Boolean>> spellZoneActivate;
+    private ArrayList<ArrayList<Card>> activatedMonsterEffects;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         usernames = new ArrayList<>();
@@ -134,6 +135,10 @@ public class DuelModel {
         ArrayList<Card> spellsAndTarpsSetInThisTurn2 = new ArrayList<>();
         spellsAndTarpsSetInThisTurn.add(spellsAndTarpsSetInThisTurn1);
         spellsAndTarpsSetInThisTurn.add(spellsAndTarpsSetInThisTurn2);
+        ArrayList<Card> activatedMonsterEffects1 = new ArrayList<>();
+        ArrayList<Card> activatedMonsterEffects2 = new ArrayList<>();
+        activatedMonsterEffects.add(activatedMonsterEffects1);
+        activatedMonsterEffects.add(activatedMonsterEffects2);
     }
 
     public void decreaseLifePoint(int lifePoint, int turn) {
@@ -194,14 +199,14 @@ public class DuelModel {
     }
 
     public void addSpellAndTrapFromHandToGame(String condition, int index) {
-        spellsAndTrapsInFiled.get(turn).add(index, selectedCards.get(turn).get(0));
-        spellAndTrapCondition.get(turn).add(index, condition);
+        spellsAndTrapsInFiled.get(turn).set(index, selectedCards.get(turn).get(0));
+        spellAndTrapCondition.get(turn).set(index, condition);
         deSelectedCard();
         deleteCardFromHand(getSpellAndTrap(turn, index + 1));
     }
 
     public void addMonsterCondition(int turn, int index, String condition) {
-        monsterCondition.get(turn).add(index, condition);
+        monsterCondition.get(turn).set(index, condition);
     }
 
     public void changeAttackAndDefense(int place) {
@@ -527,5 +532,13 @@ public class DuelModel {
             }
         }
         return -1;
+    }
+
+    public void addActivatedMonsterEffect(Card card, int turn){
+        activatedMonsterEffects.get(turn).add(card);
+    }
+
+    public ArrayList<Card> getActivatedMonsterEffect(int turn){
+        return activatedMonsterEffects.get(turn);
     }
 }

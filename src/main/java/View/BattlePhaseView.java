@@ -62,6 +62,12 @@ public class BattlePhaseView extends DuelView {
 
     }
 
+    public String getCyberseCard(){
+        System.out.println("opponent attacked you but you had Texchanger,now enter a Cyberse typed card to special summon: ");
+        String cardName = scanner1.nextLine();
+        return cardName;
+    }
+
     public void directAttack(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
