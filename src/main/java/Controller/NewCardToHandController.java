@@ -32,7 +32,7 @@ public class NewCardToHandController extends DuelController {
                     if (card.getName().equals("Time Seal") && duelModel.getSpellAndTrapCondition(1 - duelModel.turn, i).charAt(0) == 'O'){
                         duelModel.deleteSpellAndTrap(1 - duelModel.turn, i - 1);
                         duelModel.addCardToGraveyard(1 - duelModel.turn, card);
-                        return duelModel.getHandCards().get(duelModel.turn);
+                        return null;
                     }
                 }
             }

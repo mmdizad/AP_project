@@ -33,6 +33,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
 
         while (true) {
             String command = scanner.nextLine();
+            isCommandInvalid = true;
             selectMonster(getCommandMatcher(command, "^select --monster (\\d+)$"));
             selectOpponentMonster(getCommandMatcher(command, "^select --monster (\\d+) --opponent$"));
             selectOpponentMonster(getCommandMatcher(command, "^select --opponent --monster (\\d+)$"));
@@ -40,7 +41,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             selectOpponentSpell(getCommandMatcher(command, "^select --spell (\\d+) --opponent$"));
             selectOpponentSpell(getCommandMatcher(command, "^select --opponent --spell (\\d+)$"));
             selectField(getCommandMatcher(command, "^select --field"));
-            selectOpponentField(getCommandMatcher(command, "^select --opponent --filed"));
+            selectOpponentField(getCommandMatcher(command, "^select --opponent --field"));
             selectOpponentField(getCommandMatcher(command, "^select --field --opponent"));
             deselect(getCommandMatcher(command, "^select -d$"));
             selectHand(getCommandMatcher(command, "^select --hand (\\d+)$"));
@@ -52,16 +53,24 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             specialSummon(getCommandMatcher(command, "^special-summon$"));
             activateEffectMainView(getCommandMatcher(command, "^activate effect$"));
             if (command.equals("enterPhase")) {
+                isCommandInvalid = false;
                 enterPhase(scanner);
                 break;
-            } else if (command.equals("set"))
+            } else if (command.equals("set")) {
+                isCommandInvalid = false;
                 set();
+            }
+            if (isCommandInvalid){
+                System.out.println("invalid command");
+            }
+            isCommandInvalid = true;
         }
     }
 
     @Override
     public void summon(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             MainPhaseController mainPhaseController = MainPhaseController.getInstance();
             String result = mainPhaseController.summon();
             if (result.equals("summoned successfully")) {
@@ -92,6 +101,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     @Override
     public void flipSummon(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             MainPhaseController mainPhaseController = MainPhaseController.getInstance();
             System.out.println(mainPhaseController.flipSummon());
         }
@@ -100,6 +110,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     @Override
     public void specialSummon(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             MainPhaseController mainPhaseController = MainPhaseController.getInstance();
             String result = mainPhaseController.specialSummon();
             if (result.equals("summon successfully")) {
