@@ -20,20 +20,39 @@ public class BattlePhaseView extends DuelView {
         if (startOfPhase) {
             System.out.println("BattlePhase");
         }
-
         while (true) {
+            isCommandInvalid = true;
             String command = scanner.nextLine();
             attack(getCommandMatcher(command, "^attack ([1-5]{1})$"),scanner);
             directAttack(getCommandMatcher(command, "^attack direct$"));
+            selectMonster(getCommandMatcher(command, "^select --monster (\\d+)$"));
+            selectOpponentMonster(getCommandMatcher(command, "^select --monster (\\d+) --opponent$"));
+            selectOpponentMonster(getCommandMatcher(command, "^select --opponent --monster (\\d+)$"));
+            selectSpellOrTrap(getCommandMatcher(command, "^select --spell (\\d+)$"));
+            selectOpponentSpell(getCommandMatcher(command, "^select --spell (\\d+) --opponent$"));
+            selectOpponentSpell(getCommandMatcher(command, "^select --opponent --spell (\\d+)$"));
+            selectField(getCommandMatcher(command, "^select --field"));
+            selectOpponentField(getCommandMatcher(command, "^select --opponent --field"));
+            selectOpponentField(getCommandMatcher(command, "^select --field --opponent"));
+            deselect(getCommandMatcher(command, "^select -d$"));
+            selectHand(getCommandMatcher(command, "^select --hand (\\d+)$"));
+            showCard(getCommandMatcher(command, "^card show (.+)$"));
+            showSelectedCard(getCommandMatcher(command, "card show --selected"));
+            showGraveyard(getCommandMatcher(command, "show graveyard"));
             if (command.equals("enterMenu")) {
                 enterPhase(scanner);
                 break;
             }
+            if (isCommandInvalid){
+                System.out.println("invalid command");
+            }
+            isCommandInvalid = true;
         }
     }
 
     public void attack(Matcher matcher,Scanner scanner) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             String response = BattlePhaseController.getInstance().attack(matcher);
             System.out.println(response);
             if (response.equals("opponent had Negate Attack trap and canceled your attack and ended battle phase,enter the phase you want to go:")){
@@ -45,6 +64,7 @@ public class BattlePhaseView extends DuelView {
 
     public void directAttack(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             System.out.println(BattlePhaseController.getInstance().directAttack(matcher));
         }
     }

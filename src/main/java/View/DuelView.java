@@ -14,6 +14,7 @@ public class DuelView {
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
+    protected boolean isCommandInvalid = true;
 
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView) {
         scanner1 = scanner;
@@ -52,6 +53,7 @@ public class DuelView {
 
     protected void deselect(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             System.out.println(duelController.deselect());
         }
     }
@@ -128,6 +130,7 @@ public class DuelView {
 
     protected void showGraveyard(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             ArrayList<String> output = duelController.showGraveYard();
             for (String s : output) {
                 System.out.println(s);
@@ -137,6 +140,7 @@ public class DuelView {
 
     protected void showCard(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             ArrayList<String> output = duelController.checkCard(matcher);
             for (String s : output) {
                 System.out.println(s);
@@ -146,6 +150,7 @@ public class DuelView {
 
     protected void showSelectedCard(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             ArrayList<String> output = duelController.checkSelectedCard(matcher);
             for (String s : output) {
                 System.out.println(s);
@@ -162,42 +167,49 @@ public class DuelView {
 
     protected void selectMonster(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             System.out.println(duelController.selectMonster(matcher));
         }
     }
 
     protected void selectOpponentMonster(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             System.out.println(duelController.selectOpponentMonster(matcher));
         }
     }
 
     protected void selectSpellOrTrap(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             System.out.println(duelController.selectSpellOrTrap(matcher));
         }
     }
 
     protected void selectOpponentSpell(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             System.out.println(duelController.selectOpponentSpellOrTrap(matcher));
         }
     }
 
     protected void selectField(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             System.out.println(duelController.selectFieldZone());
         }
     }
 
     protected void selectOpponentField(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             System.out.println(duelController.selectOpponentFieldZone());
         }
     }
 
     protected void selectHand(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             System.out.println(duelController.selectHand(matcher));
         }
     }
