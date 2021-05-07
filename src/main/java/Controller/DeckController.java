@@ -128,7 +128,7 @@ public class DeckController extends LoginController {
             if (numberOfCardsInDeck >= 3) {
                 return "there are already three cards with name " + matcher.group(1) + " in deck " + matcher.group(2);
             } else {
-                Card card = Card.getNewCardBYName(matcher.group(1));
+                Card card = Card.getCardByName(matcher.group(1));
                 deck.addCardToMain(card);
                 return "card added to deck successfully";
             }
@@ -156,7 +156,7 @@ public class DeckController extends LoginController {
             if (numberOfCardsInDeck >= 3) {
                 return "there are already three cards with name " + matcher.group(1) + " in deck " + matcher.group(2);
             } else {
-                Card card = Card.getNewCardBYName(matcher.group(1));
+                Card card = Card.getCardByName(matcher.group(1));
                 deck.addCardToSide(card);
                 return "card added to deck successfully";
             }

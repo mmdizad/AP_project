@@ -76,7 +76,7 @@ public class Card {
         }
         return newFirstCards;
     }
-//روی این تابع یه فور بزن و یک کپی ازش بساز بفرس مثل پایین
+
 
 
     public static ArrayList<Card> getFirstCards() {
@@ -84,13 +84,8 @@ public class Card {
     }
 
 
-    //این تابع رو با تابع گت کار بای نیم که توی دک زدی جایگزین کن رضا
 
-    public static Card getNewCardBYName(String cardName) {
-        Card card = cards.get(cardName);
-        Card newCard = new Card(card.name, card.description, card.cardType, card.price, card.category);
-        return newCard;
-    }
+
 
     public static Card getCardByName(String cardName) {
         return cards.get(cardName);
