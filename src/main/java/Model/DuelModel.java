@@ -198,7 +198,7 @@ public class DuelModel {
     }
 
     public void changeAttackAndDefense(int place) {
-        if (monsterCondition.get(turn).get(place) == "OO")
+        if (monsterCondition.get(turn).get(place).equals("OO"))
             monsterCondition.get(turn).set(place, "DO");
         else monsterCondition.get(turn).set(place, "OO");
     }
@@ -208,14 +208,13 @@ public class DuelModel {
     }
 
     public void deleteMonster(int turn, int place) {
-        monstersInField.get(turn).add(place, null);
-        monsterCondition.get(turn).remove(place);
-        monsterCondition.get(turn).add("");
+        monstersInField.get(turn).set(place, null);
+        monsterCondition.get(turn).set(place,"");
     }
 
     public void deleteSpellAndTrap(int turn, int place) {
-        spellsAndTrapsInFiled.get(turn).add(place, null);
-        changeSpellAndTrapCondition(turn,place + 1, null);
+        spellsAndTrapsInFiled.get(turn).set(place, null);
+        spellAndTrapCondition.get(turn).set(place,"");
     }
 
     public void activateSpell(int turn, int place) {
@@ -378,8 +377,7 @@ public class DuelModel {
     }
 
     public void changeSpellAndTrapCondition(int turn,int place,String condition){
-        spellAndTrapCondition.get(turn).remove(place - 1);
-        spellAndTrapCondition.get(turn).add(place - 1, condition);
+        spellAndTrapCondition.get(turn).set(place - 1,condition);
     }
 
     public void deleteCardFromHand(Card card) {

@@ -37,24 +37,37 @@ public class BattlePhaseController extends DuelController {
                 if (attackedCards.contains(Integer.parseInt(condition[2]))) {
                     return "this card already attacked";
                 } else {
-                    if (monstersInField.get(duelModel.turn - 1).get(placeNumber - 1) == null) {
+                    if (monstersInField.get(1 - duelModel.turn).get(placeNumber - 1) == null) {
                         return "there is no card to attack here";
                     } else {
                         attackedCards.add(Integer.parseInt(condition[2]));
-                        if (duelModel.getMonsterCondition(duelModel.turn - 1, placeNumber).startsWith("OO")) {
-                            Card opponentCard = monstersInField.get(duelModel.turn - 1).get(placeNumber - 1);
-                            int ourCardAttack = Monster.getMonsterByName(ourCard.getName()).getAttackPower();
-                            int opponentCardAttack = Monster.getMonsterByName(opponentCard.getName()).getAttackPower();
+                        for (int i = 1; i < 6; i++) {
+                            Card card = duelModel.getSpellAndTrap(1 - duelModel.turn, i);
+                            String spellCondition = duelModel.getSpellAndTrapCondition(1 - duelModel.turn, i);
+                            if (card != null) {
+                                if (card.getName().equals("Magic Cylinder") && spellCondition.charAt(0) == 'O') {
+                                    return trapMagicCylinder(ourCard, card, i);
+                                } else if (card.getName().equals("Mirror Force") && spellCondition.charAt(0) == 'O') {
+                                    return trapMirrorFace(card, i);
+                                } else if (card.getName().equals("Negate Attack") && spellCondition.charAt(0) == 'O') {
+                                    return trapNegateAttack(card, i);
+                                }
+                            }
+                        }
+                        if (duelModel.getMonsterCondition(1 - duelModel.turn, placeNumber).startsWith("OO")) {
+                            Card opponentCard = monstersInField.get(1 - duelModel.turn).get(placeNumber - 1);
+                            int ourCardAttack = ourCard.getAttackPower();
+                            int opponentCardAttack = opponentCard.getAttackPower();
                             if (ourCardAttack > opponentCardAttack) {
-                                duelModel.addCardToGraveyard(duelModel.turn - 1, opponentCard);
-                                duelModel.deleteMonster(duelModel.turn - 1, placeNumber - 1);
-                                duelModel.decreaseLifePoint(ourCardAttack - opponentCardAttack, duelModel.turn - 1);
+                                duelModel.addCardToGraveyard(1 - duelModel.turn, opponentCard);
+                                duelModel.deleteMonster(1 - duelModel.turn, placeNumber - 1);
+                                duelModel.decreaseLifePoint(ourCardAttack - opponentCardAttack, 1 - duelModel.turn);
                                 int difference = ourCardAttack - opponentCardAttack;
                                 duelModel.deSelectedCard();
                                 return "your opponent’s monster is destroyed and your opponent receives " + difference + "  battle damage";
                             } else if (ourCardAttack == opponentCardAttack) {
-                                duelModel.addCardToGraveyard(duelModel.turn - 1, opponentCard);
-                                duelModel.deleteMonster(duelModel.turn - 1, placeNumber - 1);
+                                duelModel.addCardToGraveyard(1 - duelModel.turn, opponentCard);
+                                duelModel.deleteMonster(1 - duelModel.turn, placeNumber - 1);
                                 duelModel.addCardToGraveyard(duelModel.turn, ourCard);
                                 duelModel.deleteMonster(duelModel.turn, Integer.parseInt(condition[2]));
                                 duelModel.deSelectedCard();
@@ -68,14 +81,14 @@ public class BattlePhaseController extends DuelController {
                                 return "Your monster card is destroyed and you received " + difference + " battle damage";
                             }
                         } else {
-                            Card opponentCard = monstersInField.get(duelModel.turn - 1).get(placeNumber - 1);
-                            int ourCardAttack = Monster.getMonsterByName(ourCard.getName()).getAttackPower();
-                            int opponentCardDefense = Monster.getMonsterByName(opponentCard.getName()).getDefensePower();
+                            Card opponentCard = monstersInField.get(1 - duelModel.turn).get(placeNumber - 1);
+                            int ourCardAttack = ourCard.getAttackPower();
+                            int opponentCardDefense = opponentCard.getDefensePower();
                             if (ourCardAttack > opponentCardDefense) {
-                                duelModel.addCardToGraveyard(duelModel.turn - 1, opponentCard);
-                                duelModel.deleteMonster(duelModel.turn - 1, placeNumber - 1);
+                                duelModel.addCardToGraveyard(1 - duelModel.turn, opponentCard);
+                                duelModel.deleteMonster(1 - duelModel.turn, placeNumber - 1);
                                 duelModel.deSelectedCard();
-                                if (duelModel.getMonsterCondition(duelModel.turn - 1, placeNumber).startsWith("DO")) {
+                                if (duelModel.getMonsterCondition(1 - duelModel.turn, placeNumber).startsWith("DO")) {
                                     return "the defense position monster is destroyed";
                                 } else {
                                     return "opponent’s monster card was " + opponentCard.getName() +
@@ -83,7 +96,7 @@ public class BattlePhaseController extends DuelController {
                                 }
                             } else if (ourCardAttack == opponentCardDefense) {
                                 duelModel.deSelectedCard();
-                                if (duelModel.getMonsterCondition(duelModel.turn - 1, placeNumber).startsWith("DO")) {
+                                if (duelModel.getMonsterCondition(1 - duelModel.turn, placeNumber).startsWith("DO")) {
                                     return "no card is destroyed";
                                 } else {
                                     return "opponent’s monster card was " + opponentCard.getName() + " and no card is destroyed";
@@ -91,11 +104,12 @@ public class BattlePhaseController extends DuelController {
                             } else {
                                 duelModel.decreaseLifePoint(opponentCardDefense - ourCardAttack, duelModel.turn);
                                 duelModel.deSelectedCard();
-                                if (duelModel.getMonsterCondition(duelModel.turn - 1, placeNumber).startsWith("DO")) {
-                                    return "no card is destroyed and you received <damage> battle damage";
+                                int difference = opponentCardDefense - ourCardAttack;
+                                if (duelModel.getMonsterCondition(1 - duelModel.turn, placeNumber).startsWith("DO")) {
+                                    return "no card is destroyed and you received " + difference + " battle damage";
                                 } else {
                                     return "opponent’s monster card was " + opponentCard.getName() +
-                                            " and no card is destroyed and you received <damage> battle damage";
+                                            " and no card is destroyed and you received " + difference + " battle damage";
                                 }
                             }
                         }
@@ -122,21 +136,48 @@ public class BattlePhaseController extends DuelController {
                 } else {
                     boolean canAttack = true;
                     for (int i = 0; i < 5; i++) {
-                        if (monstersInField.get(duelModel.turn - 1).get(i) != null) {
+                        if (monstersInField.get(1 - duelModel.turn).get(i) != null) {
                             canAttack = false;
                         }
                     }
                     if (!canAttack) {
                         return "you can’t attack the opponent directly";
                     } else {
-                        int ourCardAttack = Monster.getMonsterByName(ourCard.getName()).getAttackPower();
+                        int ourCardAttack = ourCard.getAttackPower();
                         attackedCards.add(Integer.parseInt(condition[2]));
-                        duelModel.decreaseLifePoint(ourCardAttack, duelModel.turn - 1);
+                        duelModel.decreaseLifePoint(ourCardAttack, 1 - duelModel.turn);
                         duelModel.deSelectedCard();
                         return "you opponent receives " + ourCardAttack + " battale damage";
                     }
                 }
             }
         }
+    }
+
+    public String trapMagicCylinder(Card ourCard, Card trap, int place) {
+        duelModel.decreaseLifePoint(ourCard.getAttackPower(), duelModel.turn);
+        duelModel.addCardToGraveyard(1 - duelModel.turn, trap);
+        duelModel.deleteSpellAndTrap(1 - duelModel.turn, place - 1);
+        return "Opponent had Magic Cylinder Trap and canceled your attack and you took " + ourCard.getAttackPower() + " damage";
+    }
+
+    public String trapMirrorFace(Card trap, int place) {
+        for (int i = 1; i < 6; i++) {
+            String condition = duelModel.getMonsterCondition(duelModel.turn, i);
+            if (condition != null) {
+                if (condition.split("/")[0].equals("OO")) {
+                    duelModel.deleteMonster(duelModel.turn, i - 1);
+                }
+            }
+        }
+        duelModel.addCardToGraveyard(1 - duelModel.turn, trap);
+        duelModel.deleteSpellAndTrap(1 - duelModel.turn, place - 1);
+        return "Opponent had Mirror Force trap and removed all of your attacking monsters";
+    }
+
+    public String trapNegateAttack( Card trap, int place) {
+        duelModel.addCardToGraveyard(1 - duelModel.turn, trap);
+        duelModel.deleteSpellAndTrap(1 - duelModel.turn, place - 1);
+        return "opponent had Negate Attack trap and canceled your attack and ended battle phase,enter the phase you want to go:";
     }
 }
