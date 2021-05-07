@@ -175,9 +175,32 @@ public class BattlePhaseController extends DuelController {
         return "Opponent had Mirror Force trap and removed all of your attacking monsters";
     }
 
-    public String trapNegateAttack( Card trap, int place) {
+    public String trapNegateAttack(Card trap, int place) {
         duelModel.addCardToGraveyard(1 - duelModel.turn, trap);
         duelModel.deleteSpellAndTrap(1 - duelModel.turn, place - 1);
         return "opponent had Negate Attack trap and canceled your attack and ended battle phase,enter the phase you want to go:";
+    }
+
+    public String activateEffectBattlePhaseController() {
+        if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
+            return "no card is selected yet";
+        } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Spell")) {
+            return "activate effect is only for spell cards.";
+        } else {
+            String[] detailOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn)
+                    .get(duelModel.getSelectedCards().get(duelModel.turn).get(0)).split("/");
+            if (detailOfSelectedCard[0].equals("Hand")) {
+                return "you cant active this card";
+            }
+            if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field")) {
+
+            } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("O")) {
+                return "you have already activated this card";
+            } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("H")) {
+                return duelController.activateEffect(Integer.parseInt(detailOfSelectedCard[2]));
+            }
+            return "you cant active this card";
+        }
+
     }
 }

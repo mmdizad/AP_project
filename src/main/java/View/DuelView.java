@@ -56,9 +56,6 @@ public class DuelView {
         }
     }
 
-    protected void activateEffect() {
-
-    }
 
     public String getCardNameForTrapMindCrush(){
         System.out.println("enter card name:");

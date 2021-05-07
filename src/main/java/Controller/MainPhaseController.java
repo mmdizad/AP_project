@@ -5,6 +5,7 @@ import Model.Monster;
 import View.MainPhaseView;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.regex.Matcher;
 
 public class MainPhaseController extends DuelController {
@@ -431,5 +432,27 @@ public class MainPhaseController extends DuelController {
 
     public String ritualSummon(Matcher matcher) {
         return null;
+    }
+
+    public String activateSpellEffectMainController() {
+        if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
+            return "no card is selected yet";
+        } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Spell")) {
+            return "activate effect is only for spell cards.";
+        } else {
+            String[] detailOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn)
+                    .get(duelModel.getSelectedCards().get(duelModel.turn).get(0)).split("/");
+            if (detailOfSelectedCard[0].equals("Hand")) {
+                return duelController.activateEffect(-1);
+            } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field")) {
+
+            } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("O")) {
+                return "you have already activated this card";
+            } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("H")) {
+                return duelController.activateEffect(Integer.parseInt(detailOfSelectedCard[2]));
+            }
+            return "you cant active this card";
+        }
+
     }
 }

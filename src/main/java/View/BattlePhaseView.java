@@ -24,7 +24,8 @@ public class BattlePhaseView extends DuelView {
         while (true) {
             String command = scanner.nextLine();
             attack(getCommandMatcher(command, "^attack ([1-5]{1})$"),scanner);
-            directAttack(getCommandMatcher(command, "^attack direct$"));
+             directAttack(getCommandMatcher(command, "^attack direct$"));
+            activateEffectBattlePhaseView(getCommandMatcher(command, "^activate effect$"));
             if (command.equals("enterMenu")) {
                 enterPhase(scanner);
                 break;
@@ -36,7 +37,7 @@ public class BattlePhaseView extends DuelView {
         if (matcher.find()) {
             String response = BattlePhaseController.getInstance().attack(matcher);
             System.out.println(response);
-            if (response.equals("opponent had Negate Attack trap and canceled your attack and ended battle phase,enter the phase you want to go:")){
+            if (response.equals("opponent had Negate Attack trap and canceled your attack and ended battle phase,enter the phase you want to go:")) {
                 enterPhase(scanner);
             }
         }
@@ -46,6 +47,13 @@ public class BattlePhaseView extends DuelView {
     public void directAttack(Matcher matcher) {
         if (matcher.find()) {
             System.out.println(BattlePhaseController.getInstance().directAttack(matcher));
+        }
+    }
+
+    public void activateEffectBattlePhaseView(Matcher matcher){
+        if (matcher.find()){
+            BattlePhaseController battlePhaseController = BattlePhaseController.getInstance();
+            System.out.println(battlePhaseController.activateEffectBattlePhaseController());
         }
     }
 

@@ -50,6 +50,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             summon(getCommandMatcher(command, "^summon$"));
             flipSummon(getCommandMatcher(command, "^flip-summon$"));
             specialSummon(getCommandMatcher(command, "^special-summon$"));
+            activateEffectMainView(getCommandMatcher(command, "^activate effect$"));
             if (command.equals("enterPhase")) {
                 enterPhase(scanner);
                 break;
@@ -69,6 +70,13 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             } else {
                 System.out.println(result);
             }
+        }
+    }
+
+    public void activateEffectMainView(Matcher matcher) {
+        if (matcher.find()) {
+            MainPhaseController mainPhaseController = MainPhaseController.getInstance();
+            System.out.println(mainPhaseController.activateSpellEffectMainController());
         }
     }
 
