@@ -189,26 +189,26 @@ public class DeckController extends LoginController {
         Deck deck = Deck.getDeckByName(matcher.group(2));
         ArrayList<Card> mainCards = deck.getCardsMain();
         Card card = Card.getCardByName(matcher.group(1));
-        if (!mainCards.contains(card)) {
-            return "card with name " + matcher.group(1) + "  does not exist in main deck";
-        } else {
-            deck.deleteCardFromMain(card);
-            user.addCard(card);
-            return "card removed form deck successfully";
+        for (Card card1 : mainCards) {
+            if (card1.getName().equals(card.getName())) {
+                deck.deleteCardFromMain(card);
+                return "card removed form deck successfully";
+            }
         }
+        return "card with name " + matcher.group(1) + " does not exist in main deck";
     }
 
     public String deleteCardFromSide(Matcher matcher) {
         Deck deck = Deck.getDeckByName(matcher.group(2));
         ArrayList<Card> sideCards = deck.getCardsSide();
         Card card = Card.getCardByName(matcher.group(1));
-        if (!sideCards.contains(card)) {
-            return "card with name " + matcher.group(1) + "  does not exist in main deck";
-        } else {
-            deck.deleteCardFromSide(card);
-            user.addCard(card);
-            return "card removed form deck successfully";
+        for (Card card1 : sideCards){
+            if (card1.getName().equals(card.getName())) {
+                deck.deleteCardFromSide(card);
+                return "card removed form deck successfully";
+            }
         }
+        return "card with name " + matcher.group(1) + " does not exist in side deck";
     }
 
     public ArrayList<String> deckShow(Matcher matcher) {
@@ -239,7 +239,7 @@ public class DeckController extends LoginController {
         ArrayList<Card> spellsAndTraps = new ArrayList<>();
         ArrayList<Card> mainCards = deck.getCardsMain();
         for (int i = 0; i < mainCards.size(); i++) {
-            if (mainCards.get(i).getCategory().equals("monster")) {
+            if (mainCards.get(i).getCategory().equals("Monster")) {
                 monsters.add(mainCards.get(i));
             } else {
                 spellsAndTraps.add(mainCards.get(i));
@@ -266,7 +266,7 @@ public class DeckController extends LoginController {
         ArrayList<Card> spellsAndTraps = new ArrayList<>();
         ArrayList<Card> sideCards = deck.getCardsSide();
         for (int i = 0; i < sideCards.size(); i++) {
-            if (sideCards.get(i).getCategory().equals("monster")) {
+            if (sideCards.get(i).getCategory().equals("Monster")) {
                 monsters.add(sideCards.get(i));
             } else {
                 spellsAndTraps.add(sideCards.get(i));

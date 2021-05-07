@@ -209,10 +209,13 @@ public class DuelModel {
 
     public void deleteMonster(int turn, int place) {
         monstersInField.get(turn).add(place, null);
+        monsterCondition.get(turn).remove(place);
+        monsterCondition.get(turn).add("");
     }
 
     public void deleteSpellAndTrap(int turn, int place) {
         spellsAndTrapsInFiled.get(turn).add(place, null);
+        changeSpellAndTrapCondition(turn,place + 1, null);
     }
 
     public void activateSpell(int turn, int place) {
@@ -374,8 +377,17 @@ public class DuelModel {
         deSelectedCard();
     }
 
+    public void changeSpellAndTrapCondition(int turn,int place,String condition){
+        spellAndTrapCondition.get(turn).remove(place - 1);
+        spellAndTrapCondition.get(turn).add(place - 1, condition);
+    }
+
     public void deleteCardFromHand(Card card) {
         handCards.get(turn).remove(card);
+    }
+
+    public void deleteCardFromOpponentHand(Card card) {
+        handCards.get(1 - turn).remove(card);
     }
 
     public void deleteCardFromHandWithIndex(int index) {
@@ -385,6 +397,16 @@ public class DuelModel {
 
     public void addMonsterFromGraveyardToGame(String condition, int index) {
         monstersInField.get(turn).add(index, selectedCards.get(turn).get(0));
+        monsterCondition.get(turn).add(index, condition);
+    }
+
+    public void addCertainMonsterFromGraveyardToGame(int turn,String condition, int index, Card card) {
+        monstersInField.get(turn).add(index, card);
+        monsterCondition.get(turn).add(index, condition);
+    }
+
+    public void addCertainSpellOrTrapFromGraveyardToGame(String condition, int index,Card card) {
+        monstersInField.get(turn).add(index, card);
         monsterCondition.get(turn).add(index, condition);
     }
 

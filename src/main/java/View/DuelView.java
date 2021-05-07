@@ -60,6 +60,11 @@ public class DuelView {
 
     }
 
+    public String getCardNameForTrapMindCrush(){
+        System.out.println("enter card name:");
+        return scanner1.nextLine();
+    }
+
     public void opponentActiveEffect(boolean hasAnySpellOrTrap) {
         if (hasAnySpellOrTrap) {
             duelModel.turn = 1 - duelModel.turn;

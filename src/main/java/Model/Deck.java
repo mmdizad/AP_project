@@ -25,19 +25,47 @@ public class Deck {
     }
 
     public void addCardToMain(Card card) {
-        cardsMain.add(card);
+        if (card.getCategory().equals("Monster")){
+            Card card1 = new Card(card.getName(),card.getDescription(),card.getCardType(),card.getPrice(),card.getCategory());
+            card1.setAttackPower(Monster.getMonsterByName(card.getName()).getAttackPower());
+            card1.setDefensePower(Monster.getMonsterByName(card.getName()).getDefensePower());
+            card1.setLevel(Monster.getMonsterByName(card.getName()).getLevel());
+            cardsMain.add(card1);
+        }else {
+            Card card1 = new Card(card.getName(),card.getDescription(),card.getCardType(),card.getPrice(),card.getCategory());
+            cardsMain.add(card1);
+        }
     }
 
     public void addCardToSide(Card card) {
-        cardsSide.add(card);
+        if (card.getCategory().equals("Monster")){
+            Card card1 = new Card(card.getName(),card.getDescription(),card.getCardType(),card.getPrice(),card.getCategory());
+            card1.setAttackPower(Monster.getMonsterByName(card.getName()).getAttackPower());
+            card1.setDefensePower(Monster.getMonsterByName(card.getName()).getDefensePower());
+            card1.setLevel(Monster.getMonsterByName(card.getName()).getLevel());
+            cardsSide.add(card1);
+        }else {
+            Card card1 = new Card(card.getName(),card.getDescription(),card.getCardType(),card.getPrice(),card.getCategory());
+            cardsSide.add(card1);
+        }
     }
 
     public void deleteCardFromMain(Card card) {
-        cardsMain.remove(card);
+        for (Card card1 : cardsMain){
+            if (card1.getName().equals(card.getName())){
+                cardsMain.remove(card1);
+                return;
+            }
+        }
     }
 
     public void deleteCardFromSide(Card card) {
-        cardsSide.remove(card);
+        for (Card card1 : cardsSide){
+            if (card1.getName().equals(card.getName())){
+                cardsSide.remove(card1);
+                return;
+            }
+        }
     }
 
     public static void deleteDeck(Deck deck) {

@@ -20,6 +20,9 @@ public class Card {
     protected String category;
     protected String cardType;
     protected String cardID;
+    private int defensePower;
+    private int attackPower;
+    private int level;
 
     public Card(String name, String description, String cardType, int price, String category) {
         setName(name);
@@ -31,6 +34,30 @@ public class Card {
             cards.put(name, this);
             allCards.add(this);
         }
+    }
+
+    public void setAttackPower(int attackPower) {
+        this.attackPower = attackPower;
+    }
+
+    public void setDefensePower(int defensePower) {
+        this.defensePower = defensePower;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getAttackPower() {
+        return attackPower;
+    }
+
+    public int getDefensePower() {
+        return defensePower;
     }
 
     public static void addFirstCards(ArrayList<Card> addFirstCards) {

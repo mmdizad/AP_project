@@ -25,6 +25,8 @@ public class DrawPhaseView extends DuelView {
             for (Card card : cardsAddedToPlayerHand) {
                 System.out.println("new card added to the hand :" + card.getName());
             }
+        }else {
+            System.out.println("no card added to hand");
         }
         if (!startOfGame) {
             StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();

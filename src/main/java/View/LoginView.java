@@ -23,7 +23,6 @@ public class LoginView extends Menu {
                     " (\\S+)$"), scanner);
             showMenu(getCommandMatcher(input, "^menu show-current$"));
             enterMenu(getCommandMatcher(input, "^menu enter \\S+$"));
-
             if (input.equals("menu exit")) {
                 break;
             }
@@ -47,9 +46,12 @@ public class LoginView extends Menu {
 
     public void login(String username, String password, Scanner scanner) {
         LoginController loginController = new LoginController();
-        System.out.println(loginController.login(username, password));
-        MainMenu mainMenu = new MainMenu();
-        mainMenu.run(scanner);
+        String response = loginController.login(username, password);
+        System.out.println(response);
+        if (response.equals("user logged in successfully!")) {
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.run(scanner);
+        }
     }
 
     public Matcher getCommandMatcher(String input, String regex) {
