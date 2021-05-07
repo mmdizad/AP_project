@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 
 public class DuelController {
@@ -572,45 +571,118 @@ public class DuelController {
                 //پر شود
 
 
-                return "spell activated";
             } else {
                 monster.setDefensePower(monster.getAttackPower() + monster.getDefensePower());
 
-                return "spell activated";
-
             }
+            return "spell activated";
         } else return "you don't have any Warrior monster to equip ";
     }
 
     public String effectOfUmiiruka() {
-        duelModel.setField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
-        duelModel.getHandCards().get(duelModel.turn).remove(duelModel.getSelectedCards().get(duelModel.turn).get(0));
         for (int i = 0; i < 5; i++) {
             Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
             Monster monster1 = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
-            if (monster != null) {
-                monster.setDefensePower(monster.getDefensePower() - 400);
-                monster.setAttackPower(monster.getAttackPower() + 500);
-            }
-            if (monster1 != null) {
-                monster1.setDefensePower(monster1.getDefensePower() - 400);
-                monster1.setAttackPower(monster1.getAttackPower() + 500);
-            }
+            if (monster != null)
+                if (monster.getCardType().equals("Aqua"))
+                    if (!duelModel.getSpellZoneActivate().get(duelModel.turn).get(i)) {
+                        duelModel.getSpellZoneActivate().get(duelModel.turn).add(i, true);
+                        monster.setDefensePower(monster.getDefensePower() - 400);
+                        monster.setAttackPower(monster.getAttackPower() + 500);
+                    }
+            if (monster1 != null)
+                if (monster1.getCardType().equals("Aqua"))
+                    if (!duelModel.getSpellZoneActivate().get(1 - duelModel.turn).get(i)) {
+                        duelModel.getSpellZoneActivate().get(1-duelModel.turn).add(i, true);
+                        monster1.setDefensePower(monster1.getDefensePower() - 400);
+                        monster1.setAttackPower(monster1.getAttackPower() + 500);
+                    }
         }
-        return "spell activated";
+        deselect();
+        return "spellZone activated";
     }
 
     public String effectOfClosedForest() {
-        duelModel.getHandCards().get(duelModel.turn).remove(duelModel.getSelectedCards().get(duelModel.turn).get(0));
-        duelModel.setField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
+
         for (int i = 0; i < 5; i++) {
             Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
             if (monster != null)
-                monster.setAttackPower(monster.getAttackPower() + duelModel.getGraveyard(duelModel.turn).size() * 100);
+                if (monster.getMonsterType().equals("Beast-Type")) {
+                    if (!duelModel.getSpellZoneActivate().get(duelModel.turn).get(i))
+                        duelModel.getSpellZoneActivate().get(duelModel.turn).add(i, true);
+                        monster.setAttackPower(monster.getAttackPower() + duelModel.getGraveyard(duelModel.turn).size() * 100);
+                }
         }
-        deselect();
-        return "spell activated";
+        return "spellZone activated";
     }
+
+    public String effectOfForest() {
+
+        for (int i = 0; i < 5; i++) {
+            Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            Monster monster1 = (Monster) duelModel.getMonstersInField().get(1 - duelModel.turn).get(i);
+            if (monster != null)
+                if (monster.getMonsterType().equals("Beast-Warrior") || monster.getMonsterType().equals("Beast") || monster.getMonsterType().equals("Insect"))
+                    if (!duelModel.getSpellZoneActivate().get(duelModel.turn).get(i)) {
+                        duelModel.getSpellZoneActivate().get(duelModel.turn).add(i, true);
+                        Monster monster2 = Monster.getMonsterByName(monster.getName());
+                        monster.setAttackPower(monster2.getAttackPower() + 200);
+                        monster.setDefensePower(monster2.getDefensePower() + 200);
+                    }
+            if (monster1 != null)
+                if (monster1.getMonsterType().equals("Beast-Warrior") || monster.getMonsterType().equals("Beast") || monster.getMonsterType().equals("Insect"))
+                    if (!duelModel.getSpellZoneActivate().get(1-duelModel.turn).get(i)) {
+                        duelModel.getSpellZoneActivate().get(1-duelModel.turn).add(i, true);
+                        monster1.setAttackPower(Monster.getMonsterByName(monster1.getName()).getAttackPower() + 200);
+                        monster1.setDefensePower(Monster.getMonsterByName(monster1.getName()).getDefensePower() + 200);
+                    }
+        }
+        return "spellZone activated";
+    }
+
+    public String effectOfYami() {
+        for (int i = 0; i < 5; i++) {
+            Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            Monster monster1 = (Monster) duelModel.getMonstersInField().get(1 - duelModel.turn).get(i);
+            if (monster != null) {
+                if (monster.getMonsterType().equals("Fiend") || monster.getMonsterType().equals("Spellcaster")) {
+                    if (!duelModel.getSpellZoneActivate().get(duelModel.turn).get(i)) {
+                        duelModel.getSpellZoneActivate().get(duelModel.turn).add(i, true);
+                        Monster monster2 = Monster.getMonsterByName(monster.getName());
+                        monster.setAttackPower(monster2.getAttackPower() + 200);
+                        monster.setDefensePower(monster2.getDefensePower() + 200);
+                    }
+                } else if (monster.getMonsterType().equals("Fairy")) {
+                    if (!duelModel.getSpellZoneActivate().get(duelModel.turn).get(i)) {
+                        duelModel.getSpellZoneActivate().get(duelModel.turn).add(i, true);
+                        Monster monster2 = Monster.getMonsterByName(monster.getName());
+                        monster.setAttackPower(monster2.getAttackPower() - 200);
+                        monster.setDefensePower(monster2.getDefensePower() - 200);
+                    }
+
+                }
+            }
+            if (monster1 != null) {
+                if (monster1.getMonsterType().equals("Fiend") || monster1.getMonsterType().equals("Spellcaster")) {
+                    if (!duelModel.getSpellZoneActivate().get(1 - duelModel.turn).get(i)) {
+                        duelModel.getSpellZoneActivate().get(1 - duelModel.turn).add(i, true);
+                        monster1.setAttackPower(Monster.getMonsterByName(monster1.getName()).getAttackPower() + 200);
+                        monster1.setDefensePower(Monster.getMonsterByName(monster1.getName()).getDefensePower() + 200);
+
+                    }
+                } else if (monster1.getMonsterType().equals("Fairy")) {
+                    if (!duelModel.getSpellZoneActivate().get(1 - duelModel.turn).get(i)) {
+                        duelModel.getSpellZoneActivate().get(1 - duelModel.turn).add(i, true);
+                        Monster monster2 = Monster.getMonsterByName(monster.getName());
+                        monster1.setAttackPower(monster2.getAttackPower() - 200);
+                        monster1.setDefensePower(monster2.getDefensePower() - 200);
+                    }
+                }
+            }
+}
+return "spellZoneActivate";
+    }
+
 
     public String specialSummonMonsterOnFieldFromGraveyard(int turn, String state, int indexOfCardOfGraveyard) {
         String stateOfCard = "OO";

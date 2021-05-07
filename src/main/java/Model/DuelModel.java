@@ -29,6 +29,7 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> spellAbsorptionCards;
     private ArrayList<ArrayList<Card>> messengerOfPeace;
     private ArrayList<ArrayList<Card>> spellsAndTarpsSetInThisTurn;
+    private ArrayList<ArrayList<Boolean>> spellZoneActivate;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         usernames = new ArrayList<>();
@@ -213,6 +214,10 @@ public class DuelModel {
         return field.get(turn).get(0);
     }
 
+    public ArrayList<ArrayList<Boolean>> getSpellZoneActivate() {
+        return spellZoneActivate;
+    }
+
     public void deleteMonster(int turn, int place) {
         monstersInField.get(turn).set(place, null);
         monsterCondition.get(turn).set(place,"");
@@ -259,7 +264,12 @@ public class DuelModel {
     }
 
     public void addCardToGraveyard(int turn, Card card) {
+
         if (card.getCategory().equals("Monster")) {
+            //اینارو برای میدان زدم وقتی که کارت حذف میشه باید
+            Monster monster = (Monster) card;
+            monster.setAttackPower(Card.getCardByName(card.name).getAttackPower());
+            monster.setDefensePower(Card.getCardByName(card.name).getDefensePower());
             monsterDestroyedInThisTurn.get(turn).add(card);
         }
         graveyard.get(turn).add(card);
