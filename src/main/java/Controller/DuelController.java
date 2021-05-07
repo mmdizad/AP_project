@@ -98,6 +98,8 @@ public class DuelController {
             return effectOfMessengerOfPeace(placeOfSpell);
         } else if (spell.getName().equals("Twin Twisters")) {
             return effectOfTwinTwisters(placeOfSpell);
+        } else if (spell.getName().equals("Mystical space typhoon")) {
+            return effectOfMysticalSpaceTyphoon(placeOfSpell);
         }
         return "";
     }
@@ -412,14 +414,8 @@ public class DuelController {
     }
 
     public String effectOfTwinTwisters(int placeOfSpell) {
-        ArrayList<Card> spellsAndTrapsSetInThisTurn = duelModel.getSpellsAndTarpsSetInThisTurn()
-                .get(duelModel.turn);
-        for (Card card : spellsAndTrapsSetInThisTurn) {
-            if (card.getCategory().equals("Spell")) {
-                if (card == duelModel.getSelectedCards().get(duelModel.turn).get(0)) {
-                    return "preparations of this spell are not done yet";
-                }
-            }
+        if (hasSpellSetInThisTurn()) {
+            return "preparations of this spell are not done yet";
         }
         int placeOfCardInHand = duelView.scanNumberOfCardForDeleteFromHand();
         if (placeOfCardInHand > duelModel.getHandCards().get(duelModel.turn).size()) {
@@ -442,10 +438,10 @@ public class DuelController {
                 String[] splitResponse = response.split(" ");
                 int placeOfSpellOrTrapCard = Integer.parseInt(splitResponse[1]);
                 if (splitResponse[0].equals("my")) {
-                    return deleteSpellCardsInActiveTwinTwisters(duelModel.turn, placeOfSpell,
+                    return deleteASpellCardInActiveSpell(duelModel.turn, placeOfSpell,
                             placeOfSpellOrTrapCard);
                 } else if (splitResponse[0].equals("opponent")) {
-                    return deleteSpellCardsInActiveTwinTwisters(1 - duelModel.turn, placeOfSpell,
+                    return deleteASpellCardInActiveSpell(1 - duelModel.turn, placeOfSpell,
                             placeOfSpellOrTrapCard);
                 } else {
                     return "you must enter my/opponent";
@@ -458,24 +454,24 @@ public class DuelController {
                 int placeOfSpellOrTrapCard1 = Integer.parseInt(splitResponse1[1]);
                 int placeOfSpellOrTrapCard2 = Integer.parseInt(splitResponse2[1]);
                 if (splitResponse1[0].equals("my") && splitResponse2[0].equals("my")) {
-                    deleteSpellCardsInActiveTwinTwisters(duelModel.turn, placeOfSpell,
+                    deleteASpellCardInActiveSpell(duelModel.turn, placeOfSpell,
                             placeOfSpellOrTrapCard1);
-                    deleteSpellCardsInActiveTwinTwisters(duelModel.turn, placeOfSpell,
+                    deleteASpellCardInActiveSpell(duelModel.turn, placeOfSpell,
                             placeOfSpellOrTrapCard2);
                 } else if (splitResponse1[0].equals("opponent") && splitResponse2[0].equals("opponent")) {
-                    deleteSpellCardsInActiveTwinTwisters(1 - duelModel.turn, placeOfSpell,
+                    deleteASpellCardInActiveSpell(1 - duelModel.turn, placeOfSpell,
                             placeOfSpellOrTrapCard1);
-                    deleteSpellCardsInActiveTwinTwisters(1 - duelModel.turn, placeOfSpell,
+                    deleteASpellCardInActiveSpell(1 - duelModel.turn, placeOfSpell,
                             placeOfSpellOrTrapCard2);
                 } else if (splitResponse1[0].equals("my") && splitResponse2[0].equals("opponent")) {
-                    deleteSpellCardsInActiveTwinTwisters(duelModel.turn, placeOfSpell,
+                    deleteASpellCardInActiveSpell(duelModel.turn, placeOfSpell,
                             placeOfSpellOrTrapCard1);
-                    deleteSpellCardsInActiveTwinTwisters(1 - duelModel.turn, placeOfSpell,
+                    deleteASpellCardInActiveSpell(1 - duelModel.turn, placeOfSpell,
                             placeOfSpellOrTrapCard2);
                 } else if (splitResponse1[0].equals("opponent") && splitResponse2[0].equals("my")) {
-                    deleteSpellCardsInActiveTwinTwisters(1 - duelModel.turn, placeOfSpell,
+                    deleteASpellCardInActiveSpell(1 - duelModel.turn, placeOfSpell,
                             placeOfSpellOrTrapCard1);
-                    deleteSpellCardsInActiveTwinTwisters(duelModel.turn, placeOfSpell,
+                    deleteASpellCardInActiveSpell(duelModel.turn, placeOfSpell,
                             placeOfSpellOrTrapCard2);
                 } else {
                     return "you must enter my/opponent";
@@ -487,8 +483,40 @@ public class DuelController {
         return "";
     }
 
+    public String effectOfMysticalSpaceTyphoon(int placeOfSpell) {
+        if (hasSpellSetInThisTurn()) {
+            return "preparations of this spell are not done yet";
+        }
+        String response = duelView.scanPlaceOfCardWantToDestroyed();
+        String[] splitResponse = response.split(" ");
+        int placeOfSpellOrTrapCard = Integer.parseInt(splitResponse[1]);
+        if (splitResponse[0].equals("my")) {
+            return deleteASpellCardInActiveSpell(duelModel.turn, placeOfSpell,
+                    placeOfSpellOrTrapCard);
+        } else if (splitResponse[0].equals("opponent")) {
+            return deleteASpellCardInActiveSpell(1 - duelModel.turn, placeOfSpell,
+                    placeOfSpellOrTrapCard);
+        } else {
+            return "you must enter my/opponent";
+        }
 
-    public String deleteSpellCardsInActiveTwinTwisters(int turn, int placeOfSpell, int placeOfSpellOrTrapCard) {
+    }
+
+    public boolean hasSpellSetInThisTurn() {
+        ArrayList<Card> spellsAndTrapsSetInThisTurn = duelModel.getSpellsAndTarpsSetInThisTurn()
+                .get(duelModel.turn);
+        for (Card card : spellsAndTrapsSetInThisTurn) {
+            if (card.getCategory().equals("Spell")) {
+                if (card == duelModel.getSelectedCards().get(duelModel.turn).get(0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    public String deleteASpellCardInActiveSpell(int turn, int placeOfSpell, int placeOfSpellOrTrapCard) {
         if (placeOfSpellOrTrapCard > 5) {
             return "you must enter correct address";
         } else {
@@ -619,19 +647,19 @@ public class DuelController {
             activeNormalTraps();
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Mind Crush")) {
             activeTrapMindCrush();
-        }else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Trap Hole")) {
+        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Trap Hole")) {
             activeNormalTraps();
-        }else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Torrential Tribute")) {
+        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Torrential Tribute")) {
             activeNormalTraps();
-        }else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Time Seal")) {
+        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Time Seal")) {
             activeNormalTraps();
-        }else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Negate Attack")) {
+        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Negate Attack")) {
             activeNormalTraps();
-        }else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Call of the Haunted")) {
+        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Call of the Haunted")) {
             activeTrapCallOfTheHaunted();
-        }else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Magic Jammer")) {
+        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Magic Jammer")) {
             activeNormalTraps();
-        }else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Solemn Warning")) {
+        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Solemn Warning")) {
             activeNormalTraps();
         }
         return "trap activated";
@@ -660,10 +688,10 @@ public class DuelController {
                 isCardExistInOpponentHand = true;
             }
         }
-        if (!isCardExistInOpponentHand){
+        if (!isCardExistInOpponentHand) {
             ArrayList<Integer> number = new ArrayList<>();
-            for (int i = 0;i < duelModel.getHandCards().get(duelModel.turn).size();i++){
-                number.add(i+1);
+            for (int i = 0; i < duelModel.getHandCards().get(duelModel.turn).size(); i++) {
+                number.add(i + 1);
             }
             Collections.shuffle(number);
             Card card = duelModel.getHandCards().get(duelModel.turn).get(number.get(0));
@@ -678,13 +706,13 @@ public class DuelController {
         duelModel.deleteSpellAndTrap(duelModel.turn, place - 1);
         duelModel.addCardToGraveyard(duelModel.turn, trap);
         ArrayList<Card> graveyard = duelModel.getGraveyard(duelModel.turn);
-        for (int i = 0;i < graveyard.size() - 1;i++){
+        for (int i = 0; i < graveyard.size() - 1; i++) {
             Card card = graveyard.get(i);
-            if (card.getCategory().equals("Monster")){
+            if (card.getCategory().equals("Monster")) {
                 ArrayList<Card> monsters = duelModel.getMonstersInField().get(duelModel.turn);
-                for (int j = 0;j < 5;j++){
-                    if (monsters.get(j) == null){
-                        duelModel.addCertainMonsterFromGraveyardToGame(duelModel.turn, "OO/" + j + 1 , j,card);
+                for (int j = 0; j < 5; j++) {
+                    if (monsters.get(j) == null) {
+                        duelModel.addCertainMonsterFromGraveyardToGame(duelModel.turn, "OO/" + j + 1, j, card);
                         duelModel.deleteCardFromGraveyard(duelModel.turn, i);
                         return;
                     }
