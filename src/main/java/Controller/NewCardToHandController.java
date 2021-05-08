@@ -42,16 +42,17 @@ public class NewCardToHandController extends DuelController {
         }
     }
 
-    public boolean hasHeraldOfCreation() {
-        boolean hasHeraldOfCreation = false;
+    public String hasHeraldOfCreation() {
+        DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
         ArrayList<Card> monstersInFiled = duelModel.getMonstersInField().get(duelModel.turn);
         for (Card card : monstersInFiled) {
             if (card.getName().equals("Herald of Creation")) {
-                hasHeraldOfCreation = true;
-                break;
+                String response = drawPhaseView.scanResponse();
+                if (response.equals("yes"))
+                return effectOfHeraldOfCreation();
             }
         }
-        return hasHeraldOfCreation;
+        return "";
     }
 
     public String effectOfHeraldOfCreation() {

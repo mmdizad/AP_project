@@ -29,9 +29,7 @@ public class DrawPhaseView extends DuelView {
             System.out.println("no card added to hand");
         }
         if (!startOfGame) {
-            if (newCardToHandController.hasHeraldOfCreation()) {
-                System.out.println(newCardToHandController.effectOfHeraldOfCreation());
-            }
+            System.out.println(newCardToHandController.hasHeraldOfCreation());
             StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
             standByPhaseView.run(scanner);
         }
@@ -47,6 +45,11 @@ public class DrawPhaseView extends DuelView {
         System.out.println("please enter address of card that you want add to hand from graveyard" +
                 "(level it must be 7 or more)");
         return scanner1.nextInt();
+    }
+
+    public String scanResponse(){
+        System.out.println("do you want to use effect of Herald of Creation (enter yse or no)");
+        return scanner1.nextLine();
     }
 
 
