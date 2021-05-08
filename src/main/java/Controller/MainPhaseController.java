@@ -471,6 +471,5 @@ public class MainPhaseController extends DuelController {
             }
             return "you cant active this card";
         }
-
     }
 }

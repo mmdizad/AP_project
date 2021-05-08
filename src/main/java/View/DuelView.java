@@ -58,14 +58,14 @@ public class DuelView {
         }
     }
 
-    public String scanAddressForTributeForRitualSummon(){
+    public String scanAddressForTributeForRitualSummon() {
         System.out.println("please enter two address from deck for tribute for ritual summon" +
                 "separate it with space (ex: 3 4)");
         return scanner1.nextLine();
     }
 
 
-    public String getCardNameForTrapMindCrush(){
+    public String getCardNameForTrapMindCrush() {
         System.out.println("enter card name:");
         return scanner1.nextLine();
     }
@@ -74,7 +74,7 @@ public class DuelView {
         if (hasAnySpellOrTrap) {
             duelModel.turn = 1 - duelModel.turn;
             System.out.println("now it will be " + duelModel.getUsernames().get(duelModel.turn) + " turn");
-            System.out.println("do you want to activate your trap and spell?");
+            System.out.println("do you want to activate your trap or spell?");
             String response = scanner1.nextLine();
             if (!response.equals("NO") && !response.equals("YES")) {
                 System.out.println("you must enter NO or YES");

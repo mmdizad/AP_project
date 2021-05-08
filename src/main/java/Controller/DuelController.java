@@ -91,20 +91,22 @@ public class DuelController {
             String response = selectSpellOrTrap(matcher);
             System.out.println(response);
             if (response.equals("card selected")) {
-                if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCardType()
-                        .equals("Quick-play")) {
-                    return "you cant active this spell int this turn";
-                }
-                String[] detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).
-                        get(duelModel.getSelectedCards().get(duelModel.turn).get(0)).split("/");
-                String stateOfSelectedCard = detailsOfSelectedCard[1];
-                if (stateOfSelectedCard.equals("O")) {
-                    return "Card already Activated";
+                if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Trap")) {
+                    return opponentActiveTrap();
                 } else {
-                    return opponentActiveSpell(Integer.parseInt(matcher.group(1)));
+                    if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCardType()
+                            .equals("Quick-play")) {
+                        return "you cant active this spell int this turn";
+                    }
+                    String[] detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).
+                            get(duelModel.getSelectedCards().get(duelModel.turn).get(0)).split("/");
+                    String stateOfSelectedCard = detailsOfSelectedCard[1];
+                    if (stateOfSelectedCard.equals("O")) {
+                        return "Card already Activated";
+                    } else {
+                        return opponentActiveSpell(Integer.parseInt(matcher.group(1)));
+                    }
                 }
-            } else {
-                return opponentActiveTrap();
             }
         }
         return "it’s not your turn to play this kind of moves";
