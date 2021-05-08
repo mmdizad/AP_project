@@ -9,7 +9,5 @@ public interface Summon {
 
     public void specialSummon(Matcher matcher);
 
-    public void ritualSummon();
-
 }
 

@@ -534,11 +534,22 @@ public class DuelModel {
         return -1;
     }
 
-    public void addActivatedMonsterEffect(Card card, int turn){
+    public void addActivatedMonsterEffect(Card card, int turn) {
         activatedMonsterEffects.get(turn).add(card);
     }
 
-    public ArrayList<Card> getActivatedMonsterEffect(int turn){
+    public ArrayList<Card> getActivatedMonsterEffect(int turn) {
         return activatedMonsterEffects.get(turn);
+    }
+
+    public void ritualSummon(String condition, int index, Card card) {
+        monstersInField.get(turn).add(index, card);
+        monsterCondition.get(turn).add(index, condition);
+        deleteCardFromHand(getMonster(turn, index + 1));
+    }
+
+    public void deleteCardFromDeck(int turn, int index, Card card) {
+        playersCards.get(turn).remove(index);
+        addCardToGraveyard(turn, card);
     }
 }

@@ -5,7 +5,6 @@ import Model.Monster;
 import View.MainPhaseView;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.regex.Matcher;
 
 public class MainPhaseController extends DuelController {
@@ -38,6 +37,7 @@ public class MainPhaseController extends DuelController {
     }
 
     public String setTrapOrSpell() {
+        Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
         if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(0) == null)
             duelModel.addSpellAndTrapFromHandToGame("H/1", 0);
         else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(1) == null)
@@ -48,9 +48,8 @@ public class MainPhaseController extends DuelController {
             duelModel.addSpellAndTrapFromHandToGame("H/4", 3);
         else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(4) == null)
             duelModel.addSpellAndTrapFromHandToGame("H/5", 4);
-        else return "monster card zone is full";
-        duelModel.setSpellsAndTrapsSetInThisTurn(duelModel.turn, duelModel.getSelectedCards()
-                .get(duelModel.turn).get(0));
+        else return "spell card zone is full";
+        duelModel.setSpellsAndTrapsSetInThisTurn(duelModel.turn, card);
         return "set successfully";
     }
 
@@ -428,10 +427,6 @@ public class MainPhaseController extends DuelController {
             }
         }
         return "";
-    }
-
-    public String ritualSummon(Matcher matcher) {
-        return null;
     }
 
     public String activateSpellEffectMainController() {

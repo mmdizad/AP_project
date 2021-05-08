@@ -133,11 +133,6 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     }
 
     @Override
-    public void ritualSummon() {
-
-    }
-
-    @Override
     public void set() {
         MainPhaseController mainPhaseController = MainPhaseController.getInstance();
         String result = mainPhaseController.set();

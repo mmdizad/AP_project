@@ -65,6 +65,8 @@ public class DuelController {
             return effectOfMysticalSpaceTyphoon(placeOfSpell);
         } else if (spell.getName().equals("Ring of Defense")) {
             return effectOfRingOfDefense(placeOfSpell);
+        } else if (spell.getName().equals("Advanced Ritual Art")) {
+            return effectOfAdvancedRitualArt(placeOfSpell);
         }
         return "";
     }
@@ -438,8 +440,7 @@ public class DuelController {
             return "spell activated";
         } else {
             Card card1 = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-            String response = activeSpellFromHand(false);
-            duelModel.addCardToGraveyard(duelModel.turn, card1);
+            String response = activeSpellFromHand(true);
             duelModel.effectOfSpellAbsorptionCards();
             duelModel.setSwordsCard(duelModel.turn, card1);
             changeStateOfMonsterWithSwordsCard(1 - duelModel.turn);
@@ -521,7 +522,6 @@ public class DuelController {
         } else {
             Card card1 = duelModel.getSelectedCards().get(duelModel.turn).get(0);
             String response = activeSpellFromHand(true);
-            duelModel.addCardToGraveyard(duelModel.turn, card1);
             duelModel.effectOfSpellAbsorptionCards();
             duelModel.setSupplySquad(duelModel.turn, card1);
             return response;
@@ -541,7 +541,6 @@ public class DuelController {
         } else {
             Card card1 = duelModel.getSelectedCards().get(duelModel.turn).get(0);
             String response = activeSpellFromHand(true);
-            duelModel.addCardToGraveyard(duelModel.turn, card1);
             duelModel.effectOfSpellAbsorptionCards();
             duelModel.setSpellAbsorptionCards(duelModel.turn, card1);
             return response;
@@ -562,7 +561,6 @@ public class DuelController {
         } else {
             Card card1 = duelModel.getSelectedCards().get(duelModel.turn).get(0);
             String response = activeSpellFromHand(true);
-            duelModel.addCardToGraveyard(duelModel.turn, card1);
             duelModel.effectOfSpellAbsorptionCards();
             duelModel.setMessengerOfPeace(duelModel.turn, card1);
             return response;
@@ -665,10 +663,10 @@ public class DuelController {
     }
 
     public String effectOfRingOfDefense(int placeOfSpell) {
+        // not complete it needs a change in trap
         if (placeOfSpell == -1 && isSpellZoneFull(duelModel.turn)) {
             return "spell card zone is full";
         }
-        // // not complete it needs a change in trap
         if (hasSpellSetInThisTurn()) {
             return "preparations of this spell are not done yet";
         }
@@ -763,10 +761,97 @@ public class DuelController {
             if (!continuousSpell)
                 duelModel.deleteSpellAndTrap(duelModel.turn, 4);
         }
-        duelModel.setSpellsAndTrapsSetInThisTurn(duelModel.turn, duelModel.getSelectedCards()
-                .get(duelModel.turn).get(0));
         return "spell activated";
 
+    }
+
+    public String effectOfAdvancedRitualArt(int placeOfSpell) {
+        boolean hasAnyRitualMonster = false;
+        if (placeOfSpell == -1 && isSpellZoneFull(duelModel.turn)) {
+            return "spell card zone is full";
+        }
+        ArrayList<Card> handCards = duelModel.getHandCards().get(duelModel.turn);
+        ArrayList<Card> cardsInDeck = duelModel.getPlayersCards().get(duelModel.turn);
+        Monster monster = null;
+        for (Card card : handCards) {
+            if (card.getCategory().equals("Monster")) {
+                monster = (Monster) card;
+                if (monster.getCardType().equals("Ritual")) {
+                    hasAnyRitualMonster = true;
+                    break;
+                }
+            }
+        }
+        if (!hasAnyRitualMonster) {
+            return "there is no way you could ritual summon a monster";
+        } else {
+            String[] addressOfCardForTribute = duelView.scanAddressForTributeForRitualSummon().split(" ");
+            if (addressOfCardForTribute.length < 2) {
+                return "you must enter two address for tribute from your deck";
+            } else {
+                int addressOfCard1 = Integer.parseInt(addressOfCardForTribute[0]);
+                int addressOfCard2 = Integer.parseInt(addressOfCardForTribute[1]);
+                if (addressOfCard1 > cardsInDeck.size() || addressOfCard2 > cardsInDeck.size()) {
+                    return "you must enter correct address";
+                } else {
+                    Card card1 = cardsInDeck.get(addressOfCard1 - 1);
+                    Card card2 = cardsInDeck.get(addressOfCard2 - 1);
+                    if (!card1.getCategory().equals("Monster") || !card2.getCategory().equals("Monster")) {
+                        return "you must tribute monster";
+                    } else {
+                        Monster monster1 = (Monster) card1;
+                        Monster monster2 = (Monster) card2;
+                        if (monster1.getLevel() + monster2.getLevel() != monster.getLevel()) {
+                            return "selected monsters levels don’t match with ritual monster";
+                        } else {
+                            MainPhaseView mainPhaseView = MainPhaseView.getInstance();
+                            String stateOfCardForSummon = mainPhaseView.getStateOfCardForSummon();
+                            if (!stateOfCardForSummon.equals("Attack")
+                                    && !stateOfCardForSummon.equals("Defence")) {
+                                return "you must Highlight the state of card for summon correctly";
+                            }
+                            String response = ritualSummonMonsterOnField(stateOfCardForSummon, monster);
+                            if (response.equals("summoned successfully")) {
+                                if (placeOfSpell != -1) {
+                                    duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+                                } else {
+                                    Card spellCard = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                                    activeSpellFromHand(false);
+                                    duelModel.addCardToGraveyard(duelModel.turn, spellCard);
+                                }
+                                duelModel.deleteCardFromDeck(duelModel.turn, addressOfCard1 - 1, card1);
+                                duelModel.deleteCardFromDeck(duelModel.turn, addressOfCard2 - 1, card2);
+                                duelModel.effectOfSpellAbsorptionCards();
+                            }
+                            return response;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public String ritualSummonMonsterOnField(String state, Card card) {
+        String stateOfCard = "OO";
+        if (state.equals("Attack")) {
+            stateOfCard = "OO";
+        } else if (state.equals("Defence")) {
+            stateOfCard = "DO";
+        }
+        if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
+            duelModel.ritualSummon(stateOfCard + "/1", 0, card);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null) {
+            duelModel.ritualSummon(stateOfCard + "/2", 1, card);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null) {
+            duelModel.ritualSummon(stateOfCard + "/3", 0, card);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null) {
+            duelModel.ritualSummon(stateOfCard + "/4", 0, card);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null) {
+            duelModel.ritualSummon(stateOfCard + "/5", 0, card);
+        } else {
+            return "monster card zone is full";
+        }
+        return "summoned successfully";
     }
 
 
@@ -816,7 +901,7 @@ public class DuelController {
             if (monster1 != null)
                 if (monster1.getCardType().equals("Aqua"))
                     if (!duelModel.getSpellZoneActivate().get(1 - duelModel.turn).get(i)) {
-                        duelModel.getSpellZoneActivate().get(1-duelModel.turn).add(i, true);
+                        duelModel.getSpellZoneActivate().get(1 - duelModel.turn).add(i, true);
                         monster1.setDefensePower(monster1.getDefensePower() - 400);
                         monster1.setAttackPower(monster1.getAttackPower() + 500);
                     }
@@ -826,14 +911,13 @@ public class DuelController {
     }
 
     public String effectOfClosedForest() {
-
         for (int i = 0; i < 5; i++) {
             Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
             if (monster != null)
                 if (monster.getMonsterType().equals("Beast-Type")) {
                     if (!duelModel.getSpellZoneActivate().get(duelModel.turn).get(i))
                         duelModel.getSpellZoneActivate().get(duelModel.turn).add(i, true);
-                        monster.setAttackPower(monster.getAttackPower() + duelModel.getGraveyard(duelModel.turn).size() * 100);
+                    monster.setAttackPower(monster.getAttackPower() + duelModel.getGraveyard(duelModel.turn).size() * 100);
                 }
         }
         return "spellZone activated";
@@ -854,8 +938,8 @@ public class DuelController {
                     }
             if (monster1 != null)
                 if (monster1.getMonsterType().equals("Beast-Warrior") || monster.getMonsterType().equals("Beast") || monster.getMonsterType().equals("Insect"))
-                    if (!duelModel.getSpellZoneActivate().get(1-duelModel.turn).get(i)) {
-                        duelModel.getSpellZoneActivate().get(1-duelModel.turn).add(i, true);
+                    if (!duelModel.getSpellZoneActivate().get(1 - duelModel.turn).get(i)) {
+                        duelModel.getSpellZoneActivate().get(1 - duelModel.turn).add(i, true);
                         monster1.setAttackPower(Monster.getMonsterByName(monster1.getName()).getAttackPower() + 200);
                         monster1.setDefensePower(Monster.getMonsterByName(monster1.getName()).getDefensePower() + 200);
                     }
@@ -902,8 +986,8 @@ public class DuelController {
                     }
                 }
             }
-}
-return "spellZoneActivate";
+        }
+        return "spellZoneActivate";
     }
 
 

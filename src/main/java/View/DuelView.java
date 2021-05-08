@@ -58,6 +58,12 @@ public class DuelView {
         }
     }
 
+    public String scanAddressForTributeForRitualSummon(){
+        System.out.println("please enter two address from deck for tribute for ritual summon" +
+                "separate it with space (ex: 3 4)");
+        return scanner1.nextLine();
+    }
+
 
     public String getCardNameForTrapMindCrush(){
         System.out.println("enter card name:");
