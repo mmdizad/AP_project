@@ -60,7 +60,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
                 isCommandInvalid = false;
                 set();
             }
-            if (isCommandInvalid){
+            if (isCommandInvalid) {
                 System.out.println("invalid command");
             }
             isCommandInvalid = true;
@@ -103,8 +103,20 @@ public class MainPhaseView extends DuelView implements Set, Summon {
         if (matcher.find()) {
             isCommandInvalid = false;
             MainPhaseController mainPhaseController = MainPhaseController.getInstance();
-            System.out.println(mainPhaseController.flipSummon());
+            String response = mainPhaseController.flipSummon();
+            if (response.equals("flipSummon Man-Eater Bug")) {
+                System.out.println("flip summoned successfully");
+                System.out.println(mainPhaseController.flipSummonManEaterBug());
+            } else {
+                System.out.println(response);
+            }
         }
+    }
+
+    public int scanPlaceOfMonsterForDestroyInManEaterFlipSummon(){
+        System.out.println("please enter the place of monster that you want destroyed" +
+                "(in opponent board)");
+        return scanner1.nextInt();
     }
 
     @Override

@@ -265,6 +265,9 @@ public class MainPhaseController extends DuelController {
             return "no card is selected yet";
         } else {
             Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+            if (!card.getCategory().equals("Monster")) {
+                return "you can’t flipSummon this card";
+            }
             String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
             String[] details = detailsOfSelectedCard.split("/");
             if (details[0].equals("Hand") || details[0].equals("Opponent")) {
@@ -287,9 +290,29 @@ public class MainPhaseController extends DuelController {
                         return "you can’t flip summon this card";
                     } else {
                         duelModel.flipSummon(placeOfSummonCard - 1);
+                        if (card.getName().equals("Man-Eater Bug")) {
+                            return "flipSummon Man-Eater Bug";
+                        }
                         return "flip summoned successfully";
                     }
                 }
+            }
+        }
+    }
+
+    public String flipSummonManEaterBug() {
+        MainPhaseView mainPhaseView = MainPhaseView.getInstance();
+        int placeOfMonster = mainPhaseView.scanPlaceOfMonsterForDestroyInManEaterFlipSummon();
+        if (placeOfMonster > 5) {
+            return "you must enter correct address";
+        } else {
+            Card card = duelModel.getMonster(1 - duelModel.turn, placeOfMonster);
+            if (card == null) {
+                return "this address has not monster";
+            } else {
+                duelModel.deleteMonster(1 - duelModel.turn, placeOfMonster - 1);
+                duelModel.addCardToGraveyard(1 - duelModel.turn, card);
+                return "monster with this address in opponent board destroyed";
             }
         }
     }
