@@ -18,7 +18,8 @@ public class StandByPhaseController extends DuelController {
             return "your messenger of peace cards destroyed";
         } else {
             // check ....
-            duelModel.decreaseLifePoint(100, duelModel.turn);
+            duelModel.decreaseLifePoint(100 * duelModel.getMessengerOfPeace().get(duelModel.turn).size(),
+                    duelModel.turn);
             System.out.println("your lp decreases 100 unit");
         }
         return "";
