@@ -131,7 +131,7 @@ public class DuelView {
         return place;
     }
 
-    protected void showGraveyard(Matcher matcher) {
+    public void showGraveyard(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
             ArrayList<String> output = duelController.showGraveYard();
@@ -223,5 +223,11 @@ public class DuelView {
         return matcher;
     }
 
+    public void showGraveyardForSomeClasses() {
+        ArrayList<String> output = duelController.showGraveYard();
+        for (String s : output) {
+            System.out.println(s);
+        }
+    }
 
 }

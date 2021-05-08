@@ -269,7 +269,6 @@ public class DuelModel {
     }
 
     public void addCardToGraveyard(int turn, Card card) {
-
         if (card.getCategory().equals("Monster")) {
             //اینارو برای میدان زدم وقتی که کارت حذف میشه باید
             Monster monster = (Monster) card;
