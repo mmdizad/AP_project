@@ -37,7 +37,12 @@ public class MainPhaseController extends DuelController {
     }
 
     public String setTrapOrSpell() {
+
         Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        if(card.getCategory().equals("Field")){
+           
+
+        }
         if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(0) == null)
             duelModel.addSpellAndTrapFromHandToGame("H/1", 0);
         else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(1) == null)
@@ -50,6 +55,7 @@ public class MainPhaseController extends DuelController {
             duelModel.addSpellAndTrapFromHandToGame("H/5", 4);
         else return "spell card zone is full";
         duelModel.setSpellsAndTrapsSetInThisTurn(duelModel.turn, card);
+
         return "set successfully";
     }
 
@@ -463,7 +469,9 @@ public class MainPhaseController extends DuelController {
             if (detailOfSelectedCard[0].equals("Hand")) {
                 return duelController.activateEffect(-1);
             } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field")) {
+                     if(duelModel.getField().get(duelModel.turn).get(0)==null){
 
+                     }
             } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("O")) {
                 return "you have already activated this card";
             } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("H")) {

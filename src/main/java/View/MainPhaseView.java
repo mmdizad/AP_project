@@ -1,14 +1,9 @@
 package View;
 
 import Controller.MainPhaseController;
-import Model.Card;
-import Model.Monster;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class MainPhaseView extends DuelView implements Set, Summon {

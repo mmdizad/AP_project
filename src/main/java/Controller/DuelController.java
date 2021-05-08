@@ -24,6 +24,32 @@ public class DuelController {
     public void selectFirstPlayer() {
 
     }
+    //این تابع حین بازی صدا زده میشه تا کارت های ورودی شامل میدان شوند
+    public void activeField(){
+        if(duelModel.getField().get(duelModel.turn).get(0)!=null){
+          Spell spell=(Spell) duelModel.getField().get(duelModel.turn).get(0);
+            if(spell.getName().equals("Yami"))
+                effectOfYami();
+            else if(spell.getName().equals("Forest"))
+                effectOfForest();
+            else if(spell.getName().equals("Closed Forest"))
+                effectOfClosedForest();
+            else if(spell.getName().equals("UMIIRUKA"))
+                effectOfUmiiruka();
+        }else if(duelModel.getField().get(1-duelModel.turn).get(0)!=null){
+            Spell spell=(Spell) duelModel.getField().get(1-duelModel.turn).get(0);
+            if(spell.getName().equals("Yami"))
+                effectOfYami();
+            else if(spell.getName().equals("Forest"))
+                effectOfForest();
+            else if(spell.getName().equals("Closed Forest"))
+                effectOfClosedForest();
+            else if(spell.getName().equals("UMIIRUKA"))
+                effectOfUmiiruka();
+
+        }
+
+    }
 
     public String deselect() {
         if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
@@ -67,7 +93,8 @@ public class DuelController {
             return effectOfRingOfDefense(placeOfSpell);
         } else if (spell.getName().equals("Advanced Ritual Art")) {
             return effectOfAdvancedRitualArt(placeOfSpell);
-        }
+        }else
+
         return "";
     }
 
@@ -895,7 +922,7 @@ public class DuelController {
             Monster monster1 = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
             if (monster != null)
                 if (monster.getCardType().equals("Aqua"))
-                    if (!duelModel.getSpellZoneActivate().get(duelModel.turn).get(i)) {
+                    if (duelModel.getSpellZoneActivate().get(duelModel.turn).get(i)) {
                         duelModel.getSpellZoneActivate().get(duelModel.turn).add(i, true);
                         monster.setDefensePower(monster.getDefensePower() - 400);
                         monster.setAttackPower(monster.getAttackPower() + 500);
@@ -1244,7 +1271,7 @@ public class DuelController {
         if (duelModel.getFieldZoneCard(duelModel.turn) == null) {
             return "no card found in the given position";
         } else {
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn), "My/Filed");
+            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn), "My/Filed/"+duelModel.getFieldCondition().get(duelModel.turn).get(0));
             return "card selected";
         }
     }
