@@ -276,18 +276,20 @@ public class DuelModel {
             spellAndTrapCondition.get(turn).add(place - 1, "O/" + place);
         }
     }
-    public  void changeField(Card card,String condition){
+
+    public void changeField(Card card, String condition) {
         deletExitedField();
-        field.get(turn).set(0,card);
-        fieldCondition.get(turn).set(0,condition);
+        field.get(turn).set(0, card);
+        fieldCondition.get(turn).set(0, condition);
     }
-    public void  deletExitedField(){
+
+    public void deletExitedField() {
         field.get(turn).remove(0);
-        field.get(1-turn).remove(0);
+        field.get(1 - turn).remove(0);
         field.get(turn).add(selectedCards.get(turn).get(0));
         for (int i = 0; i < 5; i++) {
-            Monster monster=(Monster)monstersInField.get(turn).get(i);
-            Monster monster1=(Monster)monstersInField.get(1-turn).get(i);
+            Monster monster = (Monster) monstersInField.get(turn).get(i);
+            Monster monster1 = (Monster) monstersInField.get(1 - turn).get(i);
             monster.setDefensePower(Card.getCardByName(monster.getName()).getDefensePower());
             monster.setAttackPower(Card.getCardByName(monster.getName()).getAttackPower());
             monster1.setAttackPower(Card.getCardByName(monster1.getName()).getAttackPower());
@@ -390,8 +392,8 @@ public class DuelModel {
         field.get(turn).remove(0);
         field.get(turn).add(card);
         for (int i = 0; i < 5; i++) {
-            Monster monster=(Monster)monstersInField.get(turn).get(i);
-            Monster monster1=(Monster)monstersInField.get(1-turn).get(i);
+            Monster monster = (Monster) monstersInField.get(turn).get(i);
+            Monster monster1 = (Monster) monstersInField.get(1 - turn).get(i);
             monster.setDefensePower(Card.getCardByName(monster.getName()).getDefensePower());
             monster.setAttackPower(Card.getCardByName(monster.getName()).getAttackPower());
             monster1.setAttackPower(Card.getCardByName(monster1.getName()).getAttackPower());
@@ -524,9 +526,9 @@ public class DuelModel {
 
     public void effectOfSpellAbsorptionCards() {
         if (spellAbsorptionCards.get(turn).size() > 0) {
-            lifePointUser += 500;
+            lifePointUser += 500 * spellAbsorptionCards.get(turn).size();
         } else if (spellAbsorptionCards.get(1 - turn).size() > 0) {
-            lifePointOpponent += 500;
+            lifePointOpponent += 500 * spellAbsorptionCards.get(1 - turn).size();
         }
     }
 

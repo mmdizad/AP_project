@@ -24,27 +24,28 @@ public class DuelController {
     public void selectFirstPlayer() {
 
     }
+
     //این تابع حین بازی صدا زده میشه تا کارت های ورودی شامل میدان شوند
-    public void activeField(){
-        if(duelModel.getField().get(duelModel.turn).get(0)!=null){
-          Spell spell=(Spell) duelModel.getField().get(duelModel.turn).get(0);
-            if(spell.getName().equals("Yami"))
+    public void activeField() {
+        if (duelModel.getField().get(duelModel.turn).get(0) != null) {
+            Spell spell = (Spell) duelModel.getField().get(duelModel.turn).get(0);
+            if (spell.getName().equals("Yami"))
                 effectOfYami();
-            else if(spell.getName().equals("Forest"))
+            else if (spell.getName().equals("Forest"))
                 effectOfForest();
-            else if(spell.getName().equals("Closed Forest"))
+            else if (spell.getName().equals("Closed Forest"))
                 effectOfClosedForest();
-            else if(spell.getName().equals("UMIIRUKA"))
+            else if (spell.getName().equals("UMIIRUKA"))
                 effectOfUmiiruka();
-        }else if(duelModel.getField().get(1-duelModel.turn).get(0)!=null){
-            Spell spell=(Spell) duelModel.getField().get(1-duelModel.turn).get(0);
-            if(spell.getName().equals("Yami"))
+        } else if (duelModel.getField().get(1 - duelModel.turn).get(0) != null) {
+            Spell spell = (Spell) duelModel.getField().get(1 - duelModel.turn).get(0);
+            if (spell.getName().equals("Yami"))
                 effectOfYami();
-            else if(spell.getName().equals("Forest"))
+            else if (spell.getName().equals("Forest"))
                 effectOfForest();
-            else if(spell.getName().equals("Closed Forest"))
+            else if (spell.getName().equals("Closed Forest"))
                 effectOfClosedForest();
-            else if(spell.getName().equals("UMIIRUKA"))
+            else if (spell.getName().equals("UMIIRUKA"))
                 effectOfUmiiruka();
 
         }
@@ -93,9 +94,9 @@ public class DuelController {
             return effectOfRingOfDefense(placeOfSpell);
         } else if (spell.getName().equals("Advanced Ritual Art")) {
             return effectOfAdvancedRitualArt(placeOfSpell);
-        }else
+        } else
 
-        return "";
+            return "";
     }
 
     public void isOpponentHasAnySpellOrTrapForActivate() {
@@ -1271,7 +1272,7 @@ public class DuelController {
         if (duelModel.getFieldZoneCard(duelModel.turn) == null) {
             return "no card found in the given position";
         } else {
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn), "My/Filed/"+duelModel.getFieldCondition().get(duelModel.turn).get(0));
+            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn), "My/Filed/" + duelModel.getFieldCondition().get(duelModel.turn).get(0));
             return "card selected";
         }
     }
@@ -1327,15 +1328,19 @@ public class DuelController {
         ArrayList<Card> supplyCards2 = duelModel.getSupplySquadCards().get(1 - duelModel.turn);
         if (monsterDestroyedInThisTurn1.size() > 0) {
             if (supplyCards1.size() > 0) {
-                duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
-                        , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
-                                getPlayersCards().get(duelModel.turn).size() - 1));
+                for (int i = 0; i < supplyCards1.size(); i++) {
+                    duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
+                            , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
+                                    getPlayersCards().get(duelModel.turn).size() - 1));
+                }
             }
         } else if (monsterDestroyedInThisTurn2.size() > 0) {
             if (supplyCards2.size() > 0) {
-                duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
-                        , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
-                                getPlayersCards().get(duelModel.turn).size() - 1));
+                for (int j = 0; j < supplyCards2.size(); j++) {
+                    duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
+                            , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
+                                    getPlayersCards().get(duelModel.turn).size() - 1));
+                }
             }
         }
     }
