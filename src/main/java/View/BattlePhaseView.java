@@ -86,6 +86,10 @@ public class BattlePhaseView extends DuelView {
             if (duelModel.getBorrowCards().size() > 0) {
                 duelController.refundsTheBorrowCards();
             }
+            duelController.hasSwordCard();
+            duelController.hasSupplySquadCard();
+            duelModel.deleteMonstersDestroyedInThisTurn();
+            duelModel.deleteSpellAndTrapsSetInThisTurn();
             System.out.println("EndPhase");
             BattlePhaseController.getInstance().attackedCards.clear();
             duelModel.turn = 1 - duelModel.turn;

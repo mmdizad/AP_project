@@ -30,6 +30,7 @@ public class DrawPhaseView extends DuelView {
         }
         if (!startOfGame) {
             System.out.println(newCardToHandController.hasHeraldOfCreation());
+            System.out.println(newCardToHandController.hasScannerMonster());
             StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
             standByPhaseView.run(scanner);
         }
@@ -47,9 +48,20 @@ public class DrawPhaseView extends DuelView {
         return scanner1.nextInt();
     }
 
-    public String scanResponse(){
-        System.out.println("do you want to use effect of Herald of Creation (enter yse or no)");
+    public String scanResponseForHeraldOfCreation() {
+        System.out.println("do you want to use effect of Herald of Creation? (enter yse or no)");
         return scanner1.nextLine();
+    }
+
+    public String scanResponseForScanner() {
+        System.out.println("do you want to change it with monster in opponent graveyard int this turn?");
+        return scanner1.nextLine();
+    }
+
+    public int scanPlaceOfCardForInsteadOfScanner() {
+        System.out.println("please enter address of monster from opponent graveyard, this" +
+                "card is InsteadOf your scanner in this turn");
+        return scanner1.nextInt();
     }
 
 

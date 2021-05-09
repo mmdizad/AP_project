@@ -1130,8 +1130,8 @@ public class DuelController {
         }
     }
 
-    public ArrayList<String> showGraveYard() {
-        ArrayList<Card> graveyardCards = duelModel.getGraveyard(0);
+    public ArrayList<String> showGraveYard(int turn) {
+        ArrayList<Card> graveyardCards = duelModel.getGraveyard(turn);
         ArrayList<String> output = new ArrayList<>();
         for (int i = 0; i < graveyardCards.size(); i++) {
             output.add(i + 1 + ". " + graveyardCards.get(i).getName() + ": " + graveyardCards.get(i).getDescription());
@@ -1341,6 +1341,22 @@ public class DuelController {
                             , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
                                     getPlayersCards().get(duelModel.turn).size() - 1));
                 }
+            }
+        }
+    }
+
+    public void hasSomeCardsInsteadOfScanner() {
+        HashMap<Card, Integer> cardsInsteadOfScanner = duelModel.getCardsInsteadOfScanners();
+        if (cardsInsteadOfScanner.size() > 0) {
+            for (Map.Entry<Card, Integer> entry : cardsInsteadOfScanner.entrySet()) {
+                Monster monster = new Monster("Scanner", "Once per turn, you can select 1 of your opponent's monsters" +
+                        " that is removed from play. Until the End Phase, this card's name is treated" +
+                        " as the selected monster's name, and this card has the same Attribute, Level, ATK," +
+                        " and DEF as the selected monster. If this card is removed from the field while this effect" +
+                        " is applied, remove it from play.", "Effect", 8000, "Monster",
+                        0, 0, "Machine", "LIGHT", 1, false);
+                int placeOfScanner = entry.getValue();
+                duelModel.getMonstersInField().get(duelModel.turn).add(placeOfScanner - 1, monster);
             }
         }
     }

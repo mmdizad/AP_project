@@ -32,6 +32,7 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> spellsAndTarpsSetInThisTurn;
     private ArrayList<ArrayList<Boolean>> spellZoneActivate;
     private ArrayList<ArrayList<Card>> activatedMonsterEffects;
+    private HashMap<Card, Integer> cardsInsteadOfScanners;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         usernames = new ArrayList<>();
@@ -140,6 +141,7 @@ public class DuelModel {
         ArrayList<Card> activatedMonsterEffects2 = new ArrayList<>();
         activatedMonsterEffects.add(activatedMonsterEffects1);
         activatedMonsterEffects.add(activatedMonsterEffects2);
+        cardsInsteadOfScanners = new HashMap<>();
     }
 
     public void decreaseLifePoint(int lifePoint, int turn) {
@@ -588,5 +590,17 @@ public class DuelModel {
     public void deleteCardFromDeck(int turn, int index, Card card) {
         playersCards.get(turn).remove(index);
         addCardToGraveyard(turn, card);
+    }
+
+    public void setCardsInsteadOfScanners(Card card, int placeOfCard) {
+        cardsInsteadOfScanners.put(card, placeOfCard);
+    }
+
+    public HashMap<Card, Integer> getCardsInsteadOfScanners() {
+        return cardsInsteadOfScanners;
+    }
+
+    public void deleteCardsInsteadOfScanners() {
+        cardsInsteadOfScanners.clear();
     }
 }

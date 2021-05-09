@@ -46,11 +46,30 @@ public class NewCardToHandController extends DuelController {
         DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
         ArrayList<Card> monstersInFiled = duelModel.getMonstersInField().get(duelModel.turn);
         for (Card card : monstersInFiled) {
-            if (card.getName().equals("Herald of Creation")) {
-                String response = drawPhaseView.scanResponse();
-                if (response.equals("yes"))
-                return effectOfHeraldOfCreation();
+            if (card != null) {
+                if (card.getName().equals("Herald of Creation")) {
+                    String response = drawPhaseView.scanResponseForHeraldOfCreation();
+                    if (response.equals("yes"))
+                        return effectOfHeraldOfCreation();
+                }
             }
+        }
+        return "";
+    }
+
+    public String hasScannerMonster() {
+        DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
+        ArrayList<Card> monstersInFiled = duelModel.getMonstersInField().get(duelModel.turn);
+        int i = 1;
+        for (Card card : monstersInFiled) {
+            if (card != null) {
+                if (card.getName().equals("Scanner")) {
+                    String response = drawPhaseView.scanResponseForScanner();
+                    if (response.equals("yes"))
+                        return effectOfScanner(i);
+                }
+            }
+            i++;
         }
         return "";
     }
@@ -58,7 +77,7 @@ public class NewCardToHandController extends DuelController {
     public String effectOfHeraldOfCreation() {
         DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
         int addressOfHandCard = drawPhaseView.scanNumberCardTributeForHeraldOfCreation();
-        duelView.showGraveyardForSomeClasses();
+        duelView.showGraveyardForSomeClasses(duelModel.turn);
         if (addressOfHandCard > duelModel.getHandCards().get(duelModel.turn).size()) {
             return "this address in hand is not correct";
         } else {
@@ -85,5 +104,21 @@ public class NewCardToHandController extends DuelController {
         }
     }
 
-
+    public String effectOfScanner(int placeOfScanner) {
+        DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
+        duelView.showGraveyardForSomeClasses(1 - duelModel.turn);
+        int addressOfCardInGraveyard = drawPhaseView.scanPlaceOfCardForInsteadOfScanner();
+        if (addressOfCardInGraveyard > duelModel.getGraveyard(duelModel.turn).size()) {
+            return "this address in graveyard is not correct";
+        } else {
+            Card card = duelModel.getGraveyard(duelModel.turn).get(addressOfCardInGraveyard - 1);
+            if (!card.getCategory().equals("Monster")) {
+                return "you must select monster to insteadOf Scanner";
+            } else {
+                duelModel.getMonstersInField().get(duelModel.turn).add(placeOfScanner - 1, card);
+                duelModel.setCardsInsteadOfScanners(card, placeOfScanner);
+                return "a monster card insteadOf Scanner";
+            }
+        }
+    }
 }
