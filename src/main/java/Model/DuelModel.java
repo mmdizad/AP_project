@@ -428,9 +428,6 @@ public class DuelModel {
         monsterSetOrSummonInThisTurn = null;
     }
 
-    public void changeUser() {
-    }
-
     public void flipSummon(int place) {
         monsterCondition.get(turn).add(place, "OO/" + place + 1);
         deSelectedCard();
@@ -562,15 +559,6 @@ public class DuelModel {
 
     public void deleteSpellAndTrapsSetInThisTurn() {
         spellsAndTarpsSetInThisTurn.clear();
-    }
-
-    public int findEmptySpellField() {
-        for (int i = 0; i < 5; i++) {
-            if (spellsAndTrapsInFiled.get(turn).get(i) == null) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     public void addActivatedMonsterEffect(Card card, int turn) {
