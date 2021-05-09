@@ -15,8 +15,7 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> handCards;
     private ArrayList<ArrayList<Card>> field;
     private ArrayList<ArrayList<String>> fieldCondition;
-    private int lifePointUser = 8000;
-    private int lifePointOpponent = 8000;
+    private ArrayList<Integer> lifePoints;
     private ArrayList<String> usernames;
     public int turn = 0;
     public Card monsterSetOrSummonInThisTurn;
@@ -35,6 +34,11 @@ public class DuelModel {
     private HashMap<Card, Integer> cardsInsteadOfScanners;
 
     public DuelModel(String playerUsername, String opponentUsername) {
+        lifePoints = new ArrayList<>();
+        int lifePointUser = 8000;
+        int lifePointOpponent = 8000;
+        lifePoints.add(lifePointUser);
+        lifePoints.add(lifePointOpponent);
         usernames = new ArrayList<>();
         usernames.add(playerUsername);
         usernames.add(opponentUsername);
@@ -144,16 +148,14 @@ public class DuelModel {
         cardsInsteadOfScanners = new HashMap<>();
     }
 
-    public void decreaseLifePoint(int lifePoint, int turn) {
-        if (turn == 1) {
-            lifePointOpponent -= lifePoint;
-        } else {
-            lifePointUser -= lifePoint;
-        }
+    public void decreaseLifePoint(int decreaseLifePoint, int turn) {
+        int lifePoint = lifePoints.get(turn);
+        lifePoints.add(turn, lifePoint - decreaseLifePoint);
     }
 
-    public void increaseLifePoint(int lifePoint, int turn) {
-
+    public void increaseLifePoint(int increaseLifePoint, int turn) {
+        int lifePoint = lifePoints.get(turn);
+        lifePoints.add(turn, lifePoint + increaseLifePoint);
     }
 
     public void addBorrowCard(Card card, String condition) {
@@ -370,7 +372,7 @@ public class DuelModel {
         String spellFieldUser = "    " + spellConditionUser.get(5)[0] + "    " + spellConditionUser.get(3)[0] + "    " + spellConditionUser.get(1)[0] + "    " + spellConditionUser.get(2)[0] + "    " + spellConditionUser.get(4)[0];
         String monsterFieldUser = "    " + conditionMonsterUser.get(5)[0] + "    " + conditionMonsterUser.get(3)[0] + "    " + conditionMonsterUser.get(1)[0] + "    " + conditionMonsterUser.get(2)[0] + "    " + conditionMonsterUser.get(4)[0];
         String monsterFieldOpponent = "    " + conditionMonsterOpponent.get(4)[0] + "    " + conditionMonsterOpponent.get(2)[0] + "    " + conditionMonsterOpponent.get(1)[0] + "    " + conditionMonsterOpponent.get(3)[0] + "    " + conditionMonsterOpponent.get(5)[0];
-        board.add(usernames.get(turn - 1) + ":" + lifePointOpponent);
+        board.add(usernames.get(turn - 1) + ":" + lifePoints.get(1 - turn));
         board.add(handCardOpponent);
         board.add(String.valueOf(playersCards.get(1 - turn).size()));
         board.add(spellFieldofOpponet);
@@ -385,7 +387,7 @@ public class DuelModel {
         board.add(monsterFieldUser);
         board.add(spellFieldUser);
         board.add(handCardUser);
-        board.add(usernames.get(turn) + ":" + lifePointUser);
+        board.add(usernames.get(turn) + ":" + lifePoints.get(turn));
         return board;
 
     }
@@ -525,9 +527,9 @@ public class DuelModel {
 
     public void effectOfSpellAbsorptionCards() {
         if (spellAbsorptionCards.get(turn).size() > 0) {
-            lifePointUser += 500 * spellAbsorptionCards.get(turn).size();
+            increaseLifePoint(500 * spellAbsorptionCards.get(turn).size(), turn);
         } else if (spellAbsorptionCards.get(1 - turn).size() > 0) {
-            lifePointOpponent += 500 * spellAbsorptionCards.get(1 - turn).size();
+            increaseLifePoint(500 * spellAbsorptionCards.get(1 - turn).size(), 1 - turn);
         }
     }
 
