@@ -198,15 +198,17 @@ public class DuelView {
 
     protected void selectField(Matcher matcher) {
         if (matcher.find()) {
+            int place = Integer.parseInt(matcher.group(0));
             isCommandInvalid = false;
-            System.out.println(duelController.selectFieldZone());
+            System.out.println(duelController.selectFieldZone(place));
         }
     }
 
     protected void selectOpponentField(Matcher matcher) {
         if (matcher.find()) {
+            int place = Integer.parseInt(matcher.group(0));
             isCommandInvalid = false;
-            System.out.println(duelController.selectOpponentFieldZone());
+            System.out.println(duelController.selectOpponentFieldZone(place));
         }
     }
 

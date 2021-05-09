@@ -14,7 +14,6 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> graveyard;
     private ArrayList<ArrayList<Card>> handCards;
     private ArrayList<ArrayList<Card>> field;
-    private ArrayList<ArrayList<String>> fieldCondition;
     private int lifePointUser = 8000;
     private int lifePointOpponent = 8000;
     private ArrayList<String> usernames;
@@ -96,7 +95,11 @@ public class DuelModel {
         handCards = new ArrayList<>();
         field = new ArrayList<>();
         ArrayList<Card> field1 = new ArrayList<>();
+        field1.add(null);
+        field1.add(null);
         ArrayList<Card> field2 = new ArrayList<>();
+        field2.add(null);
+        field2.add(null);
         field.add(field1);
         field.add(field2);
         detailOfSelectedCard = new ArrayList<>();
@@ -266,9 +269,6 @@ public class DuelModel {
         return spellAndTrapCondition.get(turn).get(place - 1);
     }
 
-    public ArrayList<ArrayList<String>> getFieldCondition() {
-        return fieldCondition;
-    }
 
     public void changePositionOfSpellOrTrapCard(int turn, int place) {
         String[] condition = spellAndTrapCondition.get(turn).get(place - 1).split("/");
@@ -276,10 +276,9 @@ public class DuelModel {
             spellAndTrapCondition.get(turn).add(place - 1, "O/" + place);
         }
     }
-    public  void changeField(Card card,String condition){
+    public  void activeField(Card card){
         deletExitedField();
         field.get(turn).set(0,card);
-        fieldCondition.get(turn).set(0,condition);
     }
     public void  deletExitedField(){
         field.get(turn).remove(0);
@@ -292,6 +291,8 @@ public class DuelModel {
             monster.setAttackPower(Card.getCardByName(monster.getName()).getAttackPower());
             monster1.setAttackPower(Card.getCardByName(monster1.getName()).getAttackPower());
             monster1.setDefensePower(Card.getCardByName(monster1.getName()).getDefensePower());
+            spellZoneActivate.get(turn).set(i,false);
+            spellZoneActivate.get(1-turn).set(i,false);
         }
 
     }
@@ -318,8 +319,7 @@ public class DuelModel {
 
 
     public void deSelectedCard() {
-        selectedCards.get(turn).remove(0);
-        detailOfSelectedCard.get(turn).clear();
+        selectedCards.get(turn).set(0,null);
     }
 
     public ArrayList<ArrayList<Card>> getHandCards() {
@@ -387,16 +387,7 @@ public class DuelModel {
     }
 
     public void setField(Card card) {
-        field.get(turn).remove(0);
-        field.get(turn).add(card);
-        for (int i = 0; i < 5; i++) {
-            Monster monster=(Monster)monstersInField.get(turn).get(i);
-            Monster monster1=(Monster)monstersInField.get(1-turn).get(i);
-            monster.setDefensePower(Card.getCardByName(monster.getName()).getDefensePower());
-            monster.setAttackPower(Card.getCardByName(monster.getName()).getAttackPower());
-            monster1.setAttackPower(Card.getCardByName(monster1.getName()).getAttackPower());
-            monster1.setDefensePower(Card.getCardByName(monster1.getName()).getDefensePower());
-        }
+       field.get(turn).set(1,card);
     }
 
     public ArrayList<String> getUsernames() {
