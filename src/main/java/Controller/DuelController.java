@@ -104,7 +104,8 @@ public class DuelController {
         for (int i = 1; i <= 5; i++) {
             if (duelModel.getSpellAndTrap(1 - duelModel.turn, i) != null) {
                 if (duelModel.getSpellAndTrap(1 - duelModel.turn, i).getCardType()
-                        .equals("Quick-play")) {
+                        .equals("Quick-play") || duelModel.getSpellAndTrap(1 - duelModel.turn, i)
+                        .getCategory().equals("Trap")) {
                     hasAnySpellOrTrap = true;
                     break;
                 }
