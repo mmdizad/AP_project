@@ -31,8 +31,14 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> spellsAndTarpsSetInThisTurn;
     private ArrayList<ArrayList<Boolean>> spellZoneActivate;
     private ArrayList<ArrayList<Card>> activatedMonsterEffects;
+    private HashMap<Card, Integer> cardsInsteadOfScanners;
 
     public DuelModel(String playerUsername, String opponentUsername) {
+        lifePoints = new ArrayList<>();
+        int lifePointUser = 8000;
+        int lifePointOpponent = 8000;
+        lifePoints.add(lifePointUser);
+        lifePoints.add(lifePointOpponent);
         usernames = new ArrayList<>();
         usernames.add(playerUsername);
         usernames.add(opponentUsername);
@@ -280,13 +286,14 @@ public class DuelModel {
         deletExitedField();
         field.get(turn).set(0,card);
     }
-    public void  deletExitedField(){
+
+    public void deletExitedField() {
         field.get(turn).remove(0);
-        field.get(1-turn).remove(0);
+        field.get(1 - turn).remove(0);
         field.get(turn).add(selectedCards.get(turn).get(0));
         for (int i = 0; i < 5; i++) {
-            Monster monster=(Monster)monstersInField.get(turn).get(i);
-            Monster monster1=(Monster)monstersInField.get(1-turn).get(i);
+            Monster monster = (Monster) monstersInField.get(turn).get(i);
+            Monster monster1 = (Monster) monstersInField.get(1 - turn).get(i);
             monster.setDefensePower(Card.getCardByName(monster.getName()).getDefensePower());
             monster.setAttackPower(Card.getCardByName(monster.getName()).getAttackPower());
             monster1.setAttackPower(Card.getCardByName(monster1.getName()).getAttackPower());
@@ -366,7 +373,7 @@ public class DuelModel {
         String spellFieldUser = "    " + spellConditionUser.get(5)[0] + "    " + spellConditionUser.get(3)[0] + "    " + spellConditionUser.get(1)[0] + "    " + spellConditionUser.get(2)[0] + "    " + spellConditionUser.get(4)[0];
         String monsterFieldUser = "    " + conditionMonsterUser.get(5)[0] + "    " + conditionMonsterUser.get(3)[0] + "    " + conditionMonsterUser.get(1)[0] + "    " + conditionMonsterUser.get(2)[0] + "    " + conditionMonsterUser.get(4)[0];
         String monsterFieldOpponent = "    " + conditionMonsterOpponent.get(4)[0] + "    " + conditionMonsterOpponent.get(2)[0] + "    " + conditionMonsterOpponent.get(1)[0] + "    " + conditionMonsterOpponent.get(3)[0] + "    " + conditionMonsterOpponent.get(5)[0];
-        board.add(usernames.get(turn - 1) + ":" + lifePointOpponent);
+        board.add(usernames.get(turn - 1) + ":" + lifePoints.get(1 - turn));
         board.add(handCardOpponent);
         board.add(String.valueOf(playersCards.get(1 - turn).size()));
         board.add(spellFieldofOpponet);
@@ -381,7 +388,7 @@ public class DuelModel {
         board.add(monsterFieldUser);
         board.add(spellFieldUser);
         board.add(handCardUser);
-        board.add(usernames.get(turn) + ":" + lifePointUser);
+        board.add(usernames.get(turn) + ":" + lifePoints.get(turn));
         return board;
 
     }
@@ -413,9 +420,6 @@ public class DuelModel {
 
     public void deleteMonsterSetOrSummonInThisTurn() {
         monsterSetOrSummonInThisTurn = null;
-    }
-
-    public void changeUser() {
     }
 
     public void flipSummon(int place) {
@@ -515,9 +519,9 @@ public class DuelModel {
 
     public void effectOfSpellAbsorptionCards() {
         if (spellAbsorptionCards.get(turn).size() > 0) {
-            lifePointUser += 500;
+            increaseLifePoint(500 * spellAbsorptionCards.get(turn).size(), turn);
         } else if (spellAbsorptionCards.get(1 - turn).size() > 0) {
-            lifePointOpponent += 500;
+            increaseLifePoint(500 * spellAbsorptionCards.get(1 - turn).size(), 1 - turn);
         }
     }
 
@@ -551,15 +555,6 @@ public class DuelModel {
         spellsAndTarpsSetInThisTurn.clear();
     }
 
-    public int findEmptySpellField() {
-        for (int i = 0; i < 5; i++) {
-            if (spellsAndTrapsInFiled.get(turn).get(i) == null) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public void addActivatedMonsterEffect(Card card, int turn) {
         activatedMonsterEffects.get(turn).add(card);
     }
@@ -577,5 +572,17 @@ public class DuelModel {
     public void deleteCardFromDeck(int turn, int index, Card card) {
         playersCards.get(turn).remove(index);
         addCardToGraveyard(turn, card);
+    }
+
+    public void setCardsInsteadOfScanners(Card card, int placeOfCard) {
+        cardsInsteadOfScanners.put(card, placeOfCard);
+    }
+
+    public HashMap<Card, Integer> getCardsInsteadOfScanners() {
+        return cardsInsteadOfScanners;
+    }
+
+    public void deleteCardsInsteadOfScanners() {
+        cardsInsteadOfScanners.clear();
     }
 }

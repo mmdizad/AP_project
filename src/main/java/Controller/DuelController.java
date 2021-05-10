@@ -24,27 +24,28 @@ public class DuelController {
     public void selectFirstPlayer() {
 
     }
+
     //این تابع حین بازی صدا زده میشه تا کارت های ورودی شامل میدان شوند
-    public void activeField(){
-        if(duelModel.getField().get(duelModel.turn).get(0)!=null){
-          Spell spell=(Spell) duelModel.getField().get(duelModel.turn).get(0);
-            if(spell.getName().equals("Yami"))
+    public void activeField() {
+        if (duelModel.getField().get(duelModel.turn).get(0) != null) {
+            Spell spell = (Spell) duelModel.getField().get(duelModel.turn).get(0);
+            if (spell.getName().equals("Yami"))
                 effectOfYami();
-            else if(spell.getName().equals("Forest"))
+            else if (spell.getName().equals("Forest"))
                 effectOfForest();
-            else if(spell.getName().equals("Closed Forest"))
+            else if (spell.getName().equals("Closed Forest"))
                 effectOfClosedForest();
-            else if(spell.getName().equals("UMIIRUKA"))
+            else if (spell.getName().equals("UMIIRUKA"))
                 effectOfUmiiruka();
-        }else if(duelModel.getField().get(1-duelModel.turn).get(0)!=null){
-            Spell spell=(Spell) duelModel.getField().get(1-duelModel.turn).get(0);
-            if(spell.getName().equals("Yami"))
+        } else if (duelModel.getField().get(1 - duelModel.turn).get(0) != null) {
+            Spell spell = (Spell) duelModel.getField().get(1 - duelModel.turn).get(0);
+            if (spell.getName().equals("Yami"))
                 effectOfYami();
-            else if(spell.getName().equals("Forest"))
+            else if (spell.getName().equals("Forest"))
                 effectOfForest();
-            else if(spell.getName().equals("Closed Forest"))
+            else if (spell.getName().equals("Closed Forest"))
                 effectOfClosedForest();
-            else if(spell.getName().equals("UMIIRUKA"))
+            else if (spell.getName().equals("UMIIRUKA"))
                 effectOfUmiiruka();
 
         }
@@ -101,31 +102,14 @@ public class DuelController {
         }
         return "";
     }
-    public String activeSetZone(){
-        duelModel.activeField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
-        Spell spell = (Spell) duelModel.getSelectedCards().get(duelModel.turn).get(0);
-        duelModel.getField().get(duelModel.turn).set(1,null);
-        deselect();
-        if(spell.getName().equals("Yami"))
-            effectOfYami();
-        else if(spell.getName().equals("Forest"))
-            effectOfForest();
-        else if(spell.getName().equals("Closed Forest"))
-            effectOfClosedForest();
-        else if(spell.getName().equals("UMIIRUKA"))
-            effectOfUmiiruka();
-
-        return "spell zone activate";
-
-
-    }
 
     public void isOpponentHasAnySpellOrTrapForActivate() {
         boolean hasAnySpellOrTrap = false;
         for (int i = 1; i <= 5; i++) {
             if (duelModel.getSpellAndTrap(1 - duelModel.turn, i) != null) {
                 if (duelModel.getSpellAndTrap(1 - duelModel.turn, i).getCardType()
-                        .equals("Quick-play")) {
+                        .equals("Quick-play") || duelModel.getSpellAndTrap(1 - duelModel.turn, i)
+                        .getCategory().equals("Trap")) {
                     hasAnySpellOrTrap = true;
                     break;
                 }
@@ -1303,21 +1287,21 @@ public class DuelController {
         }
     }
 
-    public String selectFieldZone(int place) {
-        if (duelModel.getField().get(place) == null) {
+    public String selectFieldZone() {
+        if (duelModel.getFieldZoneCard(duelModel.turn) == null) {
             return "no card found in the given position";
         } else {
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn), "My/Filed/"+place);
+            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn), "My/Filed/"+duelModel.getFieldCondition().get(duelModel.turn).get(0));
             return "card selected";
         }
     }
 
 
-    public String selectOpponentFieldZone(int place) {
+    public String selectOpponentFieldZone() {
         if (duelModel.getFieldZoneCard(duelModel.turn - 1) == null) {
             return "no card found in the given position";
         } else {
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn - 1), "Opponent/Field/"+place);
+            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn - 1), "Opponent/Field");
             return "card selected";
         }
     }

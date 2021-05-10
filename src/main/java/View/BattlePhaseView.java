@@ -86,12 +86,18 @@ public class BattlePhaseView extends DuelView {
             if (duelModel.getBorrowCards().size() > 0) {
                 duelController.refundsTheBorrowCards();
             }
+            duelController.hasSwordCard();
+            duelController.hasSupplySquadCard();
+            duelController.hasSomeCardsInsteadOfScanner();
+            duelModel.deleteMonstersDestroyedInThisTurn();
+            duelModel.deleteSpellAndTrapsSetInThisTurn();
+            duelModel.deleteCardsInsteadOfScanners();
+            duelModel.deleteMonsterSetOrSummonInThisTurn();
             System.out.println("EndPhase");
             BattlePhaseController.getInstance().attackedCards.clear();
             duelModel.turn = 1 - duelModel.turn;
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, duelModel.getUsernames().get(duelModel.turn), false);
-            duelModel.deleteMonsterSetOrSummonInThisTurn();
         } else {
             System.out.println("please enter another or correct phase");
             run(scanner, false);
