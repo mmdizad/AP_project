@@ -243,7 +243,6 @@ public class DuelModel {
     }
 
     public void activateSpell(int turn, int place) {
-
     }
 
     public void changeSetToFaceUp(int place) {
