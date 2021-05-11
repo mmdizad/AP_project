@@ -281,13 +281,11 @@ public class DuelModel {
         }
     }
 
-    public void changeField(Card card, String condition) {
+    public  void activeField(Card card){
         deletExitedField();
-        field.get(turn).set(0, card);
-        fieldCondition.get(turn).set(0, condition);
+        field.get(turn).set(0,card);
     }
-
-    public void deletExitedField() {
+    public void  deletExitedField() {
         field.get(turn).remove(0);
         field.get(1 - turn).remove(0);
         field.get(turn).add(selectedCards.get(turn).get(0));
@@ -298,9 +296,11 @@ public class DuelModel {
             monster.setAttackPower(Card.getCardByName(monster.getName()).getAttackPower());
             monster1.setAttackPower(Card.getCardByName(monster1.getName()).getAttackPower());
             monster1.setDefensePower(Card.getCardByName(monster1.getName()).getDefensePower());
+            spellZoneActivate.get(turn).set(i, false);
+            spellZoneActivate.get(1 - turn).set(i, false);
         }
-
     }
+
 
     public void addCardToGraveyard(int turn, Card card) {
         if (card.getCategory().equals("Monster")) {
@@ -324,8 +324,7 @@ public class DuelModel {
 
 
     public void deSelectedCard() {
-        selectedCards.get(turn).remove(0);
-        detailOfSelectedCard.get(turn).clear();
+        selectedCards.get(turn).set(0,null);
     }
 
     public ArrayList<ArrayList<Card>> getHandCards() {
@@ -393,16 +392,7 @@ public class DuelModel {
     }
 
     public void setField(Card card) {
-        field.get(turn).remove(0);
-        field.get(turn).add(card);
-        for (int i = 0; i < 5; i++) {
-            Monster monster = (Monster) monstersInField.get(turn).get(i);
-            Monster monster1 = (Monster) monstersInField.get(1 - turn).get(i);
-            monster.setDefensePower(Card.getCardByName(monster.getName()).getDefensePower());
-            monster.setAttackPower(Card.getCardByName(monster.getName()).getAttackPower());
-            monster1.setAttackPower(Card.getCardByName(monster1.getName()).getAttackPower());
-            monster1.setDefensePower(Card.getCardByName(monster1.getName()).getDefensePower());
-        }
+        field.get(turn).set(1,card);
     }
 
     public ArrayList<String> getUsernames() {

@@ -182,33 +182,23 @@ public class DuelView {
         }
     }
 
-    protected void selectSpellOrTrap(Matcher matcher) {
-        if (matcher.find()) {
-            isCommandInvalid = false;
-            System.out.println(duelController.selectSpellOrTrap(matcher));
-        }
-    }
-
-    protected void selectOpponentSpell(Matcher matcher) {
-        if (matcher.find()) {
-            isCommandInvalid = false;
-            System.out.println(duelController.selectOpponentSpellOrTrap(matcher));
-        }
-    }
-
     protected void selectField(Matcher matcher) {
         if (matcher.find()) {
+            int place = Integer.parseInt(matcher.group(0));
             isCommandInvalid = false;
-            System.out.println(duelController.selectFieldZone());
+            System.out.println(duelController.selectFieldZone(place));
         }
     }
 
     protected void selectOpponentField(Matcher matcher) {
         if (matcher.find()) {
+            int place = Integer.parseInt(matcher.group(0));
             isCommandInvalid = false;
-            System.out.println(duelController.selectOpponentFieldZone());
+            System.out.println(duelController.selectOpponentFieldZone(place));
         }
     }
+
+
 
     protected void selectHand(Matcher matcher) {
         if (matcher.find()) {
