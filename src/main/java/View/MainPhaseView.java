@@ -71,6 +71,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             if (result.equals("summoned successfully")) {
                 System.out.println(result);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
+                duelModel.monsterFlipSummonOrNormalSummonForTrapHole = null;
             } else {
                 System.out.println(result);
             }
@@ -102,13 +103,21 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             if (response.equals("flipSummon Man-Eater Bug")) {
                 System.out.println("flip summoned successfully");
                 System.out.println(mainPhaseController.flipSummonManEaterBug());
+                duelController.isOpponentHasAnySpellOrTrapForActivate();
+                duelModel.monsterFlipSummonOrNormalSummonForTrapHole = null;
             } else {
-                System.out.println(response);
+                if (response.equals("flip summoned successfully")) {
+                    System.out.println(response);
+                    duelController.isOpponentHasAnySpellOrTrapForActivate();
+                    duelModel.monsterFlipSummonOrNormalSummonForTrapHole = null;
+                } else {
+                    System.out.println(response);
+                }
             }
         }
     }
 
-    public int scanPlaceOfMonsterForDestroyInManEaterFlipSummon(){
+    public int scanPlaceOfMonsterForDestroyInManEaterFlipSummon() {
         System.out.println("please enter the place of monster that you want destroyed" +
                 "(in opponent board)");
         return scanner1.nextInt();

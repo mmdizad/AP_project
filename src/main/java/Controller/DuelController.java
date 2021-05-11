@@ -1058,7 +1058,7 @@ public class DuelController {
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Mind Crush")) {
             activeTrapMindCrush();
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Trap Hole")) {
-            activeNormalTraps();
+            return effectOfTrapHole();
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Torrential Tribute")) {
             activeNormalTraps();
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Time Seal")) {
@@ -1073,6 +1073,24 @@ public class DuelController {
             activeNormalTraps();
         }
         return "trap activated";
+    }
+
+    public String effectOfTrapHole() {
+        if (duelModel.monsterFlipSummonOrNormalSummonForTrapHole == null) {
+            return "your opponent didnt summon or flipSummon card with property for destroy";
+        } else {
+            Card card = duelModel.monsterFlipSummonOrNormalSummonForTrapHole;
+            int indexOfMonsterSummonOrFlipSummon = duelModel.getMonstersInField().get(1 - duelModel.turn)
+                    .indexOf(card);
+            activeNormalTraps();
+            duelModel.deleteMonster(1 - duelModel.turn, indexOfMonsterSummonOrFlipSummon);
+            duelModel.addCardToGraveyard(1 - duelModel.turn, card);
+            Card trap = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+            int place = Integer.parseInt(duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(trap).split("/")[2]);
+            duelModel.deleteSpellAndTrap(duelModel.turn, place - 1);
+            duelModel.addCardToGraveyard(duelModel.turn, trap);
+            return "trap activated";
+        }
     }
 
     public void activeNormalTraps() {

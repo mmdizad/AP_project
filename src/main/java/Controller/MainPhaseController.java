@@ -38,7 +38,7 @@ public class MainPhaseController extends DuelController {
     public String setTrapOrSpell() {
 
         Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-        if(card.getCategory().equals("Field")){
+        if (card.getCategory().equals("Field")) {
             duelModel.setField(card);
         }
         if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(0) == null)
@@ -238,6 +238,11 @@ public class MainPhaseController extends DuelController {
         } else {
             return "monster card zone is full";
         }
+        if (monster.getLevel() <= 4) {
+            if (monster.getAttackPower() >= 1000) {
+                duelModel.monsterFlipSummonOrNormalSummonForTrapHole = monster;
+            }
+        }
         return "summoned successfully";
     }
 
@@ -293,7 +298,13 @@ public class MainPhaseController extends DuelController {
                     if (placeOfCardSummonedOrSetInThisTurn == placeOfSummonCard) {
                         return "you can’t flip summon this card";
                     } else {
+                        Monster monster = (Monster) card;
                         duelModel.flipSummon(placeOfSummonCard - 1);
+                        if (monster.getLevel() <= 4) {
+                            if (monster.getAttackPower() >= 1000) {
+                                duelModel.monsterFlipSummonOrNormalSummonForTrapHole = monster;
+                            }
+                        }
                         if (card.getName().equals("Man-Eater Bug")) {
                             return "flipSummon Man-Eater Bug";
                         }
@@ -390,6 +401,7 @@ public class MainPhaseController extends DuelController {
             return "Please enter correct response";
         } else if (response.equals("NO")) {
             monster.setAttackPower(1900);
+            duelModel.monsterFlipSummonOrNormalSummonForTrapHole = monster;
             return normalSummonMonsterOnField(monster, "Attack");
         } else {
             int address1 = mainPhaseView.getCardAddressForTribute();
@@ -466,14 +478,14 @@ public class MainPhaseController extends DuelController {
                     .get(duelModel.getSelectedCards().get(duelModel.turn).get(0)).split("/");
             if (detailOfSelectedCard[0].equals("Hand")) {
                 return duelController.activateEffect(-1);
-            } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field")&&detailOfSelectedCard.equals("2"))
-                       activateEffect(-2);
-              else if(detailOfSelectedCard[0].equals("My")&& detailOfSelectedCard[1].equals("Field")&&detailOfSelectedCard.equals("1"))
-                  return "this zone is activated";
-                else if(detailOfSelectedCard[0].equals("opponent"))
-                    return "you cant active your opponent field card";
-                    else if(detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field")&&detailOfSelectedCard.equals("1"))
-                        return "this card is activate";
+            } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field") && detailOfSelectedCard.equals("2"))
+                activateEffect(-2);
+            else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field") && detailOfSelectedCard.equals("1"))
+                return "this zone is activated";
+            else if (detailOfSelectedCard[0].equals("opponent"))
+                return "you cant active your opponent field card";
+            else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field") && detailOfSelectedCard.equals("1"))
+                return "this card is activate";
             else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("O")) {
                 return "you have already activated this card";
             } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("H")) {
