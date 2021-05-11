@@ -2,6 +2,7 @@ package View;
 
 import Controller.DuelController;
 import Controller.LoginController;
+import Controller.NewCardToHandController;
 import Model.DuelModel;
 
 import java.util.ArrayList;
@@ -16,6 +17,9 @@ public class DuelView {
     protected Scanner scanner1;
     protected boolean isCommandInvalid = true;
 
+
+
+
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView) {
         scanner1 = scanner;
         ArrayList<Integer> someRandomNumbers = new ArrayList<>();
@@ -25,7 +29,11 @@ public class DuelView {
         Collections.shuffle(someRandomNumbers);
         int starterGame = someRandomNumbers.get(0);
         if (starterGame % 2 == 0) {
+            String x=" 44";
             duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
+            duelController = DuelController.getInstance();
+            NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
+            duelController.setDuelModel(duelModel, duelView, duelController,x);
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);
             System.out.println("EndPhase");
@@ -36,7 +44,10 @@ public class DuelView {
             StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
             standByPhaseView.run(scanner);
         } else {
+            String x=" 44";
             duelModel = new DuelModel(secondPlayerUsername, LoginController.user.getUsername());
+            duelController = DuelController.getInstance();
+            duelController.setDuelModel(duelModel, duelView, duelController,x);
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, secondPlayerUsername, true);
             System.out.println("EndPhase");
@@ -47,8 +58,7 @@ public class DuelView {
             StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
             standByPhaseView.run(scanner);
         }
-        duelController = new DuelController();
-        duelController.setDuelModel(duelModel, duelView, duelController);
+
     }
 
     protected void deselect(Matcher matcher) {
@@ -136,6 +146,7 @@ public class DuelView {
         int place = scanner1.nextInt();
         return place;
     }
+
 
     public void showGraveyard(Matcher matcher) {
         if (matcher.find()) {

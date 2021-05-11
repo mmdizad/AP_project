@@ -4,19 +4,20 @@ import Model.*;
 import View.DrawPhaseView;
 
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
 
 
 public class NewCardToHandController extends DuelController {
 
-    private static NewCardToHandController newCardToHandController = new NewCardToHandController();
+    private static NewCardToHandController newCardToHandController ;
 
     private NewCardToHandController() {
 
     }
-
     public static NewCardToHandController getInstance() {
+        if(newCardToHandController==null)
+             newCardToHandController = new NewCardToHandController();
         return newCardToHandController;
+
     }
 
     public ArrayList<Card> newCardToHand(String playerUsername, DuelModel duelModel) {
@@ -26,6 +27,7 @@ public class NewCardToHandController extends DuelController {
         if (cardsInDeck.size() >= 1) {
             //ما اینجا duelModel نول هست چک کنید
             for (int i = 1; i < 6; i++) {
+                duelController.deselect();
                 Card card = duelModel.getSpellAndTrap(1 - duelModel.turn, i);
                 if (card != null) {
                     if (card.getName().equals("Time Seal") && duelModel.getSpellAndTrapCondition(1 - duelModel.turn, i).charAt(0) == 'O') {
@@ -37,6 +39,7 @@ public class NewCardToHandController extends DuelController {
             }
             return duelModel.addCardToHand();
         } else {
+
             return null;
             // جایگزین دارد
         }

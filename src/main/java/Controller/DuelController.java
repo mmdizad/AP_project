@@ -13,14 +13,23 @@ import java.util.regex.Matcher;
 public class DuelController {
     protected DuelModel duelModel;
     protected DuelView duelView;
-    protected DuelController duelController;
+    protected static DuelController duelController;
 
-    public void setDuelModel(DuelModel duelModel, DuelView duelView, DuelController duelController) {
+
+    protected DuelController (){
+
+    }
+    public static DuelController getInstance(){
+        if(duelController==null)
+            duelController=new DuelController();
+        return duelController;
+    }
+    public void setDuelModel(DuelModel duelModel, DuelView duelView, DuelController duelController,String x) {
+
         this.duelModel = duelModel;
         this.duelView = duelView;
-        this.duelController = duelController;
+        this.duelController = this;
     }
-
     public void selectFirstPlayer() {
 
     }
@@ -972,6 +981,48 @@ public class DuelController {
             }
             return "spell activated";
         } else return "you don't have any Warrior monster to equip ";
+    }
+    public String effectOfUnitedWeStand(){
+        boolean isMonster = false;
+        ArrayList<Integer> placeOfMonsterCard = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            Card card = duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            if (card != null) {
+                //check it
+                if (duelModel.getMonsterCondition(duelModel.turn, i).equals("DO") || duelModel.getMonsterCondition(duelModel.turn, i).equals("OO"))
+                    isMonster = true;
+                placeOfMonsterCard.add(i);
+            }
+            }
+            if(isMonster) {
+                int place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
+                Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(place);
+                monster.setAttackPower(monster.getAttackPower() + 800);
+                monster.setDefensePower(monster.getDefensePower() + 800);
+                return "spell activated";
+            }
+        return "you don't have any monster to equip";
+    }
+
+    public String effectOfBlackPendant(){
+        boolean isMonster = false;
+        ArrayList<Integer> placeOfMonsterCard = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            Card card = duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            if (card != null) {
+                //check it
+                if (duelModel.getMonsterCondition(duelModel.turn, i).equals("DO") || duelModel.getMonsterCondition(duelModel.turn, i).equals("OO"))
+                    isMonster = true;
+                placeOfMonsterCard.add(i);
+            }
+        }
+        if(isMonster) {
+            int place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
+            Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(place);
+            monster.setAttackPower(monster.getAttackPower() + 500);
+            return "spell activated";
+        }
+        return "you don't have any monster to equip";
     }
 
     public String effectOfUmiiruka() {

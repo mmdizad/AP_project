@@ -35,6 +35,7 @@ public class DuelModel {
     public Card monsterFlipSummonOrNormalSummonForTrapHole = null;
     public Card monsterSummonForEffectOfSomeTraps = null;
 
+
     public DuelModel(String playerUsername, String opponentUsername) {
         lifePoints = new ArrayList<>();
         int lifePointUser = 8000;
@@ -143,6 +144,7 @@ public class DuelModel {
         ArrayList<Card> spellsAndTarpsSetInThisTurn2 = new ArrayList<>();
         spellsAndTarpsSetInThisTurn.add(spellsAndTarpsSetInThisTurn1);
         spellsAndTarpsSetInThisTurn.add(spellsAndTarpsSetInThisTurn2);
+        ArrayList<ArrayList<Card>>  activatedMonsterEffects=new ArrayList<>();
         ArrayList<Card> activatedMonsterEffects1 = new ArrayList<>();
         ArrayList<Card> activatedMonsterEffects2 = new ArrayList<>();
         activatedMonsterEffects.add(activatedMonsterEffects1);
@@ -237,6 +239,7 @@ public class DuelModel {
     public void deleteMonster(int turn, int place) {
         monstersInField.get(turn).set(place, null);
         monsterCondition.get(turn).set(place, "");
+
     }
 
     public void deleteSpellAndTrap(int turn, int place) {
@@ -356,8 +359,6 @@ public class DuelModel {
         for (int i = 0; i < handCards.get(turn).size(); i++) {
             handCardUser = handCardUser + "c    ";
         }
-
-
         ArrayList<String[]> spellConditionOpponent = new ArrayList<>();
         ArrayList<String[]> spellConditionUser = new ArrayList<>();
         ArrayList<String[]> conditionMonsterOpponent = new ArrayList<>();

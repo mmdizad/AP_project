@@ -20,6 +20,7 @@ public class BattlePhaseView extends DuelView {
         if (startOfPhase) {
             System.out.println("BattlePhase");
         }
+
         while (true) {
             isCommandInvalid = true;
             String command = scanner.nextLine();
