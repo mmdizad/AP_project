@@ -204,6 +204,21 @@ public class DuelView {
         }
     }
 
+    protected void selectSpellOrTrap(Matcher matcher) {
+        if (matcher.find()) {
+            isCommandInvalid = false;
+            System.out.println(duelController.selectSpellOrTrap(matcher));
+        }
+    }
+
+    protected void selectOpponentSpell(Matcher matcher) {
+        if (matcher.find()) {
+            isCommandInvalid = false;
+            System.out.println(duelController.selectOpponentSpellOrTrap(matcher));
+        }
+    }
+
+
 
 
     protected void selectHand(Matcher matcher) {
