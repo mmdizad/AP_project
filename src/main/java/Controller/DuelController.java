@@ -23,7 +23,7 @@ public class DuelController {
             duelController=new DuelController();
         return duelController;
     }
-    public void setDuelModel(DuelModel duelModel, DuelView duelView, DuelController duelController,String x) {
+    public void setDuelModel(DuelModel duelModel, DuelView duelView, DuelController duelController) {
 
         this.duelModel = duelModel;
         this.duelView = duelView;

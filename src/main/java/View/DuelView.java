@@ -29,11 +29,11 @@ public class DuelView {
         Collections.shuffle(someRandomNumbers);
         int starterGame = someRandomNumbers.get(0);
         if (starterGame % 2 == 0) {
-            String x=" 44";
+
            duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
             duelController = DuelController.getInstance();
             NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
-            duelController.setDuelModel(duelModel, duelView, duelController,x);
+            duelController.setDuelModel(duelModel, duelView, duelController);
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);
             System.out.println("EndPhase");
@@ -44,10 +44,9 @@ public class DuelView {
             StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
             standByPhaseView.run(scanner);
         } else {
-            String x=" 44";
             duelModel = new DuelModel(secondPlayerUsername, LoginController.user.getUsername());
             duelController = DuelController.getInstance();
-            duelController.setDuelModel(duelModel, duelView, duelController,x);
+            duelController.setDuelModel(duelModel, duelView, duelController);
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, secondPlayerUsername, true);
             System.out.println("EndPhase");
