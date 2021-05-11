@@ -20,7 +20,7 @@ public class DrawPhaseView extends DuelView {
     public void newCard(Scanner scanner, String playerUsername, boolean startOfGame) {
         System.out.println("DrawPhase");
         NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
-        ArrayList<Card> cardsAddedToPlayerHand = newCardToHandController.newCardToHand(playerUsername, duelModel);
+        ArrayList<Card> cardsAddedToPlayerHand = newCardToHandController.newCardToHand(playerUsername);
         if (cardsAddedToPlayerHand != null) {
             for (Card card : cardsAddedToPlayerHand) {
                 System.out.println("new card added to the hand :" + card.getName());

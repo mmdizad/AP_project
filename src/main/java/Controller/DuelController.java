@@ -13,8 +13,7 @@ import java.util.regex.Matcher;
 public class DuelController {
     protected DuelModel duelModel;
     protected DuelView duelView;
-    protected static DuelController duelController;
-
+    protected static DuelController duelController=null;
 
     protected DuelController (){
 
@@ -28,7 +27,7 @@ public class DuelController {
 
         this.duelModel = duelModel;
         this.duelView = duelView;
-        this.duelController = this;
+        this.duelController = duelController;
     }
     public void selectFirstPlayer() {
 

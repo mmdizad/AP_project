@@ -30,7 +30,7 @@ public class DuelView {
         int starterGame = someRandomNumbers.get(0);
         if (starterGame % 2 == 0) {
             String x=" 44";
-            duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
+           duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
             duelController = DuelController.getInstance();
             NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
             duelController.setDuelModel(duelModel, duelView, duelController,x);

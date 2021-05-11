@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class NewCardToHandController extends DuelController {
 
-    private static NewCardToHandController newCardToHandController ;
+    private static NewCardToHandController newCardToHandController=null ;
 
     private NewCardToHandController() {
 
@@ -20,7 +20,7 @@ public class NewCardToHandController extends DuelController {
 
     }
 
-    public ArrayList<Card> newCardToHand(String playerUsername, DuelModel duelModel) {
+    public ArrayList<Card> newCardToHand(String playerUsername) {
         User user = User.getUserByUsername(playerUsername);
         Deck deck = user.getActiveDeck();
         ArrayList<Card> cardsInDeck = deck.getCardsMain();
@@ -28,16 +28,17 @@ public class NewCardToHandController extends DuelController {
             //ما اینجا duelModel نول هست چک کنید
             for (int i = 1; i < 6; i++) {
                 duelController.deselect();
-                Card card = duelModel.getSpellAndTrap(1 - duelModel.turn, i);
+
+                Card card = duelController.duelModel.getSpellAndTrap(1 - duelController.duelModel.turn, i);
                 if (card != null) {
-                    if (card.getName().equals("Time Seal") && duelModel.getSpellAndTrapCondition(1 - duelModel.turn, i).charAt(0) == 'O') {
-                        duelModel.deleteSpellAndTrap(1 - duelModel.turn, i - 1);
-                        duelModel.addCardToGraveyard(1 - duelModel.turn, card);
+                    if (card.getName().equals("Time Seal") && duelController.duelModel.getSpellAndTrapCondition(1 - duelModel.turn, i).charAt(0) == 'O') {
+                        duelController.duelModel.deleteSpellAndTrap(1 - duelController.duelModel.turn, i - 1);
+                        duelController.duelModel.addCardToGraveyard(1 - duelController.duelModel.turn, card);
                         return null;
                     }
                 }
             }
-            return duelModel.addCardToHand();
+            return duelController.duelModel.addCardToHand();
         } else {
 
             return null;

@@ -65,6 +65,8 @@ public class DuelModel {
         selectedCards = new ArrayList<>();
         ArrayList<Card> selectCard1 = new ArrayList<>();
         ArrayList<Card> selectCard2 = new ArrayList<>();
+        selectCard2.add(null);
+        selectCard1.add(null);
         selectedCards.add(selectCard1);
         selectedCards.add(selectCard2);
 
