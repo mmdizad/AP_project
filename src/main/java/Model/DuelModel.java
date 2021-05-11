@@ -33,6 +33,7 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> activatedMonsterEffects;
     private HashMap<Card, Integer> cardsInsteadOfScanners;
     public Card monsterFlipSummonOrNormalSummonForTrapHole = null;
+    public Card monsterSummonForEffectOfSomeTraps = null;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         lifePoints = new ArrayList<>();

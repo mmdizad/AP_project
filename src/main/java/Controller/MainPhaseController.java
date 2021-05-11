@@ -243,6 +243,7 @@ public class MainPhaseController extends DuelController {
                 duelModel.monsterFlipSummonOrNormalSummonForTrapHole = monster;
             }
         }
+        duelModel.monsterSummonForEffectOfSomeTraps = monster;
         return "summoned successfully";
     }
 
@@ -253,6 +254,7 @@ public class MainPhaseController extends DuelController {
         } else if (state.equals("Defence")) {
             stateOfCard = "DO";
         }
+        Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
         if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
             duelModel.addMonsterFromHandToGame(stateOfCard + "/1", 0);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null) {
@@ -266,6 +268,7 @@ public class MainPhaseController extends DuelController {
         } else {
             return "monster card zone is full";
         }
+        duelModel.monsterSummonForEffectOfSomeTraps = card;
         return "summoned successfully";
     }
 
@@ -305,6 +308,7 @@ public class MainPhaseController extends DuelController {
                                 duelModel.monsterFlipSummonOrNormalSummonForTrapHole = monster;
                             }
                         }
+                        duelModel.monsterSummonForEffectOfSomeTraps = monster;
                         if (card.getName().equals("Man-Eater Bug")) {
                             return "flipSummon Man-Eater Bug";
                         }
@@ -395,6 +399,7 @@ public class MainPhaseController extends DuelController {
     }
 
     public String summonMonsterHasTwoMethods(Monster monster) {
+        // monsterName : Beast King Barbaros
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
         String response = mainPhaseView.summonMonsterHasTwoMethods();
         if (!response.equals("NO") && !response.equals("YES")) {
@@ -439,6 +444,7 @@ public class MainPhaseController extends DuelController {
     }
 
     public String normalSummonCardThatCanSummonAnotherCard(String response) {
+        // monsterName : Terratiger, the Empowered Warrior
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
         if (response.equals("summoned successfully")) {
             String response1 = mainPhaseView.normalSummonCardThatCanSummonAnotherCard();

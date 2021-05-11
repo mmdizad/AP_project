@@ -80,7 +80,13 @@ public class DuelView {
                 System.out.println("you must enter NO or YES");
             }
             if (response.equals("YES")) {
-                System.out.println(duelController.opponentActiveSpellOrTrap());
+                // check ...
+                String result = duelController.opponentActiveSpellOrTrap();
+                if (result.equals("spell activated") || result.equals("trap activated")) {
+                    System.out.println(result);
+                    duelController.isOpponentHasAnySpellOrTrapForActivate();
+                    duelModel.monsterSummonForEffectOfSomeTraps = null;
+                }
                 duelModel.turn = 1 - duelModel.turn;
             }
             if (response.equals("NO")) {

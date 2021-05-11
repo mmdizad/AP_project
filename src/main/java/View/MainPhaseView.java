@@ -72,6 +72,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
                 System.out.println(result);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 duelModel.monsterFlipSummonOrNormalSummonForTrapHole = null;
+                duelModel.monsterSummonForEffectOfSomeTraps = null;
             } else {
                 System.out.println(result);
             }
@@ -81,7 +82,15 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     public void activateEffectMainView(Matcher matcher) {
         if (matcher.find()) {
             MainPhaseController mainPhaseController = MainPhaseController.getInstance();
-            System.out.println(mainPhaseController.activateSpellEffectMainController());
+           String result = mainPhaseController.activateSpellEffectMainController();
+           if (result.equals("spell activated")){
+               System.out.println(result);
+               duelController.isOpponentHasAnySpellOrTrapForActivate();
+               duelModel.monsterSummonForEffectOfSomeTraps = null;
+           }else {
+               System.out.println(result);
+           }
+
         }
     }
 
@@ -110,6 +119,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
                     System.out.println(response);
                     duelController.isOpponentHasAnySpellOrTrapForActivate();
                     duelModel.monsterFlipSummonOrNormalSummonForTrapHole = null;
+                    duelModel.monsterSummonForEffectOfSomeTraps = null;
                 } else {
                     System.out.println(response);
                 }
@@ -132,6 +142,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             if (result.equals("summon successfully")) {
                 System.out.println(result);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
+                duelModel.monsterSummonForEffectOfSomeTraps = null;
             } else {
                 System.out.println(result);
             }

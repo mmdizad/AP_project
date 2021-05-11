@@ -107,7 +107,14 @@ public class BattlePhaseView extends DuelView {
     public void activateEffectBattlePhaseView(Matcher matcher) {
         if (matcher.find()) {
             BattlePhaseController battlePhaseController = BattlePhaseController.getInstance();
-            System.out.println(battlePhaseController.activateEffectBattlePhaseController());
+            String result = battlePhaseController.activateEffectBattlePhaseController();
+            if (result.equals("spell activated")) {
+                System.out.println(result);
+                duelController.isOpponentHasAnySpellOrTrapForActivate();
+                duelModel.monsterSummonForEffectOfSomeTraps = null;
+            } else {
+                System.out.println(result);
+            }
         }
     }
 }
