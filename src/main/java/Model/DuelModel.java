@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DuelModel {
+
     private ArrayList<ArrayList<Card>> selectedCards;
     private ArrayList<HashMap<Card, String>> detailOfSelectedCard;
     private ArrayList<ArrayList<Card>> playersCards;
