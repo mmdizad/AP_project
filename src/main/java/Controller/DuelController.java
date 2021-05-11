@@ -1076,6 +1076,7 @@ public class DuelController {
     }
 
     public String effectOfTrapHole() {
+        // check...
         if (duelModel.monsterFlipSummonOrNormalSummonForTrapHole == null) {
             return "your opponent didnt summon or flipSummon card with property for destroy";
         } else {
