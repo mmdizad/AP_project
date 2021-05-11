@@ -286,11 +286,12 @@ public class DuelModel {
         }
     }
 
-    public  void activeField(Card card){
+    public void activeField(Card card) {
         deletExitedField();
-        field.get(turn).set(0,card);
+        field.get(turn).set(0, card);
     }
-    public void  deletExitedField() {
+
+    public void deletExitedField() {
         field.get(turn).remove(0);
         field.get(1 - turn).remove(0);
         field.get(turn).add(selectedCards.get(turn).get(0));
@@ -329,7 +330,7 @@ public class DuelModel {
 
 
     public void deSelectedCard() {
-        selectedCards.get(turn).set(0,null);
+        selectedCards.get(turn).set(0, null);
     }
 
     public ArrayList<ArrayList<Card>> getHandCards() {
@@ -395,7 +396,7 @@ public class DuelModel {
     }
 
     public void setField(Card card) {
-        field.get(turn).set(1,card);
+        field.get(turn).set(1, card);
     }
 
     public ArrayList<String> getUsernames() {
