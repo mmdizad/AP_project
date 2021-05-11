@@ -94,9 +94,13 @@ public class DuelController {
             return effectOfRingOfDefense(placeOfSpell);
         } else if (spell.getName().equals("Advanced Ritual Art")) {
             return effectOfAdvancedRitualArt(placeOfSpell);
-        } else
-
-            return "";
+        }else if(spell.getCategory().equals("Field")) {
+            if(placeOfSpell==-1)
+            activeZoneFromHand();
+            if(placeOfSpell==-2)
+                activeSetZone();
+        }
+        return "";
     }
 
     public void isOpponentHasAnySpellOrTrapForActivate() {
@@ -795,6 +799,20 @@ public class DuelController {
         return "spell activated";
 
     }
+    public String activeZoneFromHand(){
+        duelModel.activeField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
+        Spell spell = (Spell) duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        duelModel.getHandCards().get(duelModel.turn).remove(duelModel.getSelectedCards().get(duelModel.turn).get(0));
+        if(spell.getName().equals("Yami"))
+            effectOfYami();
+        else if(spell.getName().equals("Forest"))
+            effectOfForest();
+        else if(spell.getName().equals("Closed Forest"))
+            effectOfClosedForest();
+        else if(spell.getName().equals("UMIIRUKA"))
+            effectOfUmiiruka();
+        return "spell zone activate";
+    }
 
     public String effectOfAdvancedRitualArt(int placeOfSpell) {
         boolean hasAnyRitualMonster = false;
@@ -1131,8 +1149,8 @@ public class DuelController {
         }
     }
 
-    public ArrayList<String> showGraveYard(int turn) {
-        ArrayList<Card> graveyardCards = duelModel.getGraveyard(turn);
+    public ArrayList<String> showGraveYard() {
+        ArrayList<Card> graveyardCards = duelModel.getGraveyard(0);
         ArrayList<String> output = new ArrayList<>();
         for (int i = 0; i < graveyardCards.size(); i++) {
             output.add(i + 1 + ". " + graveyardCards.get(i).getName() + ": " + graveyardCards.get(i).getDescription());
@@ -1273,7 +1291,7 @@ public class DuelController {
         if (duelModel.getFieldZoneCard(duelModel.turn) == null) {
             return "no card found in the given position";
         } else {
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn), "My/Filed/" + duelModel.getFieldCondition().get(duelModel.turn).get(0));
+            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn), "My/Filed/"+duelModel.getFieldCondition().get(duelModel.turn).get(0));
             return "card selected";
         }
     }
@@ -1329,35 +1347,15 @@ public class DuelController {
         ArrayList<Card> supplyCards2 = duelModel.getSupplySquadCards().get(1 - duelModel.turn);
         if (monsterDestroyedInThisTurn1.size() > 0) {
             if (supplyCards1.size() > 0) {
-                for (int i = 0; i < supplyCards1.size(); i++) {
-                    duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
-                            , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
-                                    getPlayersCards().get(duelModel.turn).size() - 1));
-                }
+                duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
+                        , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
+                                getPlayersCards().get(duelModel.turn).size() - 1));
             }
         } else if (monsterDestroyedInThisTurn2.size() > 0) {
             if (supplyCards2.size() > 0) {
-                for (int j = 0; j < supplyCards2.size(); j++) {
-                    duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
-                            , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
-                                    getPlayersCards().get(duelModel.turn).size() - 1));
-                }
-            }
-        }
-    }
-
-    public void hasSomeCardsInsteadOfScanner() {
-        HashMap<Card, Integer> cardsInsteadOfScanner = duelModel.getCardsInsteadOfScanners();
-        if (cardsInsteadOfScanner.size() > 0) {
-            for (Map.Entry<Card, Integer> entry : cardsInsteadOfScanner.entrySet()) {
-                Monster monster = new Monster("Scanner", "Once per turn, you can select 1 of your opponent's monsters" +
-                        " that is removed from play. Until the End Phase, this card's name is treated" +
-                        " as the selected monster's name, and this card has the same Attribute, Level, ATK," +
-                        " and DEF as the selected monster. If this card is removed from the field while this effect" +
-                        " is applied, remove it from play.", "Effect", 8000, "Monster",
-                        0, 0, "Machine", "LIGHT", 1, false);
-                int placeOfScanner = entry.getValue();
-                duelModel.getMonstersInField().get(duelModel.turn).add(placeOfScanner - 1, monster);
+                duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
+                        , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
+                                getPlayersCards().get(duelModel.turn).size() - 1));
             }
         }
     }

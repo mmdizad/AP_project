@@ -32,7 +32,6 @@ public class MainPhaseController extends DuelController {
                 return this.setMonster();
             } else
                 return setTrapOrSpell();
-
         }
     }
 
@@ -40,8 +39,7 @@ public class MainPhaseController extends DuelController {
 
         Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
         if(card.getCategory().equals("Field")){
-           
-
+            duelModel.setField(card);
         }
         if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(0) == null)
             duelModel.addSpellAndTrapFromHandToGame("H/1", 0);
@@ -468,11 +466,15 @@ public class MainPhaseController extends DuelController {
                     .get(duelModel.getSelectedCards().get(duelModel.turn).get(0)).split("/");
             if (detailOfSelectedCard[0].equals("Hand")) {
                 return duelController.activateEffect(-1);
-            } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field")) {
-                     if(duelModel.getField().get(duelModel.turn).get(0)==null){
-
-                     }
-            } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("O")) {
+            } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field")&&detailOfSelectedCard.equals("2"))
+                       activateEffect(-2);
+              else if(detailOfSelectedCard[0].equals("My")&& detailOfSelectedCard[1].equals("Field")&&detailOfSelectedCard.equals("1"))
+                  return "this zone is activated";
+                else if(detailOfSelectedCard[0].equals("opponent"))
+                    return "you cant active your opponent field card";
+                    else if(detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field")&&detailOfSelectedCard.equals("1"))
+                        return "this card is activate";
+            else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("O")) {
                 return "you have already activated this card";
             } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("H")) {
                 return duelController.activateEffect(Integer.parseInt(detailOfSelectedCard[2]));
