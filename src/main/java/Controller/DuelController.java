@@ -94,44 +94,45 @@ public class DuelController {
             return effectOfRingOfDefense(placeOfSpell);
         } else if (spell.getName().equals("Advanced Ritual Art")) {
             return effectOfAdvancedRitualArt(placeOfSpell);
-        }   else if(spell.getCategory().equals("Field")) {
-            if(placeOfSpell==-1)
+        } else if (spell.getCategory().equals("Field")) {
+            if (placeOfSpell == -1)
                 activeZoneFromHand();
-            if(placeOfSpell==-2)
+            if (placeOfSpell == -2)
                 activeSetZone();
         }
-            return "";
+        return "";
     }
 
-    public String activeSetZone(){
+    public String activeSetZone() {
         duelModel.activeField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
         Spell spell = (Spell) duelModel.getSelectedCards().get(duelModel.turn).get(0);
-        duelModel.getField().get(duelModel.turn).set(1,null);
+        duelModel.getField().get(duelModel.turn).set(1, null);
         deselect();
-        if(spell.getName().equals("Yami"))
+        if (spell.getName().equals("Yami"))
             effectOfYami();
-        else if(spell.getName().equals("Forest"))
+        else if (spell.getName().equals("Forest"))
             effectOfForest();
-        else if(spell.getName().equals("Closed Forest"))
+        else if (spell.getName().equals("Closed Forest"))
             effectOfClosedForest();
-        else if(spell.getName().equals("UMIIRUKA"))
+        else if (spell.getName().equals("UMIIRUKA"))
             effectOfUmiiruka();
 
         return "spell zone activate";
 
 
     }
-    public String activeZoneFromHand(){
+
+    public String activeZoneFromHand() {
         duelModel.activeField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
         Spell spell = (Spell) duelModel.getSelectedCards().get(duelModel.turn).get(0);
         duelModel.getHandCards().get(duelModel.turn).remove(duelModel.getSelectedCards().get(duelModel.turn).get(0));
-        if(spell.getName().equals("Yami"))
+        if (spell.getName().equals("Yami"))
             effectOfYami();
-        else if(spell.getName().equals("Forest"))
+        else if (spell.getName().equals("Forest"))
             effectOfForest();
-        else if(spell.getName().equals("Closed Forest"))
+        else if (spell.getName().equals("Closed Forest"))
             effectOfClosedForest();
-        else if(spell.getName().equals("UMIIRUKA"))
+        else if (spell.getName().equals("UMIIRUKA"))
             effectOfUmiiruka();
         return "spell zone activate";
     }
@@ -1128,9 +1129,27 @@ public class DuelController {
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Magic Jammer")) {
             activeNormalTraps();
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Solemn Warning")) {
-            activeNormalTraps();
+            return effectOfSolemnWarning();
         }
         return "trap activated";
+    }
+
+    public String effectOfSolemnWarning() {
+        if (duelModel.monsterSummonForEffectOfSomeTraps == null) {
+            return "no monster summon";
+        } else {
+            Card card = duelModel.monsterSummonForEffectOfSomeTraps;
+            int indexOfMonsterSummoned = duelModel.getMonstersInField().get(1 - duelModel.turn)
+                    .indexOf(card);
+            duelModel.decreaseLifePoint(2000, duelModel.turn);
+            duelModel.deleteMonster(1 - duelModel.turn, indexOfMonsterSummoned);
+            duelModel.addCardToGraveyard(1 - duelModel.turn, card);
+            Card trap = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+            int place = Integer.parseInt(duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(trap).split("/")[2]);
+            duelModel.deleteSpellAndTrap(duelModel.turn, place - 1);
+            duelModel.addCardToGraveyard(duelModel.turn, trap);
+            return "trap activated";
+        }
     }
 
     public String effectOfTorrentialTribute() {
@@ -1385,7 +1404,7 @@ public class DuelController {
         if (duelModel.getField().get(place) == null) {
             return "no card found in the given position";
         } else {
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn), "My/Filed/"+place);
+            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn), "My/Filed/" + place);
             return "card selected";
         }
     }
@@ -1394,7 +1413,7 @@ public class DuelController {
         if (duelModel.getFieldZoneCard(duelModel.turn - 1) == null) {
             return "no card found in the given position";
         } else {
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn - 1), "Opponent/Field/"+place);
+            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn - 1), "Opponent/Field/" + place);
             return "card selected";
         }
     }

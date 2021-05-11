@@ -219,8 +219,6 @@ public class DuelView {
     }
 
 
-
-
     protected void selectHand(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;

@@ -82,14 +82,14 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     public void activateEffectMainView(Matcher matcher) {
         if (matcher.find()) {
             MainPhaseController mainPhaseController = MainPhaseController.getInstance();
-           String result = mainPhaseController.activateSpellEffectMainController();
-           if (result.equals("spell activated")){
-               System.out.println(result);
-               duelController.isOpponentHasAnySpellOrTrapForActivate();
-               duelModel.monsterSummonForEffectOfSomeTraps = null;
-           }else {
-               System.out.println(result);
-           }
+            String result = mainPhaseController.activateSpellEffectMainController();
+            if (result.equals("spell activated")) {
+                System.out.println(result);
+                duelController.isOpponentHasAnySpellOrTrapForActivate();
+                duelModel.monsterSummonForEffectOfSomeTraps = null;
+            } else {
+                System.out.println(result);
+            }
 
         }
     }
