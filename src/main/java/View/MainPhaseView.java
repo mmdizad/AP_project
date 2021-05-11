@@ -47,6 +47,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             flipSummon(getCommandMatcher(command, "^flip-summon$"));
             specialSummon(getCommandMatcher(command, "^special-summon$"));
             activateEffectMainView(getCommandMatcher(command, "^activate effect$"));
+
             if (command.equals("enterPhase")) {
                 isCommandInvalid = false;
                 enterPhase(scanner);
@@ -54,10 +55,15 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             } else if (command.equals("set")) {
                 isCommandInvalid = false;
                 set();
+            } else if (command.equals("surrender"))
+            {
+                surrender();
+                break;
             }
-            if (isCommandInvalid) {
+           else if (isCommandInvalid) {
                 System.out.println("invalid command");
             }
+
             isCommandInvalid = true;
         }
     }

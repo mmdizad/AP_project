@@ -6,6 +6,12 @@ import java.util.HashMap;
 public class User {
     public static HashMap<String, User> users;
     public static ArrayList<User> allUsers;
+
+    static {
+        users = new HashMap<>();
+        allUsers = new ArrayList<>();
+    }
+
     private String username;
     private String password;
     private String nickname;
@@ -17,11 +23,6 @@ public class User {
     private Deck activeDeck;
     private ArrayList<Card> cards;
 
-    static {
-        users = new HashMap<>();
-        allUsers = new ArrayList<>();
-    }
-
     public User(String username, String nickname, String password) {
         setUsername(username);
         setNickname(nickname);
@@ -31,38 +32,6 @@ public class User {
         coins = 100000;
         this.cards = new ArrayList<>();
         this.addFirstCards(Card.getFirstCards());
-    }
-
-    public void addCard(Card card) {
-        this.cards.add(card);
-    }
-
-    public void addFirstCards(ArrayList<Card> firstCards) {
-        this.cards.addAll(firstCards);
-    }
-
-    public ArrayList<Card> getCards() {
-        return cards;
-    }
-
-    public void deleteCard(Card card) {
-        cards.remove(card);
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public static User getUserByUsername(String username) {
@@ -87,12 +56,52 @@ public class User {
         return false;
     }
 
+    public static ArrayList<User> getAllUsers() {
+        return allUsers;
+    }
+
+    public void addCard(Card card) {
+        this.cards.add(card);
+    }
+
+    public void addFirstCards(ArrayList<Card> firstCards) {
+        this.cards.addAll(firstCards);
+    }
+
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    public void deleteCard(Card card) {
+        cards.remove(card);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void increaseScore() {
         score++;
     }
 
     public int getScore() {
         return score;
+    }
+
+    public void setScore(int score) {
+        this.score += score;
     }
 
     public void increaseWins() {
@@ -115,12 +124,12 @@ public class User {
         decks.remove(deletingDeck);
     }
 
-    public void setActiveDeck(Deck activatingDeck) {
-        activeDeck = activatingDeck;
-    }
-
     public Deck getActiveDeck() {
         return activeDeck;
+    }
+
+    public void setActiveDeck(Deck activatingDeck) {
+        activeDeck = activatingDeck;
     }
 
     public Card getCardByName(String cardName) {
@@ -153,15 +162,11 @@ public class User {
         this.coins -= coins;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public static ArrayList<User> getAllUsers() {
-        return allUsers;
-    }
-
     public String getNickname() {
         return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

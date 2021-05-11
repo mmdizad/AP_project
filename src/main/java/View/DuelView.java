@@ -4,6 +4,7 @@ import Controller.DuelController;
 import Controller.LoginController;
 import Controller.NewCardToHandController;
 import Model.DuelModel;
+import Model.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,14 +13,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DuelView {
+
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
     protected boolean isCommandInvalid = true;
 
+public DuelView(){
 
-
-
+}
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView) {
         scanner1 = scanner;
         ArrayList<Integer> someRandomNumbers = new ArrayList<>();
@@ -30,7 +32,7 @@ public class DuelView {
         int starterGame = someRandomNumbers.get(0);
         if (starterGame % 2 == 0) {
 
-           duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
+            duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
             duelController = DuelController.getInstance();
             NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
             duelController.setDuelModel(duelModel, duelView, duelController);
@@ -178,6 +180,18 @@ public class DuelView {
     }
 
     public void surrender() {
+
+            User firdtPlayer = User.getUserByUsername(duelModel.getUsernames().get(0));
+            User secondPlayer = User.getUserByUsername(duelModel.getUsernames().get(1));
+            if (duelModel.turn == 0) {
+                firdtPlayer.setScore(3);
+                secondPlayer.setScore(-1);
+            } else {
+                firdtPlayer.setScore(-1);
+                secondPlayer.setScore(3);
+            }
+
+
     }
 
     protected void select(Matcher matcher) {
