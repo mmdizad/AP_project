@@ -90,6 +90,10 @@ public class DuelModel {
         monsterCondition = new ArrayList<>();
         ArrayList<String> monsterCondition1 = new ArrayList<>();
         ArrayList<String> monsterCondition2 = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            monsterCondition1.add("E");
+            monsterCondition2.add("E");
+        }
         monsterCondition.add(monsterCondition1);
         monsterCondition.add(monsterCondition2);
         spellAndTrapCondition = new ArrayList<>();
@@ -348,22 +352,32 @@ public class DuelModel {
         for (int i = 0; i < handCards.get(turn).size(); i++) {
             handCardUser = handCardUser + "c    ";
         }
-        ArrayList<String[]> spellConditionOpponent = new ArrayList<>();
-        ArrayList<String[]> spellConditionUser = new ArrayList<>();
-        ArrayList<String[]> conditionMonsterOpponent = new ArrayList<>();
-        ArrayList<String[]> conditionMonsterUser = new ArrayList<>();
+        ArrayList<String> spellConditionOpponent = new ArrayList<>();
+        ArrayList<String> spellConditionUser = new ArrayList<>();
+        ArrayList<String> conditionMonsterOpponent = new ArrayList<>();
+        ArrayList<String> conditionMonsterUser = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            conditionMonsterOpponent.add(monsterCondition.get(1 - turn).get(i).split("/"));
-            conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/"));
-            spellConditionOpponent.add(spellAndTrapCondition.get(1 - turn).get(i).split("/"));
-            spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/"));
+            if(monstersInField.get(turn).get(i)!=null)
+            conditionMonsterOpponent.add(monsterCondition.get(1 - turn).get(i).split("/")[0]);
+            else
+                conditionMonsterOpponent.add("E");
+            if(monstersInField.get(1-turn).get(i)!=null)
+            conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
+            else
+                conditionMonsterUser.add("E");
+                if(spellsAndTrapsInFiled.get(1-turn).get(i)!=null)
+            spellConditionOpponent.add(spellAndTrapCondition.get(1 - turn).get(i).split("/")[0]);
+                else spellConditionOpponent.add("E");
+                if(spellsAndTrapsInFiled.get(turn).get(i)!=null)
+            spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/")[0]);
+                else spellConditionUser.add("E");
         }
 
-        String spellFieldofOpponet = "    " + spellConditionOpponent.get(4)[0] + "    " + spellConditionOpponent.get(2)[0] + "    " + spellConditionOpponent.get(1)[0] + "    " + spellConditionOpponent.get(3)[0] + "    " + spellConditionOpponent.get(5)[0];
-        String spellFieldUser = "    " + spellConditionUser.get(5)[0] + "    " + spellConditionUser.get(3)[0] + "    " + spellConditionUser.get(1)[0] + "    " + spellConditionUser.get(2)[0] + "    " + spellConditionUser.get(4)[0];
-        String monsterFieldUser = "    " + conditionMonsterUser.get(5)[0] + "    " + conditionMonsterUser.get(3)[0] + "    " + conditionMonsterUser.get(1)[0] + "    " + conditionMonsterUser.get(2)[0] + "    " + conditionMonsterUser.get(4)[0];
-        String monsterFieldOpponent = "    " + conditionMonsterOpponent.get(4)[0] + "    " + conditionMonsterOpponent.get(2)[0] + "    " + conditionMonsterOpponent.get(1)[0] + "    " + conditionMonsterOpponent.get(3)[0] + "    " + conditionMonsterOpponent.get(5)[0];
-        board.add(usernames.get(turn - 1) + ":" + lifePoints.get(1 - turn));
+        String spellFieldofOpponet = "    " + spellConditionOpponent.get(3) + "    " + spellConditionOpponent.get(1) + "    " + spellConditionOpponent.get(0) + "    " + spellConditionOpponent.get(2) + "    " + spellConditionOpponent.get(4);
+        String spellFieldUser = "    " + spellConditionUser.get(4) + "    " + spellConditionUser.get(2) + "    " + spellConditionUser.get(0) + "    " + spellConditionUser.get(1) + "    " + spellConditionUser.get(3);
+        String monsterFieldUser = "    " + conditionMonsterUser.get(4) + "    " + conditionMonsterUser.get(2) + "    " + conditionMonsterUser.get(0) + "    " + conditionMonsterUser.get(1) + "    " + conditionMonsterUser.get(3);
+        String monsterFieldOpponent = "    " + conditionMonsterOpponent.get(3) + "    " + conditionMonsterOpponent.get(1) + "    " + conditionMonsterOpponent.get(0) + "    " + conditionMonsterOpponent.get(2) + "    " + conditionMonsterOpponent.get(4);
+        board.add(usernames.get(1-turn) + ":" + lifePoints.get(1 - turn));
         board.add(handCardOpponent);
         board.add(String.valueOf(playersCards.get(1 - turn).size()));
         board.add(spellFieldofOpponet);
@@ -371,13 +385,14 @@ public class DuelModel {
         if (field.get(1 - turn) == null)
             board.add(graveyard.get(1 - turn).size() + "                        " + "E");
         else board.add(graveyard.get(1 - turn).size() + "                        " + "O");
-        board.add("----------------------------------------");
+        board.add("---------------------------------");
         if (field.get(turn) == null)
             board.add("E" + "                        " + graveyard.get(turn).size());
         else board.add("O" + "                        " + graveyard.get(1 - turn).size());
         board.add(monsterFieldUser);
         board.add(spellFieldUser);
         board.add(handCardUser);
+        board.add(String.valueOf(playersCards.get(turn).size()));
         board.add(usernames.get(turn) + ":" + lifePoints.get(turn));
         return board;
 

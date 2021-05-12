@@ -13,15 +13,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DuelView {
-
+    protected static DuelView duelView;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
     protected boolean isCommandInvalid = true;
 
-public DuelView(){
+protected DuelView(){
 
 }
+public static DuelView getInstance(){
+    if(duelView==null)
+        duelView=new DuelView();
+    return duelView;
+}
+
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView) {
         scanner1 = scanner;
         ArrayList<Integer> someRandomNumbers = new ArrayList<>();
@@ -44,6 +50,7 @@ public DuelView(){
             System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
             StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
+            showBoard();
             standByPhaseView.run(scanner);
         } else {
             duelModel = new DuelModel(secondPlayerUsername, LoginController.user.getUsername());
@@ -57,6 +64,7 @@ public DuelView(){
             System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
             StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
+            showBoard();
             standByPhaseView.run(scanner);
         }
 
@@ -147,7 +155,13 @@ public DuelView(){
         int place = scanner1.nextInt();
         return place;
     }
+     public void showBoard(){
+       ArrayList<String> board= duelModel.getBoard();
+         for (String s : board) {
+             System.out.println(s);
+         }
 
+     }
 
     public void showGraveyard(Matcher matcher) {
         if (matcher.find()) {

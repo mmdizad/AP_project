@@ -10,6 +10,7 @@ public class DrawPhaseView extends DuelView {
     private static DrawPhaseView drawPhaseView = new DrawPhaseView();
 
     private DrawPhaseView() {
+        super();
 
     }
 
@@ -29,6 +30,7 @@ public class DrawPhaseView extends DuelView {
             System.out.println("no card added to hand");
         }
         if (!startOfGame) {
+            DuelView.getInstance().showBoard();
             System.out.println(newCardToHandController.hasHeraldOfCreation());
             System.out.println(newCardToHandController.hasScannerMonster());
             StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
