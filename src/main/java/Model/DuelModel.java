@@ -34,6 +34,8 @@ public class DuelModel {
     private HashMap<Card, Integer> cardsInsteadOfScanners;
     public Card monsterFlipSummonOrNormalSummonForTrapHole = null;
     public Card monsterSummonForEffectOfSomeTraps = null;
+    public Card spellActivatedForEffectSomeTarps = null;
+    public boolean activateCardFailed = false;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         lifePoints = new ArrayList<>();
@@ -201,14 +203,12 @@ public class DuelModel {
     public void addMonsterFromHandToGame(String condition, int index) {
         monstersInField.get(turn).add(index, selectedCards.get(turn).get(0));
         monsterCondition.get(turn).add(index, condition);
-        deSelectedCard();
         deleteCardFromHand(getMonster(turn, index + 1));
     }
 
     public void addSpellAndTrapFromHandToGame(String condition, int index) {
         spellsAndTrapsInFiled.get(turn).set(index, selectedCards.get(turn).get(0));
         spellAndTrapCondition.get(turn).set(index, condition);
-        deSelectedCard();
         deleteCardFromHand(getSpellAndTrap(turn, index + 1));
     }
 
@@ -445,8 +445,8 @@ public class DuelModel {
     }
 
 
-    public void addMonsterFromGraveyardToGame(String condition, int index) {
-        monstersInField.get(turn).add(index, selectedCards.get(turn).get(0));
+    public void addMonsterFromGraveyardToGame(String condition, Card card, int index) {
+        monstersInField.get(turn).add(index, card);
         monsterCondition.get(turn).add(index, condition);
     }
 
