@@ -16,6 +16,8 @@ public class StartDuelView extends MainMenu {
             Matcher matcher = pattern.matcher(input);
             Pattern pattern1 = Pattern.compile("duel --new --rounds (\\d+) --second-player (\\S+)");
             Matcher matcher1 = pattern1.matcher(input);
+            Pattern pattern2 = Pattern.compile("duel --new --ai --rounds (\\d+)");
+            Matcher matcher2 = pattern2.matcher(input);
 
             if (matcher.find()) {
                 String secondPlayerUserName = matcher.group(1);
@@ -31,8 +33,9 @@ public class StartDuelView extends MainMenu {
                         System.out.println(secondUser.getUsername() + " has no active deck");
                     else if (round == 3 || round == 1) {
                         DuelView duelView = DuelView.getInstance();
-                        duelView.selectFirstPlayer(secondPlayerUserName, scanner, duelView);
+                        duelView.selectFirstPlayer(secondPlayerUserName, scanner, duelView,false);
                     } else System.out.println("number of rounds is not supported");
+                    //valid deck check nashode
                 }
 
             } else if (matcher1.find()) {
@@ -49,14 +52,23 @@ public class StartDuelView extends MainMenu {
                         System.out.println(secondUser.getUsername() + " has no active deck");
                     else if (round == 3 || round == 1) {
                         DuelView duelView = DuelView.getInstance();
-                        duelView.selectFirstPlayer(secondPlayerUserName, scanner, duelView);
+                        duelView.selectFirstPlayer(secondPlayerUserName, scanner, duelView,false);
                     } else System.out.println("number of rounds is not supported");
                 }
-            } else if (input.equals("menu exit")) break;
+            }else if (matcher2.find()) {
+                int round = Integer.parseInt(matcher2.group(1));
+                if (LoginController.user.getActiveDeck() == null) {
+                    System.out.println(LoginController.user.getUsername() + " has no active deck");
+                }else if (round == 3 || round == 1) {
+                    User ai = new User("ai" , "ai" , "ai");
+                    ai.addDeck(LoginController.user.getActiveDeck());
+                    ai.setActiveDeck(LoginController.user.getActiveDeck());
+                    DuelView duelView = DuelView.getInstance();
+                    duelView.selectFirstPlayer(ai.getUsername(), scanner, duelView, true);
+                } else System.out.println("number of rounds is not supported");
+            }else if (input.equals("menu exit")) break;
             else if (input.equals("menu show-current")) System.out.println("StartDuel");
             else System.out.println("invalid command!");
-
-
         }
     }
 }

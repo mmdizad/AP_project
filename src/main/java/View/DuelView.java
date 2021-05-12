@@ -18,6 +18,7 @@ public class DuelView {
     protected DuelModel duelModel;
     protected Scanner scanner1;
     protected boolean isCommandInvalid = true;
+    protected boolean isAi;
 
 protected DuelView(){
 
@@ -28,8 +29,9 @@ public static DuelView getInstance(){
     return duelView;
 }
 
-    public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView) {
+    public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView,boolean isAi) {
         scanner1 = scanner;
+        this.isAi = isAi;
         ArrayList<Integer> someRandomNumbers = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             someRandomNumbers.add(i + 1);
@@ -41,7 +43,7 @@ public static DuelView getInstance(){
             duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
             duelController = DuelController.getInstance();
             NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
-            duelController.setDuelModel(duelModel, duelView, duelController);
+            duelController.setDuelModel(duelModel, duelView, duelController,isAi);
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);
             System.out.println("EndPhase");
@@ -55,7 +57,7 @@ public static DuelView getInstance(){
         } else {
             duelModel = new DuelModel(secondPlayerUsername, LoginController.user.getUsername());
             duelController = DuelController.getInstance();
-            duelController.setDuelModel(duelModel, duelView, duelController);
+            duelController.setDuelModel(duelModel, duelView, duelController,isAi);
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, secondPlayerUsername, true);
             System.out.println("EndPhase");

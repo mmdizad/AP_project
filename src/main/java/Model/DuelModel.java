@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class DuelModel {
@@ -49,6 +50,7 @@ public class DuelModel {
         User user = User.getUserByUsername(playerUsername);
         Deck activeDeck = user.getActiveDeck();
         ArrayList<Card> cardsInPlayerActiveDeck = activeDeck.getCardsMain();
+        Collections.shuffle(cardsInPlayerActiveDeck);
         playersCards = new ArrayList<>();
         ArrayList<Card> playerCard1 = new ArrayList<>();
         ArrayList<Card> playerCard2 = new ArrayList<>();
@@ -60,6 +62,7 @@ public class DuelModel {
         User opponentUser = User.getUserByUsername(opponentUsername);
         Deck activeOpponentDeck = opponentUser.getActiveDeck();
         ArrayList<Card> cardsInOpponentActiveDeck = activeOpponentDeck.getCardsMain();
+        Collections.shuffle(cardsInOpponentActiveDeck);
         for (Card card : cardsInOpponentActiveDeck) {
             playersCards.get(1).add(card);
         }
@@ -93,8 +96,8 @@ public class DuelModel {
         ArrayList<String> monsterCondition1 = new ArrayList<>();
         ArrayList<String> monsterCondition2 = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            monsterCondition1.add("E");
-            monsterCondition2.add("E");
+            monsterCondition1.add(null);
+            monsterCondition2.add(null);
         }
         monsterCondition.add(monsterCondition1);
         monsterCondition.add(monsterCondition2);
