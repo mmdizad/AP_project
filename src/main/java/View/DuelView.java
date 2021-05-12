@@ -101,11 +101,7 @@ public static DuelView getInstance(){
             if (response.equals("YES")) {
                 // check ...
                 String result = duelController.opponentActiveSpellOrTrap();
-                if (result.equals("spell activated") || result.equals("trap activated")) {
-                    System.out.println(result);
-                    duelController.isOpponentHasAnySpellOrTrapForActivate();
-                    duelModel.monsterSummonForEffectOfSomeTraps = null;
-                }
+                System.out.println(result);
                 duelModel.turn = 1 - duelModel.turn;
             }
             if (response.equals("NO")) {
