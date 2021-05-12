@@ -1,8 +1,6 @@
 package View;
 
-import Controller.DuelController;
 import Controller.LoginController;
-import Model.DuelModel;
 import Model.User;
 
 import java.util.Scanner;

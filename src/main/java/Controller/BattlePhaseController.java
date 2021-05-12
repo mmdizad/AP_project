@@ -54,6 +54,12 @@ public class BattlePhaseController extends DuelController {
                                     return trapMirrorFace(card, i);
                                 } else if (card.getName().equals("Negate Attack") && spellCondition.charAt(0) == 'O') {
                                     return trapNegateAttack(card, i);
+                                }else if (card.getName().equals("Swords of Revealing Light") && spellCondition.charAt(0) == 'O'){
+                                    return ("opponent has active Swords of Revealing Light spell so you can't attack");
+                                }else if (card.getName().equals("Messenger of peace") && spellCondition.charAt(0) == 'O'
+                                && ourCard.getAttackPower() >= 1500){
+                                    return ("opponent has active Messenger of peace spell so you can't attack because your selected" +
+                                            " card's attack power is more than 1500");
                                 }
                             }
                         }

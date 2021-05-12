@@ -20,6 +20,7 @@ public class BattlePhaseView extends DuelView {
         if (startOfPhase) {
             System.out.println("BattlePhase");
         }
+
         while (true) {
             isCommandInvalid = true;
             String command = scanner.nextLine();
@@ -55,6 +56,11 @@ public class BattlePhaseView extends DuelView {
         if (matcher.find()) {
             isCommandInvalid = false;
             String response = BattlePhaseController.getInstance().attack(matcher);
+            if (response.startsWith("opponent’s monster card was") || response.startsWith("no card is destroyed")||
+            response.startsWith("the defense position monster is destroyed") || response.startsWith("Your monster card is destroyed and you received")
+            || response.startsWith("both you and your opponent monster") || response.startsWith("your opponent’s monster is destroyed")){
+                duelController.isOpponentHasAnySpellOrTrapForActivate();
+            }
             System.out.println(response);
             if (response.equals("opponent had Negate Attack trap and canceled your attack and ended battle phase,enter the phase you want to go:")) {
                 enterPhase(scanner);
@@ -65,14 +71,17 @@ public class BattlePhaseView extends DuelView {
 
     public String getCyberseCard() {
         System.out.println("opponent attacked you but you had Texchanger,now enter a Cyberse typed card to special summon: ");
-        String cardName = scanner1.nextLine();
-        return cardName;
+        return scanner1.nextLine();
     }
 
     public void directAttack(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
-            System.out.println(BattlePhaseController.getInstance().directAttack(matcher));
+            String response = BattlePhaseController.getInstance().directAttack(matcher);
+            if (response.startsWith("you opponent receives")){
+                duelController.isOpponentHasAnySpellOrTrapForActivate();
+            }
+            System.out.println(response);
         }
     }
 

@@ -3,7 +3,7 @@ package Controller;
 public class StandByPhaseController extends DuelController {
 
     public boolean hasSpellEffectInThisPhase() {
-        if (duelModel.getMessengerOfPeace().get(duelModel.turn).size() > 0) {
+        if (duelController.duelModel.getMessengerOfPeace().get(duelController.duelModel.turn).size() > 0) {
             return true;
         } else {
             return false;

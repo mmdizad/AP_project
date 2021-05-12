@@ -14,7 +14,6 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> graveyard;
     private ArrayList<ArrayList<Card>> handCards;
     private ArrayList<ArrayList<Card>> field;
-    private ArrayList<ArrayList<String>> fieldCondition;
     private ArrayList<Integer> lifePoints;
     private ArrayList<String> usernames;
     public int turn = 0;
@@ -36,6 +35,7 @@ public class DuelModel {
     public Card monsterSummonForEffectOfSomeTraps = null;
     public Card spellActivatedForEffectSomeTarps = null;
     public boolean activateCardFailed = false;
+
 
     public DuelModel(String playerUsername, String opponentUsername) {
         lifePoints = new ArrayList<>();
@@ -66,6 +66,8 @@ public class DuelModel {
         selectedCards = new ArrayList<>();
         ArrayList<Card> selectCard1 = new ArrayList<>();
         ArrayList<Card> selectCard2 = new ArrayList<>();
+        selectCard2.add(null);
+        selectCard1.add(null);
         selectedCards.add(selectCard1);
         selectedCards.add(selectCard2);
 
@@ -145,6 +147,7 @@ public class DuelModel {
         ArrayList<Card> spellsAndTarpsSetInThisTurn2 = new ArrayList<>();
         spellsAndTarpsSetInThisTurn.add(spellsAndTarpsSetInThisTurn1);
         spellsAndTarpsSetInThisTurn.add(spellsAndTarpsSetInThisTurn2);
+        ArrayList<ArrayList<Card>>  activatedMonsterEffects=new ArrayList<>();
         ArrayList<Card> activatedMonsterEffects1 = new ArrayList<>();
         ArrayList<Card> activatedMonsterEffects2 = new ArrayList<>();
         activatedMonsterEffects.add(activatedMonsterEffects1);
@@ -237,6 +240,7 @@ public class DuelModel {
     public void deleteMonster(int turn, int place) {
         monstersInField.get(turn).set(place, null);
         monsterCondition.get(turn).set(place, "");
+
     }
 
     public void deleteSpellAndTrap(int turn, int place) {
@@ -272,9 +276,6 @@ public class DuelModel {
         return spellAndTrapCondition.get(turn).get(place - 1);
     }
 
-    public ArrayList<ArrayList<String>> getFieldCondition() {
-        return fieldCondition;
-    }
 
     public void changePositionOfSpellOrTrapCard(int turn, int place) {
         String[] condition = spellAndTrapCondition.get(turn).get(place - 1).split("/");
@@ -284,25 +285,15 @@ public class DuelModel {
     }
 
     public void activeField(Card card) {
-        deletExitedField();
+        if(field.get(1 - turn).get(0)!=null)
+            addCardToGraveyard(turn,field.get(1 - turn).get(0));
+        if(field.get(turn).get(0)!=null)
+            addCardToGraveyard(turn,field.get( turn).get(0));
+        field.get(1 - turn).set(0,null);
         field.get(turn).set(0, card);
     }
 
-    public void deletExitedField() {
-        field.get(turn).remove(0);
-        field.get(1 - turn).remove(0);
-        field.get(turn).add(selectedCards.get(turn).get(0));
-        for (int i = 0; i < 5; i++) {
-            Monster monster = (Monster) monstersInField.get(turn).get(i);
-            Monster monster1 = (Monster) monstersInField.get(1 - turn).get(i);
-            monster.setDefensePower(Card.getCardByName(monster.getName()).getDefensePower());
-            monster.setAttackPower(Card.getCardByName(monster.getName()).getAttackPower());
-            monster1.setAttackPower(Card.getCardByName(monster1.getName()).getAttackPower());
-            monster1.setDefensePower(Card.getCardByName(monster1.getName()).getDefensePower());
-            spellZoneActivate.get(turn).set(i, false);
-            spellZoneActivate.get(1 - turn).set(i, false);
-        }
-    }
+
 
 
     public void addCardToGraveyard(int turn, Card card) {
@@ -357,8 +348,6 @@ public class DuelModel {
         for (int i = 0; i < handCards.get(turn).size(); i++) {
             handCardUser = handCardUser + "c    ";
         }
-
-
         ArrayList<String[]> spellConditionOpponent = new ArrayList<>();
         ArrayList<String[]> spellConditionUser = new ArrayList<>();
         ArrayList<String[]> conditionMonsterOpponent = new ArrayList<>();
