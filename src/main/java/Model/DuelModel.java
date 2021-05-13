@@ -33,9 +33,7 @@ public class DuelModel {
     private HashMap<Card, Integer> cardsInsteadOfScanners;
     public Card monsterFlipSummonOrNormalSummonForTrapHole = null;
     public Card monsterSummonForEffectOfSomeTraps = null;
-    public Card spellActivatedForEffectSomeTarps = null;
-    public boolean activateCardFailed = false;
-
+    ArrayList<HashMap<Card,Boolean>> spellOrTrapActivated;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         lifePoints = new ArrayList<>();
@@ -153,6 +151,15 @@ public class DuelModel {
         activatedMonsterEffects.add(activatedMonsterEffects1);
         activatedMonsterEffects.add(activatedMonsterEffects2);
         cardsInsteadOfScanners = new HashMap<>();
+        spellOrTrapActivated = new ArrayList<>();
+        HashMap<Card, Boolean> spellOrTrapActivated1 = new HashMap<>();
+        HashMap<Card, Boolean> spellOrTrapActivated2 = new HashMap<>();
+        spellOrTrapActivated.add(spellOrTrapActivated1);
+        spellOrTrapActivated.add(spellOrTrapActivated2);
+    }
+
+    public ArrayList<HashMap<Card, Boolean>> getSpellOrTrapActivated() {
+        return spellOrTrapActivated;
     }
 
     public void decreaseLifePoint(int decreaseLifePoint, int turn) {
