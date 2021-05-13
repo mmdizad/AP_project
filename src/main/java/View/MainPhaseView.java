@@ -164,7 +164,8 @@ public class MainPhaseView extends DuelView implements Set, Summon {
         String result = mainPhaseController.set();
         if (result.equals("set successfully")) {
             System.out.println(result);
-            duelController.isOpponentHasAnySpellOrTrapForActivate();
+            duelView.duelController.isOpponentHasAnySpellOrTrapForActivate();
+            showBoard();
         } else {
             System.out.println(result);
         }

@@ -156,7 +156,7 @@ public class DuelView {
     }
 
     public void showBoard() {
-        ArrayList<String> board = duelModel.getBoard();
+        ArrayList<String> board = duelView.duelModel.getBoard();
         for (String s : board) {
             System.out.println(s);
         }
@@ -195,9 +195,9 @@ public class DuelView {
 
     public void surrender() {
 
-        User firdtPlayer = User.getUserByUsername(duelModel.getUsernames().get(0));
-        User secondPlayer = User.getUserByUsername(duelModel.getUsernames().get(1));
-        if (duelModel.turn == 0) {
+        User firdtPlayer = User.getUserByUsername(duelView.duelModel.getUsernames().get(0));
+        User secondPlayer = User.getUserByUsername(duelView.duelModel.getUsernames().get(1));
+        if (duelView.duelModel.turn == 0) {
             firdtPlayer.setScore(3);
             secondPlayer.setScore(-1);
         } else {
@@ -260,7 +260,7 @@ public class DuelView {
     protected void selectHand(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
-            System.out.println(duelController.selectHand(matcher));
+            System.out.println(duelView.duelController.selectHand(matcher));
         }
     }
 

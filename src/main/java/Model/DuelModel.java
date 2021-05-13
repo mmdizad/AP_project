@@ -86,9 +86,13 @@ public class DuelModel {
         spellsAndTrapsInFiled = new ArrayList<>();
         ArrayList<Card> spellsAndTraps1 = new ArrayList<>();
         ArrayList<Card> spellsAndTraps2 = new ArrayList<>();
+        ArrayList<String> spellAndTrapCondition1 = new ArrayList<>();
+        ArrayList<String> spellAndTrapCondition2 = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             spellsAndTraps1.add(null);
             spellsAndTraps2.add(null);
+            spellAndTrapCondition1.add(null);
+            spellAndTrapCondition2.add(null);
         }
         spellsAndTrapsInFiled.add(spellsAndTraps1);
         spellsAndTrapsInFiled.add(spellsAndTraps2);
@@ -102,8 +106,7 @@ public class DuelModel {
         monsterCondition.add(monsterCondition1);
         monsterCondition.add(monsterCondition2);
         spellAndTrapCondition = new ArrayList<>();
-        ArrayList<String> spellAndTrapCondition1 = new ArrayList<>();
-        ArrayList<String> spellAndTrapCondition2 = new ArrayList<>();
+
         spellAndTrapCondition.add(spellAndTrapCondition1);
         spellAndTrapCondition.add(spellAndTrapCondition2);
         graveyard = new ArrayList<>();
@@ -165,6 +168,7 @@ public class DuelModel {
         LinkedHashMap<Card, Boolean> spellOrTrapActivated2 = new LinkedHashMap<>();
         spellOrTrapActivated.add(spellOrTrapActivated1);
         spellOrTrapActivated.add(spellOrTrapActivated2);
+        equipSpells=new ArrayList<>();
         HashMap<Spell, Monster> equipspellUser = new HashMap<>();
         HashMap<Spell, Monster> equipspellOpponent = new HashMap<>();
         equipSpells.add(equipspellUser);
@@ -331,7 +335,7 @@ public class DuelModel {
         if (selectedCards.get(turn).get(0) != null) {
             deSelectedCard();
         }
-        selectedCards.get(turn).add(card);
+        selectedCards.get(turn).set(0,card);
         detailOfSelectedCard.get(turn).put(card, condition);
     }
 

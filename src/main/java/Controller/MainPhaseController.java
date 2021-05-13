@@ -20,16 +20,16 @@ public class MainPhaseController extends DuelController {
 
 
     public String set() {
-        ArrayList<ArrayList<Card>> selectedCards = this.duelModel.getSelectedCards();
-        if (selectedCards.get(this.duelModel.turn) == null) {
+        ArrayList<ArrayList<Card>> selectedCards = duelController.duelModel.getSelectedCards();
+        if (selectedCards.get(duelController.duelModel.turn) == null) {
             return "no card is selected yet";
         } else {
-            if (!(duelModel.getHandCards().get(this.duelModel.turn)).contains((selectedCards.get(this.duelModel.turn)).get(0))) {
+            if (!(duelController.duelModel.getHandCards().get(duelController.duelModel.turn)).contains((selectedCards.get(duelController.duelModel.turn)).get(0))) {
                 return "you can’t set this card";
-            } else if (this.duelModel.monsterSetOrSummonInThisTurn == null) {
+            } else if (duelController.duelModel.monsterSetOrSummonInThisTurn != null) {
                 return "you already summoned/set on this turn";
-            } else if ((selectedCards.get(this.duelModel.turn).get(0)).getCardType().equals("Monster")) {
-                return this.setMonster();
+            } else if ((selectedCards.get(duelController.duelModel.turn).get(0)).getCategory().equals("Monster")) {
+                return setMonster();
             } else
                 return setTrapOrSpell();
         }
@@ -37,44 +37,44 @@ public class MainPhaseController extends DuelController {
 
     public String setTrapOrSpell() {
 
-        Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        Card card = duelController.duelModel.getSelectedCards().get(duelController.duelModel.turn).get(0);
         if (card.getCategory().equals("Field")) {
-            duelModel.setField(card);
+            duelController.duelModel.setField(card);
         }
-        if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(0) == null)
-            duelModel.addSpellAndTrapFromHandToGame("H/1", 0);
-        else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(1) == null)
-            duelModel.addSpellAndTrapFromHandToGame("H/2", 1);
-        else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(2) == null)
-            duelModel.addSpellAndTrapFromHandToGame("H/3", 2);
-        else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(3) == null)
-            duelModel.addSpellAndTrapFromHandToGame("H/4", 3);
-        else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(4) == null)
-            duelModel.addSpellAndTrapFromHandToGame("H/5", 4);
+        if (duelController.duelModel.getSpellsAndTrapsInFiled().get(duelController.duelModel.turn).get(0) == null)
+            duelController.duelModel.addSpellAndTrapFromHandToGame("H/1", 0);
+        else if ( duelController.duelModel.getSpellsAndTrapsInFiled().get(duelController.duelModel.turn).get(1) == null)
+            duelController.duelModel.addSpellAndTrapFromHandToGame("H/2", 1);
+        else if (duelController.duelModel.getSpellsAndTrapsInFiled().get(duelController.duelModel.turn).get(2) == null)
+            duelController.duelModel.addSpellAndTrapFromHandToGame("H/3", 2);
+        else if (duelController.duelModel.getSpellsAndTrapsInFiled().get(duelController.duelModel.turn).get(3) == null)
+            duelController.duelModel.addSpellAndTrapFromHandToGame("H/4", 3);
+        else if (duelController.duelModel.getSpellsAndTrapsInFiled().get(duelController.duelModel.turn).get(4) == null)
+            duelController.duelModel.addSpellAndTrapFromHandToGame("H/5", 4);
         else return "spell card zone is full";
-        duelModel.setSpellsAndTrapsSetInThisTurn(duelModel.turn, card);
+        duelController.duelModel.setSpellsAndTrapsSetInThisTurn(duelController.duelModel.turn, card);
 
         return "set successfully";
     }
 
     public String setMonster() {
-        Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        Card card = duelController.duelModel.getSelectedCards().get(duelController.duelModel.turn).get(0);
         Monster monster = (Monster) card;
-        if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
-            duelModel.addMonsterFromHandToGame("DH/1", 0);
-            duelModel.setMonsterSetOrSummonInThisTurn(monster, 1);
-        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null) {
-            duelModel.addMonsterFromHandToGame("DH/2", 1);
-            duelModel.setMonsterSetOrSummonInThisTurn(monster, 2);
-        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null) {
-            duelModel.addMonsterFromHandToGame("DH/3", 2);
-            duelModel.setMonsterSetOrSummonInThisTurn(monster, 3);
-        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null) {
-            duelModel.addMonsterFromHandToGame("DH/4", 3);
-            duelModel.setMonsterSetOrSummonInThisTurn(monster, 4);
-        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null) {
-            duelModel.addMonsterFromHandToGame("DH/5", 4);
-            duelModel.setMonsterSetOrSummonInThisTurn(monster, 5);
+        if (duelController.duelModel.getMonstersInField().get(duelController.duelModel.turn).get(0) == null) {
+            duelController.duelModel.addMonsterFromHandToGame("DH/1", 0);
+            duelController.duelModel.setMonsterSetOrSummonInThisTurn(monster, 1);
+        } else if (duelController.duelModel.getMonstersInField().get(duelController.duelModel.turn).get(1) == null) {
+            duelController.duelModel.addMonsterFromHandToGame("DH/2", 1);
+            duelController.duelModel.setMonsterSetOrSummonInThisTurn(monster, 2);
+        } else if (duelController.duelModel.getMonstersInField().get(duelController.duelModel.turn).get(2) == null) {
+            duelController.duelModel.addMonsterFromHandToGame("DH/3", 2);
+            duelController.duelModel.setMonsterSetOrSummonInThisTurn(monster, 3);
+        } else if (duelController.duelModel.getMonstersInField().get(duelController.duelModel.turn).get(3) == null) {
+            duelController.duelModel.addMonsterFromHandToGame("DH/4", 3);
+            duelController.duelModel.setMonsterSetOrSummonInThisTurn(monster, 4);
+        } else if (duelController.duelModel.getMonstersInField().get(duelController.duelModel.turn).get(4) == null) {
+            duelController.duelModel.addMonsterFromHandToGame("DH/5", 4);
+            duelController.duelModel.setMonsterSetOrSummonInThisTurn(monster, 5);
         } else {
             return "monster card zone is full";
         }
