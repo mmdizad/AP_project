@@ -6,6 +6,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class DuelModel {
+    public int turn = 0;
+    public Card monsterSetOrSummonInThisTurn;
+    public int thePlaceOfMonsterSetOrSummonInThisTurn;
+    public boolean[] setposition = new boolean[5];
+    public Card monsterFlipSummonOrNormalSummonForTrapHole = null;
+    public Card monsterSummonForEffectOfSomeTraps = null;
+    ArrayList<LinkedHashMap<Card, Boolean>> spellOrTrapActivated;
     private ArrayList<ArrayList<Card>> selectedCards;
     private ArrayList<HashMap<Card, String>> detailOfSelectedCard;
     private ArrayList<ArrayList<Card>> playersCards;
@@ -18,10 +25,6 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> field;
     private ArrayList<Integer> lifePoints;
     private ArrayList<String> usernames;
-    public int turn = 0;
-    public Card monsterSetOrSummonInThisTurn;
-    public int thePlaceOfMonsterSetOrSummonInThisTurn;
-    public boolean[] setposition = new boolean[5];
     private ArrayList<Card> borrowCards;
     private ArrayList<String> conditionOfBorrowCards;
     private ArrayList<HashMap<Card, Integer>> swordsCard;
@@ -33,9 +36,7 @@ public class DuelModel {
     private ArrayList<ArrayList<Boolean>> spellZoneActivate;
     private ArrayList<ArrayList<Card>> activatedMonsterEffects;
     private HashMap<Card, Integer> cardsInsteadOfScanners;
-    public Card monsterFlipSummonOrNormalSummonForTrapHole = null;
-    public Card monsterSummonForEffectOfSomeTraps = null;
-    ArrayList<LinkedHashMap<Card, Boolean>> spellOrTrapActivated;
+    private ArrayList<HashMap<Spell, Monster>> equipSpells;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         lifePoints = new ArrayList<>();
@@ -164,6 +165,10 @@ public class DuelModel {
         LinkedHashMap<Card, Boolean> spellOrTrapActivated2 = new LinkedHashMap<>();
         spellOrTrapActivated.add(spellOrTrapActivated1);
         spellOrTrapActivated.add(spellOrTrapActivated2);
+        HashMap<Spell, Monster> equipspellUser = new HashMap<>();
+        HashMap<Spell, Monster> equipspellOpponent = new HashMap<>();
+        equipSpells.add(equipspellUser);
+        equipSpells.add(equipspellOpponent);
     }
 
     public ArrayList<LinkedHashMap<Card, Boolean>> getSpellOrTrapActivated() {
@@ -244,6 +249,10 @@ public class DuelModel {
         return field;
     }
 
+    public void setField(Card card) {
+        field.get(turn).set(1, card);
+    }
+
     public Card getFieldZoneCard(int turn) {
         return field.get(turn).get(0);
     }
@@ -291,7 +300,6 @@ public class DuelModel {
         return spellAndTrapCondition.get(turn).get(place - 1);
     }
 
-
     public void changePositionOfSpellOrTrapCard(int turn, int place) {
         String[] condition = spellAndTrapCondition.get(turn).get(place - 1).split("/");
         if (condition[0].equals("H")) {
@@ -319,7 +327,6 @@ public class DuelModel {
         graveyard.get(turn).add(card);
     }
 
-
     public void setSelectedCard(int turn, Card card, String condition) {
         if (selectedCards.get(turn).get(0) != null) {
             deSelectedCard();
@@ -327,7 +334,6 @@ public class DuelModel {
         selectedCards.get(turn).add(card);
         detailOfSelectedCard.get(turn).put(card, condition);
     }
-
 
     public void deSelectedCard() {
         selectedCards.get(turn).set(0, null);
@@ -393,7 +399,7 @@ public class DuelModel {
         if (field.get(1 - turn) == null)
             board.add(graveyard.get(1 - turn).size() + "                        " + "E");
         else board.add(graveyard.get(1 - turn).size() + "                        " + "O");
-        board.add("---------------------------------");
+        board.add("-------------------------------");
         if (field.get(turn) == null)
             board.add("E" + "                        " + graveyard.get(turn).size());
         else board.add("O" + "                        " + graveyard.get(1 - turn).size());
@@ -404,10 +410,6 @@ public class DuelModel {
         board.add(usernames.get(turn) + ":" + lifePoints.get(turn));
         return board;
 
-    }
-
-    public void setField(Card card) {
-        field.get(turn).set(1, card);
     }
 
     public ArrayList<String> getUsernames() {
@@ -598,4 +600,28 @@ public class DuelModel {
     public void deleteCardsInsteadOfScanners() {
         cardsInsteadOfScanners.clear();
     }
+
+    public ArrayList<HashMap<Spell, Monster>> getEquipSpells() {
+        return equipSpells;
+    }
+
+    public void activeEquip(Monster monster, Spell spell) {
+        equipSpells.get(turn).put(spell, monster);
+    }
+
+    public Integer findEmptyPlaceOfSpellField(){
+        if(spellsAndTrapsInFiled.get(turn).get(0)==null)
+            return 0;
+        else if(spellsAndTrapsInFiled.get(turn).get(1)==null)
+            return 1;
+        else if(spellsAndTrapsInFiled.get(turn).get(2)==null)
+            return 2;
+        else if(spellsAndTrapsInFiled.get(turn).get(3)==null)
+            return 3;
+        else if(spellsAndTrapsInFiled.get(turn).get(4)==null)
+            return 4;
+        return null;
+
+    }
+
 }

@@ -152,7 +152,7 @@ public class DuelView {
             System.out.print(integer + " ");
         }
         int place = scanner1.nextInt();
-        return place;
+        return place-1;
     }
 
     public void showBoard() {
