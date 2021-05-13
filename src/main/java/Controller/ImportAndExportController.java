@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.Card;
-import com.google.gson.Gson;
+
 
 import java.util.regex.Matcher;
 
@@ -22,18 +22,18 @@ public class ImportAndExportController extends LoginController {
         if (Card.getCardByName(cardName) == null){
             return "card with name " + cardName + " doesn't exist";
         }else {
-            Gson gson = new Gson();
-            Card card = Card.getCardByName(cardName);
-            String cardInfo = gson.toJson(card);
+//            Gson gson = new Gson();
+//            Card card = Card.getCardByName(cardName);
+//            String cardInfo = gson.toJson(card);
             return "card imported";
         }
     }
 
     public String exportController(Matcher matcher){
         String input = ""; //????
-        Gson gson = new Gson();
-        Card card = gson.fromJson(input, Card.class);
-        Card card1 = new Card(card.getName(),card.getDescription(),card.getCardType(),card.getPrice(), card.getCategory());
+//        Gson gson = new Gson();
+//        Card card = gson.fromJson(input, Card.class);
+//        Card card1 = new Card(card.getName(),card.getDescription(),card.getCardType(),card.getPrice(), card.getCategory());
         return "card exported";
     }
 

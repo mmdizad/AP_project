@@ -13,17 +13,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DuelView {
-
+    protected static DuelView duelView;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
     protected boolean isCommandInvalid = true;
+    protected boolean isAi;
 
-public DuelView(){
+protected DuelView(){
 
 }
-    public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView) {
+public static DuelView getInstance(){
+    if(duelView==null)
+        duelView=new DuelView();
+    return duelView;
+}
+
+    public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView,boolean isAi) {
         scanner1 = scanner;
+        this.isAi = isAi;
         ArrayList<Integer> someRandomNumbers = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             someRandomNumbers.add(i + 1);
@@ -35,7 +43,7 @@ public DuelView(){
             duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
             duelController = DuelController.getInstance();
             NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
-            duelController.setDuelModel(duelModel, duelView, duelController);
+            duelController.setDuelModel(duelModel, duelView, duelController,isAi);
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);
             System.out.println("EndPhase");
@@ -44,11 +52,12 @@ public DuelView(){
             System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
             StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
+            showBoard();
             standByPhaseView.run(scanner);
         } else {
             duelModel = new DuelModel(secondPlayerUsername, LoginController.user.getUsername());
             duelController = DuelController.getInstance();
-            duelController.setDuelModel(duelModel, duelView, duelController);
+            duelController.setDuelModel(duelModel, duelView, duelController,isAi);
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, secondPlayerUsername, true);
             System.out.println("EndPhase");
@@ -57,6 +66,7 @@ public DuelView(){
             System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
             StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
+            showBoard();
             standByPhaseView.run(scanner);
         }
 
@@ -143,7 +153,13 @@ public DuelView(){
         int place = scanner1.nextInt();
         return place;
     }
+     public void showBoard(){
+       ArrayList<String> board= duelModel.getBoard();
+         for (String s : board) {
+             System.out.println(s);
+         }
 
+     }
 
     public void showGraveyard(Matcher matcher) {
         if (matcher.find()) {
