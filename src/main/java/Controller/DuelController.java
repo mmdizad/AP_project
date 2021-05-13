@@ -16,7 +16,7 @@ public class DuelController {
     protected DuelView duelView;
     int playerActiveCloseForest;
     int attackaddedForClosedForest = 0;
-
+    protected boolean isAi;
     protected DuelController() {
 
     }
@@ -27,11 +27,11 @@ public class DuelController {
         return duelController;
     }
 
-    public void setDuelModel(DuelModel duelModel, DuelView duelView, DuelController duelController) {
-
+    public void setDuelModel(DuelModel duelModel, DuelView duelView, DuelController duelController,boolean isAi) {
+        this.isAi = isAi;
         this.duelModel = duelModel;
         this.duelView = duelView;
-        this.duelController = duelController;
+        DuelController.duelController = duelController;
     }
 
     public void selectFirstPlayer() {
