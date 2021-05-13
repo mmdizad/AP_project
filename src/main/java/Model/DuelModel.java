@@ -3,6 +3,7 @@ package Model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class DuelModel {
     private ArrayList<ArrayList<Card>> selectedCards;
@@ -34,7 +35,7 @@ public class DuelModel {
     private HashMap<Card, Integer> cardsInsteadOfScanners;
     public Card monsterFlipSummonOrNormalSummonForTrapHole = null;
     public Card monsterSummonForEffectOfSomeTraps = null;
-    ArrayList<HashMap<Card,Boolean>> spellOrTrapActivated;
+    ArrayList<LinkedHashMap<Card, Boolean>> spellOrTrapActivated;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         lifePoints = new ArrayList<>();
@@ -152,20 +153,20 @@ public class DuelModel {
         ArrayList<Card> spellsAndTarpsSetInThisTurn2 = new ArrayList<>();
         spellsAndTarpsSetInThisTurn.add(spellsAndTarpsSetInThisTurn1);
         spellsAndTarpsSetInThisTurn.add(spellsAndTarpsSetInThisTurn2);
-        ArrayList<ArrayList<Card>>  activatedMonsterEffects=new ArrayList<>();
+        ArrayList<ArrayList<Card>> activatedMonsterEffects = new ArrayList<>();
         ArrayList<Card> activatedMonsterEffects1 = new ArrayList<>();
         ArrayList<Card> activatedMonsterEffects2 = new ArrayList<>();
         activatedMonsterEffects.add(activatedMonsterEffects1);
         activatedMonsterEffects.add(activatedMonsterEffects2);
         cardsInsteadOfScanners = new HashMap<>();
         spellOrTrapActivated = new ArrayList<>();
-        HashMap<Card, Boolean> spellOrTrapActivated1 = new HashMap<>();
-        HashMap<Card, Boolean> spellOrTrapActivated2 = new HashMap<>();
+        LinkedHashMap<Card, Boolean> spellOrTrapActivated1 = new LinkedHashMap<>();
+        LinkedHashMap<Card, Boolean> spellOrTrapActivated2 = new LinkedHashMap<>();
         spellOrTrapActivated.add(spellOrTrapActivated1);
         spellOrTrapActivated.add(spellOrTrapActivated2);
     }
 
-    public ArrayList<HashMap<Card, Boolean>> getSpellOrTrapActivated() {
+    public ArrayList<LinkedHashMap<Card, Boolean>> getSpellOrTrapActivated() {
         return spellOrTrapActivated;
     }
 
@@ -299,16 +300,13 @@ public class DuelModel {
     }
 
     public void activeField(Card card) {
-        if(field.get(1 - turn).get(0)!=null)
-            addCardToGraveyard(turn,field.get(1 - turn).get(0));
-        if(field.get(turn).get(0)!=null)
-            addCardToGraveyard(turn,field.get( turn).get(0));
-        field.get(1 - turn).set(0,null);
+        if (field.get(1 - turn).get(0) != null)
+            addCardToGraveyard(turn, field.get(1 - turn).get(0));
+        if (field.get(turn).get(0) != null)
+            addCardToGraveyard(turn, field.get(turn).get(0));
+        field.get(1 - turn).set(0, null);
         field.get(turn).set(0, card);
     }
-
-
-
 
     public void addCardToGraveyard(int turn, Card card) {
         if (card.getCategory().equals("Monster")) {
@@ -367,27 +365,27 @@ public class DuelModel {
         ArrayList<String> conditionMonsterOpponent = new ArrayList<>();
         ArrayList<String> conditionMonsterUser = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            if(monstersInField.get(turn).get(i)!=null)
-            conditionMonsterOpponent.add(monsterCondition.get(1 - turn).get(i).split("/")[0]);
+            if (monstersInField.get(turn).get(i) != null)
+                conditionMonsterOpponent.add(monsterCondition.get(1 - turn).get(i).split("/")[0]);
             else
                 conditionMonsterOpponent.add("E");
-            if(monstersInField.get(1-turn).get(i)!=null)
-            conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
+            if (monstersInField.get(1 - turn).get(i) != null)
+                conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
             else
                 conditionMonsterUser.add("E");
-                if(spellsAndTrapsInFiled.get(1-turn).get(i)!=null)
-            spellConditionOpponent.add(spellAndTrapCondition.get(1 - turn).get(i).split("/")[0]);
-                else spellConditionOpponent.add("E");
-                if(spellsAndTrapsInFiled.get(turn).get(i)!=null)
-            spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/")[0]);
-                else spellConditionUser.add("E");
+            if (spellsAndTrapsInFiled.get(1 - turn).get(i) != null)
+                spellConditionOpponent.add(spellAndTrapCondition.get(1 - turn).get(i).split("/")[0]);
+            else spellConditionOpponent.add("E");
+            if (spellsAndTrapsInFiled.get(turn).get(i) != null)
+                spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/")[0]);
+            else spellConditionUser.add("E");
         }
 
         String spellFieldofOpponet = "    " + spellConditionOpponent.get(3) + "    " + spellConditionOpponent.get(1) + "    " + spellConditionOpponent.get(0) + "    " + spellConditionOpponent.get(2) + "    " + spellConditionOpponent.get(4);
         String spellFieldUser = "    " + spellConditionUser.get(4) + "    " + spellConditionUser.get(2) + "    " + spellConditionUser.get(0) + "    " + spellConditionUser.get(1) + "    " + spellConditionUser.get(3);
         String monsterFieldUser = "    " + conditionMonsterUser.get(4) + "    " + conditionMonsterUser.get(2) + "    " + conditionMonsterUser.get(0) + "    " + conditionMonsterUser.get(1) + "    " + conditionMonsterUser.get(3);
         String monsterFieldOpponent = "    " + conditionMonsterOpponent.get(3) + "    " + conditionMonsterOpponent.get(1) + "    " + conditionMonsterOpponent.get(0) + "    " + conditionMonsterOpponent.get(2) + "    " + conditionMonsterOpponent.get(4);
-        board.add(usernames.get(1-turn) + ":" + lifePoints.get(1 - turn));
+        board.add(usernames.get(1 - turn) + ":" + lifePoints.get(1 - turn));
         board.add(handCardOpponent);
         board.add(String.valueOf(playersCards.get(1 - turn).size()));
         board.add(spellFieldofOpponet);

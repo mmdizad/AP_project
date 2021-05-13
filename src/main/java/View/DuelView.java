@@ -20,16 +20,17 @@ public class DuelView {
     protected boolean isCommandInvalid = true;
     protected boolean isAi;
 
-protected DuelView(){
+    protected DuelView() {
 
-}
-public static DuelView getInstance(){
-    if(duelView==null)
-        duelView=new DuelView();
-    return duelView;
-}
+    }
 
-    public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView,boolean isAi) {
+    public static DuelView getInstance() {
+        if (duelView == null)
+            duelView = new DuelView();
+        return duelView;
+    }
+
+    public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView, boolean isAi) {
         scanner1 = scanner;
         this.isAi = isAi;
         ArrayList<Integer> someRandomNumbers = new ArrayList<>();
@@ -43,7 +44,7 @@ public static DuelView getInstance(){
             duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
             duelController = DuelController.getInstance();
             NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
-            duelController.setDuelModel(duelModel, duelView, duelController,isAi);
+            duelController.setDuelModel(duelModel, duelView, duelController, isAi);
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);
             System.out.println("EndPhase");
@@ -57,7 +58,7 @@ public static DuelView getInstance(){
         } else {
             duelModel = new DuelModel(secondPlayerUsername, LoginController.user.getUsername());
             duelController = DuelController.getInstance();
-            duelController.setDuelModel(duelModel, duelView, duelController,isAi);
+            duelController.setDuelModel(duelModel, duelView, duelController, isAi);
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, secondPlayerUsername, true);
             System.out.println("EndPhase");
@@ -153,13 +154,14 @@ public static DuelView getInstance(){
         int place = scanner1.nextInt();
         return place;
     }
-     public void showBoard(){
-       ArrayList<String> board= duelModel.getBoard();
-         for (String s : board) {
-             System.out.println(s);
-         }
 
-     }
+    public void showBoard() {
+        ArrayList<String> board = duelModel.getBoard();
+        for (String s : board) {
+            System.out.println(s);
+        }
+
+    }
 
     public void showGraveyard(Matcher matcher) {
         if (matcher.find()) {
@@ -193,15 +195,15 @@ public static DuelView getInstance(){
 
     public void surrender() {
 
-            User firdtPlayer = User.getUserByUsername(duelModel.getUsernames().get(0));
-            User secondPlayer = User.getUserByUsername(duelModel.getUsernames().get(1));
-            if (duelModel.turn == 0) {
-                firdtPlayer.setScore(3);
-                secondPlayer.setScore(-1);
-            } else {
-                firdtPlayer.setScore(-1);
-                secondPlayer.setScore(3);
-            }
+        User firdtPlayer = User.getUserByUsername(duelModel.getUsernames().get(0));
+        User secondPlayer = User.getUserByUsername(duelModel.getUsernames().get(1));
+        if (duelModel.turn == 0) {
+            firdtPlayer.setScore(3);
+            secondPlayer.setScore(-1);
+        } else {
+            firdtPlayer.setScore(-1);
+            secondPlayer.setScore(3);
+        }
 
 
     }

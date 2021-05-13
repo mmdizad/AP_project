@@ -346,6 +346,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card1, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card1)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card1);
                     duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn, card);
                     duelModel.effectOfSpellAbsorptionCards();
                     duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
@@ -357,6 +358,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card1, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card1)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card1);
                     duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn, card);
                     duelModel.effectOfSpellAbsorptionCards();
                     int indexOfSpell = duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).indexOf(card1);
@@ -384,6 +386,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     specialEffectOfPotOfGreed();
                     duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
                     duelModel.addCardToGraveyard(duelModel.turn, card);
@@ -394,6 +397,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     specialEffectOfPotOfGreed();
                     int indexOfSpell = duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).indexOf(card);
                     duelModel.deleteSpellAndTrap(duelModel.turn, indexOfSpell);
@@ -435,6 +439,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     deleteAllMonsters(1 - duelModel.turn);
                     duelModel.effectOfSpellAbsorptionCards();
                     duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
@@ -446,6 +451,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     deleteAllMonsters(1 - duelModel.turn);
                     duelModel.effectOfSpellAbsorptionCards();
                     int indexOfSpell = duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).indexOf(card);
@@ -494,6 +500,7 @@ public class DuelController {
                     duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                     duelController.isOpponentHasAnySpellOrTrapForActivate();
                     if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                        duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                         duelModel.deleteMonster(1 - duelModel.turn, numberOfMonsterCard - 1);
                         specialEffectOfChangeOfHeart(borrowCard, detailsOfBorrowCard);
                         duelModel.effectOfSpellAbsorptionCards();
@@ -506,6 +513,7 @@ public class DuelController {
                     duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                     duelController.isOpponentHasAnySpellOrTrapForActivate();
                     if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                        duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                         duelModel.deleteMonster(1 - duelModel.turn, numberOfMonsterCard - 1);
                         specialEffectOfChangeOfHeart(borrowCard, detailsOfBorrowCard);
                         duelModel.effectOfSpellAbsorptionCards();
@@ -586,6 +594,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     specialEffectOfHarpiesFeatherDuster();
                     duelModel.effectOfSpellAbsorptionCards();
                     duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
@@ -597,6 +606,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     specialEffectOfHarpiesFeatherDuster();
                     duelModel.effectOfSpellAbsorptionCards();
                     int indexOfSpell = duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).indexOf(card);
@@ -624,14 +634,14 @@ public class DuelController {
                 } else if (card.getName().equals("Messenger of peace")) {
                     duelModel.deleteMessengerOfPeaceCards(1 - duelModel.turn);
                 } else {
-                    for (Map.Entry<Card, Boolean> entry : duelModel.getSpellOrTrapActivated().get(1 - duelModel.turn).entrySet()) {
-                        Card spellCardActivated = entry.getKey();
-                        if (spellCardActivated == card) {
-                            duelModel.getSpellOrTrapActivated().get(1 - duelModel.turn).put(card, true);
-                        }
-                    }
                     duelModel.deleteSpellAndTrap(1 - duelModel.turn, i);
                     duelModel.addCardToGraveyard(1 - duelModel.turn, card);
+                }
+                for (Map.Entry<Card, Boolean> entry : duelModel.getSpellOrTrapActivated().get(1 - duelModel.turn).entrySet()) {
+                    Card spellCardActivated = entry.getKey();
+                    if (spellCardActivated == card) {
+                        duelModel.getSpellOrTrapActivated().get(1 - duelModel.turn).put(card, true);
+                    }
                 }
             }
             i++;
@@ -649,6 +659,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     duelModel.setSwordsCard(duelModel.turn, card);
                     changeStateOfMonsterWithSwordsCard(1 - duelModel.turn);
                     duelModel.effectOfSpellAbsorptionCards();
@@ -659,6 +670,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     duelModel.setSwordsCard(duelModel.turn, card);
                     changeStateOfMonsterWithSwordsCard(1 - duelModel.turn);
                     duelModel.effectOfSpellAbsorptionCards();
@@ -712,6 +724,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     deleteAllMonsters(duelModel.turn);
                     deleteAllMonsters(1 - duelModel.turn);
                     duelModel.effectOfSpellAbsorptionCards();
@@ -724,6 +737,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     deleteAllMonsters(duelModel.turn);
                     deleteAllMonsters(1 - duelModel.turn);
                     duelModel.effectOfSpellAbsorptionCards();
@@ -751,6 +765,7 @@ public class DuelController {
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     duelModel.setSupplySquad(duelModel.turn, card);
                     duelModel.effectOfSpellAbsorptionCards();
                     return "spell activated";
@@ -760,6 +775,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     duelModel.setSupplySquad(duelModel.turn, card);
                     duelModel.effectOfSpellAbsorptionCards();
                     return response;
@@ -780,6 +796,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     duelModel.effectOfSpellAbsorptionCards();
                     duelModel.setSpellAbsorptionCards(duelModel.turn, card);
                     return "spell activated";
@@ -789,6 +806,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     duelModel.effectOfSpellAbsorptionCards();
                     duelModel.setSpellAbsorptionCards(duelModel.turn, card);
                     return response;
@@ -810,6 +828,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     duelModel.setMessengerOfPeace(duelModel.turn, card);
                     duelModel.effectOfSpellAbsorptionCards();
                     return "spell activated";
@@ -819,6 +838,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                     duelModel.setMessengerOfPeace(duelModel.turn, card);
                     duelModel.effectOfSpellAbsorptionCards();
                     return response;
@@ -845,6 +865,7 @@ public class DuelController {
         duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card1, false);
         duelController.isOpponentHasAnySpellOrTrapForActivate();
         if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card1)) {
+            duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card1);
             int placeOfCardInHand = duelView.scanNumberOfCardForDeleteFromHand();
             if (placeOfCardInHand > duelModel.getHandCards().get(duelModel.turn).size()) {
                 return "you cant delete card with this address from your hand";
@@ -926,6 +947,7 @@ public class DuelController {
         duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
         duelController.isOpponentHasAnySpellOrTrapForActivate();
         if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+            duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
             String response = duelView.scanPlaceOfCardWantToDestroyed();
             String[] splitResponse = response.split(" ");
             int placeOfSpellOrTrapCard = Integer.parseInt(splitResponse[1]);
@@ -1034,14 +1056,14 @@ public class DuelController {
         } else if (card.getName().equals("Messenger of peace")) {
             duelModel.deleteMessengerOfPeaceCards(turn);
         } else {
-            for (Map.Entry<Card, Boolean> entry : duelModel.getSpellOrTrapActivated().get(turn).entrySet()) {
-                Card spellCardActivated = entry.getKey();
-                if (spellCardActivated == card) {
-                    duelModel.getSpellOrTrapActivated().get(turn).put(card, true);
-                }
-            }
             duelModel.deleteSpellAndTrap(turn, placeOfSpellOrTrapCard - 1);
             duelModel.addCardToGraveyard(turn, card);
+        }
+        for (Map.Entry<Card, Boolean> entry : duelModel.getSpellOrTrapActivated().get(turn).entrySet()) {
+            Card spellCardActivated = entry.getKey();
+            if (spellCardActivated == card) {
+                duelModel.getSpellOrTrapActivated().get(turn).put(card, true);
+            }
         }
     }
 
@@ -1105,6 +1127,7 @@ public class DuelController {
             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
             duelController.isOpponentHasAnySpellOrTrapForActivate();
             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                 String[] addressOfCardForTribute = duelView.scanAddressForTributeForRitualSummon().split(" ");
                 if (addressOfCardForTribute.length < 2) {
                     return "you must enter two address for tribute from your deck";
@@ -1422,6 +1445,7 @@ public class DuelController {
             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(trap, false);
             duelController.isOpponentHasAnySpellOrTrapForActivate();
             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(trap)) {
+                duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(trap);
                 Card card = duelModel.monsterSummonForEffectOfSomeTraps;
                 int indexOfMonsterSummoned = duelModel.getMonstersInField().get(1 - duelModel.turn).indexOf(card);
                 duelModel.decreaseLifePoint(2000, duelModel.turn);
@@ -1465,6 +1489,7 @@ public class DuelController {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(trap, false);
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(trap)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(trap);
                     deleteAllMonsters(duelModel.turn);
                     deleteAllMonsters(1 - duelModel.turn);
                     int place = Integer.parseInt(duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(trap).split("/")[2]);
@@ -1488,6 +1513,7 @@ public class DuelController {
             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(trap, false);
             duelController.isOpponentHasAnySpellOrTrapForActivate();
             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(trap)) {
+                duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(trap);
                 Card card = duelModel.monsterFlipSummonOrNormalSummonForTrapHole;
                 int indexOfMonsterSummonOrFlipSummon = duelModel.getMonstersInField().get(1 - duelModel.turn).indexOf(card);
                 duelModel.deleteMonster(1 - duelModel.turn, indexOfMonsterSummonOrFlipSummon);
@@ -1503,12 +1529,43 @@ public class DuelController {
     }
 
     public String MagicJammer() {
-//        if (duelModel.spellOrTrapActivatedForSomeEffects == null) {
-//            return "no card activated";
-//        } else if (!duelModel.spellOrTrapActivatedForSomeEffects.getCategory().equals("Spell")) {
-//            return "no spell activated";
-//        }
-        return "";
+        if (duelModel.getSpellOrTrapActivated().get(1 - duelModel.turn).size() == 0) {
+            return "no card activated";
+        } else {
+            Card cardActivated = null;
+            for (Map.Entry<Card, Boolean> entry : duelModel.getSpellOrTrapActivated().get(1 - duelModel.turn).entrySet()) {
+                cardActivated = entry.getKey();
+            }
+            assert cardActivated != null;
+            if (!cardActivated.getCategory().equals("Spell")) {
+                return "no spell activated";
+            } else {
+                Card trap = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                activeNormalTraps();
+                duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(trap, false);
+                duelController.isOpponentHasAnySpellOrTrapForActivate();
+                if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(trap)) {
+                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(trap);
+                    int placeOfCardDeleteFromHand = duelView.scanNumberOfCardForDeleteFromHand();
+                    if (placeOfCardDeleteFromHand > duelModel.getHandCards().get(duelModel.turn).size()) {
+                        return "you must enter address that has card (correct address)";
+                    } else {
+                        Card card = duelModel.getHandCards().get(duelModel.turn).get(placeOfCardDeleteFromHand - 1);
+                        duelModel.deleteCardFromHand(card);
+                        duelModel.addCardToGraveyard(duelModel.turn, card);
+                        int indexOfCardActivated = duelModel.getSpellsAndTrapsInFiled().get(1 - duelModel.turn).
+                                indexOf(cardActivated);
+                        deleteASpell(1 - duelModel.turn, indexOfCardActivated + 1, cardActivated);
+                        int place = Integer.parseInt(duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(trap).split("/")[2]);
+                        duelModel.deleteSpellAndTrap(duelModel.turn, place - 1);
+                        duelModel.addCardToGraveyard(duelModel.turn, trap);
+                        return "trap activated";
+                    }
+                }
+                duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(trap);
+                return "";
+            }
+        }
     }
 
 
