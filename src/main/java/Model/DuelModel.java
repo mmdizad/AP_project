@@ -207,6 +207,10 @@ public class DuelModel {
         conditionOfBorrowCards.clear();
     }
 
+    public String getCreatorUsername(int turn){
+        return usernames.get(turn);
+    }
+
     public ArrayList<Card> addCardToHand() {
         if (handCards.size() <= turn) {
             ArrayList<Card> handCardsPlayer = new ArrayList<>();

@@ -7,6 +7,7 @@ import View.BattlePhaseView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BattlePhaseController extends DuelController {
 
@@ -369,6 +370,65 @@ public class BattlePhaseController extends DuelController {
             }
             return "you cant active this card";
         }
+    }
 
+    public void setCommandsForAi(){
+        int attackPower = 0;
+        int place = 0;
+        ArrayList<Card> ourMonsters = duelModel.getMonstersInField().get(duelModel.turn);
+        for (int i = 0;i < 5;i++){
+            if (ourMonsters.get(i) != null){
+                if (ourMonsters.get(i).getAttackPower() > attackPower){
+                    attackPower = ourMonsters.get(i).getAttackPower();
+                    place = i + 1;
+                }
+            }
+        }
+        if (place != 0) {
+            String input = "select --monster " + place;
+            Pattern pattern = Pattern.compile("^select --monster (\\d+)$");
+            Matcher matcher = pattern.matcher(input);
+            if (matcher.find()) {
+                selectMonster(matcher);
+            }
+            ArrayList<Card> opponentMonsters = duelModel.getMonstersInField().get(1 - duelModel.turn);
+            int opponentAttackPower = 100000;
+            int opponentPlace = -1;
+            for (int i = 0; i < 5; i++) {
+                if (opponentMonsters.get(i) != null) {
+                    if (opponentMonsters.get(i).getAttackPower() < opponentAttackPower) {
+                        opponentPlace = i + 1;
+                        opponentAttackPower = opponentMonsters.get(i).getAttackPower();
+                    }
+                }
+            }
+            if (opponentPlace == -1) {
+                input = "attack direct";
+                Pattern pattern1 = Pattern.compile("^attack direct$");
+                Matcher matcher1 = pattern1.matcher(input);
+                if (matcher1.find()) {
+                    directAttack(matcher1);
+                }
+            } else {
+                input = "attack " + opponentPlace;
+                Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
+                Matcher matcher1 = pattern1.matcher(input);
+                if (matcher1.find()) {
+                    attack(matcher1);
+                }
+            }
+        }
+    }
+
+    public String getCyberseCard(){
+        ArrayList<Card> cards = duelModel.getPlayersCards().get(1 - duelModel.turn);
+        for (Card card : cards){
+            if (card.getCategory().equals("Monster")){
+                if (card.getCardType().equals("Cyberse")){
+                    return card.getName();
+                }
+            }
+        }
+        return null;
     }
 }
