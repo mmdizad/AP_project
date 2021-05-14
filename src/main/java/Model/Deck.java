@@ -69,7 +69,7 @@ public class Deck {
     }
 
     public static void deleteDeck(Deck deck) {
-        decks.remove(deck);
+        decks.remove(deck.getName());
     }
 
     public static Deck getDeckByName(String name) {
