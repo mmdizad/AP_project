@@ -653,7 +653,7 @@ public class MainPhaseController extends DuelController {
                     if (card != duelModel.monsterSetOrSummonInThisTurn) {
                         int placeOfMonsterCard = duelModel.getMonstersInField().get(duelModel.turn).indexOf(card) + 1;
                         String aiCommand = "select --monster " + placeOfMonsterCard;
-                        duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --monster (\\d+)$"));
+                        duelController.selectMonster(duelView.getCommandMatcher(aiCommand, "^select --monster (\\d+)$"));
                         flipSummon();
                     }
                 }
@@ -672,7 +672,8 @@ public class MainPhaseController extends DuelController {
         }
         Comparator<Monster> compareForAiSummonAndSet = Comparator
                 .comparing(Monster::getLevel, Comparator.reverseOrder())
-                .thenComparing(Monster::getAttackPower, Comparator.reverseOrder());
+                .thenComparing(Monster::getAttackPower, Comparator.reverseOrder())
+                .thenComparing(Monster::getDefensePower, Comparator.reverseOrder());
         monstersInHand.sort(compareForAiSummonAndSet);
         return monstersInHand;
     }
@@ -686,7 +687,8 @@ public class MainPhaseController extends DuelController {
         }
         Comparator<Card> compareForAiTribute = Comparator
                 .comparing(Card::getLevel)
-                .thenComparing(Card::getAttackPower);
+                .thenComparing(Card::getAttackPower)
+                .thenComparing(Card::getDefensePower);
         monstersInFieldForAiTribute.sort(compareForAiTribute);
         return monstersInFieldForAiTribute;
     }
@@ -724,7 +726,8 @@ public class MainPhaseController extends DuelController {
         }
         Comparator<Card> compareForAiDestroy = Comparator
                 .comparing(Card::getLevel, Comparator.reverseOrder())
-                .thenComparing(Card::getAttackPower, Comparator.reverseOrder());
+                .thenComparing(Card::getAttackPower, Comparator.reverseOrder())
+                .thenComparing(Card::getDefensePower, Comparator.reverseOrder());
         monstersInField.sort(compareForAiDestroy);
         return monstersInField.get(0);
     }
@@ -755,13 +758,14 @@ public class MainPhaseController extends DuelController {
         for (Card card : duelModel.getHandCards().get(duelModel.turn)) {
             if (card.getCategory().equals("Spell") || card.getCategory().equals("Trap")) {
                 if (card.getCardType().equals("Field")) {
-                    String aiCommand = "select --field " + 2;
-                    duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --field (\\d+)$"));
+                    int placeOfSpellCard = duelModel.getHandCards().get(duelModel.turn).indexOf(card) + 1;
+                    String aiCommand = "select --hand " + placeOfSpellCard;
+                    duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
                     setTrapOrSpell();
                 } else if (!duelController.isSpellZoneFull(duelModel.turn)) {
-                    int placeOfSpellCard = duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).indexOf(card) + 1;
-                    String aiCommand = "select --spell " + placeOfSpellCard;
-                    duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --spell (\\d+)$"));
+                    int placeOfSpellCard = duelModel.getHandCards().get(duelModel.turn).indexOf(card) + 1;
+                    String aiCommand = "select --hand " + placeOfSpellCard;
+                    duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
                     setTrapOrSpell();
                 }
             }

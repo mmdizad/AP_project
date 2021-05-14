@@ -4,18 +4,20 @@ import Model.*;
 import View.DrawPhaseView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 public class NewCardToHandController extends DuelController {
 
-    private static NewCardToHandController newCardToHandController=null ;
+    private static NewCardToHandController newCardToHandController = null;
 
     private NewCardToHandController() {
 
     }
+
     public static NewCardToHandController getInstance() {
-        if(newCardToHandController==null)
-             newCardToHandController = new NewCardToHandController();
+        if (newCardToHandController == null)
+            newCardToHandController = new NewCardToHandController();
         return newCardToHandController;
 
     }
@@ -68,7 +70,16 @@ public class NewCardToHandController extends DuelController {
         for (Card card : monstersInFiled) {
             if (card != null) {
                 if (card.getName().equals("Scanner")) {
-                    String response = drawPhaseView.scanResponseForScanner();
+                    String response;
+                    if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                        response = drawPhaseView.scanResponseForScanner();
+                    } else {
+                        if (hasOpponentMonsterInGraveyard()) {
+                            response = "yes";
+                        } else {
+                            response = "no";
+                        }
+                    }
                     if (response.equals("yes"))
                         return effectOfScanner(i);
                 }
@@ -109,13 +120,19 @@ public class NewCardToHandController extends DuelController {
     }
 
     public String effectOfScanner(int placeOfScanner) {
+        int addressOfCardInGraveyard;
         DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
-        duelView.showGraveyardForSomeClasses(1 - duelModel.turn);
-        int addressOfCardInGraveyard = drawPhaseView.scanPlaceOfCardForInsteadOfScanner();
-        if (addressOfCardInGraveyard > duelModel.getGraveyard(duelModel.turn).size()) {
+        if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+            duelView.showGraveyardForSomeClasses(1 - duelModel.turn);
+            addressOfCardInGraveyard = drawPhaseView.scanPlaceOfCardForInsteadOfScanner();
+        } else {
+            addressOfCardInGraveyard = duelModel.getGraveyard(1 - duelModel.turn)
+                    .indexOf(getBestMonsterOfOpponentForAiScanner()) + 1;
+        }
+        if (addressOfCardInGraveyard > duelModel.getGraveyard(1 - duelModel.turn).size()) {
             return "this address in graveyard is not correct";
         } else {
-            Card card = duelModel.getGraveyard(duelModel.turn).get(addressOfCardInGraveyard - 1);
+            Card card = duelModel.getGraveyard(1 - duelModel.turn).get(addressOfCardInGraveyard - 1);
             if (!card.getCategory().equals("Monster")) {
                 return "you must select monster to insteadOf Scanner";
             } else {
@@ -124,5 +141,32 @@ public class NewCardToHandController extends DuelController {
                 return "a monster card insteadOf Scanner";
             }
         }
+    }
+
+    public boolean hasOpponentMonsterInGraveyard() {
+        boolean hasOpponentMonsterInGraveyardForAi = false;
+        ArrayList<Card> graveyardCards = duelModel.getGraveyard(1 - duelModel.turn);
+        for (Card card : graveyardCards) {
+            if (card.getCategory().equals("Monster")) {
+                hasOpponentMonsterInGraveyardForAi = true;
+                break;
+            }
+        }
+        return hasOpponentMonsterInGraveyardForAi;
+    }
+
+    public Card getBestMonsterOfOpponentForAiScanner() {
+        ArrayList<Card> monstersInGraveyard = new ArrayList<>();
+        for (Card card : duelModel.getGraveyard(1 - duelModel.turn)) {
+            if (card.getCategory().equals("Monster")) {
+                monstersInGraveyard.add(card);
+            }
+        }
+        Comparator<Card> compareForAiScanner = Comparator
+                .comparing(Card::getLevel, Comparator.reverseOrder())
+                .thenComparing(Card::getAttackPower, Comparator.reverseOrder())
+                .thenComparing(Card::getDefensePower, Comparator.reverseOrder());
+        monstersInGraveyard.sort(compareForAiScanner);
+        return monstersInGraveyard.get(0);
     }
 }

@@ -32,7 +32,10 @@ public class DrawPhaseView extends DuelView {
         if (!startOfGame) {
             DuelView.getInstance().showBoard();
             System.out.println(newCardToHandController.hasHeraldOfCreation());
-            System.out.println(newCardToHandController.hasScannerMonster());
+            String result = newCardToHandController.hasScannerMonster();
+            if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                System.out.println(result);
+            }
             StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
             standByPhaseView.run(scanner);
         }
@@ -56,7 +59,7 @@ public class DrawPhaseView extends DuelView {
     }
 
     public String scanResponseForScanner() {
-        System.out.println("do you want to change it with monster in opponent graveyard int this turn?");
+        System.out.println("do you want to change it with monster in opponent graveyard int this turn? (enter yes or no)");
         return scanner1.nextLine();
     }
 
