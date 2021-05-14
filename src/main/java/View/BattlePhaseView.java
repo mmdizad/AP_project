@@ -20,35 +20,40 @@ public class BattlePhaseView extends DuelView {
         if (startOfPhase) {
             System.out.println("BattlePhase");
         }
-
-        while (true) {
-            isCommandInvalid = true;
-            String command = scanner.nextLine();
-            attack(getCommandMatcher(command, "^attack ([1-5]{1})$"), scanner);
-            directAttack(getCommandMatcher(command, "^attack direct$"));
-            selectMonster(getCommandMatcher(command, "^select --monster (\\d+)$"));
-            selectOpponentMonster(getCommandMatcher(command, "^select --monster (\\d+) --opponent$"));
-            selectOpponentMonster(getCommandMatcher(command, "^select --opponent --monster (\\d+)$"));
-            selectSpellOrTrap(getCommandMatcher(command, "^select --spell (\\d+)$"));
-            selectOpponentSpell(getCommandMatcher(command, "^select --spell (\\d+) --opponent$"));
-            selectOpponentSpell(getCommandMatcher(command, "^select --opponent --spell (\\d+)$"));
-            selectField(getCommandMatcher(command, "^select --field"));
-            selectOpponentField(getCommandMatcher(command, "^select --opponent --field"));
-            selectOpponentField(getCommandMatcher(command, "^select --field --opponent"));
-            deselect(getCommandMatcher(command, "^select -d$"));
-            selectHand(getCommandMatcher(command, "^select --hand (\\d+)$"));
-            showCard(getCommandMatcher(command, "^card show (.+)$"));
-            showSelectedCard(getCommandMatcher(command, "card show --selected"));
-            showGraveyard(getCommandMatcher(command, "show graveyard"));
-            activateEffectBattlePhaseView(getCommandMatcher(command, "^activate effect$"));
-            if (command.equals("enterMenu")) {
-                enterPhase(scanner);
-                break;
+        if (duelModel.getCreatorUsername(duelModel.turn).equals("ai")) {
+            BattlePhaseController battlePhaseController = BattlePhaseController.getInstance();
+            battlePhaseController.setCommandsForAi();
+            enterPhase(scanner);
+        } else {
+            while (true) {
+                isCommandInvalid = true;
+                String command = scanner.nextLine();
+                attack(getCommandMatcher(command, "^attack ([1-5]{1})$"), scanner);
+                directAttack(getCommandMatcher(command, "^attack direct$"));
+                selectMonster(getCommandMatcher(command, "^select --monster (\\d+)$"));
+                selectOpponentMonster(getCommandMatcher(command, "^select --monster (\\d+) --opponent$"));
+                selectOpponentMonster(getCommandMatcher(command, "^select --opponent --monster (\\d+)$"));
+                selectSpellOrTrap(getCommandMatcher(command, "^select --spell (\\d+)$"));
+                selectOpponentSpell(getCommandMatcher(command, "^select --spell (\\d+) --opponent$"));
+                selectOpponentSpell(getCommandMatcher(command, "^select --opponent --spell (\\d+)$"));
+                selectField(getCommandMatcher(command, "^select --field"));
+                selectOpponentField(getCommandMatcher(command, "^select --opponent --field"));
+                selectOpponentField(getCommandMatcher(command, "^select --field --opponent"));
+                deselect(getCommandMatcher(command, "^select -d$"));
+                selectHand(getCommandMatcher(command, "^select --hand (\\d+)$"));
+                showCard(getCommandMatcher(command, "^card show (.+)$"));
+                showSelectedCard(getCommandMatcher(command, "card show --selected"));
+                showGraveyard(getCommandMatcher(command, "show graveyard"));
+                activateEffectBattlePhaseView(getCommandMatcher(command, "^activate effect$"));
+                if (command.equals("enterMenu")) {
+                    enterPhase(scanner);
+                    break;
+                }
+                if (isCommandInvalid) {
+                    System.out.println("invalid command");
+                }
+                isCommandInvalid = true;
             }
-            if (isCommandInvalid) {
-                System.out.println("invalid command");
-            }
-            isCommandInvalid = true;
         }
     }
 
@@ -56,9 +61,9 @@ public class BattlePhaseView extends DuelView {
         if (matcher.find()) {
             isCommandInvalid = false;
             String response = BattlePhaseController.getInstance().attack(matcher);
-            if (response.startsWith("opponent’s monster card was") || response.startsWith("no card is destroyed")||
-            response.startsWith("the defense position monster is destroyed") || response.startsWith("Your monster card is destroyed and you received")
-            || response.startsWith("both you and your opponent monster") || response.startsWith("your opponent’s monster is destroyed")){
+            if (response.startsWith("opponent’s monster card was") || response.startsWith("no card is destroyed") ||
+                    response.startsWith("the defense position monster is destroyed") || response.startsWith("Your monster card is destroyed and you received")
+                    || response.startsWith("both you and your opponent monster") || response.startsWith("your opponent’s monster is destroyed")) {
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
             }
             System.out.println(response);
@@ -70,15 +75,20 @@ public class BattlePhaseView extends DuelView {
     }
 
     public String getCyberseCard() {
-        System.out.println("opponent attacked you but you had Texchanger,now enter a Cyberse typed card to special summon: ");
-        return scanner1.nextLine();
+        if (duelModel.getCreatorUsername(1 - duelModel.turn).equals("ai")) {
+            BattlePhaseController battlePhaseController = BattlePhaseController.getInstance();
+            return battlePhaseController.getCyberseCard();
+        } else {
+            System.out.println("opponent attacked you but you had Texchanger,now enter a Cyberse typed card to special summon: ");
+            return scanner1.nextLine();
+        }
     }
 
     public void directAttack(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
             String response = BattlePhaseController.getInstance().directAttack(matcher);
-            if (response.startsWith("you opponent receives")){
+            if (response.startsWith("you opponent receives")) {
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
             }
             System.out.println(response);
@@ -112,6 +122,7 @@ public class BattlePhaseView extends DuelView {
             run(scanner, false);
         }
     }
+
 
     public void activateEffectBattlePhaseView(Matcher matcher) {
         if (matcher.find()) {
