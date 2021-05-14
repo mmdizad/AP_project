@@ -1,6 +1,7 @@
 package View;
 
 import Controller.MainPhaseController;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -36,9 +37,9 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             selectSpellOrTrap(getCommandMatcher(command, "^select --spell (\\d+)$"));
             selectOpponentSpell(getCommandMatcher(command, "^select --spell (\\d+) --opponent$"));
             selectOpponentSpell(getCommandMatcher(command, "^select --opponent --spell (\\d+)$"));
-            selectField(getCommandMatcher(command, "^select --field"));
-            selectOpponentField(getCommandMatcher(command, "^select --opponent --field"));
-            selectOpponentField(getCommandMatcher(command, "^select --field --opponent"));
+            selectField(getCommandMatcher(command, "^select --field (\\d+)$"));
+            selectOpponentField(getCommandMatcher(command, "^select --opponent --field (\\d+)$"));
+            selectOpponentField(getCommandMatcher(command, "^select --field (\\d+) --opponent$"));
             deselect(getCommandMatcher(command, "^select -d$"));
             selectHand(getCommandMatcher(command, "^select --hand (\\d+)$"));
             showCard(getCommandMatcher(command, "^card show (.+)$"));
@@ -67,7 +68,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
         }
     }
 
-    public void aiMainPhaseView(){
+    public void aiMainPhaseView() {
         MainPhaseController mainPhaseController = MainPhaseController.getInstance();
         mainPhaseController.aiMainPhaseController();
     }

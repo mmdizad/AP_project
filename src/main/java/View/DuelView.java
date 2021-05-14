@@ -1,4 +1,5 @@
 package View;
+
 import Controller.DuelController;
 import Controller.LoginController;
 import Controller.NewCardToHandController;
@@ -226,7 +227,7 @@ public class DuelView {
 
     public void selectField(Matcher matcher) {
         if (matcher.find()) {
-            int place = Integer.parseInt(matcher.group(0));
+            int place = Integer.parseInt(matcher.group(1));
             isCommandInvalid = false;
             System.out.println(duelController.selectFieldZone(place));
         }
@@ -234,7 +235,7 @@ public class DuelView {
 
     public void selectOpponentField(Matcher matcher) {
         if (matcher.find()) {
-            int place = Integer.parseInt(matcher.group(0));
+            int place = Integer.parseInt(matcher.group(1));
             isCommandInvalid = false;
             System.out.println(duelController.selectOpponentFieldZone(place));
         }

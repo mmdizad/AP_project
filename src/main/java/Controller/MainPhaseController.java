@@ -21,6 +21,7 @@ public class MainPhaseController extends DuelController {
 
 
     public String set() {
+        // has a bug
         ArrayList<ArrayList<Card>> selectedCards = this.duelModel.getSelectedCards();
         if (selectedCards.get(this.duelModel.turn) == null) {
             return "no card is selected yet";
@@ -590,6 +591,7 @@ public class MainPhaseController extends DuelController {
         aiSetAndNormalSummon();
         aiFlipSummon();
         aiSpecialSummon();
+        setAiSpellAndTrap();
     }
 
     public void aiSetAndNormalSummon() {
@@ -744,6 +746,23 @@ public class MainPhaseController extends DuelController {
                         duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
                         specialSummon();
                     }
+                }
+            }
+        }
+    }
+
+    public void setAiSpellAndTrap() {
+        for (Card card : duelModel.getHandCards().get(duelModel.turn)) {
+            if (card.getCategory().equals("Spell") || card.getCategory().equals("Trap")) {
+                if (card.getCardType().equals("Field")) {
+                    String aiCommand = "select --field " + 2;
+                    duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --field (\\d+)$"));
+                    setTrapOrSpell();
+                } else if (!duelController.isSpellZoneFull(duelModel.turn)) {
+                    int placeOfSpellCard = duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).indexOf(card) + 1;
+                    String aiCommand = "select --spell " + placeOfSpellCard;
+                    duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --spell (\\d+)$"));
+                    setTrapOrSpell();
                 }
             }
         }
