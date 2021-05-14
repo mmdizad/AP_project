@@ -1,7 +1,9 @@
 package Controller;
+
 import Model.Card;
 import Model.Monster;
 import View.MainPhaseView;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.regex.Matcher;
@@ -371,11 +373,21 @@ public class MainPhaseController extends DuelController {
             } else if (!monster.isHasSpecialSummon()) {
                 return "there is no way you could special summon a monster";
             } else if (monster.getName().equals("The Tricky")) {
-                int address = mainPhaseView.getCardAddressForTribute();
+                int address;
+                if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                    address = mainPhaseView.getCardAddressForTribute();
+                } else {
+                    address = 1;
+                }
                 if (address > duelModel.getHandCards().get(duelModel.turn).size()) {
                     return "there is no way you could special summon a monster";
                 } else {
-                    String stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                    String stateOfCard;
+                    if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                        stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                    } else {
+                        stateOfCard = "Attack";
+                    }
                     if (!stateOfCard.equals("Defence") && !stateOfCard.equals("Attack")) {
                         return "please enter the appropriate state (Defence or Attack)";
                     } else {
@@ -386,9 +398,18 @@ public class MainPhaseController extends DuelController {
                     }
                 }
             } else if (monster.getName().equals("Gate Guardian")) {
-                int address = mainPhaseView.getCardAddressForTribute();
-                int address1 = mainPhaseView.getCardAddressForTribute();
-                int address2 = mainPhaseView.getCardAddressForTribute();
+                int address;
+                int address1;
+                int address2;
+                if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                    address = mainPhaseView.getCardAddressForTribute();
+                    address1 = mainPhaseView.getCardAddressForTribute();
+                    address2 = mainPhaseView.getCardAddressForTribute();
+                } else {
+                    address = getPlaceOfMonsterForAiTribute(1);
+                    address1 = getPlaceOfMonsterForAiTribute(2);
+                    address2 = getPlaceOfMonsterForAiTribute(3);
+                }
                 if (address > 5 || address1 > 5 || address2 > 5 || address == address1 || address == address2
                         || address1 == address2) {
                     return "there is no way you could special summon a monster";
@@ -397,7 +418,12 @@ public class MainPhaseController extends DuelController {
                         duelModel.getMonstersInField().get(duelModel.turn).get(address2 - 1) == null) {
                     return "there is no way you could special summon a monster";
                 } else {
-                    String stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                    String stateOfCard;
+                    if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                        stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                    } else {
+                        stateOfCard = "Attack";
+                    }
                     if (!stateOfCard.equals("Defence") && !stateOfCard.equals("Attack")) {
                         return "please enter the appropriate state (Defence or Attack)";
                     } else {
@@ -563,6 +589,7 @@ public class MainPhaseController extends DuelController {
     public void aiMainPhaseController() {
         aiSetAndNormalSummon();
         aiFlipSummon();
+        aiSpecialSummon();
     }
 
     public void aiSetAndNormalSummon() {
@@ -698,5 +725,27 @@ public class MainPhaseController extends DuelController {
                 .thenComparing(Card::getAttackPower, Comparator.reverseOrder());
         monstersInField.sort(compareForAiDestroy);
         return monstersInField.get(0);
+    }
+
+    public void aiSpecialSummon() {
+        for (Card card : duelModel.getHandCards().get(duelModel.turn)) {
+            if (card != null) {
+                if (card.getName().equals("The Tricky")) {
+                    if (duelModel.getHandCards().get(duelModel.turn).size() > 0) {
+                        int placeOfMonsterCard = duelModel.getHandCards().get(duelModel.turn).indexOf(card) + 1;
+                        String aiCommand = "select --hand " + placeOfMonsterCard;
+                        duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
+                        specialSummon();
+                    }
+                } else if (card.getName().equals("Gate Guardian")) {
+                    if (getNumberOfMonstersInPlayerField() >= 3) {
+                        int placeOfMonsterCard = duelModel.getHandCards().get(duelModel.turn).indexOf(card) + 1;
+                        String aiCommand = "select --hand " + placeOfMonsterCard;
+                        duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
+                        specialSummon();
+                    }
+                }
+            }
+        }
     }
 }
