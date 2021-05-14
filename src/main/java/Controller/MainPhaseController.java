@@ -1,9 +1,7 @@
 package Controller;
-
 import Model.Card;
 import Model.Monster;
 import View.MainPhaseView;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.regex.Matcher;
@@ -127,7 +125,6 @@ public class MainPhaseController extends DuelController {
             return "you can’t summon this card";
         } else {
             Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-            ArrayList<Card> cardsInHandsOfPlayer = duelModel.getHandCards().get(duelModel.turn);
             String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
             Monster monster = (Monster) card;
             if (!detailsOfSelectedCard.equals("Hand")) {
@@ -337,8 +334,14 @@ public class MainPhaseController extends DuelController {
     }
 
     public String flipSummonManEaterBug() {
+        int placeOfMonster;
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
-        int placeOfMonster = mainPhaseView.scanPlaceOfMonsterForDestroyInManEaterFlipSummon();
+        if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+            placeOfMonster = mainPhaseView.scanPlaceOfMonsterForDestroyInManEaterFlipSummon();
+        } else {
+            Card card = getBestMonsterOfOpponentForAiDestroy();
+            placeOfMonster = duelModel.getMonstersInField().get(1 - duelModel.turn).indexOf(card) + 1;
+        }
         if (placeOfMonster > 5) {
             return "you must enter correct address";
         } else {
@@ -559,6 +562,7 @@ public class MainPhaseController extends DuelController {
 
     public void aiMainPhaseController() {
         aiSetAndNormalSummon();
+        aiFlipSummon();
     }
 
     public void aiSetAndNormalSummon() {
@@ -610,6 +614,25 @@ public class MainPhaseController extends DuelController {
         }
     }
 
+    public void aiFlipSummon() {
+        ArrayList<Card> monstersInField = duelModel.getMonstersInField().get(duelModel.turn);
+        int i = 0;
+        for (Card card : monstersInField) {
+            if (card != null) {
+                String[] state = duelModel.getMonsterCondition(duelModel.turn, i + 1).split("/");
+                if (state[0].equals("DH")) {
+                    if (card != duelModel.monsterSetOrSummonInThisTurn) {
+                        int placeOfMonsterCard = duelModel.getMonstersInField().get(duelModel.turn).indexOf(card) + 1;
+                        String aiCommand = "select --monster " + placeOfMonsterCard;
+                        duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --monster (\\d+)$"));
+                        flipSummon();
+                    }
+                }
+            }
+            i++;
+        }
+    }
+
     public ArrayList<Monster> arrangeMonsterInHandWithLevelAndAttackPower(ArrayList<Card> handCards) {
         ArrayList<Monster> monstersInHand = new ArrayList<>();
         for (Card card : handCards) {
@@ -629,9 +652,7 @@ public class MainPhaseController extends DuelController {
         ArrayList<Card> monstersInFieldForAiTribute = new ArrayList<>();
         for (Card card : duelModel.getMonstersInField().get(duelModel.turn)) {
             if (card != null) {
-                if (card.getCategory().equals("Monster")) {
-                    monstersInFieldForAiTribute.add(card);
-                }
+                monstersInFieldForAiTribute.add(card);
             }
         }
         Comparator<Card> compareForAiTribute = Comparator
@@ -663,5 +684,19 @@ public class MainPhaseController extends DuelController {
             }
         }
         return numberOfMonstersInPlayerFiled;
+    }
+
+    public Card getBestMonsterOfOpponentForAiDestroy() {
+        ArrayList<Card> monstersInField = new ArrayList<>();
+        for (Card card : duelModel.getMonstersInField().get(1 - duelModel.turn)) {
+            if (card != null) {
+                monstersInField.add(card);
+            }
+        }
+        Comparator<Card> compareForAiDestroy = Comparator
+                .comparing(Card::getLevel, Comparator.reverseOrder())
+                .thenComparing(Card::getAttackPower, Comparator.reverseOrder());
+        monstersInField.sort(compareForAiDestroy);
+        return monstersInField.get(0);
     }
 }

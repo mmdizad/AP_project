@@ -168,7 +168,7 @@ public class DuelModel {
         LinkedHashMap<Card, Boolean> spellOrTrapActivated2 = new LinkedHashMap<>();
         spellOrTrapActivated.add(spellOrTrapActivated1);
         spellOrTrapActivated.add(spellOrTrapActivated2);
-        equipSpells=new ArrayList<>();
+        equipSpells = new ArrayList<>();
         HashMap<Spell, Monster> equipspellUser = new HashMap<>();
         HashMap<Spell, Monster> equipspellOpponent = new HashMap<>();
         equipSpells.add(equipspellUser);
@@ -207,7 +207,7 @@ public class DuelModel {
         conditionOfBorrowCards.clear();
     }
 
-    public String getCreatorUsername(int turn){
+    public String getCreatorUsername(int turn) {
         return usernames.get(turn);
     }
 
@@ -339,7 +339,7 @@ public class DuelModel {
         if (selectedCards.get(turn).get(0) != null) {
             deSelectedCard();
         }
-        selectedCards.get(turn).set(0,card);
+        selectedCards.get(turn).set(0, card);
         detailOfSelectedCard.get(turn).put(card, condition);
     }
 
@@ -617,16 +617,16 @@ public class DuelModel {
         equipSpells.get(turn).put(spell, monster);
     }
 
-    public Integer findEmptyPlaceOfSpellField(){
-        if(spellsAndTrapsInFiled.get(turn).get(0)==null)
+    public Integer findEmptyPlaceOfSpellField() {
+        if (spellsAndTrapsInFiled.get(turn).get(0) == null)
             return 0;
-        else if(spellsAndTrapsInFiled.get(turn).get(1)==null)
+        else if (spellsAndTrapsInFiled.get(turn).get(1) == null)
             return 1;
-        else if(spellsAndTrapsInFiled.get(turn).get(2)==null)
+        else if (spellsAndTrapsInFiled.get(turn).get(2) == null)
             return 2;
-        else if(spellsAndTrapsInFiled.get(turn).get(3)==null)
+        else if (spellsAndTrapsInFiled.get(turn).get(3) == null)
             return 3;
-        else if(spellsAndTrapsInFiled.get(turn).get(4)==null)
+        else if (spellsAndTrapsInFiled.get(turn).get(4) == null)
             return 4;
         return null;
 

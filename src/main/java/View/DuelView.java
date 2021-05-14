@@ -1,5 +1,4 @@
 package View;
-
 import Controller.DuelController;
 import Controller.LoginController;
 import Controller.NewCardToHandController;
@@ -40,7 +39,6 @@ public class DuelView {
         Collections.shuffle(someRandomNumbers);
         int starterGame = someRandomNumbers.get(0);
         if (starterGame % 2 == 0) {
-
             duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
             duelController = DuelController.getInstance();
             NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
@@ -70,6 +68,7 @@ public class DuelView {
             showBoard();
             standByPhaseView.run(scanner);
         }
+
 
     }
 
