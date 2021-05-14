@@ -6,7 +6,6 @@ import View.MainPhaseView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 
 public class MainPhaseController extends DuelController {
@@ -114,8 +113,6 @@ public class MainPhaseController extends DuelController {
                 duelModel.changeAttackAndDefense(place);
                 return "monster card position changed successfully";
             }
-
-
         }
 
     }
