@@ -5,6 +5,8 @@ import Model.Monster;
 import View.MainPhaseView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 
 public class MainPhaseController extends DuelController {
@@ -36,7 +38,6 @@ public class MainPhaseController extends DuelController {
     }
 
     public String setTrapOrSpell() {
-
         Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
         if (card.getCategory().equals("Field")) {
             duelModel.setField(card);
@@ -53,7 +54,6 @@ public class MainPhaseController extends DuelController {
             duelModel.addSpellAndTrapFromHandToGame("H/5", 4);
         else return "spell card zone is full";
         duelModel.setSpellsAndTrapsSetInThisTurn(duelModel.turn, card);
-
         return "set successfully";
     }
 
@@ -147,22 +147,33 @@ public class MainPhaseController extends DuelController {
                 if (monster.getName().equals("Terratiger, the Empowered Warrior")) {
                     return normalSummonCardThatCanSummonAnotherCard(response);
                 } else if (monster.getLevel() == 5 || monster.getLevel() == 6) {
-                    for (Card cardInHandOfPlayer : cardsInHandsOfPlayer) {
-                        if (cardInHandOfPlayer.getCategory().equals("monster")) {
-                            existMonsterOnField = true;
-                            break;
-                        }
+                    if (getNumberOfMonstersInPlayerField() >= 1) {
+                        existMonsterOnField = true;
                     }
                     if (!existMonsterOnField) {
                         return "there are not enough cards for tribute";
                     } else {
-                        int address = mainPhaseView.getCardAddressForTribute();
+                        int address;
+                        if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                            address = mainPhaseView.getCardAddressForTribute();
+                        } else {
+                            address = getPlaceOfMonsterForAiTribute(1);
+                        }
                         if (address > 5) {
                             return "there no monsters one this address";
                         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(address - 1) == null) {
                             return "there no monsters one this address";
                         } else {
-                            String stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                            String stateOfCard;
+                            if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                                stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                            } else {
+                                if (monster.getAttackPower() >= monster.getDefensePower()) {
+                                    stateOfCard = "Attack";
+                                } else {
+                                    stateOfCard = "Defence";
+                                }
+                            }
                             if (!stateOfCard.equals("Defence") && !stateOfCard.equals("Attack")) {
                                 return "please enter the appropriate state (Defence or Attack)";
                             } else {
@@ -176,24 +187,34 @@ public class MainPhaseController extends DuelController {
                 } else if (monster.getName().equals("Beast King Barbaros")) {
                     return summonMonsterHasTwoMethods(monster);
                 } else if (monster.getLevel() >= 7) {
-                    int numberOfPlayerMonsterOnField = 0;
-                    for (Card cardInHandOfPlayer : cardsInHandsOfPlayer) {
-                        if (cardInHandOfPlayer.getCategory().equals("monster")) {
-                            numberOfPlayerMonsterOnField++;
-                        }
-                    }
-                    if (numberOfPlayerMonsterOnField < 2) {
+                    int address;
+                    int address1;
+                    if (getNumberOfMonstersInPlayerField() < 2) {
                         return "there are not enough cards for tribute";
                     }
-                    int address = mainPhaseView.getCardAddressForTribute();
-                    int address1 = mainPhaseView.getCardAddressForTribute();
+                    if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                        address = mainPhaseView.getCardAddressForTribute();
+                        address1 = mainPhaseView.getCardAddressForTribute();
+                    } else {
+                        address = getPlaceOfMonsterForAiTribute(1);
+                        address1 = getPlaceOfMonsterForAiTribute(2);
+                    }
                     if (address > 5 || address1 > 5 || address1 == address) {
                         return "there is no monster on one of these addresses";
                     } else if (duelModel.getMonstersInField().get(duelModel.turn).get(address - 1) == null
                             || duelModel.getMonstersInField().get(duelModel.turn).get(address1 - 1) == null) {
                         return "there is no monster on one of these addresses";
                     } else {
-                        String stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                        String stateOfCard;
+                        if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                            stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                        } else {
+                            if (monster.getAttackPower() >= monster.getDefensePower()) {
+                                stateOfCard = "Attack";
+                            } else {
+                                stateOfCard = "Defence";
+                            }
+                        }
                         if (!stateOfCard.equals("Defence") && !stateOfCard.equals("Attack")) {
                             return "please enter the appropriate state (Defence or Attack)";
                         } else {
@@ -205,7 +226,6 @@ public class MainPhaseController extends DuelController {
                                     address1));
                             return normalSummonMonsterOnField(monster, stateOfCard);
                         }
-
                     }
                 }
             }
@@ -401,7 +421,16 @@ public class MainPhaseController extends DuelController {
     public String summonMonsterHasTwoMethods(Monster monster) {
         // monsterName : Beast King Barbaros
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
-        String response = mainPhaseView.summonMonsterHasTwoMethods();
+        String response;
+        if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+            response = mainPhaseView.summonMonsterHasTwoMethods();
+        } else {
+            if (getNumberOfMonstersInPlayerField() >= 3) {
+                response = "YES";
+            } else {
+                response = "NO";
+            }
+        }
         if (!response.equals("NO") && !response.equals("YES")) {
             return "Please enter correct response";
         } else if (response.equals("NO")) {
@@ -409,9 +438,18 @@ public class MainPhaseController extends DuelController {
             duelModel.monsterFlipSummonOrNormalSummonForTrapHole = monster;
             return normalSummonMonsterOnField(monster, "Attack");
         } else {
-            int address1 = mainPhaseView.getCardAddressForTribute();
-            int address2 = mainPhaseView.getCardAddressForTribute();
-            int address3 = mainPhaseView.getCardAddressForTribute();
+            int address1;
+            int address2;
+            int address3;
+            if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                address1 = mainPhaseView.getCardAddressForTribute();
+                address2 = mainPhaseView.getCardAddressForTribute();
+                address3 = mainPhaseView.getCardAddressForTribute();
+            } else {
+                address1 = getPlaceOfMonsterForAiTribute(1);
+                address2 = getPlaceOfMonsterForAiTribute(2);
+                address3 = getPlaceOfMonsterForAiTribute(3);
+            }
             if (address1 > 5 || address2 > 5 || address3 > 5 || address1 == address2 || address2 == address3
                     || address1 == address3) {
                 return "there is no monster on one of these addresses";
@@ -420,7 +458,12 @@ public class MainPhaseController extends DuelController {
                     duelModel.getMonstersInField().get(duelModel.turn).get(address3 - 1) == null) {
                 return "there is no monster on one of these addresses";
             } else {
-                String stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                String stateOfCard;
+                if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                    stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                } else {
+                    stateOfCard = "Attack";
+                }
                 if (!stateOfCard.equals("Defence") && !stateOfCard.equals("Attack")) {
                     return "please enter the appropriate state (Defence or Attack)";
                 } else {
@@ -445,9 +488,25 @@ public class MainPhaseController extends DuelController {
 
     public String normalSummonCardThatCanSummonAnotherCard(String response) {
         // monsterName : Terratiger, the Empowered Warrior
+        String response1;
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
         if (response.equals("summoned successfully")) {
-            String response1 = mainPhaseView.normalSummonCardThatCanSummonAnotherCard();
+            if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                response1 = mainPhaseView.normalSummonCardThatCanSummonAnotherCard();
+            } else {
+                response1 = "YES";
+                ArrayList<Monster> monstersInHand = arrangeMonsterInHandWithLevelAndAttackPower(duelModel.getHandCards()
+                        .get(duelModel.turn));
+                for (Monster monster : monstersInHand) {
+                    if (!monster.getCardType().equals("Ritual") && !monster.isHasSpecialSummon()) {
+                        if (monster.getLevel() <= 4) {
+                            int placeOfMonster = duelModel.getHandCards().get(duelModel.turn).indexOf(monster) + 1;
+                            String aiCommand = "select --hand " + placeOfMonster;
+                            duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
+                        }
+                    }
+                }
+            }
             if (!response1.equals("NO") && !response1.equals("YES")) {
                 return "Please enter correct response";
             } else if (response1.equals("YES")) {
@@ -499,5 +558,113 @@ public class MainPhaseController extends DuelController {
             }
             return "you cant active this card";
         }
+    }
+
+    public void aiMainPhaseController() {
+        aiSetAndNormalSummon();
+    }
+
+    public void aiSetAndNormalSummon() {
+        ArrayList<Card> aiHandCards = duelModel.getHandCards().get(duelModel.turn);
+        ArrayList<Monster> monstersInHand = arrangeMonsterInHandWithLevelAndAttackPower(aiHandCards);
+        for (Monster monster : monstersInHand) {
+            if (duelModel.getMonsterSetOrSummonInThisTurn() == null) {
+                if (!duelController.isMonsterZoneFull(duelModel.turn)) {
+                    if (!monster.getCardType().equals("Ritual") && !monster.isHasSpecialSummon()) {
+                        if (monster.getLevel() <= 4) {
+                            int placeOfMonsterCard = duelModel.getHandCards().get(duelModel.turn).indexOf(monster) + 1;
+                            String aiCommand = "select --hand " + placeOfMonsterCard;
+                            duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
+                            if (monster.getAttackPower() >= monster.getDefensePower()) {
+                                summon();
+                            } else {
+                                setMonster();
+                            }
+                        } else if (monster.getLevel() == 5 || monster.getLevel() == 6) {
+                            boolean isMonsterInFieldExists = false;
+                            if (getNumberOfMonstersInPlayerField() >= 1) {
+                                isMonsterInFieldExists = true;
+                            }
+                            int placeOfMonsterCard = duelModel.getHandCards().get(duelModel.turn).indexOf(monster) + 1;
+                            String aiCommand = "select --hand " + placeOfMonsterCard;
+                            duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
+                            if (isMonsterInFieldExists) {
+                                summon();
+                            } else {
+                                setMonster();
+                            }
+                        } else if (monster.getLevel() >= 7) {
+                            boolean hasEnoughMonsterInFieldForTribute = false;
+                            if (getNumberOfMonstersInPlayerField() >= 2) {
+                                hasEnoughMonsterInFieldForTribute = true;
+                            }
+                            int placeOfMonsterCard = duelModel.getHandCards().get(duelModel.turn).indexOf(monster) + 1;
+                            String aiCommand = "select --hand " + placeOfMonsterCard;
+                            duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
+                            if (hasEnoughMonsterInFieldForTribute) {
+                                summon();
+                            } else {
+                                setMonster();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public ArrayList<Monster> arrangeMonsterInHandWithLevelAndAttackPower(ArrayList<Card> handCards) {
+        ArrayList<Monster> monstersInHand = new ArrayList<>();
+        for (Card card : handCards) {
+            if (card.getCategory().equals("Monster")) {
+                Monster monster = (Monster) card;
+                monstersInHand.add(monster);
+            }
+        }
+        Comparator<Monster> compareForAiSummonAndSet = Comparator
+                .comparing(Monster::getLevel, Comparator.reverseOrder())
+                .thenComparing(Monster::getAttackPower, Comparator.reverseOrder());
+        monstersInHand.sort(compareForAiSummonAndSet);
+        return monstersInHand;
+    }
+
+    public ArrayList<Card> arrangeMonsterInFiledWitheLevelAndAttackPowerAscending() {
+        ArrayList<Card> monstersInFieldForAiTribute = new ArrayList<>();
+        for (Card card : duelModel.getMonstersInField().get(duelModel.turn)) {
+            if (card != null) {
+                if (card.getCategory().equals("Monster")) {
+                    monstersInFieldForAiTribute.add(card);
+                }
+            }
+        }
+        Comparator<Card> compareForAiTribute = Comparator
+                .comparing(Card::getLevel)
+                .thenComparing(Card::getAttackPower);
+        monstersInFieldForAiTribute.sort(compareForAiTribute);
+        return monstersInFieldForAiTribute;
+    }
+
+    public Integer getPlaceOfMonsterForAiTribute(int numberOfTributeCard) {
+        ArrayList<Card> monstersInFieldForAiTribute = arrangeMonsterInFiledWitheLevelAndAttackPowerAscending();
+        Card card = null;
+        if (numberOfTributeCard == 1) {
+            card = monstersInFieldForAiTribute.get(0);
+        } else if (numberOfTributeCard == 2) {
+            card = monstersInFieldForAiTribute.get(1);
+        } else if (numberOfTributeCard == 3) {
+            card = monstersInFieldForAiTribute.get(2);
+        }
+        return duelModel.getMonstersInField().get(duelModel.turn).indexOf(card) + 1;
+    }
+
+    public Integer getNumberOfMonstersInPlayerField() {
+        ArrayList<Card> monstersInField = duelModel.getMonstersInField().get(duelModel.turn);
+        int numberOfMonstersInPlayerFiled = 0;
+        for (Card card : monstersInField) {
+            if (card != null) {
+                numberOfMonstersInPlayerFiled++;
+            }
+        }
+        return numberOfMonstersInPlayerFiled;
     }
 }

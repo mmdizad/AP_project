@@ -194,7 +194,6 @@ public class DuelView {
     }
 
     public void surrender() {
-
         User firdtPlayer = User.getUserByUsername(duelModel.getUsernames().get(0));
         User secondPlayer = User.getUserByUsername(duelModel.getUsernames().get(1));
         if (duelModel.turn == 0) {
@@ -212,21 +211,21 @@ public class DuelView {
 
     }
 
-    protected void selectMonster(Matcher matcher) {
+    public void selectMonster(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
             System.out.println(duelController.selectMonster(matcher));
         }
     }
 
-    protected void selectOpponentMonster(Matcher matcher) {
+    public void selectOpponentMonster(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
             System.out.println(duelController.selectOpponentMonster(matcher));
         }
     }
 
-    protected void selectField(Matcher matcher) {
+    public void selectField(Matcher matcher) {
         if (matcher.find()) {
             int place = Integer.parseInt(matcher.group(0));
             isCommandInvalid = false;
@@ -234,7 +233,7 @@ public class DuelView {
         }
     }
 
-    protected void selectOpponentField(Matcher matcher) {
+    public void selectOpponentField(Matcher matcher) {
         if (matcher.find()) {
             int place = Integer.parseInt(matcher.group(0));
             isCommandInvalid = false;
@@ -242,14 +241,14 @@ public class DuelView {
         }
     }
 
-    protected void selectSpellOrTrap(Matcher matcher) {
+    public void selectSpellOrTrap(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
             System.out.println(duelController.selectSpellOrTrap(matcher));
         }
     }
 
-    protected void selectOpponentSpell(Matcher matcher) {
+    public void selectOpponentSpell(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
             System.out.println(duelController.selectOpponentSpellOrTrap(matcher));
@@ -257,14 +256,14 @@ public class DuelView {
     }
 
 
-    protected void selectHand(Matcher matcher) {
+    public void selectHand(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
             System.out.println(duelController.selectHand(matcher));
         }
     }
 
-    protected Matcher getCommandMatcher(String command, String regex) {
+    public Matcher getCommandMatcher(String command, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(command);
         return matcher;

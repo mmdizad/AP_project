@@ -1,7 +1,6 @@
 package View;
 
 import Controller.MainPhaseController;
-
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -25,7 +24,9 @@ public class MainPhaseView extends DuelView implements Set, Summon {
         if (startOfPhase) {
             System.out.println(phaseName);
         }
-
+        if (duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+            aiMainPhaseView();
+        }
         while (true) {
             String command = scanner.nextLine();
             isCommandInvalid = true;
@@ -55,17 +56,20 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             } else if (command.equals("set")) {
                 isCommandInvalid = false;
                 set();
-            } else if (command.equals("surrender"))
-            {
+            } else if (command.equals("surrender")) {
                 surrender();
                 break;
-            }
-           else if (isCommandInvalid) {
+            } else if (isCommandInvalid) {
                 System.out.println("invalid command");
             }
 
             isCommandInvalid = true;
         }
+    }
+
+    public void aiMainPhaseView(){
+        MainPhaseController mainPhaseController = MainPhaseController.getInstance();
+        mainPhaseController.aiMainPhaseController();
     }
 
     @Override

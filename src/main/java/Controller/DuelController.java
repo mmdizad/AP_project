@@ -160,8 +160,6 @@ public class DuelController {
             effectOfUmiiruka(1);
 
         return "spell zone activate";
-
-
     }
 
     public String activeZoneFromHand() {
@@ -1092,7 +1090,6 @@ public class DuelController {
             duelModel.addSpellAndTrapFromHandToGame("O/5", 4);
         }
         return "spell activated";
-
     }
 
     public String effectOfAdvancedRitualArt(int placeOfSpell) {
@@ -1375,7 +1372,7 @@ public class DuelController {
         boolean isMonsterZoneFull = true;
         ArrayList<Card> monsterInFiledPlayer = duelModel.getMonstersInField().get(turn);
         for (Card card : monsterInFiledPlayer) {
-            if (card != null) {
+            if (card == null) {
                 isMonsterZoneFull = false;
                 break;
             }
