@@ -1484,27 +1484,42 @@ public class DuelController {
 
     public String opponentActiveTrap() {
         if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Magic Cylinder")) {
-            activeNormalTraps();
+            return activeOtherTraps();
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Mirror Force")) {
-            activeNormalTraps();
+            return activeOtherTraps();
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Mind Crush")) {
-            activeTrapMindCrush();
+            return activeTrapMindCrush();
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Trap Hole")) {
             return effectOfTrapHole();
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Torrential Tribute")) {
             return effectOfTorrentialTribute();
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Time Seal")) {
-            activeNormalTraps();
+            return activeOtherTraps();
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Negate Attack")) {
-            activeNormalTraps();
+            return activeOtherTraps();
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Call of the Haunted")) {
-            activeTrapCallOfTheHaunted();
+            return activeTrapCallOfTheHaunted();
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Magic Jammer")) {
-            activeNormalTraps();
+            return MagicJammer();
         } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Solemn Warning")) {
             return effectOfSolemnWarning();
         }
         return "trap activated";
+    }
+
+    public String activeOtherTraps(){
+        Card trap = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        activeNormalTraps();
+        duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(trap, false);
+        duelController.isOpponentHasAnySpellOrTrapForActivate();
+        int place = Integer.parseInt(duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(trap).split("/")[2]);
+        if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(trap)) {
+            duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(trap);
+            return "trap activated";
+        }else {
+            duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(trap);
+            return "";
+        }
     }
 
     public String effectOfSolemnWarning() {
@@ -1647,53 +1662,70 @@ public class DuelController {
         duelModel.changeSpellAndTrapCondition(duelModel.turn, place, condition.replaceAll("H", "O"));
     }
 
-    public void activeTrapMindCrush() {
+    public String activeTrapMindCrush() {
         Card trap = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        activeNormalTraps();
+        duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(trap, false);
+        duelController.isOpponentHasAnySpellOrTrapForActivate();
         int place = Integer.parseInt(duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(trap).split("/")[2]);
-        duelModel.deleteSpellAndTrap(duelModel.turn, place - 1);
-        duelModel.addCardToGraveyard(duelModel.turn, trap);
+        if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(trap)) {
+            duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(trap);
+            duelModel.deleteSpellAndTrap(duelModel.turn, place - 1);
+            duelModel.addCardToGraveyard(duelModel.turn, trap);
 //        String condition = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(trap);
 //        duelModel.changeSpellAndTrapCondition(duelModel.turn, place,condition.replaceAll("H","O"));
-        String cardName = duelView.getCardNameForTrapMindCrush();
-        ArrayList<ArrayList<Card>> cardsInHand = duelModel.getHandCards();
-        boolean isCardExistInOpponentHand = false;
-        for (Card card : cardsInHand.get(duelModel.turn - 1)) {
-            if (card.getName().equals(cardName)) {
-                duelModel.deleteCardFromOpponentHand(card);
-                isCardExistInOpponentHand = true;
+            String cardName = duelView.getCardNameForTrapMindCrush();
+            ArrayList<ArrayList<Card>> cardsInHand = duelModel.getHandCards();
+            boolean isCardExistInOpponentHand = false;
+            for (Card card : cardsInHand.get(duelModel.turn - 1)) {
+                if (card.getName().equals(cardName)) {
+                    duelModel.deleteCardFromOpponentHand(card);
+                    isCardExistInOpponentHand = true;
+                }
             }
-        }
-        if (!isCardExistInOpponentHand) {
-            ArrayList<Integer> number = new ArrayList<>();
-            for (int i = 0; i < duelModel.getHandCards().get(duelModel.turn).size(); i++) {
-                number.add(i + 1);
+            if (!isCardExistInOpponentHand) {
+                ArrayList<Integer> number = new ArrayList<>();
+                for (int i = 0; i < duelModel.getHandCards().get(duelModel.turn).size(); i++) {
+                    number.add(i + 1);
+                }
+                Collections.shuffle(number);
+                Card card = duelModel.getHandCards().get(duelModel.turn).get(number.get(0));
+                duelModel.deleteCardFromHand(card);
+                duelModel.addCardToGraveyard(duelModel.turn, card);
             }
-            Collections.shuffle(number);
-            Card card = duelModel.getHandCards().get(duelModel.turn).get(number.get(0));
-            duelModel.deleteCardFromHand(card);
-            duelModel.addCardToGraveyard(duelModel.turn, card);
+            return "trap activated";
         }
+        duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(trap);
+        return "";
     }
 
-    public void activeTrapCallOfTheHaunted() {
+    public String activeTrapCallOfTheHaunted() {
         Card trap = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        activeNormalTraps();
+        duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(trap, false);
+        duelController.isOpponentHasAnySpellOrTrapForActivate();
         int place = Integer.parseInt(duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(trap).split("/")[2]);
-        duelModel.deleteSpellAndTrap(duelModel.turn, place - 1);
-        duelModel.addCardToGraveyard(duelModel.turn, trap);
-        ArrayList<Card> graveyard = duelModel.getGraveyard(duelModel.turn);
-        for (int i = 0; i < graveyard.size() - 1; i++) {
-            Card card = graveyard.get(i);
-            if (card.getCategory().equals("Monster")) {
-                ArrayList<Card> monsters = duelModel.getMonstersInField().get(duelModel.turn);
-                for (int j = 0; j < 5; j++) {
-                    if (monsters.get(j) == null) {
-                        duelModel.addCertainMonsterFromGraveyardToGame(duelModel.turn, "OO/" + j + 1, j, card);
-                        duelModel.deleteCardFromGraveyard(duelModel.turn, i);
-                        return;
+        if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(trap)) {
+            duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(trap);
+            duelModel.deleteSpellAndTrap(duelModel.turn, place - 1);
+            duelModel.addCardToGraveyard(duelModel.turn, trap);
+            ArrayList<Card> graveyard = duelModel.getGraveyard(duelModel.turn);
+            for (int i = 0; i < graveyard.size() - 1; i++) {
+                Card card = graveyard.get(i);
+                if (card.getCategory().equals("Monster")) {
+                    ArrayList<Card> monsters = duelModel.getMonstersInField().get(duelModel.turn);
+                    for (int j = 0; j < 5; j++) {
+                        if (monsters.get(j) == null) {
+                            duelModel.addCertainMonsterFromGraveyardToGame(duelModel.turn, "OO/" + j + 1, j, card);
+                            duelModel.deleteCardFromGraveyard(duelModel.turn, i);
+                            return "trap activated";
+                        }
                     }
                 }
             }
         }
+        duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(trap);
+        return "";
     }
 
     public ArrayList<String> showGraveYard(int turn) {
