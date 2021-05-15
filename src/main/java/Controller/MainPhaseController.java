@@ -151,7 +151,9 @@ public class MainPhaseController extends DuelController {
                         return "there are not enough cards for tribute";
                     } else {
                         int address;
-                        if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                        if (!isAi) {
+                            address = mainPhaseView.getCardAddressForTribute();
+                        } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                             address = mainPhaseView.getCardAddressForTribute();
                         } else {
                             address = getPlaceOfMonsterForAiTribute(1);
@@ -162,7 +164,9 @@ public class MainPhaseController extends DuelController {
                             return "there no monsters one this address";
                         } else {
                             String stateOfCard;
-                            if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                            if (!isAi) {
+                                stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                            } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                                 stateOfCard = mainPhaseView.getStateOfCardForSummon();
                             } else {
                                 if (monster.getAttackPower() >= monster.getDefensePower()) {
@@ -189,7 +193,10 @@ public class MainPhaseController extends DuelController {
                     if (getNumberOfMonstersInPlayerField() < 2) {
                         return "there are not enough cards for tribute";
                     }
-                    if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                    if (!isAi) {
+                        address = mainPhaseView.getCardAddressForTribute();
+                        address1 = mainPhaseView.getCardAddressForTribute();
+                    } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                         address = mainPhaseView.getCardAddressForTribute();
                         address1 = mainPhaseView.getCardAddressForTribute();
                     } else {
@@ -203,7 +210,9 @@ public class MainPhaseController extends DuelController {
                         return "there is no monster on one of these addresses";
                     } else {
                         String stateOfCard;
-                        if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                        if (!isAi) {
+                            stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                        } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                             stateOfCard = mainPhaseView.getStateOfCardForSummon();
                         } else {
                             if (monster.getAttackPower() >= monster.getDefensePower()) {
@@ -339,7 +348,9 @@ public class MainPhaseController extends DuelController {
     public String flipSummonManEaterBug() {
         int placeOfMonster;
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
-        if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+        if (!isAi) {
+            placeOfMonster = mainPhaseView.scanPlaceOfMonsterForDestroyInManEaterFlipSummon();
+        } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
             placeOfMonster = mainPhaseView.scanPlaceOfMonsterForDestroyInManEaterFlipSummon();
         } else {
             Card card = getBestMonsterOfOpponentForAiDestroy();
@@ -375,7 +386,9 @@ public class MainPhaseController extends DuelController {
                 return "there is no way you could special summon a monster";
             } else if (monster.getName().equals("The Tricky")) {
                 int address;
-                if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                if (!isAi) {
+                    address = mainPhaseView.getCardAddressForTribute();
+                } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                     address = mainPhaseView.getCardAddressForTribute();
                 } else {
                     address = 1;
@@ -384,7 +397,9 @@ public class MainPhaseController extends DuelController {
                     return "there is no way you could special summon a monster";
                 } else {
                     String stateOfCard;
-                    if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                    if (!isAi) {
+                        stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                    } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                         stateOfCard = mainPhaseView.getStateOfCardForSummon();
                     } else {
                         stateOfCard = "Attack";
@@ -402,7 +417,11 @@ public class MainPhaseController extends DuelController {
                 int address;
                 int address1;
                 int address2;
-                if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                if (!isAi) {
+                    address = mainPhaseView.getCardAddressForTribute();
+                    address1 = mainPhaseView.getCardAddressForTribute();
+                    address2 = mainPhaseView.getCardAddressForTribute();
+                } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                     address = mainPhaseView.getCardAddressForTribute();
                     address1 = mainPhaseView.getCardAddressForTribute();
                     address2 = mainPhaseView.getCardAddressForTribute();
@@ -420,7 +439,9 @@ public class MainPhaseController extends DuelController {
                     return "there is no way you could special summon a monster";
                 } else {
                     String stateOfCard;
-                    if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                    if (!isAi) {
+                        stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                    } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                         stateOfCard = mainPhaseView.getStateOfCardForSummon();
                     } else {
                         stateOfCard = "Attack";
@@ -449,7 +470,9 @@ public class MainPhaseController extends DuelController {
         // monsterName : Beast King Barbaros
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
         String response;
-        if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+        if (!isAi) {
+            response = mainPhaseView.summonMonsterHasTwoMethods();
+        } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
             response = mainPhaseView.summonMonsterHasTwoMethods();
         } else {
             if (getNumberOfMonstersInPlayerField() >= 3) {
@@ -468,7 +491,11 @@ public class MainPhaseController extends DuelController {
             int address1;
             int address2;
             int address3;
-            if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+            if (!isAi) {
+                address1 = mainPhaseView.getCardAddressForTribute();
+                address2 = mainPhaseView.getCardAddressForTribute();
+                address3 = mainPhaseView.getCardAddressForTribute();
+            } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                 address1 = mainPhaseView.getCardAddressForTribute();
                 address2 = mainPhaseView.getCardAddressForTribute();
                 address3 = mainPhaseView.getCardAddressForTribute();
@@ -486,7 +513,9 @@ public class MainPhaseController extends DuelController {
                 return "there is no monster on one of these addresses";
             } else {
                 String stateOfCard;
-                if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                if (!isAi) {
+                    stateOfCard = mainPhaseView.getStateOfCardForSummon();
+                } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                     stateOfCard = mainPhaseView.getStateOfCardForSummon();
                 } else {
                     stateOfCard = "Attack";
@@ -518,7 +547,9 @@ public class MainPhaseController extends DuelController {
         String response1;
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
         if (response.equals("summoned successfully")) {
-            if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+            if (!isAi) {
+                response1 = mainPhaseView.normalSummonCardThatCanSummonAnotherCard();
+            } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                 response1 = mainPhaseView.normalSummonCardThatCanSummonAnotherCard();
             } else {
                 response1 = "YES";

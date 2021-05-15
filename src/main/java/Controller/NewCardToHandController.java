@@ -54,7 +54,19 @@ public class NewCardToHandController extends DuelController {
         for (Card card : monstersInFiled) {
             if (card != null) {
                 if (card.getName().equals("Herald of Creation")) {
-                    String response = drawPhaseView.scanResponseForHeraldOfCreation();
+                    String response;
+                    if (!isAi) {
+                        response = drawPhaseView.scanResponseForHeraldOfCreation();
+                    } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                        response = drawPhaseView.scanResponseForHeraldOfCreation();
+                    } else {
+                        if (hasAiMonsterInGraveyardForHeraldOfCreation() && duelModel.getHandCards()
+                                .get(duelModel.turn).size() >= 1) {
+                            response = "yes";
+                        } else {
+                            response = "no";
+                        }
+                    }
                     if (response.equals("yes"))
                         return effectOfHeraldOfCreation();
                 }
@@ -71,7 +83,9 @@ public class NewCardToHandController extends DuelController {
             if (card != null) {
                 if (card.getName().equals("Scanner")) {
                     String response;
-                    if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                    if (!isAi) {
+                        response = drawPhaseView.scanResponseForScanner();
+                    } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                         response = drawPhaseView.scanResponseForScanner();
                     } else {
                         if (hasOpponentMonsterInGraveyard()) {
@@ -90,13 +104,29 @@ public class NewCardToHandController extends DuelController {
     }
 
     public String effectOfHeraldOfCreation() {
+        int addressOfHandCard;
         DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
-        int addressOfHandCard = drawPhaseView.scanNumberCardTributeForHeraldOfCreation();
-        duelView.showGraveyardForSomeClasses(duelModel.turn);
+        if (!isAi) {
+            addressOfHandCard = drawPhaseView.scanNumberCardTributeForHeraldOfCreation();
+            duelView.showGraveyardForSomeClasses(duelModel.turn);
+        } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+            addressOfHandCard = drawPhaseView.scanNumberCardTributeForHeraldOfCreation();
+            duelView.showGraveyardForSomeClasses(duelModel.turn);
+        } else {
+            addressOfHandCard = 1;
+        }
         if (addressOfHandCard > duelModel.getHandCards().get(duelModel.turn).size()) {
             return "this address in hand is not correct";
         } else {
-            int addressOfCardInGraveyard = drawPhaseView.scanPlaceOfCardForAddToHandFromGraveyard();
+            int addressOfCardInGraveyard;
+            if (!isAi) {
+                addressOfCardInGraveyard = drawPhaseView.scanPlaceOfCardForAddToHandFromGraveyard();
+            } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                addressOfCardInGraveyard = drawPhaseView.scanPlaceOfCardForAddToHandFromGraveyard();
+            } else {
+                Card card = getBestMonsterFromGraveyard(duelModel.turn);
+                addressOfCardInGraveyard = duelModel.getGraveyard(duelModel.turn).indexOf(card) + 1;
+            }
             if (addressOfCardInGraveyard > duelModel.getGraveyard(duelModel.turn).size()) {
                 return "this address in graveyard is not correct";
             } else {
@@ -122,12 +152,15 @@ public class NewCardToHandController extends DuelController {
     public String effectOfScanner(int placeOfScanner) {
         int addressOfCardInGraveyard;
         DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
-        if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+        if (!isAi) {
+            duelView.showGraveyardForSomeClasses(1 - duelModel.turn);
+            addressOfCardInGraveyard = drawPhaseView.scanPlaceOfCardForInsteadOfScanner();
+        } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
             duelView.showGraveyardForSomeClasses(1 - duelModel.turn);
             addressOfCardInGraveyard = drawPhaseView.scanPlaceOfCardForInsteadOfScanner();
         } else {
             addressOfCardInGraveyard = duelModel.getGraveyard(1 - duelModel.turn)
-                    .indexOf(getBestMonsterOfOpponentForAiScanner()) + 1;
+                    .indexOf(getBestMonsterFromGraveyard(1 - duelModel.turn)) + 1;
         }
         if (addressOfCardInGraveyard > duelModel.getGraveyard(1 - duelModel.turn).size()) {
             return "this address in graveyard is not correct";
@@ -155,9 +188,9 @@ public class NewCardToHandController extends DuelController {
         return hasOpponentMonsterInGraveyardForAi;
     }
 
-    public Card getBestMonsterOfOpponentForAiScanner() {
+    public Card getBestMonsterFromGraveyard(int turn) {
         ArrayList<Card> monstersInGraveyard = new ArrayList<>();
-        for (Card card : duelModel.getGraveyard(1 - duelModel.turn)) {
+        for (Card card : duelModel.getGraveyard(turn)) {
             if (card.getCategory().equals("Monster")) {
                 monstersInGraveyard.add(card);
             }
@@ -168,5 +201,19 @@ public class NewCardToHandController extends DuelController {
                 .thenComparing(Card::getDefensePower, Comparator.reverseOrder());
         monstersInGraveyard.sort(compareForAiScanner);
         return monstersInGraveyard.get(0);
+    }
+
+    public boolean hasAiMonsterInGraveyardForHeraldOfCreation() {
+        boolean hasMonsterInGraveyardForHeraldOfCreation = false;
+        ArrayList<Card> graveyardCards = duelModel.getGraveyard(duelModel.turn);
+        for (Card card : graveyardCards) {
+            if (card.getCategory().equals("Monster")) {
+                if (card.getLevel() >= 7) {
+                    hasMonsterInGraveyardForHeraldOfCreation = true;
+                    break;
+                }
+            }
+        }
+        return hasMonsterInGraveyardForHeraldOfCreation;
     }
 }

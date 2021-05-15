@@ -31,10 +31,17 @@ public class DrawPhaseView extends DuelView {
         }
         if (!startOfGame) {
             DuelView.getInstance().showBoard();
-            System.out.println(newCardToHandController.hasHeraldOfCreation());
-            String result = newCardToHandController.hasScannerMonster();
-            if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
-                System.out.println(result);
+            String resultOfEffectOfHeraldOfCreation = newCardToHandController.hasHeraldOfCreation();
+            if (!isAi) {
+                System.out.println(resultOfEffectOfHeraldOfCreation);
+            } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                System.out.println(resultOfEffectOfHeraldOfCreation);
+            }
+            String resultOfEffectOfScanner = newCardToHandController.hasScannerMonster();
+            if (!isAi) {
+                System.out.println(resultOfEffectOfScanner);
+            } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                System.out.println(resultOfEffectOfHeraldOfCreation);
             }
             StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
             standByPhaseView.run(scanner);
