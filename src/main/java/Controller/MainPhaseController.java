@@ -642,6 +642,8 @@ public class MainPhaseController extends DuelController {
                             aiActiveTerraforming(placeOfSpellCard);
                         } else if (card.getName().equals("Pot of Greed")) {
                             aiActivePotOfGreed(placeOfSpellCard);
+                        } else if (card.getName().equals("Raigeki")) {
+                            aiActiveRaigeki(placeOfSpellCard);
                         }
                     }
                 }
@@ -670,6 +672,12 @@ public class MainPhaseController extends DuelController {
     public void aiActivePotOfGreed(int placeOfSpell) {
         if (duelModel.getPlayersCards().get(duelModel.turn).size() >= 2) {
             duelController.effectOfPotOfGreed(placeOfSpell);
+        }
+    }
+
+    public void aiActiveRaigeki(int placeOfSpell) {
+        if (!duelController.isMonsterZoneFull(1 - duelModel.turn)) {
+            duelController.effectOfRaigeki(placeOfSpell);
         }
     }
 
