@@ -640,6 +640,8 @@ public class MainPhaseController extends DuelController {
                             aiActiveMonsterReborn(placeOfSpellCard);
                         } else if (card.getName().equals("Terraforming")) {
                             aiActiveTerraforming(placeOfSpellCard);
+                        } else if (card.getName().equals("Pot of Greed")) {
+                            aiActivePotOfGreed(placeOfSpellCard);
                         }
                     }
                 }
@@ -662,6 +664,12 @@ public class MainPhaseController extends DuelController {
                 duelController.effectOfTerraforming(placeOfSpell);
                 break;
             }
+        }
+    }
+
+    public void aiActivePotOfGreed(int placeOfSpell) {
+        if (duelModel.getPlayersCards().get(duelModel.turn).size() >= 2) {
+            duelController.effectOfPotOfGreed(placeOfSpell);
         }
     }
 

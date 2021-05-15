@@ -1289,7 +1289,7 @@ public class DuelController {
             int place;
             while (true) {
                 place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
-                if(placeOfMonsterCard.contains(place))
+                if (placeOfMonsterCard.contains(place))
                     break;
             }
             Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(place);
@@ -1335,11 +1335,11 @@ public class DuelController {
         if (isMonster) {
             int place;
             while (true) {
-                 place= duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
-                 if(placeOfMonsterCard.contains(place))
-                     break;
+                place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
+                if (placeOfMonsterCard.contains(place))
+                    break;
             }
-            Card monster =  duelModel.getMonstersInField().get(duelModel.turn).get(place);
+            Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
             if (placeOfSpell == -1) {
                 if (isSpellZoneFull(duelModel.turn))
                     return "spellZone full!";
@@ -1386,7 +1386,7 @@ public class DuelController {
                 if (placeOfMonsterCard.contains(place))
                     break;
             }
-            Card monster =  duelModel.getMonstersInField().get(duelModel.turn).get(place);
+            Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
             SwordOfDarkstraction(monster, 1);
             return "spell activated";
         }
