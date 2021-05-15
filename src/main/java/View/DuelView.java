@@ -98,8 +98,9 @@ public class DuelView {
             System.out.println("now it will be " + duelModel.getUsernames().get(duelModel.turn) + " turn");
             System.out.println("do you want to activate your trap or spell?");
             String response = scanner1.nextLine();
-            if (!response.equals("NO") && !response.equals("YES")) {
+            while (!response.equals("NO") && !response.equals("YES")) {
                 System.out.println("you must enter NO or YES");
+                response = scanner1.nextLine();
             }
             if (response.equals("YES")) {
                 // check ...
@@ -194,17 +195,6 @@ public class DuelView {
     }
 
     public void surrender() {
-        User firdtPlayer = User.getUserByUsername(duelModel.getUsernames().get(0));
-        User secondPlayer = User.getUserByUsername(duelModel.getUsernames().get(1));
-        if (duelModel.turn == 0) {
-            firdtPlayer.setScore(3);
-            secondPlayer.setScore(-1);
-        } else {
-            firdtPlayer.setScore(-1);
-            secondPlayer.setScore(3);
-        }
-
-
     }
 
     protected void select(Matcher matcher) {

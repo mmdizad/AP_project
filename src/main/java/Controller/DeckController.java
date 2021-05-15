@@ -37,14 +37,6 @@ public class DeckController extends LoginController {
             if (!decks.contains(deck)) {
                 return "deck with name " + matcher.group(1) + " does not exist";
             } else {
-                ArrayList<Card> mainCards = deck.getCardsMain();
-                ArrayList<Card> sideCards = deck.getCardsSide();
-                for (int i = 0; i < mainCards.size(); i++) {
-                    user.addCard(mainCards.get(i));
-                }
-                for (int i = 0; i < sideCards.size(); i++) {
-                    user.addCard(sideCards.get(i));
-                }
                 user.deleteDeck(deck);
                 Deck.deleteDeck(deck);
                 return "deck deleted successfully";
