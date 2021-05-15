@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DuelController {
     protected static DuelController duelController = null;
@@ -227,6 +228,32 @@ public class DuelController {
             }
         }
         return "it’s not your turn to play this kind of moves";
+    }
+
+    public void aiOpponentActiveSpellOrTrap() {
+        ArrayList<Card> spellsAndTraps = duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn);
+        for (int i = 0; i < 6; i++) {
+            if (spellsAndTraps.get(i).getCategory().equals("Trap")) {
+                if (duelModel.getSpellAndTrapCondition(duelModel.turn, i + 1).charAt(0) == 'H') {
+                    Pattern pattern = Pattern.compile("^select --spell (\\d+)$");
+                    Matcher matcher = pattern.matcher("select --spell " + (i + 1));
+                    if (matcher.find()) {
+                        selectSpellOrTrap(matcher);
+                    }
+                    opponentActiveTrap();
+                    return;
+                }
+            } else if (spellsAndTraps.get(i).getCategory().equals("Spell") && spellsAndTraps.get(i).getCardType().equals("Quick-play")) {
+                if (duelModel.getSpellAndTrapCondition(duelModel.turn, i + 1).charAt(0) == 'H') {
+                    Pattern pattern = Pattern.compile("^select --spell (\\d+)$");
+                    Matcher matcher = pattern.matcher("select --spell " + (i + 1));
+                    if (matcher.find()) {
+                        selectSpellOrTrap(matcher);
+                    }
+                    opponentActiveSpell(i + 1);
+                }
+            }
+        }
     }
 
     public String opponentActiveSpell(int placeOfSpell) {
@@ -1585,28 +1612,42 @@ public class DuelController {
     }
 
     public String opponentActiveTrap() {
-        if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Magic Cylinder")) {
-            return activeOtherTraps();
-        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Mirror Force")) {
-            return activeOtherTraps();
-        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Mind Crush")) {
-            return activeTrapMindCrush();
-        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Trap Hole")) {
-            return effectOfTrapHole();
-        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Torrential Tribute")) {
-            return effectOfTorrentialTribute();
-        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Time Seal")) {
-            return activeOtherTraps();
-        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Negate Attack")) {
-            return activeOtherTraps();
-        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Call of the Haunted")) {
-            return activeTrapCallOfTheHaunted();
-        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Magic Jammer")) {
-            return MagicJammer();
-        } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Solemn Warning")) {
-            return effectOfSolemnWarning();
+        Card trap = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        if (!duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(trap).split("/")[1].equals("H")) {
+            return "card has been activated before";
+        } else {
+            ArrayList<Card> monsters = duelModel.getMonstersInField().get(1 - duelModel.turn);
+            for (int i = 0;i < 5;i++){
+                if (monsters.get(i) != null) {
+                    if (monsters.get(i).getName().equals("Mirage Dragon") && duelModel.getMonsterCondition(1 - duelModel.turn,
+                            i + 1).split("/")[0].charAt(1) == 'O') {
+                        return "opponent has face up Mirage Dragon Monster so you can't active";
+                    }
+                }
+            }
+            if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Magic Cylinder")) {
+                return activeOtherTraps();
+            } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Mirror Force")) {
+                return activeOtherTraps();
+            } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Mind Crush")) {
+                return activeTrapMindCrush();
+            } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Trap Hole")) {
+                return effectOfTrapHole();
+            } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Torrential Tribute")) {
+                return effectOfTorrentialTribute();
+            } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Time Seal")) {
+                return activeOtherTraps();
+            } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Negate Attack")) {
+                return activeOtherTraps();
+            } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Call of the Haunted")) {
+                return activeTrapCallOfTheHaunted();
+            } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Magic Jammer")) {
+                return MagicJammer();
+            } else if (duelModel.getSelectedCards().get(duelModel.turn).get(0).getName().equals("Solemn Warning")) {
+                return effectOfSolemnWarning();
+            }
+            return "trap activated";
         }
-        return "trap activated";
     }
 
     public String activeOtherTraps() {

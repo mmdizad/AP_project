@@ -50,7 +50,19 @@ public class BattlePhaseController extends DuelController {
                             String spellCondition = duelModel.getSpellAndTrapCondition(1 - duelModel.turn, i);
                             if (card != null) {
                                 if (card.getName().equals("Magic Cylinder") && spellCondition.charAt(0) == 'O') {
-                                    return trapMagicCylinder(ourCard, card, i);
+                                    boolean ringOfDefenseExist = false;
+                                    ArrayList<Card> ourSpells = duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn);
+                                    for (int j = 0;j < 5;j++){
+                                        if (ourSpells.get(j) != null) {
+                                            if (ourSpells.get(j).getName().equals("Ring of Defense") && duelModel.getSpellAndTrapCondition(duelModel.turn,
+                                                    j + 1).split("/")[0].charAt(0) == 'O') {
+                                                ringOfDefenseExist = true;
+                                            }
+                                        }
+                                    }
+                                    if (!ringOfDefenseExist) {
+                                        return trapMagicCylinder(ourCard, card, i);
+                                    }
                                 } else if (card.getName().equals("Mirror Force") && spellCondition.charAt(0) == 'O') {
                                     return trapMirrorFace(card, i);
                                 } else if (card.getName().equals("Negate Attack") && spellCondition.charAt(0) == 'O') {

@@ -95,22 +95,27 @@ public class DuelView {
     public void opponentActiveEffect(boolean hasAnySpellOrTrap) {
         if (hasAnySpellOrTrap) {
             duelModel.turn = 1 - duelModel.turn;
-            System.out.println("now it will be " + duelModel.getUsernames().get(duelModel.turn) + " turn");
-            System.out.println("do you want to activate your trap or spell?");
-            String response = scanner1.nextLine();
-            while (!response.equals("NO") && !response.equals("YES")) {
-                System.out.println("you must enter NO or YES");
-                response = scanner1.nextLine();
-            }
-            if (response.equals("YES")) {
-                // check ...
-                String result = duelController.opponentActiveSpellOrTrap();
-                System.out.println(result);
+            if (duelModel.getCreatorUsername(duelModel.turn).equals("ai")) {
+                duelController.aiOpponentActiveSpellOrTrap();
                 duelModel.turn = 1 - duelModel.turn;
-            }
-            if (response.equals("NO")) {
-                duelModel.turn = 1 - duelModel.turn;
+            } else {
                 System.out.println("now it will be " + duelModel.getUsernames().get(duelModel.turn) + " turn");
+                System.out.println("do you want to activate your trap or spell?");
+                String response = scanner1.nextLine();
+                while (!response.equals("NO") && !response.equals("YES")) {
+                    System.out.println("you must enter NO or YES");
+                    response = scanner1.nextLine();
+                }
+                if (response.equals("YES")) {
+                    // check ...
+                    String result = duelController.opponentActiveSpellOrTrap();
+                    System.out.println(result);
+                    duelModel.turn = 1 - duelModel.turn;
+                }
+                if (response.equals("NO")) {
+                    duelModel.turn = 1 - duelModel.turn;
+                    System.out.println("now it will be " + duelModel.getUsernames().get(duelModel.turn) + " turn");
+                }
             }
         }
     }
