@@ -638,6 +638,8 @@ public class MainPhaseController extends DuelController {
                         duelController.selectSpellOrTrap(duelView.getCommandMatcher(aiCommand, "^select --spell (\\d+)$"));
                         if (card.getName().equals("Monster Reborn")) {
                             aiActiveMonsterReborn(placeOfSpellCard);
+                        } else if (card.getName().equals("Terraforming")) {
+                            aiActiveTerraforming(placeOfSpellCard);
                         }
                     }
                 }
@@ -649,6 +651,16 @@ public class MainPhaseController extends DuelController {
         if (hasMonsterInGraveyard(duelModel.turn) || hasMonsterInGraveyard(1 - duelModel.turn)) {
             if (!isMonsterZoneFull(duelModel.turn)) {
                 duelController.effectOfMonsterReborn(placeOfSpell);
+            }
+        }
+    }
+
+    public void aiActiveTerraforming(int placeOfSpell) {
+        ArrayList<Card> playersCardsInDeck = duelModel.getPlayersCards().get(duelModel.turn);
+        for (Card card : playersCardsInDeck) {
+            if (card.getCardType().equals("Field")) {
+                duelController.effectOfTerraforming(placeOfSpell);
+                break;
             }
         }
     }
