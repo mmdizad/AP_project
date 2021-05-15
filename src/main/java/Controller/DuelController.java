@@ -108,7 +108,7 @@ public class DuelController {
             return effectOfRingOfDefense(placeOfSpell);
         } else if (spell.getName().equals("Advanced Ritual Art")) {
             return effectOfAdvancedRitualArt(placeOfSpell);
-        } else if (spell.getCategory().equals("Field")) {
+        } else if (spell.getCardType().equals("Field")) {
             if (placeOfSpell == -1)
                 activeZoneFromHand();
             if (placeOfSpell == -2)

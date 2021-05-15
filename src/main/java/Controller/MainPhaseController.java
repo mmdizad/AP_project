@@ -39,7 +39,7 @@ public class MainPhaseController extends DuelController {
 
     public String setTrapOrSpell() {
         Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-        if (card.getCategory().equals("Field")) {
+        if (card.getCardType().equals("Field")) {
             duelModel.setField(card);
         }
         if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(0) == null)
