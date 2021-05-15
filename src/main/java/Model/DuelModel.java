@@ -189,6 +189,10 @@ public class DuelModel {
         lifePoints.add(turn, lifePoint + increaseLifePoint);
     }
 
+    public int getLifePoint(int turn){
+        return lifePoints.get(turn);
+    }
+
     public void addBorrowCard(Card card, String condition) {
         borrowCards.add(card);
         conditionOfBorrowCards.add(condition);

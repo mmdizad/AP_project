@@ -195,17 +195,6 @@ public class DuelView {
     }
 
     public void surrender() {
-        User firdtPlayer = User.getUserByUsername(duelModel.getUsernames().get(0));
-        User secondPlayer = User.getUserByUsername(duelModel.getUsernames().get(1));
-        if (duelModel.turn == 0) {
-            firdtPlayer.setScore(3);
-            secondPlayer.setScore(-1);
-        } else {
-            firdtPlayer.setScore(-1);
-            secondPlayer.setScore(3);
-        }
-
-
     }
 
     protected void select(Matcher matcher) {

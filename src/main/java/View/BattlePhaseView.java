@@ -48,6 +48,8 @@ public class BattlePhaseView extends DuelView {
                 if (command.equals("enterMenu")) {
                     enterPhase(scanner);
                     break;
+                }else if (command.equals("surrender")){
+                    break;
                 }
                 if (isCommandInvalid) {
                     System.out.println("invalid command");

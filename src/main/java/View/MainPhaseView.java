@@ -58,7 +58,6 @@ public class MainPhaseView extends DuelView implements Set, Summon {
                 isCommandInvalid = false;
                 set();
             } else if (command.equals("surrender")) {
-                surrender();
                 break;
             } else if (isCommandInvalid) {
                 System.out.println("invalid command");
