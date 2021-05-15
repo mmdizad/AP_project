@@ -691,7 +691,16 @@ public class MainPhaseController extends DuelController {
     }
 
     public void aiActiveChangeOfHeart(int placeOfSpell) {
-
+        boolean hasOpponentAnyMonster = false;
+        for (Card card : duelModel.getMonstersInField().get(1 - duelModel.turn)) {
+            if (card != null) {
+                hasOpponentAnyMonster = true;
+                break;
+            }
+        }
+        if (hasOpponentAnyMonster && !duelController.isMonsterZoneFull(duelModel.turn)) {
+            duelController.effectOfChangeOfHeart(placeOfSpell);
+        }
     }
 
     public Boolean hasMonsterInGraveyard(int turn) {

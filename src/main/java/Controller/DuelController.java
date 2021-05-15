@@ -261,11 +261,11 @@ public class DuelController {
             if (mainPhaseController.hasMonsterInGraveyard(duelModel.turn)) {
                 kindOfGraveyard = "My";
                 numberOfCard = duelModel.getGraveyard(duelModel.turn).indexOf(newCardToHandController
-                        .getBestMonsterFromGraveyard(duelModel.turn));
+                        .getBestMonsterFromGraveyard(duelModel.turn)) + 1;
             } else {
                 kindOfGraveyard = "Opponent";
                 numberOfCard = duelModel.getGraveyard(1 - duelModel.turn).indexOf(newCardToHandController
-                        .getBestMonsterFromGraveyard(1 - duelModel.turn));
+                        .getBestMonsterFromGraveyard(1 - duelModel.turn)) + 1;
             }
         }
         if (!kindOfGraveyard.equals("My") && !kindOfGraveyard.equals("Opponent")) {
@@ -527,10 +527,19 @@ public class DuelController {
     }
 
     public String effectOfChangeOfHeart(int placeOfSpell) {
+        MainPhaseController mainPhaseController = MainPhaseController.getInstance();
+        int numberOfMonsterCard;
         if (placeOfSpell == -1 && isSpellZoneFull(duelModel.turn)) {
             return "spell card zone is full";
         }
-        int numberOfMonsterCard = duelView.scanNumberOfCardForActiveEffect();
+        if (!isAi) {
+            numberOfMonsterCard = duelView.scanNumberOfCardForActiveEffect();
+        } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+            numberOfMonsterCard = duelView.scanNumberOfCardForActiveEffect();
+        } else {
+            Card card = mainPhaseController.getBestMonsterOfOpponentForAi();
+            numberOfMonsterCard = duelModel.getMonstersInField().get(1 - duelModel.turn).indexOf(card) + 1;
+        }
         if (numberOfMonsterCard > 5) {
             return "you cant get card with this address";
         } else if (duelModel.getMonstersInField().get(1 - duelModel.turn).get(numberOfMonsterCard - 1) == null) {
