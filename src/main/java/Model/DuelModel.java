@@ -195,7 +195,7 @@ public class DuelModel {
         DuelView.getInstance().showBoard();
     }
 
-    public int getLifePoint(int turn){
+    public int getLifePoint(int turn) {
         return lifePoints.get(turn);
     }
 
@@ -352,7 +352,7 @@ public class DuelModel {
             monsterDestroyedInThisTurn.get(turn).add(card);
         }
         graveyard.get(turn).add(card);
-       DuelView.getInstance().showBoard();
+        DuelView.getInstance().showBoard();
     }
 
     public void setSelectedCard(int turn, Card card, String condition) {
@@ -579,14 +579,11 @@ public class DuelModel {
         messengerOfPeace.get(turn).add(card);
     }
 
-    public void deleteMessengerOfPeaceCards(int turn) {
-        // maybe has a bug
-        for (Card card : messengerOfPeace.get(turn)) {
-            int index = spellsAndTrapsInFiled.get(turn).indexOf(card);
-            deleteSpellAndTrap(turn, index);
-            addCardToGraveyard(turn, card);
-        }
-        messengerOfPeace.get(turn).clear();
+    public void deleteMessengerOfPeaceCards(int turn, Card card) {
+        messengerOfPeace.get(turn).remove(card);
+        int index = spellsAndTrapsInFiled.get(turn).indexOf(card);
+        deleteSpellAndTrap(turn, index);
+        addCardToGraveyard(turn, card);
     }
 
     public ArrayList<ArrayList<Card>> getMessengerOfPeace() {

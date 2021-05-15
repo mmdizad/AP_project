@@ -646,6 +646,20 @@ public class MainPhaseController extends DuelController {
                             aiActiveRaigeki(placeOfSpellCard);
                         } else if (card.getName().equals("Change of Heart")) {
                             aiActiveChangeOfHeart(placeOfSpellCard);
+                        } else if (card.getName().equals("Harpie’s Feather Duster")) {
+                            aiActiveHarpiesFeatherDuster(placeOfSpellCard);
+                        } else if (card.getName().equals("Swords of Revealing Light")) {
+                            duelController.effectOfSwordsOfRevealingLight(placeOfSpellCard);
+                        } else if (card.getName().equals("Dark Hole")) {
+                            aiActiveDarkHole(placeOfSpellCard);
+                        } else if (card.getName().equals("Supply Squad")) {
+                            duelController.effectOfSupplySquad(placeOfSpellCard);
+                        } else if (card.getName().equals("Spell Absorption")) {
+                            duelController.effectOfSpellAbsorption(placeOfSpellCard);
+                        } else if (card.getName().equals("Messenger of peace")) {
+                            duelController.effectOfMessengerOfPeace(placeOfSpellCard);
+                        } else if (card.getName().equals("Twin Twisters")) {
+                            aiActiveTwinTwisters(placeOfSpellCard);
                         }
                     }
                 }
@@ -701,6 +715,69 @@ public class MainPhaseController extends DuelController {
         if (hasOpponentAnyMonster && !duelController.isMonsterZoneFull(duelModel.turn)) {
             duelController.effectOfChangeOfHeart(placeOfSpell);
         }
+    }
+
+    public void aiActiveHarpiesFeatherDuster(int placeOfSpell) {
+        boolean hasOpponentAnySpellOrTrap = false;
+        for (Card card : duelModel.getSpellsAndTrapsInFiled().get(1 - duelModel.turn)) {
+            if (card != null) {
+                hasOpponentAnySpellOrTrap = true;
+                break;
+            }
+        }
+        if (hasOpponentAnySpellOrTrap) {
+            duelController.effectOfHarpiesFeatherDuster(placeOfSpell);
+        }
+    }
+
+    public void aiActiveDarkHole(int placeOfSpell) {
+        boolean hasOpponentAnyMonster = false;
+        boolean hasAiAnyMonster = false;
+        for (Card card : duelModel.getMonstersInField().get(1 - duelModel.turn)) {
+            if (card != null) {
+                hasOpponentAnyMonster = true;
+                break;
+            }
+        }
+        for (Card card : duelModel.getMonstersInField().get(duelModel.turn)) {
+            if (card != null) {
+                hasAiAnyMonster = true;
+                break;
+            }
+        }
+        if (hasAiAnyMonster || hasOpponentAnyMonster) {
+            duelController.effectOfDarkHole(placeOfSpell);
+        }
+    }
+
+    public void aiActiveTwinTwisters(int placeOfSpell) {
+        if (getNumberOfSpellsAndTrapsInPlayerField(1 - duelModel.turn) >= 1 &&
+                !duelController.hasSpellSetInThisTurn() && duelModel.getHandCards().get(duelModel.turn).size() >= 1) {
+            duelController.effectOfTwinTwisters(placeOfSpell);
+        }
+    }
+
+    public boolean isThisPlaceHasSpellOrTrap(int place) {
+        return duelModel.getSpellsAndTrapsInFiled().get(place - 1) != null;
+    }
+
+    public String getResponseForAiForTwinTwisters() {
+        for (int i = 1; i <= 5; i++) {
+            if (mainPhaseController.isThisPlaceHasSpellOrTrap(i)) {
+                return "opponent " + i;
+            }
+        }
+        return "";
+    }
+
+    public Integer getNumberOfSpellsAndTrapsInPlayerField(int turn) {
+        int numberOfSpellsAndTraps = 0;
+        for (Card card : duelModel.getSpellsAndTrapsInFiled().get(turn)) {
+            if (card != null) {
+                numberOfSpellsAndTraps++;
+            }
+        }
+        return numberOfSpellsAndTraps;
     }
 
     public Boolean hasMonsterInGraveyard(int turn) {
