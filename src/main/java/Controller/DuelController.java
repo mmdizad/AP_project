@@ -1244,7 +1244,12 @@ public class DuelController {
             }
         }
         if (isMonster) {
-            int place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
+            int place;
+            while (true) {
+                place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
+                if(placeOfMonsterCard.contains(place))
+                    break;
+            }
             Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(place);
             if (placeOfSpell == -1) {
                 if (isSpellZoneFull(duelModel.turn))
@@ -1286,8 +1291,13 @@ public class DuelController {
         }
 
         if (isMonster) {
-            int place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
-            Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(place);
+            int place;
+            while (true) {
+                 place= duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
+                 if(placeOfMonsterCard.contains(place))
+                     break;
+            }
+            Card monster =  duelModel.getMonstersInField().get(duelModel.turn).get(place);
             if (placeOfSpell == -1) {
                 if (isSpellZoneFull(duelModel.turn))
                     return "spellZone full!";
@@ -1309,7 +1319,7 @@ public class DuelController {
         return "you don't have any monster to equip";
     }
 
-    public void blackPendant(Monster monster, int activeOrdeActive) {
+    public void blackPendant(Card monster, int activeOrdeActive) {
         monster.setAttackPower(monster.getAttackPower() + 500 * activeOrdeActive);
     }
 
@@ -1328,15 +1338,20 @@ public class DuelController {
             }
         }
         if (isMonster) {
-            int place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
-            Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(place);
+            int place;
+            while (true) {
+                place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
+                if (placeOfMonsterCard.contains(place))
+                    break;
+            }
+            Card monster =  duelModel.getMonstersInField().get(duelModel.turn).get(place);
             SwordOfDarkstraction(monster, 1);
             return "spell activated";
         }
         return "you don't have any monster to equip";
     }
 
-    private void SwordOfDarkstraction(Monster monster, int activeOrdeactive) {
+    private void SwordOfDarkstraction(Card monster, int activeOrdeactive) {
         monster.setAttackPower(monster.getAttackPower() + 400 * activeOrdeactive);
         monster.setDefensePower(monster.getDefensePower() - 200 * activeOrdeactive);
     }
