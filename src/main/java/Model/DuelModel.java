@@ -1,5 +1,7 @@
 package Model;
 
+import View.DuelView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,7 +38,7 @@ public class DuelModel {
     private ArrayList<ArrayList<Boolean>> spellZoneActivate;
     private ArrayList<ArrayList<Card>> activatedMonsterEffects;
     private HashMap<Card, Integer> cardsInsteadOfScanners;
-    private ArrayList<HashMap<Spell, Monster>> equipSpells;
+    private ArrayList<HashMap<Spell, Card>> equipSpells;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         lifePoints = new ArrayList<>();
@@ -117,7 +119,9 @@ public class DuelModel {
         handCards = new ArrayList<>();
         field = new ArrayList<>();
         ArrayList<Card> field1 = new ArrayList<>();
+        field1.add(null);
         ArrayList<Card> field2 = new ArrayList<>();
+        field2.add(null);
         field.add(field1);
         field.add(field2);
         detailOfSelectedCard = new ArrayList<>();
@@ -169,8 +173,8 @@ public class DuelModel {
         spellOrTrapActivated.add(spellOrTrapActivated1);
         spellOrTrapActivated.add(spellOrTrapActivated2);
         equipSpells = new ArrayList<>();
-        HashMap<Spell, Monster> equipspellUser = new HashMap<>();
-        HashMap<Spell, Monster> equipspellOpponent = new HashMap<>();
+        HashMap<Spell, Card> equipspellUser = new HashMap<>();
+        HashMap<Spell, Card> equipspellOpponent = new HashMap<>();
         equipSpells.add(equipspellUser);
         equipSpells.add(equipspellOpponent);
     }
@@ -182,11 +186,13 @@ public class DuelModel {
     public void decreaseLifePoint(int decreaseLifePoint, int turn) {
         int lifePoint = lifePoints.get(turn);
         lifePoints.add(turn, lifePoint - decreaseLifePoint);
+        DuelView.getInstance().showBoard();
     }
 
     public void increaseLifePoint(int increaseLifePoint, int turn) {
         int lifePoint = lifePoints.get(turn);
         lifePoints.add(turn, lifePoint + increaseLifePoint);
+        DuelView.getInstance().showBoard();
     }
 
     public int getLifePoint(int turn){
@@ -196,6 +202,7 @@ public class DuelModel {
     public void addBorrowCard(Card card, String condition) {
         borrowCards.add(card);
         conditionOfBorrowCards.add(condition);
+        DuelView.getInstance().showBoard();
     }
 
     public ArrayList<Card> getBorrowCards() {
@@ -209,6 +216,7 @@ public class DuelModel {
     public void deleteBorrowCard() {
         borrowCards.clear();
         conditionOfBorrowCards.clear();
+        DuelView.getInstance().showBoard();
     }
 
     public String getCreatorUsername(int turn) {
@@ -231,6 +239,7 @@ public class DuelModel {
             handCards.get(turn).add(playersCards.get(turn).get(playersCards.get(turn).size() - 1));
             cardAddedInPlayerHand.add(playersCards.get(turn).get(playersCards.get(turn).size() - 1));
             playersCards.get(turn).remove(playersCards.get(turn).get(playersCards.get(turn).size() - 1));
+            DuelView.getInstance().showBoard();
             return cardAddedInPlayerHand;
         }
     }
@@ -239,12 +248,14 @@ public class DuelModel {
         monstersInField.get(turn).add(index, selectedCards.get(turn).get(0));
         monsterCondition.get(turn).add(index, condition);
         deleteCardFromHand(getMonster(turn, index + 1));
+        DuelView.getInstance().showBoard();
     }
 
     public void addSpellAndTrapFromHandToGame(String condition, int index) {
         spellsAndTrapsInFiled.get(turn).set(index, selectedCards.get(turn).get(0));
         spellAndTrapCondition.get(turn).set(index, condition);
         deleteCardFromHand(getSpellAndTrap(turn, index + 1));
+        DuelView.getInstance().showBoard();
     }
 
     public void addMonsterCondition(int turn, int index, String condition) {
@@ -255,6 +266,7 @@ public class DuelModel {
         if (monsterCondition.get(turn).get(place).equals("OO"))
             monsterCondition.get(turn).set(place, "DO");
         else monsterCondition.get(turn).set(place, "OO");
+        DuelView.getInstance().showBoard();
     }
 
     public ArrayList<ArrayList<Card>> getField() {
@@ -276,12 +288,13 @@ public class DuelModel {
     public void deleteMonster(int turn, int place) {
         monstersInField.get(turn).set(place, null);
         monsterCondition.get(turn).set(place, "");
-
+        DuelView.getInstance().showBoard();
     }
 
     public void deleteSpellAndTrap(int turn, int place) {
         spellsAndTrapsInFiled.get(turn).set(place, null);
         spellAndTrapCondition.get(turn).set(place, "");
+        DuelView.getInstance().showBoard();
     }
 
     public void activateSpell(int turn, int place) {
@@ -317,6 +330,7 @@ public class DuelModel {
         if (condition[0].equals("H")) {
             spellAndTrapCondition.get(turn).add(place - 1, "O/" + place);
         }
+        DuelView.getInstance().showBoard();
     }
 
     public void activeField(Card card) {
@@ -324,19 +338,21 @@ public class DuelModel {
             addCardToGraveyard(turn, field.get(1 - turn).get(0));
         if (field.get(turn).get(0) != null)
             addCardToGraveyard(turn, field.get(turn).get(0));
+        DuelView.getInstance().showBoard();
         field.get(1 - turn).set(0, null);
         field.get(turn).set(0, card);
+        DuelView.getInstance().showBoard();
     }
 
     public void addCardToGraveyard(int turn, Card card) {
         if (card.getCategory().equals("Monster")) {
             //اینارو برای میدان زدم وقتی که کارت حذف میشه باید
-            Monster monster = (Monster) card;
-            monster.setAttackPower(Card.getCardByName(card.name).getAttackPower());
-            monster.setDefensePower(Card.getCardByName(card.name).getDefensePower());
+            card.setAttackPower(Card.getCardByName(card.name).getAttackPower());
+            card.setDefensePower(Card.getCardByName(card.name).getDefensePower());
             monsterDestroyedInThisTurn.get(turn).add(card);
         }
         graveyard.get(turn).add(card);
+       DuelView.getInstance().showBoard();
     }
 
     public void setSelectedCard(int turn, Card card, String condition) {
@@ -408,11 +424,11 @@ public class DuelModel {
         board.add(String.valueOf(playersCards.get(1 - turn).size()));
         board.add(spellFieldofOpponet);
         board.add(monsterFieldOpponent);
-        if (field.get(1 - turn) == null)
+        if (field.get(1 - turn).get(0) == null)
             board.add(graveyard.get(1 - turn).size() + "                        " + "E");
         else board.add(graveyard.get(1 - turn).size() + "                        " + "O");
         board.add("-------------------------------");
-        if (field.get(turn) == null)
+        if (field.get(turn).get(0) == null)
             board.add("E" + "                        " + graveyard.get(turn).size());
         else board.add("O" + "                        " + graveyard.get(1 - turn).size());
         board.add(monsterFieldUser);
@@ -460,25 +476,31 @@ public class DuelModel {
 
     public void deleteCardFromHand(Card card) {
         handCards.get(turn).remove(card);
+        DuelView.getInstance().showBoard();
     }
 
     public void deleteCardFromOpponentHand(Card card) {
         handCards.get(1 - turn).remove(card);
+        Card.getCardByName(card.name).getDefensePower();
+        DuelView.getInstance().showBoard();
     }
 
     public void deleteCardFromHandWithIndex(int index) {
         handCards.get(turn).remove(index);
+        DuelView.getInstance().showBoard();
     }
 
 
     public void addMonsterFromGraveyardToGame(String condition, Card card, int index) {
         monstersInField.get(turn).add(index, card);
         monsterCondition.get(turn).add(index, condition);
+        DuelView.getInstance().showBoard();
     }
 
     public void addCertainMonsterFromGraveyardToGame(int turn, String condition, int index, Card card) {
         monstersInField.get(turn).add(index, card);
         monsterCondition.get(turn).add(index, condition);
+        DuelView.getInstance().showBoard();
     }
 
     public void addCertainSpellOrTrapFromGraveyardToGame(String condition, int index, Card card) {
@@ -493,6 +515,7 @@ public class DuelModel {
     public void addCardFromDeckToHandInMiddleOfGame(int turn, Card card) {
         handCards.get(turn).add(card);
         playersCards.get(turn).remove(card);
+        DuelView.getInstance().showBoard();
     }
 
     public void setSwordsCard(int turn, Card swordCard) {
@@ -594,6 +617,7 @@ public class DuelModel {
         monstersInField.get(turn).add(index, card);
         monsterCondition.get(turn).add(index, condition);
         deleteCardFromHand(getMonster(turn, index + 1));
+        DuelView.getInstance().showBoard();
     }
 
     public void deleteCardFromDeck(int turn, int index, Card card) {
@@ -613,11 +637,11 @@ public class DuelModel {
         cardsInsteadOfScanners.clear();
     }
 
-    public ArrayList<HashMap<Spell, Monster>> getEquipSpells() {
+    public ArrayList<HashMap<Spell, Card>> getEquipSpells() {
         return equipSpells;
     }
 
-    public void activeEquip(Monster monster, Spell spell) {
+    public void activeEquip(Card monster, Spell spell) {
         equipSpells.get(turn).put(spell, monster);
     }
 

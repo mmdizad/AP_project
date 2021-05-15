@@ -23,15 +23,15 @@ public class MainPhaseController extends DuelController {
 
     public String set() {
         // has a bug
-        ArrayList<ArrayList<Card>> selectedCards = this.duelModel.getSelectedCards();
-        if (selectedCards.get(this.duelModel.turn) == null) {
+        ArrayList<ArrayList<Card>> selectedCards = duelModel.getSelectedCards();
+        if (selectedCards.get(duelModel.turn) == null) {
             return "no card is selected yet";
         } else {
-            if (!(duelModel.getHandCards().get(this.duelModel.turn)).contains((selectedCards.get(this.duelModel.turn)).get(0))) {
+            if (!(duelModel.getHandCards().get(duelModel.turn)).contains((selectedCards.get(duelModel.turn)).get(0))) {
                 return "you can’t set this card";
-            } else if (this.duelModel.monsterSetOrSummonInThisTurn == null) {
+            } else if (duelModel.monsterSetOrSummonInThisTurn == null) {
                 return "you already summoned/set on this turn";
-            } else if ((selectedCards.get(this.duelModel.turn).get(0)).getCardType().equals("Monster")) {
+            } else if ((selectedCards.get(duelModel.turn).get(0)).getCardType().equals("Monster")) {
                 return this.setMonster();
             } else
                 return setTrapOrSpell();
@@ -40,7 +40,7 @@ public class MainPhaseController extends DuelController {
 
     public String setTrapOrSpell() {
         Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-        if (card.getCategory().equals("Field")) {
+        if (card.getCardType().equals("Field")) {
             duelModel.setField(card);
         }
         if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(0) == null)
