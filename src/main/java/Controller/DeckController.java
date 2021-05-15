@@ -5,6 +5,7 @@ import Model.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DeckController extends LoginController {
 
@@ -374,4 +375,46 @@ public class DeckController extends LoginController {
         return output;
     }
 
+    public String changeMainAndSideCards(String command,User inGameUser){
+        ArrayList<Card> mainCards = inGameUser.getActiveDeck().getCardsMain();
+        ArrayList<Card> sideCards = inGameUser.getActiveDeck().getCardsSide();
+        Pattern pattern = Pattern.compile("^change --(.+) with --(.+)$");
+        Matcher matcher = pattern.matcher(command);
+        if (matcher.find()){
+            boolean cardExistInMain = false;
+            boolean cardExistInSide = false;
+            for (Card card : mainCards){
+                if (card.getName().equals(matcher.group(1))){
+                 cardExistInMain = true;
+                }
+            }
+            for (Card card : sideCards){
+                if (card.getName().equals(matcher.group(2))){
+                    cardExistInSide = true;
+                }
+            }
+            if (!cardExistInMain){
+                return "Card with name " + matcher.group(1) + " doesnt exist in main cards";
+            }
+            if (!cardExistInSide){
+                return "Card with name " + matcher.group(2) + " doesnt exist in side cards";
+            }
+            for (Card card : mainCards){
+                if (card.getName().equals(matcher.group(1))){
+                    sideCards.add(card);
+                    mainCards.remove(card);
+                    break;
+                }
+            }
+            for (Card card : sideCards){
+                if (card.getName().equals(matcher.group(2))){
+                    mainCards.add(card);
+                    sideCards.remove(card);
+                    break;
+                }
+            }
+            return "cards changed successfully";
+        }
+        return "invalid command";
+    }
 }
