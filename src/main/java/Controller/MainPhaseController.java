@@ -6,6 +6,7 @@ import View.MainPhaseView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.IllegalFormatCodePointException;
 import java.util.regex.Matcher;
 
 public class MainPhaseController extends DuelController {
@@ -623,6 +624,45 @@ public class MainPhaseController extends DuelController {
         aiFlipSummon();
         aiSpecialSummon();
         setAiSpellAndTrap();
+        aiActiveEffect();
+    }
+
+    public void aiActiveEffect() {
+        for (Card card : duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn)) {
+            if (card != null) {
+                if (card.getCategory().equals("Spell")) {
+                    int placeOfSpellCard = duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).indexOf(card) + 1;
+                    String state = duelModel.getSpellAndTrapCondition(duelModel.turn, placeOfSpellCard).split("/")[0];
+                    if (state.equals("H")) {
+                        String aiCommand = "select --spell " + placeOfSpellCard;
+                        duelController.selectSpellOrTrap(duelView.getCommandMatcher(aiCommand, "^select --spell (\\d+)$"));
+                        if (card.getName().equals("Monster Reborn")) {
+                            aiActiveMonsterReborn(placeOfSpellCard);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void aiActiveMonsterReborn(int placeOfSpell) {
+        if (hasMonsterInGraveyard(duelModel.turn) || hasMonsterInGraveyard(1 - duelModel.turn)) {
+            if (!isMonsterZoneFull(duelModel.turn)) {
+                duelController.effectOfMonsterReborn(placeOfSpell);
+            }
+        }
+    }
+
+    public Boolean hasMonsterInGraveyard(int turn) {
+        boolean hasMonsterInGraveyard = false;
+        ArrayList<Card> cardsInGraveyard = duelModel.getGraveyard(turn);
+        for (Card card : cardsInGraveyard) {
+            if (card.getCategory().equals("Monster")) {
+                hasMonsterInGraveyard = true;
+                break;
+            }
+        }
+        return hasMonsterInGraveyard;
     }
 
     public void aiSetAndNormalSummon() {

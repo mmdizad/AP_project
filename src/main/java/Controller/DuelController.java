@@ -243,22 +243,52 @@ public class DuelController {
     }
 
     public String effectOfMonsterReborn(int placeOfSpell) {
+        String kindOfGraveyard;
+        int numberOfCard;
         if (placeOfSpell == -1 && isSpellZoneFull(duelModel.turn)) {
             return "spell card zone is full";
         }
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
-        String kindOfGraveyard = duelView.scanKindOfGraveyardForActiveEffect();
-        int numberOfCard = duelView.scanNumberOfCardForActiveEffect();
+        if (!isAi) {
+            kindOfGraveyard = duelView.scanKindOfGraveyardForActiveEffect();
+            numberOfCard = duelView.scanNumberOfCardForActiveEffect();
+        } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+            kindOfGraveyard = duelView.scanKindOfGraveyardForActiveEffect();
+            numberOfCard = duelView.scanNumberOfCardForActiveEffect();
+        } else {
+            MainPhaseController mainPhaseController = MainPhaseController.getInstance();
+            NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
+            if (mainPhaseController.hasMonsterInGraveyard(duelModel.turn)) {
+                kindOfGraveyard = "My";
+                numberOfCard = duelModel.getGraveyard(duelModel.turn).indexOf(newCardToHandController
+                        .getBestMonsterFromGraveyard(duelModel.turn));
+            } else {
+                kindOfGraveyard = "Opponent";
+                numberOfCard = duelModel.getGraveyard(1 - duelModel.turn).indexOf(newCardToHandController
+                        .getBestMonsterFromGraveyard(1 - duelModel.turn));
+            }
+        }
         if (!kindOfGraveyard.equals("My") && !kindOfGraveyard.equals("Opponent")) {
             return "you must enter correct state of card for summon";
         } else if (kindOfGraveyard.equals("My")) {
             if (numberOfCard > duelModel.getGraveyard(duelModel.turn).size()) {
                 return "card with this number not available";
-            } else if (!duelModel.getGraveyard(duelModel.turn).get(numberOfCard - 1).getCategory()
-                    .equals("Monster")) {
+            } else if (!duelModel.getGraveyard(duelModel.turn).get(numberOfCard - 1).getCategory().equals("Monster")) {
                 return "you cant summon this card";
             } else {
-                String state = mainPhaseView.getStateOfCardForSummon();
+                String state;
+                if (!isAi) {
+                    state = mainPhaseView.getStateOfCardForSummon();
+                } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                    state = mainPhaseView.getStateOfCardForSummon();
+                } else {
+                    if (duelModel.getGraveyard(duelModel.turn).get(numberOfCard - 1).getAttackPower() >=
+                            duelModel.getGraveyard(duelModel.turn).get(numberOfCard - 1).getDefensePower()) {
+                        state = "Attack";
+                    } else {
+                        state = "Defence";
+                    }
+                }
                 if (!state.equals("Defence") && !state.equals("Attack")) {
                     return "please enter the appropriate state (Defence or Attack)";
                 } else {
@@ -275,7 +305,19 @@ public class DuelController {
                     .equals("Monster")) {
                 return "you cant summon this card";
             } else {
-                String state = mainPhaseView.getStateOfCardForSummon();
+                String state;
+                if (!isAi) {
+                    state = mainPhaseView.getStateOfCardForSummon();
+                } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                    state = mainPhaseView.getStateOfCardForSummon();
+                } else {
+                    if (duelModel.getGraveyard(1 - duelModel.turn).get(numberOfCard - 1).getAttackPower() >=
+                            duelModel.getGraveyard(1 - duelModel.turn).get(numberOfCard - 1).getDefensePower()) {
+                        state = "Attack";
+                    } else {
+                        state = "Defence";
+                    }
+                }
                 if (!state.equals("Defence") && !state.equals("Attack")) {
                     return "please enter the appropriate state (Defence or Attack)";
                 } else {
@@ -1507,7 +1549,7 @@ public class DuelController {
         return "trap activated";
     }
 
-    public String activeOtherTraps(){
+    public String activeOtherTraps() {
         Card trap = duelModel.getSelectedCards().get(duelModel.turn).get(0);
         activeNormalTraps();
         duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(trap, false);
@@ -1516,7 +1558,7 @@ public class DuelController {
         if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(trap)) {
             duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(trap);
             return "trap activated";
-        }else {
+        } else {
             duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(trap);
             return "";
         }
