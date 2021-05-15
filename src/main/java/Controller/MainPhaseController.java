@@ -354,7 +354,7 @@ public class MainPhaseController extends DuelController {
         } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
             placeOfMonster = mainPhaseView.scanPlaceOfMonsterForDestroyInManEaterFlipSummon();
         } else {
-            Card card = getBestMonsterOfOpponentForAiDestroy();
+            Card card = getBestMonsterOfOpponentForAi();
             placeOfMonster = duelModel.getMonstersInField().get(1 - duelModel.turn).indexOf(card) + 1;
         }
         if (placeOfMonster > 5) {
@@ -644,6 +644,8 @@ public class MainPhaseController extends DuelController {
                             aiActivePotOfGreed(placeOfSpellCard);
                         } else if (card.getName().equals("Raigeki")) {
                             aiActiveRaigeki(placeOfSpellCard);
+                        } else if (card.getName().equals("Change of Heart")) {
+                            aiActiveChangeOfHeart(placeOfSpellCard);
                         }
                     }
                 }
@@ -676,9 +678,20 @@ public class MainPhaseController extends DuelController {
     }
 
     public void aiActiveRaigeki(int placeOfSpell) {
-        if (!duelController.isMonsterZoneFull(1 - duelModel.turn)) {
+        boolean hasOpponentAnyMonster = false;
+        for (Card card : duelModel.getMonstersInField().get(1 - duelModel.turn)) {
+            if (card != null) {
+                hasOpponentAnyMonster = true;
+                break;
+            }
+        }
+        if (hasOpponentAnyMonster) {
             duelController.effectOfRaigeki(placeOfSpell);
         }
+    }
+
+    public void aiActiveChangeOfHeart(int placeOfSpell) {
+
     }
 
     public Boolean hasMonsterInGraveyard(int turn) {
@@ -816,18 +829,18 @@ public class MainPhaseController extends DuelController {
         return numberOfMonstersInPlayerFiled;
     }
 
-    public Card getBestMonsterOfOpponentForAiDestroy() {
+    public Card getBestMonsterOfOpponentForAi() {
         ArrayList<Card> monstersInField = new ArrayList<>();
         for (Card card : duelModel.getMonstersInField().get(1 - duelModel.turn)) {
             if (card != null) {
                 monstersInField.add(card);
             }
         }
-        Comparator<Card> compareForAiDestroy = Comparator
+        Comparator<Card> compareForAi = Comparator
                 .comparing(Card::getLevel, Comparator.reverseOrder())
                 .thenComparing(Card::getAttackPower, Comparator.reverseOrder())
                 .thenComparing(Card::getDefensePower, Comparator.reverseOrder());
-        monstersInField.sort(compareForAiDestroy);
+        monstersInField.sort(compareForAi);
         return monstersInField.get(0);
     }
 
