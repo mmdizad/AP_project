@@ -1,8 +1,6 @@
 package View;
 
-import Controller.DuelController;
-import Controller.LoginController;
-import Controller.NewCardToHandController;
+import Controller.*;
 import Model.DuelModel;
 import Model.User;
 
@@ -76,7 +74,7 @@ public class DuelView {
     protected void deselect(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
-            System.out.println(duelController.deselect());
+            System.out.println(DuelController.getInstance().deselect());
         }
     }
 
@@ -101,7 +99,7 @@ public class DuelView {
         if (hasAnySpellOrTrap) {
             duelModel.turn = 1 - duelModel.turn;
             if (duelModel.getCreatorUsername(duelModel.turn).equals("ai")) {
-                duelController.aiOpponentActiveSpellOrTrap();
+                DuelController.getInstance().aiOpponentActiveSpellOrTrap();
                 duelModel.turn = 1 - duelModel.turn;
             } else {
                 System.out.println("now it will be " + duelModel.getUsernames().get(duelModel.turn) + " turn");
@@ -113,7 +111,7 @@ public class DuelView {
                 }
                 if (response.equals("YES")) {
                     // check ...
-                    String result = duelController.opponentActiveSpellOrTrap();
+                    String result = DuelController.getInstance().opponentActiveSpellOrTrap();
                     System.out.println(result);
                     duelModel.turn = 1 - duelModel.turn;
                 }
@@ -177,7 +175,7 @@ public class DuelView {
     public void showGraveyard(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
-            ArrayList<String> output = duelController.showGraveYard(duelModel.turn);
+            ArrayList<String> output = DuelController.getInstance().showGraveYard(duelModel.turn);
             for (String s : output) {
                 System.out.println(s);
             }
@@ -187,7 +185,7 @@ public class DuelView {
     protected void showCard(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
-            ArrayList<String> output = duelController.checkCard(matcher);
+            ArrayList<String> output = DuelController.getInstance().checkCard(matcher);
             for (String s : output) {
                 System.out.println(s);
             }
@@ -197,7 +195,7 @@ public class DuelView {
     protected void showSelectedCard(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
-            ArrayList<String> output = duelController.checkSelectedCard(matcher);
+            ArrayList<String> output = DuelController.getInstance().checkSelectedCard(matcher);
             for (String s : output) {
                 System.out.println(s);
             }
@@ -215,14 +213,14 @@ public class DuelView {
     public void selectMonster(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
-            System.out.println(duelController.selectMonster(matcher));
+            System.out.println(DuelController.getInstance().selectMonster(matcher));
         }
     }
 
     public void selectOpponentMonster(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
-            System.out.println(duelController.selectOpponentMonster(matcher));
+            System.out.println(DuelController.getInstance().selectOpponentMonster(matcher));
         }
     }
 
@@ -230,7 +228,7 @@ public class DuelView {
         if (matcher.find()) {
             int place = Integer.parseInt(matcher.group(1));
             isCommandInvalid = false;
-            System.out.println(duelController.selectFieldZone(place));
+            System.out.println(DuelController.getInstance().selectFieldZone(place));
         }
     }
 
@@ -238,21 +236,21 @@ public class DuelView {
         if (matcher.find()) {
             int place = Integer.parseInt(matcher.group(1));
             isCommandInvalid = false;
-            System.out.println(duelController.selectOpponentFieldZone(place));
+            System.out.println(DuelController.getInstance().selectOpponentFieldZone(place));
         }
     }
 
     public void selectSpellOrTrap(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
-            System.out.println(duelController.selectSpellOrTrap(matcher));
+            System.out.println(DuelController.getInstance().selectSpellOrTrap(matcher));
         }
     }
 
     public void selectOpponentSpell(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
-            System.out.println(duelController.selectOpponentSpellOrTrap(matcher));
+            System.out.println(DuelController.getInstance().selectOpponentSpellOrTrap(matcher));
         }
     }
 
@@ -260,7 +258,7 @@ public class DuelView {
     public void selectHand(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
-            System.out.println(duelController.selectHand(matcher));
+            System.out.println(DuelController.getInstance().selectHand(matcher));
         }
     }
 
@@ -271,7 +269,7 @@ public class DuelView {
     }
 
     public void showGraveyardForSomeClasses(int turn) {
-        ArrayList<String> output = duelController.showGraveYard(turn);
+        ArrayList<String> output = DuelController.getInstance().showGraveYard(turn);
         for (String s : output) {
             System.out.println(s);
         }
