@@ -242,6 +242,19 @@ public class MainPhaseController extends DuelController {
         return "";
     }
 
+    public void effectOfCommandKnight() {
+        for (Card card : duelModel.getMonstersInField().get(duelModel.turn)) {
+            if (card != null) {
+                card.setAttackPower(card.getAttackPower() + 400);
+            }
+        }
+        for (Card card : duelModel.getMonstersInField().get(1 - duelModel.turn)) {
+            if (card != null) {
+                card.setAttackPower(card.getAttackPower() + 400);
+            }
+        }
+    }
+
     public String normalSummonMonsterOnField(Monster monster, String state) {
         String stateOfCard = "OO";
         if (state.equals("Attack")) {
@@ -266,6 +279,9 @@ public class MainPhaseController extends DuelController {
             duelModel.setMonsterSetOrSummonInThisTurn(monster, 5);
         } else {
             return "monster card zone is full";
+        }
+        if (monster.getName().equals("Command knight")) {
+            effectOfCommandKnight();
         }
         if (monster.getLevel() <= 4) {
             if (monster.getAttackPower() >= 1000) {
@@ -332,6 +348,9 @@ public class MainPhaseController extends DuelController {
                     } else {
                         Monster monster = (Monster) card;
                         duelModel.flipSummon(placeOfSummonCard - 1);
+                        if (monster.getName().equals("Command knight")) {
+                            effectOfCommandKnight();
+                        }
                         if (monster.getLevel() <= 4) {
                             if (monster.getAttackPower() >= 1000) {
                                 duelModel.monsterFlipSummonOrNormalSummonForTrapHole = monster;

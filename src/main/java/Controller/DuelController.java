@@ -1715,6 +1715,10 @@ public class DuelController {
             duelModel.addMonsterFromGraveyardToGame(stateOfCard + "/5", card, 4);
             duelModel.deleteCardFromGraveyard(turn, indexOfCardOfGraveyard);
         }
+        if (card.getName().equals("Command knight")) {
+            MainPhaseController mainPhaseController = MainPhaseController.getInstance();
+            mainPhaseController.effectOfCommandKnight();
+        }
         duelModel.monsterSummonForEffectOfSomeTraps = card;
     }
 
