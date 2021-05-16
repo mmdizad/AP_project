@@ -1095,8 +1095,23 @@ public class DuelController {
         }
         if (hasSpellSetInThisTurn()) {
             return "preparations of this spell are not done yet";
+        } else {
+            Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+            if (placeOfSpell != -1) {
+                duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
+            } else {
+                activeSpellFromHand();
+            }
+            duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
+            duelController.isOpponentHasAnySpellOrTrapForActivate();
+            if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
+                duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
+                duelModel.effectOfSpellAbsorptionCards();
+                return "spell activated";
+            }
+            duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
+            return "";
         }
-        return "";
     }
 
 

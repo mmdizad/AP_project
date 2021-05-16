@@ -661,6 +661,8 @@ public class MainPhaseController extends DuelController {
                             aiActiveTwinTwisters(placeOfSpellCard);
                         } else if (card.getName().equals("Mystical space typhoon")) {
                             aiActiveMysticalSpaceTyphoon(placeOfSpellCard);
+                        } else if (card.getName().equals("Ring of Defense")) {
+                            aiActiveRingOfDefense(placeOfSpellCard);
                         }
                     }
                 }
@@ -755,6 +757,12 @@ public class MainPhaseController extends DuelController {
         if (getNumberOfSpellsAndTrapsInPlayerField(1 - duelModel.turn) >= 1 &&
                 !duelController.hasSpellSetInThisTurn() && duelModel.getHandCards().get(duelModel.turn).size() >= 1) {
             duelController.effectOfTwinTwisters(placeOfSpell);
+        }
+    }
+
+    public void aiActiveRingOfDefense(int placeOfSpell) {
+        if (!duelController.hasSpellSetInThisTurn()) {
+            duelController.effectOfRingOfDefense(placeOfSpell);
         }
     }
 
