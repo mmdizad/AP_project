@@ -663,6 +663,8 @@ public class MainPhaseController extends DuelController {
                             aiActiveMysticalSpaceTyphoon(placeOfSpellCard);
                         } else if (card.getName().equals("Ring of Defense")) {
                             aiActiveRingOfDefense(placeOfSpellCard);
+                        } else if (card.getName().equals("Advanced Ritual Art")) {
+                            aiActiveAdvancedRitualArt(placeOfSpellCard);
                         }
                     }
                 }
@@ -784,6 +786,93 @@ public class MainPhaseController extends DuelController {
             }
         }
         return "";
+    }
+
+    public void aiActiveAdvancedRitualArt(int placeOfSpell) {
+        if (!duelController.isMonsterZoneFull(duelModel.turn)) {
+            for (Card card : duelModel.getHandCards().get(duelModel.turn)) {
+                if (card.getName().equals("Crab Turtle")) {
+                    if (hasNecessaryMonsterForRitualSummonCrabTurtle()) {
+                        duelController.effectOfAdvancedRitualArt(placeOfSpell);
+                    }
+                } else if (card.getName().equals("Skull Guardian")) {
+                    if (hasNecessaryMonsterForRitualSummonSkullGuardian()) {
+                        duelController.effectOfAdvancedRitualArt(placeOfSpell);
+                    }
+                }
+            }
+        }
+    }
+
+    public String getResponseForRitualSummon(Card card) {
+        String response;
+        ArrayList<Card> allMonstersInDeck = new ArrayList<>();
+        ArrayList<Card> monsterWithLevel4 = new ArrayList<>();
+        ArrayList<Card> monsterWithLevel3 = new ArrayList<>();
+        for (Card card1 : duelModel.getPlayersCards().get(duelModel.turn)) {
+            if (card1.getCategory().equals("Monster")) {
+                allMonstersInDeck.add(card1);
+            }
+        }
+        Comparator<Card> compareForAiRitualSummon = Comparator
+                .comparing(Card::getLevel)
+                .thenComparing(Card::getAttackPower)
+                .thenComparing(Card::getDefensePower);
+        allMonstersInDeck.sort(compareForAiRitualSummon);
+        for (Card card1 : allMonstersInDeck) {
+            if (card1.getLevel() == 4) {
+                monsterWithLevel4.add(card1);
+            }
+        }
+        for (Card card1 : allMonstersInDeck) {
+            if (card1.getLevel() == 3) {
+                monsterWithLevel3.add(card1);
+            }
+        }
+        if (card.getName().equals("Crab Turtle")) {
+            int addressOfMonster1 = duelModel.getPlayersCards().get(duelModel.turn)
+                    .indexOf(monsterWithLevel4.get(0)) + 1;
+            int addressOfMonster2 = duelModel.getPlayersCards().get(duelModel.turn)
+                    .indexOf(monsterWithLevel4.get(1)) + 1;
+            response = addressOfMonster1 + " " + addressOfMonster2;
+            return response;
+        } else if (card.getName().equals("Skull Guardian")) {
+            int addressOfMonster1 = duelModel.getPlayersCards().get(duelModel.turn)
+                    .indexOf(monsterWithLevel4.get(0)) + 1;
+            int addressOfMonster2 = duelModel.getPlayersCards().get(duelModel.turn)
+                    .indexOf(monsterWithLevel3.get(0)) + 1;
+            response = addressOfMonster1 + " " + addressOfMonster2;
+            return response;
+        }
+        return "";
+    }
+
+    public boolean hasNecessaryMonsterForRitualSummonCrabTurtle() {
+        int numberOfNecessaryMonster = 0;
+        for (Card card : duelModel.getPlayersCards().get(duelModel.turn)) {
+            if (card.getCategory().equals("Monster")) {
+                if (card.getLevel() == 4) {
+                    numberOfNecessaryMonster++;
+                }
+            }
+        }
+        return numberOfNecessaryMonster >= 2;
+    }
+
+    public boolean hasNecessaryMonsterForRitualSummonSkullGuardian() {
+        int numberOfNecessaryMonsterWithLevel4 = 0;
+        int numberOfNecessaryMonsterWithLevel3 = 0;
+        for (Card card : duelModel.getPlayersCards().get(duelModel.turn)) {
+            if (card.getCategory().equals("Monster")) {
+                if (card.getLevel() == 4) {
+                    numberOfNecessaryMonsterWithLevel4++;
+                }
+                if (card.getLevel() == 3) {
+                    numberOfNecessaryMonsterWithLevel3++;
+                }
+            }
+        }
+        return numberOfNecessaryMonsterWithLevel4 >= 1 && numberOfNecessaryMonsterWithLevel3 >= 1;
     }
 
     public Integer getNumberOfSpellsAndTrapsInPlayerField(int turn) {

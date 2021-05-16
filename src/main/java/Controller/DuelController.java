@@ -1240,11 +1240,9 @@ public class DuelController {
         }
         ArrayList<Card> handCards = duelModel.getHandCards().get(duelModel.turn);
         ArrayList<Card> cardsInDeck = duelModel.getPlayersCards().get(duelModel.turn);
-        Monster monster = null;
         for (Card card : handCards) {
             if (card.getCategory().equals("Monster")) {
-                monster = (Monster) card;
-                if (monster.getCardType().equals("Ritual")) {
+                if (card.getCardType().equals("Ritual")) {
                     hasAnyRitualMonster = true;
                     break;
                 }
@@ -1266,7 +1264,35 @@ public class DuelController {
             duelController.isOpponentHasAnySpellOrTrapForActivate();
             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
-                String[] addressOfCardForTribute = duelView.scanAddressForTributeForRitualSummon().split(" ");
+                int addressOfMonsterForRitualSummon = 0;
+                if (!isAi) {
+                    addressOfMonsterForRitualSummon = duelView.scanAddressOfCardForRitualSummon();
+                } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                    addressOfMonsterForRitualSummon = duelView.scanAddressOfCardForRitualSummon();
+                } else {
+                    for (Card card1 : duelModel.getHandCards().get(duelModel.turn)) {
+                        if (card1.getCardType().equals("Ritual")) {
+                            addressOfMonsterForRitualSummon = duelModel.getHandCards().get(duelModel.turn)
+                                    .indexOf(card1) + 1;
+                        }
+                    }
+                }
+                if (addressOfMonsterForRitualSummon > duelModel.getHandCards().get(duelModel.turn).size()) {
+                    return "you didnt select correct address";
+                }
+                Card ritualMonster = duelModel.getHandCards().get(duelModel.turn).get(addressOfMonsterForRitualSummon - 1);
+                if (!ritualMonster.getCategory().equals("Monster") || !ritualMonster.getCardType().equals("Ritual")) {
+                    return "you didnt select ritual monster";
+                }
+                String[] addressOfCardForTribute;
+                if (!isAi) {
+                    addressOfCardForTribute = duelView.scanAddressForTributeForRitualSummon().split(" ");
+                } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                    addressOfCardForTribute = duelView.scanAddressForTributeForRitualSummon().split(" ");
+                } else {
+                    MainPhaseController mainPhaseController = MainPhaseController.getInstance();
+                    addressOfCardForTribute = mainPhaseController.getResponseForRitualSummon(ritualMonster).split(" ");
+                }
                 if (addressOfCardForTribute.length < 2) {
                     return "you must enter two address for tribute from your deck";
                 } else {
@@ -1282,18 +1308,29 @@ public class DuelController {
                         } else {
                             Monster monster1 = (Monster) card1;
                             Monster monster2 = (Monster) card2;
-                            if (monster1.getLevel() + monster2.getLevel() != monster.getLevel()) {
+                            if (monster1.getLevel() + monster2.getLevel() != ritualMonster.getLevel()) {
                                 return "selected monsters levels don’t match with ritual monster";
                             } else {
+                                String stateOfCardForSummon;
                                 duelModel.deleteCardFromDeck(duelModel.turn, addressOfCard1 - 1, card1);
                                 duelModel.deleteCardFromDeck(duelModel.turn, addressOfCard2 - 1, card2);
                                 MainPhaseView mainPhaseView = MainPhaseView.getInstance();
-                                String stateOfCardForSummon = mainPhaseView.getStateOfCardForSummon();
+                                if (!isAi) {
+                                    stateOfCardForSummon = mainPhaseView.getStateOfCardForSummon();
+                                } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                                    stateOfCardForSummon = mainPhaseView.getStateOfCardForSummon();
+                                } else {
+                                    if (ritualMonster.getAttackPower() >= ritualMonster.getDefensePower()) {
+                                        stateOfCardForSummon = "Attack";
+                                    } else {
+                                        stateOfCardForSummon = "Defence";
+                                    }
+                                }
                                 if (!stateOfCardForSummon.equals("Attack")
                                         && !stateOfCardForSummon.equals("Defence")) {
                                     return "you must Highlight the state of card for summon correctly";
                                 }
-                                ritualSummonMonsterOnField(stateOfCardForSummon, monster);
+                                ritualSummonMonsterOnField(stateOfCardForSummon, ritualMonster);
                                 duelModel.effectOfSpellAbsorptionCards();
                                 if (placeOfSpell != -1) {
                                     duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
