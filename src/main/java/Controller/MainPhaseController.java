@@ -28,9 +28,12 @@ public class MainPhaseController extends DuelController {
         } else {
             if (!(duelModel.getHandCards().get(duelModel.turn)).contains((selectedCards.get(duelModel.turn)).get(0))) {
                 return "you can’t set this card";
-            } else if (duelModel.monsterSetOrSummonInThisTurn == null) {
+            } else if (duelModel.monsterSetOrSummonInThisTurn != null) {
                 return "you already summoned/set on this turn";
             } else if ((selectedCards.get(duelModel.turn).get(0)).getCardType().equals("Monster")) {
+                if(selectedCards.get(duelModel.turn).get(0).getLevel()>5)
+                    return "this card can not set";
+                else
                 return this.setMonster();
             } else
                 return setTrapOrSpell();
@@ -665,6 +668,9 @@ public class MainPhaseController extends DuelController {
                             aiActiveRingOfDefense(placeOfSpellCard);
                         } else if (card.getName().equals("Advanced Ritual Art")) {
                             aiActiveAdvancedRitualArt(placeOfSpellCard);
+                           
+
+
                         }
                     }
                 }
@@ -774,6 +780,20 @@ public class MainPhaseController extends DuelController {
             duelController.effectOfMysticalSpaceTyphoon(placeOfSpell);
         }
     }
+    public void aiActiveBlackPendant(int placeOfSpell){
+
+
+
+    }
+    public void aiActiveUnitedWeStand(int placeOfSpell){
+
+
+
+    }
+    public void aiActiveMagnumShield(int placeOfSpell){
+
+
+    }
 
     public boolean isThisPlaceHasSpellOrTrap(int place) {
         return duelModel.getSpellsAndTrapsInFiled().get(place - 1) != null;
@@ -814,11 +834,7 @@ public class MainPhaseController extends DuelController {
                 allMonstersInDeck.add(card1);
             }
         }
-        Comparator<Card> compareForAiRitualSummon = Comparator
-                .comparing(Card::getLevel)
-                .thenComparing(Card::getAttackPower)
-                .thenComparing(Card::getDefensePower);
-        allMonstersInDeck.sort(compareForAiRitualSummon);
+
         for (Card card1 : allMonstersInDeck) {
             if (card1.getLevel() == 4) {
                 monsterWithLevel4.add(card1);

@@ -4,10 +4,7 @@ import Model.*;
 import View.DuelView;
 import View.MainPhaseView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1375,6 +1372,7 @@ public class DuelController {
     public String effectOfMagnumShield(int placeOfSpellInField) {
         boolean isWarriorExist = false;
         ArrayList<Integer> placeOfWarriorCard = new ArrayList<>();
+        Card cardForAi=null;
         for (int i = 0; i < 5; i++) {
             Card card = duelModel.getMonstersInField().get(duelModel.turn).get(i);
             if (card != null)
@@ -1382,12 +1380,29 @@ public class DuelController {
                 if (card.getCategory().equals("Warrior")) {
                     if (duelModel.getMonsterCondition(duelModel.turn, i).equals("DO") || duelModel.getMonsterCondition(duelModel.turn, i).equals("OO"))
                         isWarriorExist = true;
+                    if(cardForAi!=null){
+                        if(card.getAttackPower()>cardForAi.getAttackPower())
+                            cardForAi=card;
+                    }
+                    else cardForAi=card;
                     placeOfWarriorCard.add(i);
                 }
         }
         if (isWarriorExist) {
-            int place = duelView.scanForChoseMonsterForEquip(placeOfWarriorCard);
-            //فرض میکنیم که عدد درست وارد شده
+            int place;
+
+            if(duelModel.getUsernames().get(duelModel.turn).equals("ai"))
+            {
+                place=placeOfWarriorCard.indexOf(cardForAi);
+            }else {
+                while (true) {
+                    place = duelView.scanForChoseMonsterForEquip(placeOfWarriorCard);
+                    if (placeOfWarriorCard.contains(place))
+                        break;
+                }
+
+            }
+
             Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(place);
             if (duelModel.getMonsterCondition(duelModel.turn, place).startsWith("D")) {
                 monster.setAttackPower(monster.getAttackPower() + monster.getDefensePower());
@@ -1405,21 +1420,32 @@ public class DuelController {
     public String effectOfUnitedWeStand(int placeOfSpell) {
         boolean isMonster = false;
         ArrayList<Integer> placeOfMonsterCard = new ArrayList<>();
+        Card cardForAi=null;
         for (int i = 0; i < 5; i++) {
             Card card = duelModel.getMonstersInField().get(duelModel.turn).get(i);
             if (card != null) {
                 //check it
                 if (duelModel.getMonsterCondition(duelModel.turn, i).equals("DO") || duelModel.getMonsterCondition(duelModel.turn, i).equals("OO"))
                     isMonster = true;
+                if(cardForAi!=null){
+                    if(card.getAttackPower()>cardForAi.getAttackPower())
+                        cardForAi=card;
+                }
+                else cardForAi=card;
                 placeOfMonsterCard.add(i);
             }
         }
         if (isMonster) {
             int place;
-            while (true) {
-                place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
-                if (placeOfMonsterCard.contains(place))
-                    break;
+            if(duelModel.getUsernames().get(duelModel.turn).equals("ai"))
+            {
+                place=placeOfMonsterCard.indexOf(cardForAi);
+            }else {
+                while (true) {
+                    place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
+                    if (placeOfMonsterCard.contains(place))
+                        break;
+                }
             }
             Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(place);
             if (placeOfSpell == -1) {
@@ -1451,22 +1477,34 @@ public class DuelController {
     public String effectOfBlackPendant(int placeOfSpell) {
         boolean isMonster = false;
         ArrayList<Integer> placeOfMonsterCard = new ArrayList<>();
+        Card cardForAi=null;
         for (int i = 0; i < 5; i++) {
             Card card = duelModel.getMonstersInField().get(duelModel.turn).get(i);
+
             if (card != null) {
                 //check it
                 if (duelModel.getMonsterCondition(duelModel.turn, i).equals("DO") || duelModel.getMonsterCondition(duelModel.turn, i).equals("OO"))
                     isMonster = true;
+                if(cardForAi!=null){
+                if(card.getAttackPower()>cardForAi.getAttackPower())
+                    cardForAi=card;
+                }
+                else cardForAi=card;
                 placeOfMonsterCard.add(i);
             }
         }
 
         if (isMonster) {
             int place;
-            while (true) {
-                place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
-                if (placeOfMonsterCard.contains(place))
-                    break;
+            if(duelModel.getUsernames().get(duelModel.turn).equals("ai"))
+            {
+                place=placeOfMonsterCard.indexOf(cardForAi);
+            }else {
+                while (true) {
+                    place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
+                    if (placeOfMonsterCard.contains(place))
+                        break;
+                }
             }
             Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
             if (placeOfSpell == -1) {
@@ -1497,23 +1535,35 @@ public class DuelController {
     public String effectOfSwordOfDarkstraction(int placeOfSpell) {
         boolean isMonster = false;
         ArrayList<Integer> placeOfMonsterCard = new ArrayList<>();
+        Card cardForAi=null;
         for (int i = 0; i < 5; i++) {
             Card card = duelModel.getMonstersInField().get(duelModel.turn).get(i);
             if (card != null) {
                 //check it
                 if (duelModel.getMonsterCondition(duelModel.turn, i).equals("DO") || duelModel.getMonsterCondition(duelModel.turn, i).equals("OO"))
                     if (card.getCategory().equals("Fiend") || card.getCategory().equals("Spellcaster")) {
+                        if(cardForAi!=null){
+                            if(card.getAttackPower()>cardForAi.getAttackPower())
+                                cardForAi=card;
+                        }
+                        else cardForAi=card;
                         isMonster = true;
                         placeOfMonsterCard.add(i);
                     }
             }
         }
         if (isMonster) {
+
             int place;
-            while (true) {
-                place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
-                if (placeOfMonsterCard.contains(place))
-                    break;
+            if(duelModel.getUsernames().get(duelModel.turn).equals("ai"))
+            {
+                place=placeOfMonsterCard.indexOf(cardForAi);
+            }else {
+                while (true) {
+                    place = duelView.scanForChoseMonsterForEquip(placeOfMonsterCard);
+                    if (placeOfMonsterCard.contains(place))
+                        break;
+                }
             }
             Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
             SwordOfDarkstraction(monster, 1);
