@@ -6,7 +6,6 @@ import View.MainPhaseView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.IllegalFormatCodePointException;
 import java.util.regex.Matcher;
 
 public class MainPhaseController extends DuelController {
@@ -660,6 +659,8 @@ public class MainPhaseController extends DuelController {
                             duelController.effectOfMessengerOfPeace(placeOfSpellCard);
                         } else if (card.getName().equals("Twin Twisters")) {
                             aiActiveTwinTwisters(placeOfSpellCard);
+                        } else if (card.getName().equals("Mystical space typhoon")) {
+                            aiActiveMysticalSpaceTyphoon(placeOfSpellCard);
                         }
                     }
                 }
@@ -757,11 +758,18 @@ public class MainPhaseController extends DuelController {
         }
     }
 
+    public void aiActiveMysticalSpaceTyphoon(int placeOfSpell) {
+        if (getNumberOfSpellsAndTrapsInPlayerField(1 - duelModel.turn) >= 1 &&
+                !duelController.hasSpellSetInThisTurn()) {
+            duelController.effectOfMysticalSpaceTyphoon(placeOfSpell);
+        }
+    }
+
     public boolean isThisPlaceHasSpellOrTrap(int place) {
         return duelModel.getSpellsAndTrapsInFiled().get(place - 1) != null;
     }
 
-    public String getResponseForAiForTwinTwisters() {
+    public String getResponseForAiForTwinTwistersAndMysticalSpaceTyphoon() {
         for (int i = 1; i <= 5; i++) {
             if (mainPhaseController.isThisPlaceHasSpellOrTrap(i)) {
                 return "opponent " + i;
@@ -818,8 +826,6 @@ public class MainPhaseController extends DuelController {
                             duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
                             if (isMonsterInFieldExists) {
                                 summon();
-                            } else {
-                                setMonster();
                             }
                         } else if (monster.getLevel() >= 7) {
                             boolean hasEnoughMonsterInFieldForTribute = false;
@@ -831,8 +837,6 @@ public class MainPhaseController extends DuelController {
                             duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
                             if (hasEnoughMonsterInFieldForTribute) {
                                 summon();
-                            } else {
-                                setMonster();
                             }
                         }
                     }

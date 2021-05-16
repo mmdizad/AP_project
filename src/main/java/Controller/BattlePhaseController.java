@@ -67,57 +67,57 @@ public class BattlePhaseController extends DuelController {
                                     return trapMirrorFace(card, i);
                                 } else if (card.getName().equals("Negate Attack") && spellCondition.charAt(0) == 'O') {
                                     return trapNegateAttack(card, i);
-                                }else if (card.getName().equals("Swords of Revealing Light") && spellCondition.charAt(0) == 'O'){
+                                } else if (card.getName().equals("Swords of Revealing Light") && spellCondition.charAt(0) == 'O') {
                                     return ("opponent has active Swords of Revealing Light spell so you can't attack");
-                                }else if (card.getName().equals("Messenger of peace") && spellCondition.charAt(0) == 'O'
-                                && ourCard.getAttackPower() >= 1500){
+                                } else if (card.getName().equals("Messenger of peace") && spellCondition.charAt(0) == 'O'
+                                        && ourCard.getAttackPower() >= 1500) {
                                     return ("opponent has active Messenger of peace spell so you can't attack because your selected" +
                                             " card's attack power is more than 1500");
                                 }
                             }
                         }
-                        if (opponentCard.getName().equals("Suijin") && !duelModel.getActivatedMonsterEffect(1 - duelModel.turn).contains(opponentCard)){
+                        if (opponentCard.getName().equals("Suijin") && !duelModel.getActivatedMonsterEffect(1 - duelModel.turn).contains(opponentCard)) {
                             ourCard.setAttackPower(0);
                             duelModel.addActivatedMonsterEffect(opponentCard, 1 - duelModel.turn);
                         }
-                        if (opponentCard.getName().equals("Texchanger") && !duelModel.getActivatedMonsterEffect(1 - duelModel.turn).contains(opponentCard)){
+                        if (opponentCard.getName().equals("Texchanger") && !duelModel.getActivatedMonsterEffect(1 - duelModel.turn).contains(opponentCard)) {
                             ourCard.setAttackPower(0);
                             duelModel.addActivatedMonsterEffect(opponentCard, 1 - duelModel.turn);
                             BattlePhaseView battlePhaseView = BattlePhaseView.getInstance();
                             String cardName = battlePhaseView.getCyberseCard();
-                            if (Card.getCardByName(cardName).getCardType().equals("Cyberse")){
+                            if (Card.getCardByName(cardName).getCardType().equals("Cyberse")) {
                                 addCyberseCard(cardName);
                             }
                             return "opponent had Texchanger Monster and canceled the attack!";
                         }
-                        if (opponentCard.getName().equals("Command knight")){
-                            for (Card card : duelModel.getMonstersInField().get(1 - duelModel.turn)){
-                                if (card != null && !card.getName().equals("Command knight")){
+                        if (opponentCard.getName().equals("Command knight")) {
+                            for (Card card : duelModel.getMonstersInField().get(1 - duelModel.turn)) {
+                                if (card != null && !card.getName().equals("Command knight")) {
                                     return "opponent monster was Command knight and due to having another monsters in field, you cant attack";
                                 }
                             }
                         }
                         if (duelModel.getMonsterCondition(1 - duelModel.turn, placeNumber).startsWith("OO")) {
                             int ourCardAttack = 0;
-                            if (ourCard.getName().equals("The Calculator")){
-                                for (int i = 0;i < 5;i++){
+                            if (ourCard.getName().equals("The Calculator")) {
+                                for (int i = 0; i < 5; i++) {
                                     if (duelModel.getMonstersInField().get(duelModel.turn).get(i) != null
-                                    && duelModel.getMonsterCondition(duelModel.turn, i + 1).charAt(1) == 'O' ){
-                                        ourCardAttack += duelModel.getMonstersInField().get(duelModel.turn).get(i).getLevel()*300;
+                                            && duelModel.getMonsterCondition(duelModel.turn, i + 1).charAt(1) == 'O') {
+                                        ourCardAttack += duelModel.getMonstersInField().get(duelModel.turn).get(i).getLevel() * 300;
                                     }
                                 }
-                            }else {
+                            } else {
                                 ourCardAttack = ourCard.getAttackPower();
                             }
                             int opponentCardAttack = 0;
-                            if (opponentCard.getName().equals("The Calculator")){
-                                for (int i = 0;i < 5;i++){
+                            if (opponentCard.getName().equals("The Calculator")) {
+                                for (int i = 0; i < 5; i++) {
                                     if (duelModel.getMonstersInField().get(1 - duelModel.turn).get(i) != null
-                                            && duelModel.getMonsterCondition(1 - duelModel.turn, i + 1).charAt(1) == 'O' ){
-                                        opponentCardAttack += duelModel.getMonstersInField().get(1 - duelModel.turn).get(i).getLevel()*300;
+                                            && duelModel.getMonsterCondition(1 - duelModel.turn, i + 1).charAt(1) == 'O') {
+                                        opponentCardAttack += duelModel.getMonstersInField().get(1 - duelModel.turn).get(i).getLevel() * 300;
                                     }
                                 }
-                            }else {
+                            } else {
                                 opponentCardAttack = opponentCard.getAttackPower();
                             }
                             if (ourCardAttack > opponentCardAttack) {
@@ -126,11 +126,11 @@ public class BattlePhaseController extends DuelController {
                                     duelModel.deleteMonster(1 - duelModel.turn, placeNumber - 1);
                                 }
                                 int difference = ourCardAttack - opponentCardAttack;
-                                if (opponentCard.getName().equals("Yomi Ship")){
+                                if (opponentCard.getName().equals("Yomi Ship")) {
                                     duelModel.addCardToGraveyard(duelModel.turn, ourCard);
                                     duelModel.deleteMonster(duelModel.turn, Integer.parseInt(condition[2]));
                                 }
-                                if (opponentCard.getName().equals("Exploder Dragon")){
+                                if (opponentCard.getName().equals("Exploder Dragon")) {
                                     duelModel.addCardToGraveyard(duelModel.turn, ourCard);
                                     duelModel.deleteMonster(duelModel.turn, Integer.parseInt(condition[2]));
                                     difference = 0;
@@ -157,21 +157,21 @@ public class BattlePhaseController extends DuelController {
                                 duelModel.decreaseLifePoint(opponentCardAttack - ourCardAttack, duelModel.turn);
                                 int difference = opponentCardAttack - ourCardAttack;
                                 duelModel.deSelectedCard();
-                                if (opponentCard.getName().equals("Suijin")){
+                                if (opponentCard.getName().equals("Suijin")) {
                                     ourCard.setAttackPower(ourCardFirstAttackPower);
                                 }
                                 return "Your monster card is destroyed and you received " + difference + " battle damage";
                             }
                         } else {
                             int ourCardAttack = 0;
-                            if (ourCard.getName().equals("The Calculator")){
-                                for (int i = 0;i < 5;i++){
+                            if (ourCard.getName().equals("The Calculator")) {
+                                for (int i = 0; i < 5; i++) {
                                     if (duelModel.getMonstersInField().get(duelModel.turn).get(i) != null
-                                            && duelModel.getMonsterCondition(duelModel.turn, i + 1).charAt(1) == 'O' ){
-                                        ourCardAttack += duelModel.getMonstersInField().get(duelModel.turn).get(i).getLevel()*300;
+                                            && duelModel.getMonsterCondition(duelModel.turn, i + 1).charAt(1) == 'O') {
+                                        ourCardAttack += duelModel.getMonstersInField().get(duelModel.turn).get(i).getLevel() * 300;
                                     }
                                 }
-                            }else {
+                            } else {
                                 ourCardAttack = ourCard.getAttackPower();
                             }
                             int opponentCardDefense = opponentCard.getDefensePower();
@@ -180,11 +180,11 @@ public class BattlePhaseController extends DuelController {
                                     duelModel.addCardToGraveyard(1 - duelModel.turn, opponentCard);
                                     duelModel.deleteMonster(1 - duelModel.turn, placeNumber - 1);
                                 }
-                                if (opponentCard.getName().equals("Yomi Ship")){
+                                if (opponentCard.getName().equals("Yomi Ship")) {
                                     duelModel.addCardToGraveyard(duelModel.turn, ourCard);
                                     duelModel.deleteMonster(duelModel.turn, Integer.parseInt(condition[2]));
                                 }
-                                if (opponentCard.getName().equals("Exploder Dragon")){
+                                if (opponentCard.getName().equals("Exploder Dragon")) {
                                     duelModel.addCardToGraveyard(duelModel.turn, ourCard);
                                     duelModel.deleteMonster(duelModel.turn, Integer.parseInt(condition[2]));
                                 }
@@ -208,7 +208,7 @@ public class BattlePhaseController extends DuelController {
                                 duelModel.decreaseLifePoint(opponentCardDefense - ourCardAttack, duelModel.turn);
                                 duelModel.deSelectedCard();
                                 int difference = opponentCardDefense - ourCardAttack;
-                                if (opponentCard.getName().equals("Suijin")){
+                                if (opponentCard.getName().equals("Suijin")) {
                                     ourCard.setAttackPower(ourCardFirstAttackPower);
                                 }
                                 if (duelModel.getMonsterCondition(1 - duelModel.turn, placeNumber).startsWith("DO")) {
@@ -216,7 +216,7 @@ public class BattlePhaseController extends DuelController {
                                 } else {
                                     duelModel.decreaseLifePoint(1000, duelModel.turn);
                                     return "opponent’s monster card was " + opponentCard.getName() +
-                                            " and no card is destroyed and you received " + difference +1000 + " battle damage";
+                                            " and no card is destroyed and you received " + difference + 1000 + " battle damage";
                                 }
                             }
                         }
@@ -226,14 +226,14 @@ public class BattlePhaseController extends DuelController {
         }
     }
 
-    public void addCyberseCard(String cardName){
+    public void addCyberseCard(String cardName) {
         Card card;
         ArrayList<Card> graveyard = duelModel.getGraveyard(1 - duelModel.turn);
         ArrayList<Card> hand = duelModel.getHandCards().get(1 - duelModel.turn);
         ArrayList<Card> deck = duelModel.getPlayersCards().get(1 - duelModel.turn);
         ArrayList<Card> monsters = duelModel.getMonstersInField().get(1 - duelModel.turn);
-        for (Card card1 : graveyard){
-            if (card1.getName().equals(cardName)){
+        for (Card card1 : graveyard) {
+            if (card1.getName().equals(cardName)) {
                 graveyard.remove(card1);
                 if (duelModel.getMonstersInField().get(1 - duelModel.turn).get(0) == null) {
                     monsters.set(0, card1);
@@ -254,8 +254,8 @@ public class BattlePhaseController extends DuelController {
                 return;
             }
         }
-        for (Card card1 : deck){
-            if (card1.getName().equals(cardName)){
+        for (Card card1 : deck) {
+            if (card1.getName().equals(cardName)) {
                 deck.remove(card1);
                 if (duelModel.getMonstersInField().get(1 - duelModel.turn).get(0) == null) {
                     monsters.set(0, card1);
@@ -276,8 +276,8 @@ public class BattlePhaseController extends DuelController {
                 return;
             }
         }
-        for (Card card1 : hand){
-            if (card1.getName().equals(cardName)){
+        for (Card card1 : hand) {
+            if (card1.getName().equals(cardName)) {
                 hand.remove(card1);
                 if (duelModel.getMonstersInField().get(1 - duelModel.turn).get(0) == null) {
                     monsters.set(0, card1);
@@ -384,13 +384,15 @@ public class BattlePhaseController extends DuelController {
         }
     }
 
-    public void setCommandsForAi(){
+    public void setCommandsForAi() {
+        MainPhaseController mainPhaseController = MainPhaseController.getInstance();
+        mainPhaseController.aiActiveEffect();
         int attackPower = 0;
         int place = 0;
         ArrayList<Card> ourMonsters = duelModel.getMonstersInField().get(duelModel.turn);
-        for (int i = 0;i < 5;i++){
-            if (ourMonsters.get(i) != null){
-                if (ourMonsters.get(i).getAttackPower() > attackPower){
+        for (int i = 0; i < 5; i++) {
+            if (ourMonsters.get(i) != null) {
+                if (ourMonsters.get(i).getAttackPower() > attackPower) {
                     attackPower = ourMonsters.get(i).getAttackPower();
                     place = i + 1;
                 }
@@ -432,11 +434,11 @@ public class BattlePhaseController extends DuelController {
         }
     }
 
-    public String getCyberseCard(){
+    public String getCyberseCard() {
         ArrayList<Card> cards = duelModel.getPlayersCards().get(1 - duelModel.turn);
-        for (Card card : cards){
-            if (card.getCategory().equals("Monster")){
-                if (card.getCardType().equals("Cyberse")){
+        for (Card card : cards) {
+            if (card.getCategory().equals("Monster")) {
+                if (card.getCardType().equals("Cyberse")) {
                     return card.getName();
                 }
             }

@@ -200,6 +200,7 @@ public class DuelView {
     }
 
     public void surrender() {
+
     }
 
     protected void select(Matcher matcher) {

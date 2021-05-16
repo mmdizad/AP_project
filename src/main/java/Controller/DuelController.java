@@ -901,7 +901,6 @@ public class DuelController {
     }
 
     public String effectOfMessengerOfPeace(int placeOfSpell) {
-        // not complete it needs a change in battlePhase
         if (placeOfSpell == -1 && isSpellZoneFull(duelModel.turn)) {
             return "spell card zone is full";
         } else {
@@ -996,7 +995,7 @@ public class DuelController {
                     } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                         response = duelView.scanPlaceOfCardWantToDestroyed();
                     } else {
-                        response = mainPhaseController.getResponseForAiForTwinTwisters();
+                        response = mainPhaseController.getResponseForAiForTwinTwistersAndMysticalSpaceTyphoon();
                     }
                     String[] splitResponse = response.split(" ");
                     int placeOfSpellOrTrapCard = Integer.parseInt(splitResponse[1]);
@@ -1019,8 +1018,8 @@ public class DuelController {
                         response1 = duelView.scanPlaceOfCardWantToDestroyed();
                         response2 = duelView.scanPlaceOfCardWantToDestroyed();
                     } else {
-                        response1 = mainPhaseController.getResponseForAiForTwinTwisters();
-                        response2 = mainPhaseController.getResponseForAiForTwinTwisters();
+                        response1 = mainPhaseController.getResponseForAiForTwinTwistersAndMysticalSpaceTyphoon();
+                        response2 = mainPhaseController.getResponseForAiForTwinTwistersAndMysticalSpaceTyphoon();
                     }
                     String[] splitResponse1 = response1.split(" ");
                     String[] splitResponse2 = response2.split(" ");
@@ -1067,7 +1066,15 @@ public class DuelController {
         duelController.isOpponentHasAnySpellOrTrapForActivate();
         if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
             duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
-            String response = duelView.scanPlaceOfCardWantToDestroyed();
+            String response;
+            if (!isAi) {
+                response = duelView.scanPlaceOfCardWantToDestroyed();
+            } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                response = duelView.scanPlaceOfCardWantToDestroyed();
+            } else {
+                MainPhaseController mainPhaseController = MainPhaseController.getInstance();
+                response = mainPhaseController.getResponseForAiForTwinTwistersAndMysticalSpaceTyphoon();
+            }
             String[] splitResponse = response.split(" ");
             int placeOfSpellOrTrapCard = Integer.parseInt(splitResponse[1]);
             if (splitResponse[0].equals("my")) {
@@ -1083,7 +1090,6 @@ public class DuelController {
     }
 
     public String effectOfRingOfDefense(int placeOfSpell) {
-        // not complete it needs a change in trap
         if (placeOfSpell == -1 && isSpellZoneFull(duelModel.turn)) {
             return "spell card zone is full";
         }
@@ -1134,7 +1140,6 @@ public class DuelController {
                     return "spell activated";
                 }
             }
-
         }
     }
 
@@ -1617,7 +1622,7 @@ public class DuelController {
             return "card has been activated before";
         } else {
             ArrayList<Card> monsters = duelModel.getMonstersInField().get(1 - duelModel.turn);
-            for (int i = 0;i < 5;i++){
+            for (int i = 0; i < 5; i++) {
                 if (monsters.get(i) != null) {
                     if (monsters.get(i).getName().equals("Mirage Dragon") && duelModel.getMonsterCondition(1 - duelModel.turn,
                             i + 1).split("/")[0].charAt(1) == 'O') {
