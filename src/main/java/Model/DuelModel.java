@@ -107,8 +107,8 @@ public class DuelModel {
         ArrayList<String> monsterCondition1 = new ArrayList<>();
         ArrayList<String> monsterCondition2 = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            monsterCondition1.add(null);
-            monsterCondition2.add(null);
+            monsterCondition1.add(" ");
+            monsterCondition2.add(" ");
         }
         monsterCondition.add(monsterCondition1);
         monsterCondition.add(monsterCondition2);
@@ -417,11 +417,13 @@ public class DuelModel {
         ArrayList<String> conditionMonsterOpponent = new ArrayList<>();
         ArrayList<String> conditionMonsterUser = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            if (monstersInField.get(turn).get(i) != null)
-                conditionMonsterOpponent.add(monsterCondition.get(1 - turn).get(i).split("/")[0]);
+            if (monstersInField.get(1-turn).get(i) != null) {
+                String[] monsterCondition1=monsterCondition.get(1 - turn).get(i).split("/");
+                conditionMonsterOpponent.add(monsterCondition1[0]);
+            }
             else
                 conditionMonsterOpponent.add("E");
-            if (monstersInField.get(1 - turn).get(i) != null)
+            if (monstersInField.get(turn).get(i) != null)
                 conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
             else
                 conditionMonsterUser.add("E");
