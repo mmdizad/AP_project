@@ -80,9 +80,11 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             String result = mainPhaseController.summon();
             if (result.equals("summoned successfully")) {
                 System.out.println(result);
+                duelController.activeFieldInGame();
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 duelModel.monsterFlipSummonOrNormalSummonForTrapHole = null;
                 duelModel.monsterSummonForEffectOfSomeTraps = null;
+
             } else {
                 System.out.println(result);
             }
@@ -114,12 +116,14 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             String response = mainPhaseController.flipSummon();
             if (response.equals("flipSummon Man-Eater Bug")) {
                 System.out.println("flip summoned successfully");
+                duelController.activeFieldInGame();
                 System.out.println(mainPhaseController.flipSummonManEaterBug());
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 duelModel.monsterFlipSummonOrNormalSummonForTrapHole = null;
             } else {
                 if (response.equals("flip summoned successfully")) {
                     System.out.println(response);
+                    duelController.activeFieldInGame();
                     duelController.isOpponentHasAnySpellOrTrapForActivate();
                     duelModel.monsterFlipSummonOrNormalSummonForTrapHole = null;
                     duelModel.monsterSummonForEffectOfSomeTraps = null;
@@ -144,6 +148,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             String result = mainPhaseController.specialSummon();
             if (result.equals("summon successfully")) {
                 System.out.println(result);
+                duelController.activeFieldInGame();
                 duelController.isOpponentHasAnySpellOrTrapForActivate();
                 duelModel.monsterSummonForEffectOfSomeTraps = null;
             } else {
