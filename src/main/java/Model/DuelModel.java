@@ -192,13 +192,13 @@ public class DuelModel {
 
     public void decreaseLifePoint(int decreaseLifePoint, int turn) {
         int lifePoint = lifePoints.get(turn);
-        lifePoints.add(turn, lifePoint - decreaseLifePoint);
+        lifePoints.set(turn, lifePoint - decreaseLifePoint);
         DuelView.getInstance().showBoard();
     }
 
     public void increaseLifePoint(int increaseLifePoint, int turn) {
         int lifePoint = lifePoints.get(turn);
-        lifePoints.add(turn, lifePoint + increaseLifePoint);
+        lifePoints.set(turn, lifePoint + increaseLifePoint);
         DuelView.getInstance().showBoard();
     }
 
@@ -252,8 +252,8 @@ public class DuelModel {
     }
 
     public void addMonsterFromHandToGame(String condition, int index) {
-        monstersInField.get(turn).add(index, selectedCards.get(turn).get(0));
-        monsterCondition.get(turn).add(index, condition);
+        monstersInField.get(turn).set(index, selectedCards.get(turn).get(0));
+        monsterCondition.get(turn).set(index, condition);
         deleteCardFromHand(getMonster(turn, index + 1));
         DuelView.getInstance().showBoard();
     }
@@ -510,20 +510,20 @@ public class DuelModel {
 
 
     public void addMonsterFromGraveyardToGame(String condition, Card card, int index) {
-        monstersInField.get(turn).add(index, card);
-        monsterCondition.get(turn).add(index, condition);
+        monstersInField.get(turn).set(index, card);
+        monsterCondition.get(turn).set(index, condition);
         DuelView.getInstance().showBoard();
     }
 
     public void addCertainMonsterFromGraveyardToGame(int turn, String condition, int index, Card card) {
-        monstersInField.get(turn).add(index, card);
-        monsterCondition.get(turn).add(index, condition);
+        monstersInField.get(turn).set(index, card);
+        monsterCondition.get(turn).set(index, condition);
         DuelView.getInstance().showBoard();
     }
 
     public void addCertainSpellOrTrapFromGraveyardToGame(String condition, int index, Card card) {
-        monstersInField.get(turn).add(index, card);
-        monsterCondition.get(turn).add(index, condition);
+        monstersInField.get(turn).set(index, card);
+        monsterCondition.get(turn).set(index, condition);
     }
 
     public void deleteCardFromGraveyard(int turn, int indexOfCard) {
@@ -629,8 +629,8 @@ public class DuelModel {
     }
 
     public void ritualSummon(String condition, int index, Card card) {
-        monstersInField.get(turn).add(index, card);
-        monsterCondition.get(turn).add(index, condition);
+        monstersInField.get(turn).set(index, card);
+        monsterCondition.get(turn).set(index, condition);
         deleteCardFromHand(getMonster(turn, index + 1));
         DuelView.getInstance().showBoard();
     }
@@ -672,7 +672,6 @@ public class DuelModel {
         else if (spellsAndTrapsInFiled.get(turn).get(4) == null)
             return 4;
         return null;
-
     }
 
 }

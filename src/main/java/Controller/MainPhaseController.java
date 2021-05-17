@@ -23,7 +23,6 @@ public class MainPhaseController extends DuelController {
         return mainPhaseController;
     }
 
-
     public String set() {
         ArrayList<ArrayList<Card>> selectedCards = duelModel.getSelectedCards();
         if (selectedCards.get(duelModel.turn) == null) {
@@ -348,17 +347,16 @@ public class MainPhaseController extends DuelController {
                     if (placeOfCardSummonedOrSetInThisTurn == placeOfSummonCard) {
                         return "you can’t flip summon this card";
                     } else {
-                        Monster monster = (Monster) card;
                         duelModel.flipSummon(placeOfSummonCard - 1);
-                        if (monster.getName().equals("Command knight")) {
+                        if (card.getName().equals("Command knight")) {
                             effectOfCommandKnight();
                         }
-                        if (monster.getLevel() <= 4) {
-                            if (monster.getAttackPower() >= 1000) {
-                                duelModel.monsterFlipSummonOrNormalSummonForTrapHole = monster;
+                        if (card.getLevel() <= 4) {
+                            if (card.getAttackPower() >= 1000) {
+                                duelModel.monsterFlipSummonOrNormalSummonForTrapHole = card;
                             }
                         }
-                        duelModel.monsterSummonForEffectOfSomeTraps = monster;
+                        duelModel.monsterSummonForEffectOfSomeTraps = card;
                         if (card.getName().equals("Man-Eater Bug")) {
                             return "flipSummon Man-Eater Bug";
                         }
@@ -403,12 +401,11 @@ public class MainPhaseController extends DuelController {
         } else {
             Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
             String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
-            Monster monster = (Monster) card;
             if (!detailsOfSelectedCard.equals("Hand")) {
                 return "there is no way you could special summon a monster";
-            } else if (!monster.isHasSpecialSummon()) {
+            } else if (!card.isHasSpecialSummon()) {
                 return "there is no way you could special summon a monster";
-            } else if (monster.getName().equals("The Tricky")) {
+            } else if (card.getName().equals("The Tricky")) {
                 int address;
                 if (!isAi) {
                     address = mainPhaseView.getCardAddressForTribute();
@@ -437,7 +434,7 @@ public class MainPhaseController extends DuelController {
                         return specialSummonMonsterOnField(stateOfCard);
                     }
                 }
-            } else if (monster.getName().equals("Gate Guardian")) {
+            } else if (card.getName().equals("Gate Guardian")) {
                 int address;
                 int address1;
                 int address2;
@@ -577,9 +574,9 @@ public class MainPhaseController extends DuelController {
                 response1 = mainPhaseView.normalSummonCardThatCanSummonAnotherCard();
             } else {
                 response1 = "YES";
-                ArrayList<Monster> monstersInHand = arrangeMonsterInHandWithLevelAndAttackPower(duelModel.getHandCards()
+                ArrayList<Card> monstersInHand = arrangeMonsterInHandWithLevelAndAttackPower(duelModel.getHandCards()
                         .get(duelModel.turn));
-                for (Monster monster : monstersInHand) {
+                for (Card monster : monstersInHand) {
                     if (!monster.getCardType().equals("Ritual") && !monster.isHasSpecialSummon()) {
                         if (monster.getLevel() <= 4) {
                             int placeOfMonster = duelModel.getHandCards().get(duelModel.turn).indexOf(monster) + 1;
@@ -599,15 +596,14 @@ public class MainPhaseController extends DuelController {
                 } else {
                     Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
-                    Monster monster = (Monster) card;
                     if (!detailsOfSelectedCard.equals("Hand")) {
                         return "you can’t summon this card";
-                    } else if (card.getCardType().equals("Ritual") || monster.isHasSpecialSummon()) {
+                    } else if (card.getCardType().equals("Ritual") || card.isHasSpecialSummon()) {
                         return "you can’t summon this card";
-                    } else if (monster.getLevel() > 4) {
+                    } else if (card.getLevel() > 4) {
                         return "you can’t summon this card";
                     } else {
-                        return normalSummonMonsterOnField(monster, "Defence");
+                        return normalSummonMonsterOnField(card, "Defence");
                     }
                 }
             }
@@ -803,16 +799,13 @@ public class MainPhaseController extends DuelController {
 
     public void aiActiveBlackPendant(int placeOfSpell) {
 
-
     }
 
     public void aiActiveUnitedWeStand(int placeOfSpell) {
 
-
     }
 
     public void aiActiveMagnumShield(int placeOfSpell) {
-
 
     }
 
@@ -936,8 +929,8 @@ public class MainPhaseController extends DuelController {
 
     public void aiSetAndNormalSummon() {
         ArrayList<Card> aiHandCards = duelModel.getHandCards().get(duelModel.turn);
-        ArrayList<Monster> monstersInHand = arrangeMonsterInHandWithLevelAndAttackPower(aiHandCards);
-        for (Monster monster : monstersInHand) {
+        ArrayList<Card> monstersInHand = arrangeMonsterInHandWithLevelAndAttackPower(aiHandCards);
+        for (Card monster : monstersInHand) {
             if (duelModel.getMonsterSetOrSummonInThisTurn() == null) {
                 if (!duelController.isMonsterZoneFull(duelModel.turn)) {
                     if (!monster.getCardType().equals("Ritual") && !monster.isHasSpecialSummon()) {
@@ -998,18 +991,17 @@ public class MainPhaseController extends DuelController {
         }
     }
 
-    public ArrayList<Monster> arrangeMonsterInHandWithLevelAndAttackPower(ArrayList<Card> handCards) {
-        ArrayList<Monster> monstersInHand = new ArrayList<>();
+    public ArrayList<Card> arrangeMonsterInHandWithLevelAndAttackPower(ArrayList<Card> handCards) {
+        ArrayList<Card> monstersInHand = new ArrayList<>();
         for (Card card : handCards) {
             if (card.getCategory().equals("Monster")) {
-                Monster monster = (Monster) card;
-                monstersInHand.add(monster);
+                monstersInHand.add(card);
             }
         }
-        Comparator<Monster> compareForAiSummonAndSet = Comparator
-                .comparing(Monster::getLevel, Comparator.reverseOrder())
-                .thenComparing(Monster::getAttackPower, Comparator.reverseOrder())
-                .thenComparing(Monster::getDefensePower, Comparator.reverseOrder());
+        Comparator<Card> compareForAiSummonAndSet = Comparator
+                .comparing(Card::getLevel, Comparator.reverseOrder())
+                .thenComparing(Card::getAttackPower, Comparator.reverseOrder())
+                .thenComparing(Card::getDefensePower, Comparator.reverseOrder());
         monstersInHand.sort(compareForAiSummonAndSet);
         return monstersInHand;
     }
