@@ -149,32 +149,29 @@ public class DuelController {
         }
 
     }
-
-    public void deActiveEquipSpell(Card card, String spellName) {
-        if (spellName.equals("SwordOfDarkDestruction"))
-            swordOfDarkstraction(card, -1);
-        else if (spellName.equals("Black Pendant"))
-            blackPendant(card, -1);
-        else if (spellName.equals("UnitedWeStand"))
-            unitedWeStand(card, -1);
-        else if (spellName.equals("Magnum Shield"))
+    public void deActiveEquipSpell(Card card,String spellName){
+        if(spellName.equals("SwordOfDarkDestruction"))
+            swordOfDarkstraction(card,-1);
+        else if(spellName.equals("Black Pendant"))
+            blackPendant(card,-1);
+        else if(spellName.equals("UnitedWeStand"))
+            unitedWeStand(card,-1);
+        else if(spellName.equals("Magnum Shield"))
             deActiveMagnumShield(card);
 
-
-    }
 
     public void deActiveMagnumShield(Card card) {
         int place = duelModel.getMonstersInField().get(duelModel.turn).indexOf(card);
 
-        if (duelModel.getMonsterCondition(duelModel.turn, place).split("/")[0].startsWith("D")) {
+        if(duelModel.getMonsterCondition(duelModel.turn,place).split("/")[0].startsWith("D")) {
             card.setAttackPower(card.getAttackPower() - Card.getCardByName(card.getName()).getDefensePower());
-        } else {
-            card.setDefensePower(card.getDefensePower() - Card.getCardByName(card.getName()).getAttackPower());
+        }else{
+                card.setDefensePower(card.getDefensePower()-Card.getCardByName(card.getName()).getAttackPower());
         }
 
 
-    }
 
+  }
     public String activeSetZone() {
         deActiveOldField();
         duelModel.activeField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
@@ -206,7 +203,7 @@ public class DuelController {
             return effectOfForest(1);
         else if (spell.getName().equals("Closed Forest")) {
             playerActiveCloseForest = duelModel.turn;
-            return effectOfClosedForest(1);
+            return  effectOfClosedForest(1);
         } else if (spell.getName().equals("UMIIRUKA"))
             return effectOfUmiiruka(1);
         return "spell zone activate";
@@ -1403,8 +1400,6 @@ public class DuelController {
         boolean isWarriorExist = false;
         ArrayList<Integer> placeOfWarriorCard = new ArrayList<>();
         Card cardForAi = null;
-        if (isSpellZoneFull(duelModel.turn))
-            return "spellZone full!";
         for (int i = 0; i < 5; i++) {
             Card card = duelModel.getMonstersInField().get(duelModel.turn).get(i);
             if (card != null)
@@ -1420,57 +1415,47 @@ public class DuelController {
                 }
         }
         if (isWarriorExist) {
-
-
             int place;
-            if (duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
-                place = duelModel.getMonstersInField().indexOf(cardForAi);
-            } else {
+            Card thisSpell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                 duelModel.changePositionOfSpellOrTrapCard(duelModel.turn,placeOfSpellInField);
+                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(thisSpell,false);
+            duelController.isOpponentHasAnySpellOrTrapForActivate();
 
-                while (true) {
-                    place = duelView.scanForChoseMonsterForEquip(placeOfWarriorCard);
-                    if (placeOfWarriorCard.contains(place))
-                        break;
-                }
-                Card monsterForEquip = duelModel.getMonster(duelModel.turn, place);
-                Card thisSpell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-                if (placeOfSpellInField != -1) {
-                    duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpellInField);
+            if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(thisSpell)) {
+                duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(thisSpell);
+                if (duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+                    place = placeOfWarriorCard.indexOf(cardForAi);
                 } else {
-                    activeSpellFromHand();
-                }
-                duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(thisSpell, false);
-                isOpponentHasAnySpellOrTrapForActivate();
-                if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(thisSpell)) {
-                    if (duelModel.getMonstersInField().get(duelModel.turn).contains(monsterForEquip)) {
-                        duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(thisSpell);
 
-                        Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(place);
-                        if (duelModel.getMonsterCondition(duelModel.turn, place).startsWith("D")) {
-                            monster.setAttackPower(monster.getAttackPower() + monster.getDefensePower());
-
-                            duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).set(placeOfSpellInField, duelModel.getSelectedCards().get(duelModel.turn).get(0));
-                            //پر شود
-                        } else {
-                            monster.setDefensePower(monster.getAttackPower() + monster.getDefensePower());
-
-                        }
-
-                        duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(thisSpell);
-                        return "spell activated";
+                    while (true) {
+                        place = duelView.scanForChoseMonsterForEquip(placeOfWarriorCard);
+                        if (placeOfWarriorCard.contains(place))
+                            break;
                     }
+
+
+                }
+
+                Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(place);
+                if (duelModel.getMonsterCondition(duelModel.turn, place).startsWith("D")) {
+                    monster.setAttackPower(monster.getAttackPower() + monster.getDefensePower());
+
+                    duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).set(placeOfSpellInField, duelModel.getSelectedCards().get(duelModel.turn).get(0));
+                    //پر شود
+                } else {
+                    monster.setDefensePower(monster.getAttackPower() + monster.getDefensePower());
+
                 }
             }
-
-    }return"you don't have any Warrior monster to equip ";
-}
+            duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(thisSpell);
+            return "spell activated";
+        } else return "you don't have any Warrior monster to equip ";
+    }
 
     public String effectOfUnitedWeStand(int placeOfSpell) {
         boolean isMonster = false;
         ArrayList<Integer> placeOfMonsterCard = new ArrayList<>();
         Card cardForAi = null;
-        if (isSpellZoneFull(duelModel.turn))
-            return "spellZone full!";
         for (int i = 0; i < 5; i++) {
             Card card = duelModel.getMonstersInField().get(duelModel.turn).get(i);
             if (card != null) {
@@ -1495,29 +1480,45 @@ public class DuelController {
                         break;
                 }
             }
-            Card monsterForEquip = duelModel.getMonster(duelModel.turn, place);
+            Card monsterForEquip= duelModel.getMonster(duelModel.turn,place);
             Card thisSpell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
 
-            if (placeOfSpell != -1) {
+            if(placeOfSpell!=-1) {
                 duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
-            } else {
+            }
+            else{
                 activeSpellFromHand();
             }
-            duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(thisSpell, false);
-            isOpponentHasAnySpellOrTrapForActivate();
+            if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(thisSpell)){
+
+            }
+            duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(thisSpell,false);
+            duelController.isOpponentHasAnySpellOrTrapForActivate();
+
             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(thisSpell)) {
-                if (duelModel.getMonstersInField().get(duelModel.turn).contains(monsterForEquip)) {
-                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(thisSpell);
+                for (int i = 0; i < 5; i++) {
+                    duelModel.getMonstersInField().get(duelModel.turn).contains(monsterForEquip);
+                }
 
-                    Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
-
+                Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
+                if (placeOfSpell == -1) {
+                    if (isSpellZoneFull(duelModel.turn))
+                        return "spellZone full!";
+                    else {
+                        unitedWeStand(monster, 1);
+                        Spell spell = (Spell) duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                        duelModel.activeEquip(monster, spell);
+                        duelModel.addSpellAndTrapFromHandToGame("O", duelModel.findEmptyPlaceOfSpellField());
+                    }
+                } else {
                     unitedWeStand(monster, 1);
                     Spell spell = (Spell) duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     duelModel.activeEquip(monster, spell);
-                    return "spell activated";
-                }
+                    duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).indexOf(duelModel.getSelectedCards().get(duelModel.turn).get(0)));
 
+                }
             }
+            return "spell activated";
         }
         return "you don't have any monster to equip";
     }
@@ -1531,8 +1532,6 @@ public class DuelController {
         boolean isMonster = false;
         ArrayList<Integer> placeOfMonsterCard = new ArrayList<>();
         Card cardForAi = null;
-        if (isSpellZoneFull(duelModel.turn))
-            return "spellZone full!";
         for (int i = 0; i < 5; i++) {
             Card card = duelModel.getMonstersInField().get(duelModel.turn).get(i);
 
@@ -1559,30 +1558,25 @@ public class DuelController {
                         break;
                 }
             }
-            Card monsterForEquip = duelModel.getMonster(duelModel.turn, place);
-            Card thisSpell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-
-            if (placeOfSpell != -1) {
-                duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
-            } else {
-                activeSpellFromHand();
-            }
-            duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(thisSpell, false);
-            isOpponentHasAnySpellOrTrapForActivate();
-            if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(thisSpell)) {
-                if (duelModel.getMonstersInField().get(duelModel.turn).contains(monsterForEquip)) {
-                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(thisSpell);
-
-                    Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
-
+            Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
+            if (placeOfSpell == -1) {
+                if (isSpellZoneFull(duelModel.turn))
+                    return "spellZone full!";
+                else {
                     blackPendant(monster, 1);
                     Spell spell = (Spell) duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     duelModel.activeEquip(monster, spell);
+                    duelModel.addSpellAndTrapFromHandToGame("O", duelModel.findEmptyPlaceOfSpellField());
+                }
+            } else {
+                blackPendant(monster, 1);
+                Spell spell = (Spell) duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                duelModel.activeEquip(monster, spell);
+                duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).indexOf(duelModel.getSelectedCards().get(duelModel.turn).get(0)));
 
-                return "spell activated";
             }
+            return "spell activated";
         }
-    }
         return "you don't have any monster to equip";
     }
 
@@ -1594,8 +1588,6 @@ public class DuelController {
         boolean isMonster = false;
         ArrayList<Integer> placeOfMonsterCard = new ArrayList<>();
         Card cardForAi = null;
-        if (isSpellZoneFull(duelModel.turn))
-            return "spellZone full!";
         for (int i = 0; i < 5; i++) {
             Card card = duelModel.getMonstersInField().get(duelModel.turn).get(i);
             if (card != null) {
@@ -1623,24 +1615,9 @@ public class DuelController {
                         break;
                 }
             }
-            Card monsterForEquip = duelModel.getMonster(duelModel.turn, place);
-            Card thisSpell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-
-            if (placeOfSpell != -1) {
-                duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
-            } else {
-                activeSpellFromHand();
-            }
-            duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(thisSpell, false);
-            isOpponentHasAnySpellOrTrapForActivate();
-            if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(thisSpell)) {
-                if (duelModel.getMonstersInField().get(duelModel.turn).contains(monsterForEquip)) {
-                    duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(thisSpell);
-                    Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
-                    swordOfDarkstraction(monster, 1);
-                    return "spell activated";
-                }
-            }
+            Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
+            swordOfDarkstraction(monster, 1);
+            return "spell activated";
         }
         return "you don't have any monster to equip";
     }

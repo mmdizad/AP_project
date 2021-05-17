@@ -23,6 +23,7 @@ public class Card {
     private int defensePower;
     private int attackPower;
     private int level;
+    private boolean hasSpecialSummon;
 
     public Card(String name, String description, String cardType, int price, String category) {
         setName(name);
@@ -42,6 +43,14 @@ public class Card {
 
     public void setDefensePower(int defensePower) {
         this.defensePower = defensePower;
+    }
+
+    public void setHasSpecialSummon(boolean hasSpecialSummon) {
+        this.hasSpecialSummon = hasSpecialSummon;
+    }
+
+    public boolean isHasSpecialSummon() {
+        return hasSpecialSummon;
     }
 
     public void setLevel(int level) {
@@ -77,15 +86,9 @@ public class Card {
         return newFirstCards;
     }
 
-
-
     public static ArrayList<Card> getFirstCards() {
         return firstCards;
     }
-
-
-
-
 
     public static Card getCardByName(String cardName) {
         return cards.get(cardName);

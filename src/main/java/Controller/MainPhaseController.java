@@ -25,7 +25,6 @@ public class MainPhaseController extends DuelController {
 
 
     public String set() {
-        // has a bug
         ArrayList<ArrayList<Card>> selectedCards = duelModel.getSelectedCards();
         if (selectedCards.get(duelModel.turn) == null) {
             return "no card is selected yet";
@@ -35,10 +34,10 @@ public class MainPhaseController extends DuelController {
             } else if (duelModel.monsterSetOrSummonInThisTurn != null) {
                 return "you already summoned/set on this turn";
             } else if ((selectedCards.get(duelModel.turn).get(0)).getCardType().equals("Monster")) {
-                if(selectedCards.get(duelModel.turn).get(0).getLevel()>5)
+                if (selectedCards.get(duelModel.turn).get(0).getLevel() > 5)
                     return "this card can not set";
                 else
-                return this.setMonster();
+                    return this.setMonster();
             } else
                 return setTrapOrSpell();
         }
@@ -66,22 +65,21 @@ public class MainPhaseController extends DuelController {
 
     public String setMonster() {
         Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-        Monster monster = (Monster) card;
         if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
             duelModel.addMonsterFromHandToGame("DH/1", 0);
-            duelModel.setMonsterSetOrSummonInThisTurn(monster, 1);
+            duelModel.setMonsterSetOrSummonInThisTurn(card, 1);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null) {
             duelModel.addMonsterFromHandToGame("DH/2", 1);
-            duelModel.setMonsterSetOrSummonInThisTurn(monster, 2);
+            duelModel.setMonsterSetOrSummonInThisTurn(card, 2);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null) {
             duelModel.addMonsterFromHandToGame("DH/3", 2);
-            duelModel.setMonsterSetOrSummonInThisTurn(monster, 3);
+            duelModel.setMonsterSetOrSummonInThisTurn(card, 3);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null) {
             duelModel.addMonsterFromHandToGame("DH/4", 3);
-            duelModel.setMonsterSetOrSummonInThisTurn(monster, 4);
+            duelModel.setMonsterSetOrSummonInThisTurn(card, 4);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null) {
             duelModel.addMonsterFromHandToGame("DH/5", 4);
-            duelModel.setMonsterSetOrSummonInThisTurn(monster, 5);
+            duelModel.setMonsterSetOrSummonInThisTurn(card, 5);
         } else {
             return "monster card zone is full";
         }
@@ -136,21 +134,21 @@ public class MainPhaseController extends DuelController {
         } else {
             Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
             String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
-            Monster monster = (Monster) card;
+
             if (!detailsOfSelectedCard.equals("Hand")) {
                 return "you can’t summon this card";
-            } else if (card.getCardType().equals("Ritual") || monster.isHasSpecialSummon()) {
+            } else if (card.getCardType().equals("Ritual") || card.isHasSpecialSummon()) {
                 return "you can’t summon this card";
             } else if (duelModel.getMonsterSetOrSummonInThisTurn() != null) {
                 return "you already summoned/set on this turn";
             } else {
-                if (monster.getLevel() <= 4) {
-                    response = normalSummonMonsterOnField(monster, "Attack");
+                if (card.getLevel() <= 4) {
+                    response = normalSummonMonsterOnField(card, "Attack");
                     return response;
                 }
-                if (monster.getName().equals("Terratiger, the Empowered Warrior")) {
+                if (card.getName().equals("Terratiger, the Empowered Warrior")) {
                     return normalSummonCardThatCanSummonAnotherCard(response);
-                } else if (monster.getLevel() == 5 || monster.getLevel() == 6) {
+                } else if (card.getLevel() == 5 || card.getLevel() == 6) {
                     if (getNumberOfMonstersInPlayerField() >= 1) {
                         existMonsterOnField = true;
                     }
@@ -176,7 +174,7 @@ public class MainPhaseController extends DuelController {
                             } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                                 stateOfCard = mainPhaseView.getStateOfCardForSummon();
                             } else {
-                                if (monster.getAttackPower() >= monster.getDefensePower()) {
+                                if (card.getAttackPower() >= card.getDefensePower()) {
                                     stateOfCard = "Attack";
                                 } else {
                                     stateOfCard = "Defence";
@@ -188,13 +186,13 @@ public class MainPhaseController extends DuelController {
                                 duelModel.deleteMonster(duelModel.turn, address - 1);
                                 duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
                                         address));
-                                return normalSummonMonsterOnField(monster, stateOfCard);
+                                return normalSummonMonsterOnField(card, stateOfCard);
                             }
                         }
                     }
-                } else if (monster.getName().equals("Beast King Barbaros")) {
-                    return summonMonsterHasTwoMethods(monster);
-                } else if (monster.getLevel() >= 7) {
+                } else if (card.getName().equals("Beast King Barbaros")) {
+                    return summonMonsterHasTwoMethods(card);
+                } else if (card.getLevel() >= 7) {
                     int address;
                     int address1;
                     if (getNumberOfMonstersInPlayerField() < 2) {
@@ -222,7 +220,7 @@ public class MainPhaseController extends DuelController {
                         } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                             stateOfCard = mainPhaseView.getStateOfCardForSummon();
                         } else {
-                            if (monster.getAttackPower() >= monster.getDefensePower()) {
+                            if (card.getAttackPower() >= card.getDefensePower()) {
                                 stateOfCard = "Attack";
                             } else {
                                 stateOfCard = "Defence";
@@ -237,7 +235,7 @@ public class MainPhaseController extends DuelController {
                                     address));
                             duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
                                     address1));
-                            return normalSummonMonsterOnField(monster, stateOfCard);
+                            return normalSummonMonsterOnField(card, stateOfCard);
                         }
                     }
                 }
@@ -259,7 +257,7 @@ public class MainPhaseController extends DuelController {
         }
     }
 
-    public String normalSummonMonsterOnField(Monster monster, String state) {
+    public String normalSummonMonsterOnField(Card monster, String state) {
         String stateOfCard = "OO";
         if (state.equals("Attack")) {
             stateOfCard = "OO";
@@ -492,7 +490,7 @@ public class MainPhaseController extends DuelController {
         return "";
     }
 
-    public String summonMonsterHasTwoMethods(Monster monster) {
+    public String summonMonsterHasTwoMethods(Card monster) {
         // monsterName : Beast King Barbaros
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
         String response;
@@ -685,15 +683,13 @@ public class MainPhaseController extends DuelController {
                             aiActiveRingOfDefense(placeOfSpellCard);
                         } else if (card.getName().equals("Advanced Ritual Art")) {
                             aiActiveAdvancedRitualArt(placeOfSpellCard);
-                        }
-                        else if (card.getName().equals("MagnumShield")){
+                        } else if (card.getName().equals("MagnumShield")) {
                             duelController.effectOfMagnumShield(placeOfSpellCard);
-                        }
-                        else if(card.getName().equals("UnitedWeStand")){
+                        } else if (card.getName().equals("UnitedWeStand")) {
                             duelController.effectOfMagnumShield(placeOfSpellCard);
-                    }   else if (card.getName().equals("BlackPendant")) {
-                        duelController.effectOfBlackPendant(placeOfSpellCard);
-                    }else if(card.getName().equals("SwordOfDarkstraction")){
+                        } else if (card.getName().equals("BlackPendant")) {
+                            duelController.effectOfBlackPendant(placeOfSpellCard);
+                        } else if (card.getName().equals("SwordOfDarkstraction")) {
                             duelController.effectOfSwordOfDarkstraction(placeOfSpellCard);
                         }
                     }
@@ -804,17 +800,18 @@ public class MainPhaseController extends DuelController {
             duelController.effectOfMysticalSpaceTyphoon(placeOfSpell);
         }
     }
-    public void aiActiveBlackPendant(int placeOfSpell){
 
-
-
-    }
-    public void aiActiveUnitedWeStand(int placeOfSpell){
-
+    public void aiActiveBlackPendant(int placeOfSpell) {
 
 
     }
-    public void aiActiveMagnumShield(int placeOfSpell){
+
+    public void aiActiveUnitedWeStand(int placeOfSpell) {
+
+
+    }
+
+    public void aiActiveMagnumShield(int placeOfSpell) {
 
 
     }
