@@ -2,6 +2,7 @@ package Controller;
 
 import Model.*;
 import View.DrawPhaseView;
+import View.DuelView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,6 +11,8 @@ import java.util.Comparator;
 public class NewCardToHandController extends DuelController {
 
     private static NewCardToHandController newCardToHandController = null;
+    private final DuelView duelView = duelController.duelView;
+    private final DuelModel duelModel = duelController.duelModel;
 
     private NewCardToHandController() {
 
@@ -19,7 +22,6 @@ public class NewCardToHandController extends DuelController {
         if (newCardToHandController == null)
             newCardToHandController = new NewCardToHandController();
         return newCardToHandController;
-
     }
 
     public ArrayList<Card> newCardToHand(String playerUsername) {
@@ -27,10 +29,8 @@ public class NewCardToHandController extends DuelController {
         Deck deck = user.getActiveDeck();
         ArrayList<Card> cardsInDeck = deck.getCardsMain();
         if (cardsInDeck.size() >= 1) {
-            //ما اینجا duelModel نول هست چک کنید
             for (int i = 1; i < 6; i++) {
                 duelController.deselect();
-
                 Card card = duelController.duelModel.getSpellAndTrap(1 - duelController.duelModel.turn, i);
                 if (card != null) {
                     if (card.getName().equals("Time Seal") && duelController.duelModel.getSpellAndTrapCondition(1 - duelModel.turn, i).charAt(0) == 'O') {
@@ -42,7 +42,6 @@ public class NewCardToHandController extends DuelController {
             }
             return duelController.duelModel.addCardToHand();
         } else {
-
             return null;
             // جایگزین دارد
         }

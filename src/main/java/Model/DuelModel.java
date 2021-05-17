@@ -50,6 +50,11 @@ public class DuelModel {
         usernames = new ArrayList<>();
         usernames.add(playerUsername);
         usernames.add(opponentUsername);
+        someNewFieldsForStartDuel(playerUsername, opponentUsername);
+        otherNewFileForStartDuel();
+    }
+
+    public void someNewFieldsForStartDuel(String playerUsername, String opponentUsername) {
         User user = User.getUserByUsername(playerUsername);
         Deck activeDeck = user.getActiveDeck();
         ArrayList<Card> cardsInPlayerActiveDeck = activeDeck.getCardsMain();
@@ -76,7 +81,6 @@ public class DuelModel {
         selectCard1.add(null);
         selectedCards.add(selectCard1);
         selectedCards.add(selectCard2);
-
         monstersInField = new ArrayList<>();
         ArrayList<Card> monstersInField1 = new ArrayList<>();
         ArrayList<Card> monstersInField2 = new ArrayList<>();
@@ -109,9 +113,11 @@ public class DuelModel {
         monsterCondition.add(monsterCondition1);
         monsterCondition.add(monsterCondition2);
         spellAndTrapCondition = new ArrayList<>();
-
         spellAndTrapCondition.add(spellAndTrapCondition1);
         spellAndTrapCondition.add(spellAndTrapCondition2);
+    }
+
+    public void otherNewFileForStartDuel() {
         graveyard = new ArrayList<>();
         ArrayList<Card> graveyard1 = new ArrayList<>();
         ArrayList<Card> graveyard2 = new ArrayList<>();
@@ -351,16 +357,16 @@ public class DuelModel {
             card.setAttackPower(Card.getCardByName(card.name).getAttackPower());
             card.setDefensePower(Card.getCardByName(card.name).getDefensePower());
             monsterDestroyedInThisTurn.get(turn).add(card);
-            if(equipSpells.get(turn).containsValue(card)){
-                for(Card card1: equipSpells.get(turn).keySet()){
-                    if(equipSpells.get(turn).get(card1).equals(card))
-                        spellsAndTrapsInFiled.set(spellsAndTrapsInFiled.get(turn).indexOf(card1),null);
-                   addCardToGraveyard(turn,card1);
+            if (equipSpells.get(turn).containsValue(card)) {
+                for (Card card1 : equipSpells.get(turn).keySet()) {
+                    if (equipSpells.get(turn).get(card1).equals(card))
+                        spellsAndTrapsInFiled.set(spellsAndTrapsInFiled.get(turn).indexOf(card1), null);
+                    addCardToGraveyard(turn, card1);
                 }
             }
         }
-        if(card.getCategory().equals("Spell")&&card.getCardType().equals("Equip")){
-            DuelController.getInstance().deActiveEquipSpell(equipSpells.get(turn).get(card),card.getName());
+        if (card.getCategory().equals("Spell") && card.getCardType().equals("Equip")) {
+            DuelController.getInstance().deActiveEquipSpell(equipSpells.get(turn).get(card), card.getName());
         }
 
         graveyard.get(turn).add(card);
