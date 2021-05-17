@@ -56,8 +56,7 @@ public class LoginView extends Menu {
 
     public Matcher getCommandMatcher(String input, String regex) {
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(input);
-        return matcher;
+        return pattern.matcher(input);
     }
 
     public void showMenu(Matcher matcher) {
