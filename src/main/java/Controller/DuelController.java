@@ -147,32 +147,31 @@ public class DuelController {
             else if (spell.getName().equals("UMIIRUKA"))
                 effectOfUmiiruka(-1);
         }
-
     }
-    public void deActiveEquipSpell(Card card,String spellName){
-        if(spellName.equals("SwordOfDarkDestruction"))
-            swordOfDarkstraction(card,-1);
-        else if(spellName.equals("Black Pendant"))
-            blackPendant(card,-1);
-        else if(spellName.equals("UnitedWeStand"))
-            unitedWeStand(card,-1);
-        else if(spellName.equals("Magnum Shield"))
+
+    public void deActiveEquipSpell(Card card, String spellName) {
+        if (spellName.equals("SwordOfDarkDestruction"))
+            swordOfDarkstraction(card, -1);
+        else if (spellName.equals("Black Pendant"))
+            blackPendant(card, -1);
+        else if (spellName.equals("UnitedWeStand"))
+            unitedWeStand(card, -1);
+        else if (spellName.equals("Magnum Shield"))
             deActiveMagnumShield(card);
-
-
     }
-  public void deActiveMagnumShield(Card card){
-        int place =duelModel.getMonstersInField().get(duelModel.turn).indexOf(card);
 
-        if(duelModel.getMonsterCondition(duelModel.turn,place).split("/")[0].startsWith("D")) {
+    public void deActiveMagnumShield(Card card) {
+        int place = duelModel.getMonstersInField().get(duelModel.turn).indexOf(card);
+
+        if (duelModel.getMonsterCondition(duelModel.turn, place).split("/")[0].startsWith("D")) {
             card.setAttackPower(card.getAttackPower() - Card.getCardByName(card.getName()).getDefensePower());
-        }else{
-                card.setDefensePower(card.getDefensePower()-Card.getCardByName(card.getName()).getAttackPower());
+        } else {
+            card.setDefensePower(card.getDefensePower() - Card.getCardByName(card.getName()).getAttackPower());
         }
 
 
+    }
 
-  }
     public String activeSetZone() {
         deActiveOldField();
         duelModel.activeField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
@@ -204,7 +203,7 @@ public class DuelController {
             return effectOfForest(1);
         else if (spell.getName().equals("Closed Forest")) {
             playerActiveCloseForest = duelModel.turn;
-            return  effectOfClosedForest(1);
+            return effectOfClosedForest(1);
         } else if (spell.getName().equals("UMIIRUKA"))
             return effectOfUmiiruka(1);
         return "spell zone activate";
@@ -1418,8 +1417,8 @@ public class DuelController {
         if (isWarriorExist) {
             int place;
             Card thisSpell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-                 duelModel.changePositionOfSpellOrTrapCard(duelModel.turn,placeOfSpellInField);
-                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(thisSpell,false);
+            duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpellInField);
+            duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(thisSpell, false);
             duelController.isOpponentHasAnySpellOrTrapForActivate();
 
             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(thisSpell)) {
@@ -1481,19 +1480,18 @@ public class DuelController {
                         break;
                 }
             }
-            Card monsterForEquip= duelModel.getMonster(duelModel.turn,place);
+            Card monsterForEquip = duelModel.getMonster(duelModel.turn, place);
             Card thisSpell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
 
-            if(placeOfSpell!=-1) {
+            if (placeOfSpell != -1) {
                 duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
-            }
-            else{
+            } else {
                 activeSpellFromHand();
             }
-            if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(thisSpell)){
+            if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(thisSpell)) {
 
             }
-            duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(thisSpell,false);
+            duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(thisSpell, false);
             duelController.isOpponentHasAnySpellOrTrapForActivate();
 
             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(thisSpell)) {

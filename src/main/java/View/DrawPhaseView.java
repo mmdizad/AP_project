@@ -1,6 +1,5 @@
 package View;
 
-import Controller.DuelController;
 import Controller.NewCardToHandController;
 import Model.Card;
 import Model.DuelModel;

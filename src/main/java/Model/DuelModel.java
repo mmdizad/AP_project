@@ -26,8 +26,8 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> graveyard;
     private ArrayList<ArrayList<Card>> handCards;
     private ArrayList<ArrayList<Card>> field;
-    private ArrayList<Integer> lifePoints;
-    private ArrayList<String> usernames;
+    private final ArrayList<Integer> lifePoints;
+    private final ArrayList<String> usernames;
     private ArrayList<Card> borrowCards;
     private ArrayList<String> conditionOfBorrowCards;
     private ArrayList<HashMap<Card, Integer>> swordsCard;

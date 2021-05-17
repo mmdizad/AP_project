@@ -67,8 +67,6 @@ public class DuelView {
             showBoard();
             standByPhaseView.run(scanner);
         }
-
-
     }
 
     protected void deselect(Matcher matcher) {
@@ -169,7 +167,6 @@ public class DuelView {
         for (String s : board) {
             System.out.println(s);
         }
-
     }
 
     public void showGraveyard(Matcher matcher) {
