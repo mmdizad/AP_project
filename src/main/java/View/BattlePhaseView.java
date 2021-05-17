@@ -1,12 +1,16 @@
 package View;
 
 import Controller.BattlePhaseController;
+import Controller.DuelController;
+import Model.DuelModel;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class BattlePhaseView extends DuelView {
-    private static BattlePhaseView battlePhaseView = new BattlePhaseView();
+    private static final BattlePhaseView battlePhaseView = new BattlePhaseView();
+    private final DuelModel duelModel = duelView.duelModel;
+    private final DuelController duelController = duelView.duelController;
 
     private BattlePhaseView() {
 
@@ -48,7 +52,7 @@ public class BattlePhaseView extends DuelView {
                 if (command.equals("enterMenu")) {
                     enterPhase(scanner);
                     break;
-                }else if (command.equals("surrender")){
+                } else if (command.equals("surrender")) {
                     break;
                 }
                 if (isCommandInvalid) {

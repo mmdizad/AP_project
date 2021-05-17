@@ -4,6 +4,7 @@ import Model.Card;
 import Model.DuelModel;
 import Model.Monster;
 import View.BattlePhaseView;
+import View.DuelView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import java.util.regex.Pattern;
 public class BattlePhaseController extends DuelController {
 
     public ArrayList<Integer> attackedCards = new ArrayList<>();
-    private DuelModel duelModel = duelController.duelModel;
+    private final DuelModel duelModel = duelController.duelModel;
 
     private static BattlePhaseController battlePhaseController = new BattlePhaseController();
 

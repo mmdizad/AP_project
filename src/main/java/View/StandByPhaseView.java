@@ -1,11 +1,12 @@
 package View;
-
 import Controller.StandByPhaseController;
+import Model.DuelModel;
 
 import java.util.Scanner;
 
 public class StandByPhaseView extends DuelView {
-    private static StandByPhaseView standByPhaseView = new StandByPhaseView();
+    private static final StandByPhaseView standByPhaseView = new StandByPhaseView();
+    private final DuelModel duelModel = duelView.duelModel;
 
     private StandByPhaseView() {
 

@@ -3,6 +3,7 @@ package Controller;
 import Model.Card;
 import Model.DuelModel;
 import Model.Monster;
+import View.DuelView;
 import View.MainPhaseView;
 
 import java.util.ArrayList;
@@ -10,8 +11,9 @@ import java.util.Comparator;
 import java.util.regex.Matcher;
 
 public class MainPhaseController extends DuelController {
-    private static MainPhaseController mainPhaseController = new MainPhaseController();
-    DuelModel duelModel = duelController.duelModel;
+    private static final MainPhaseController mainPhaseController = new MainPhaseController();
+    private final DuelModel duelModel = duelController.duelModel;
+    private final DuelView duelView = duelController.duelView;
 
     private MainPhaseController() {
 

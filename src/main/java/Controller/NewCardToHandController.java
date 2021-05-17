@@ -2,6 +2,7 @@ package Controller;
 
 import Model.*;
 import View.DrawPhaseView;
+import View.DuelView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,6 +11,8 @@ import java.util.Comparator;
 public class NewCardToHandController extends DuelController {
 
     private static NewCardToHandController newCardToHandController = null;
+    private final DuelView duelView = duelController.duelView;
+    private final DuelModel duelModel = duelController.duelModel;
 
     private NewCardToHandController() {
 

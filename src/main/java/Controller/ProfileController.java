@@ -5,8 +5,7 @@ import Model.User;
 import java.util.regex.Matcher;
 
 public class ProfileController extends LoginController {
-
-    private static ProfileController profileController = new ProfileController();
+    private static final ProfileController profileController = new ProfileController();
 
     public static ProfileController getInstance() {
         return profileController;

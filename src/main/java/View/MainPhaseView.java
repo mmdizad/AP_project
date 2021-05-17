@@ -1,13 +1,17 @@
 package View;
 
+import Controller.DuelController;
 import Controller.MainPhaseController;
+import Model.DuelModel;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 
 public class MainPhaseView extends DuelView implements Set, Summon {
-    private static MainPhaseView mainPhaseView = new MainPhaseView();
+    private static final MainPhaseView mainPhaseView = new MainPhaseView();
+    private final DuelController duelController = duelView.duelController;
+    private final DuelModel duelModel = duelView.duelModel;
     private String phaseName;
     Scanner scanner1;
 
