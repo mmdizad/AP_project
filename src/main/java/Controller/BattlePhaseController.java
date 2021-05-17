@@ -54,7 +54,7 @@ public class BattlePhaseController extends DuelController {
                                 if (card.getName().equals("Magic Cylinder") && spellCondition.charAt(0) == 'O') {
                                     boolean ringOfDefenseExist = false;
                                     ArrayList<Card> ourSpells = duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn);
-                                    for (int j = 0;j < 5;j++){
+                                    for (int j = 0; j < 5; j++) {
                                         if (ourSpells.get(j) != null) {
                                             if (ourSpells.get(j).getName().equals("Ring of Defense") && duelModel.getSpellAndTrapCondition(duelModel.turn,
                                                     j + 1).split("/")[0].charAt(0) == 'O') {
@@ -376,7 +376,7 @@ public class BattlePhaseController extends DuelController {
                 return "you cant active this card";
             }
             if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field")) {
-
+                return "you cant activate this spell in this phase";
             } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("O")) {
                 return "you have already activated this card";
             } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("H")) {

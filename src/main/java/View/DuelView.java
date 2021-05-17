@@ -84,7 +84,7 @@ public class DuelView {
         return scanner1.nextLine();
     }
 
-    public Integer scanAddressOfCardForRitualSummon(){
+    public Integer scanAddressOfCardForRitualSummon() {
         System.out.println("please enter address of monster in your hand for ritual summon");
         return scanner1.nextInt();
     }
