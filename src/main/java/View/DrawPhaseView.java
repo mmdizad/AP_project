@@ -14,7 +14,6 @@ public class DrawPhaseView extends DuelView {
 
     private DrawPhaseView() {
         super();
-
     }
 
     public static DrawPhaseView getInstance() {
