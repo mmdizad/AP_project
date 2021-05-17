@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.DuelController;
 import View.DuelView;
 
 import java.util.ArrayList;
@@ -328,7 +329,7 @@ public class DuelModel {
     public void changePositionOfSpellOrTrapCard(int turn, int place) {
         String[] condition = spellAndTrapCondition.get(turn).get(place - 1).split("/");
         if (condition[0].equals("H")) {
-            spellAndTrapCondition.get(turn).add(place - 1, "O/" + place);
+            spellAndTrapCondition.get(turn).set(place - 1, "O/" + place);
         }
         DuelView.getInstance().showBoard();
     }
@@ -350,7 +351,18 @@ public class DuelModel {
             card.setAttackPower(Card.getCardByName(card.name).getAttackPower());
             card.setDefensePower(Card.getCardByName(card.name).getDefensePower());
             monsterDestroyedInThisTurn.get(turn).add(card);
+            if(equipSpells.get(turn).containsValue(card)){
+                for(Card card1: equipSpells.get(turn).keySet()){
+                    if(equipSpells.get(turn).get(card1).equals(card))
+                        spellsAndTrapsInFiled.set(spellsAndTrapsInFiled.get(turn).indexOf(card1),null);
+                   addCardToGraveyard(turn,card1);
+                }
+            }
         }
+        if(card.getCategory().equals("Spell")&&card.getCardType().equals("Equip")){
+            DuelController.getInstance().deActiveEquipSpell(equipSpells.get(turn).get(card),card.getName());
+        }
+
         graveyard.get(turn).add(card);
         DuelView.getInstance().showBoard();
     }

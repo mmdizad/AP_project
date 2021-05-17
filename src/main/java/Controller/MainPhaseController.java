@@ -627,14 +627,8 @@ public class MainPhaseController extends DuelController {
                     .get(duelModel.getSelectedCards().get(duelModel.turn).get(0)).split("/");
             if (detailOfSelectedCard[0].equals("Hand")) {
                 return duelController.activateEffect(-1);
-            } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field") && detailOfSelectedCard.equals("2"))
-                activateEffect(-2);
-            else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field") && detailOfSelectedCard.equals("1"))
-                return "this zone is activated";
-            else if (detailOfSelectedCard[0].equals("opponent"))
+            } else if (detailOfSelectedCard[0].equals("opponent"))
                 return "you cant active your opponent field card";
-            else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("Field") && detailOfSelectedCard.equals("1"))
-                return "this card is activate";
             else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("O")) {
                 return "you have already activated this card";
             } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("H")) {
@@ -691,9 +685,16 @@ public class MainPhaseController extends DuelController {
                             aiActiveRingOfDefense(placeOfSpellCard);
                         } else if (card.getName().equals("Advanced Ritual Art")) {
                             aiActiveAdvancedRitualArt(placeOfSpellCard);
-                           
-
-
+                        }
+                        else if (card.getName().equals("MagnumShield")){
+                            duelController.effectOfMagnumShield(placeOfSpellCard);
+                        }
+                        else if(card.getName().equals("UnitedWeStand")){
+                            duelController.effectOfMagnumShield(placeOfSpellCard);
+                    }   else if (card.getName().equals("BlackPendant")) {
+                        duelController.effectOfBlackPendant(placeOfSpellCard);
+                    }else if(card.getName().equals("SwordOfDarkstraction")){
+                            duelController.effectOfSwordOfDarkstraction(placeOfSpellCard);
                         }
                     }
                 }
@@ -1099,7 +1100,7 @@ public class MainPhaseController extends DuelController {
                     int placeOfSpellCard = duelModel.getHandCards().get(duelModel.turn).indexOf(card) + 1;
                     String aiCommand = "select --hand " + placeOfSpellCard;
                     duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
-                    setTrapOrSpell();
+                    duelController.activeZoneFromHand();
                 } else if (!duelController.isSpellZoneFull(duelModel.turn)) {
                     int placeOfSpellCard = duelModel.getHandCards().get(duelModel.turn).indexOf(card) + 1;
                     String aiCommand = "select --hand " + placeOfSpellCard;
