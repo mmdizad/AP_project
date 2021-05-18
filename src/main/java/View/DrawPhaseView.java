@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class DrawPhaseView extends DuelView {
     private static final DrawPhaseView drawPhaseView = new DrawPhaseView();
-    private final DuelModel duelModel = duelView.duelModel;
+    DuelModel duelModel = duelView.duelModel;
 
     private DrawPhaseView() {
         super();

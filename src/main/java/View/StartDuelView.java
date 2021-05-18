@@ -35,7 +35,7 @@ public class StartDuelView extends MainMenu {
                     User ai = new User("ai", "ai", "ai");
                     ai.addDeck(LoginController.user.getActiveDeck());
                     ai.setActiveDeck(LoginController.user.getActiveDeck());
-                    startTheGameWithAi(round,ai,scanner);
+                    startTheGameWithAi(round, ai, scanner);
                 } else System.out.println("number of rounds is not supported");
             } else if (input.equals("menu exit")) break;
             else if (input.equals("menu show-current")) System.out.println("StartDuel");
@@ -43,7 +43,7 @@ public class StartDuelView extends MainMenu {
         }
     }
 
-    private void startTheGameWithAi(int round,User secondUser,Scanner scanner) {
+    private void startTheGameWithAi(int round, User secondUser, Scanner scanner) {
         if (round == 1) {
             DuelView duelView = DuelView.getInstance();
             duelView.selectFirstPlayer(secondUser.getUsername(), scanner, duelView, false);

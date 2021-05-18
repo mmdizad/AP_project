@@ -62,9 +62,7 @@ public class DuelController {
                 effectOfClosedForest(1);
             else if (spell.getName().equals("UMIIRUKA"))
                 effectOfUmiiruka(1);
-
         }
-
     }
 
     public String deselect() {
@@ -78,49 +76,48 @@ public class DuelController {
 
     public String activateEffect(int placeOfSpell) {
         Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-        Spell spell = (Spell) card;
-        if (spell.getName().equals("Monster Reborn"))
+        if (card.getName().equals("Monster Reborn"))
             return effectOfMonsterReborn(placeOfSpell);
-        else if (spell.getName().equals("Terraforming"))
+        else if (card.getName().equals("Terraforming"))
             return effectOfTerraforming(placeOfSpell);
-        else if (spell.getName().equals("Pot of Greed"))
+        else if (card.getName().equals("Pot of Greed"))
             return effectOfPotOfGreed(placeOfSpell);
-        else if (spell.getName().equals("Raigeki"))
+        else if (card.getName().equals("Raigeki"))
             return effectOfRaigeki(placeOfSpell);
-        else if (spell.getName().equals("Change of Heart"))
+        else if (card.getName().equals("Change of Heart"))
             return effectOfChangeOfHeart(placeOfSpell);
-        else if (spell.getName().equals("Harpie’s Feather Duster"))
+        else if (card.getName().equals("Harpie’s Feather Duster"))
             return effectOfHarpiesFeatherDuster(placeOfSpell);
-        else if (spell.getName().equals("Swords of Revealing Light")) {
+        else if (card.getName().equals("Swords of Revealing Light")) {
             return effectOfSwordsOfRevealingLight(placeOfSpell);
-        } else if (spell.getName().equals("Dark Hole")) {
+        } else if (card.getName().equals("Dark Hole")) {
             return effectOfDarkHole(placeOfSpell);
-        } else if (spell.getName().equals("Supply Squad")) {
+        } else if (card.getName().equals("Supply Squad")) {
             return effectOfSupplySquad(placeOfSpell);
-        } else if (spell.getName().equals("Spell Absorption")) {
+        } else if (card.getName().equals("Spell Absorption")) {
             return effectOfSpellAbsorption(placeOfSpell);
-        } else if (spell.getName().equals("Messenger of peace")) {
+        } else if (card.getName().equals("Messenger of peace")) {
             return effectOfMessengerOfPeace(placeOfSpell);
-        } else if (spell.getName().equals("Twin Twisters")) {
+        } else if (card.getName().equals("Twin Twisters")) {
             return effectOfTwinTwisters(placeOfSpell);
-        } else if (spell.getName().equals("Mystical space typhoon")) {
+        } else if (card.getName().equals("Mystical space typhoon")) {
             return effectOfMysticalSpaceTyphoon(placeOfSpell);
-        } else if (spell.getName().equals("Ring of Defense")) {
+        } else if (card.getName().equals("Ring of Defense")) {
             return effectOfRingOfDefense(placeOfSpell);
-        } else if (spell.getName().equals("Advanced Ritual Art")) {
+        } else if (card.getName().equals("Advanced Ritual Art")) {
             return effectOfAdvancedRitualArt(placeOfSpell);
-        } else if (spell.getCardType().equals("Field")) {
+        } else if (card.getCardType().equals("Field")) {
             if (placeOfSpell == -1)
                 activeZoneFromHand();
             if (placeOfSpell == -2)
                 activeSetZone();
-        } else if (spell.getName().equals("SwordOfDarkDestruction"))
+        } else if (card.getName().equals("SwordOfDarkDestruction"))
             return effectOfSwordOfDarkstraction(placeOfSpell);
-        else if (spell.getName().equals("Black Pendant"))
+        else if (card.getName().equals("Black Pendant"))
             return effectOfBlackPendant(placeOfSpell);
-        else if (spell.getName().equals("UnitedWeStand"))
+        else if (card.getName().equals("UnitedWeStand"))
             return effectOfUnitedWeStand(placeOfSpell);
-        else if (spell.getName().equals("Magnum Shield"))
+        else if (card.getName().equals("Magnum Shield"))
             return effectOfMagnumShield(placeOfSpell);
         return "";
     }
@@ -283,12 +280,11 @@ public class DuelController {
 
     public String opponentActiveSpell(int placeOfSpell) {
         Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-        Spell spell = (Spell) card;
-        if (spell.getName().equals("Twin Twisters")) {
+        if (card.getName().equals("Twin Twisters")) {
             return effectOfTwinTwisters(placeOfSpell);
-        } else if (spell.getName().equals("Mystical space typhoon")) {
+        } else if (card.getName().equals("Mystical space typhoon")) {
             return effectOfMysticalSpaceTyphoon(placeOfSpell);
-        } else if (spell.getName().equals("Ring of Defense")) {
+        } else if (card.getName().equals("Ring of Defense")) {
             return effectOfRingOfDefense(placeOfSpell);
         }
         return "";
@@ -642,23 +638,23 @@ public class DuelController {
         String[] details = detailsOfBorrowCard.split("/");
         String stateOfBorrowCard = details[0];
         if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
-            duelModel.getMonstersInField().get(duelModel.turn).add(0, borrowCard);
+            duelModel.getMonstersInField().get(duelModel.turn).set(0, borrowCard);
             duelModel.addMonsterCondition(duelModel.turn, 0, stateOfBorrowCard + "/1");
             duelModel.addBorrowCard(borrowCard, detailsOfBorrowCard + "/" + 1);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null) {
-            duelModel.getMonstersInField().get(duelModel.turn).add(1, borrowCard);
+            duelModel.getMonstersInField().get(duelModel.turn).set(1, borrowCard);
             duelModel.addMonsterCondition(duelModel.turn, 1, stateOfBorrowCard + "/2");
             duelModel.addBorrowCard(borrowCard, detailsOfBorrowCard + "/" + 2);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null) {
-            duelModel.getMonstersInField().get(duelModel.turn).add(2, borrowCard);
+            duelModel.getMonstersInField().get(duelModel.turn).set(2, borrowCard);
             duelModel.addMonsterCondition(duelModel.turn, 2, stateOfBorrowCard + "/3");
             duelModel.addBorrowCard(borrowCard, detailsOfBorrowCard + "/" + 3);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null) {
-            duelModel.getMonstersInField().get(duelModel.turn).add(3, borrowCard);
+            duelModel.getMonstersInField().get(duelModel.turn).set(3, borrowCard);
             duelModel.addMonsterCondition(duelModel.turn, 3, stateOfBorrowCard + "/4");
             duelModel.addBorrowCard(borrowCard, detailsOfBorrowCard + "/" + 4);
         } else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null) {
-            duelModel.getMonstersInField().get(duelModel.turn).add(4, borrowCard);
+            duelModel.getMonstersInField().get(duelModel.turn).set(4, borrowCard);
             duelModel.addMonsterCondition(duelModel.turn, 4, stateOfBorrowCard + "/5");
             duelModel.addBorrowCard(borrowCard, detailsOfBorrowCard + "/" + 5);
         }
@@ -674,7 +670,7 @@ public class DuelController {
             int placeOfBorrowCard = Integer.parseInt(detailsOfBorrowCard[1]);
             int placeOfFieldThatBorrowCardSet = Integer.parseInt(detailsOfBorrowCard[2]);
             duelModel.deleteMonster(1 - duelModel.turn, placeOfFieldThatBorrowCardSet - 1);
-            duelModel.getMonstersInField().get(duelModel.turn).add(placeOfBorrowCard - 1, borrowCard);
+            duelModel.getMonstersInField().get(duelModel.turn).set(placeOfBorrowCard - 1, borrowCard);
             duelModel.addMonsterCondition(duelModel.turn, placeOfBorrowCard - 1, stateOfBorrowCard
                     + "/" + placeOfBorrowCard);
             i++;
@@ -1332,9 +1328,7 @@ public class DuelController {
                         if (!card1.getCategory().equals("Monster") || !card2.getCategory().equals("Monster")) {
                             return "you must tribute monster";
                         } else {
-                            Monster monster1 = (Monster) card1;
-                            Monster monster2 = (Monster) card2;
-                            if (monster1.getLevel() + monster2.getLevel() != ritualMonster.getLevel()) {
+                            if (card1.getLevel() + card2.getLevel() != ritualMonster.getLevel()) {
                                 return "selected monsters levels don’t match with ritual monster";
                             } else {
                                 String stateOfCardForSummon;
@@ -1398,6 +1392,7 @@ public class DuelController {
         duelModel.monsterSummonForEffectOfSomeTraps = card;
         activeFieldInGame();
     }
+
     public String effectOfMagnumShield(int placeOfSpellInField) {
         boolean isWarriorExist = false;
         ArrayList<Integer> placeOfWarriorCard = new ArrayList<>();
@@ -1419,13 +1414,10 @@ public class DuelController {
                 }
         }
         if (isWarriorExist) {
-
-
             int place;
             if (duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                 place = duelModel.getMonstersInField().indexOf(cardForAi);
             } else {
-
                 while (true) {
                     place = duelView.scanForChoseMonsterForEquip(placeOfWarriorCard);
                     if (placeOfWarriorCard.contains(place))
@@ -1453,7 +1445,6 @@ public class DuelController {
                             //پر شود
                         } else {
                             monster.setDefensePower(monster.getAttackPower() + monster.getDefensePower());
-
                         }
 
                         duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(thisSpell);
@@ -1462,7 +1453,8 @@ public class DuelController {
                 }
             }
 
-        }return"you don't have any Warrior monster to equip ";
+        }
+        return "you don't have any Warrior monster to equip ";
     }
 
     public String effectOfUnitedWeStand(int placeOfSpell) {
@@ -1512,7 +1504,7 @@ public class DuelController {
                     Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
 
                     unitedWeStand(monster, 1);
-                    Card spell =  duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                    Card spell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     duelModel.activeEquip(monster, spell);
                     return "spell activated";
                 }
@@ -1576,7 +1568,7 @@ public class DuelController {
                     Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
 
                     blackPendant(monster, 1);
-                    Card spell =  duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                    Card spell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     duelModel.activeEquip(monster, spell);
 
                     return "spell activated";
@@ -1612,7 +1604,6 @@ public class DuelController {
             }
         }
         if (isMonster) {
-
             int place;
             if (duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                 place = placeOfMonsterCard.indexOf(cardForAi);
@@ -2247,10 +2238,8 @@ public class DuelController {
     }
 
     public void hasSupplySquadCard() {
-        ArrayList<Card> monsterDestroyedInThisTurn1 = duelModel.getMonsterDestroyedInThisTurn()
-                .get(duelModel.turn);
-        ArrayList<Card> monsterDestroyedInThisTurn2 = duelModel.getMonsterDestroyedInThisTurn()
-                .get(1 - duelModel.turn);
+        ArrayList<Card> monsterDestroyedInThisTurn1 = duelModel.getMonsterDestroyedInThisTurn().get(duelModel.turn);
+        ArrayList<Card> monsterDestroyedInThisTurn2 = duelModel.getMonsterDestroyedInThisTurn().get(1 - duelModel.turn);
         ArrayList<Card> supplyCards1 = duelModel.getSupplySquadCards().get(duelModel.turn);
         ArrayList<Card> supplyCards2 = duelModel.getSupplySquadCards().get(1 - duelModel.turn);
         if (monsterDestroyedInThisTurn1.size() > 0) {
@@ -2283,7 +2272,7 @@ public class DuelController {
                         " is applied, remove it from play.", "Effect", 8000, "Monster",
                         0, 0, "Machine", "LIGHT", 1, false);
                 int placeOfScanner = entry.getValue();
-                duelModel.getMonstersInField().get(duelModel.turn).add(placeOfScanner - 1, monster);
+                duelModel.getMonstersInField().get(duelModel.turn).set(placeOfScanner - 1, monster);
             }
         }
     }

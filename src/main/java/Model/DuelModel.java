@@ -617,7 +617,9 @@ public class DuelModel {
     }
 
     public void deleteSpellAndTrapsSetInThisTurn() {
-        spellsAndTarpsSetInThisTurn.clear();
+        for (Card card : new ArrayList<>(spellsAndTarpsSetInThisTurn.get(turn))) {
+            spellsAndTarpsSetInThisTurn.get(turn).remove(card);
+        }
     }
 
     public void addActivatedMonsterEffect(Card card, int turn) {

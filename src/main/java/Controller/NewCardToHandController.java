@@ -11,8 +11,8 @@ import java.util.Comparator;
 public class NewCardToHandController extends DuelController {
 
     private static NewCardToHandController newCardToHandController = null;
-    private final DuelView duelView = duelController.duelView;
-    private final DuelModel duelModel = duelController.duelModel;
+    static DuelView duelView = duelController.duelView;
+    static DuelModel duelModel = duelController.duelModel;
 
     private NewCardToHandController() {
 
@@ -49,6 +49,7 @@ public class NewCardToHandController extends DuelController {
 
     public String hasHeraldOfCreation() {
         DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
+        DuelModel duelModel = duelController.duelModel;
         ArrayList<Card> monstersInFiled = duelModel.getMonstersInField().get(duelModel.turn);
         for (Card card : monstersInFiled) {
             if (card != null) {
@@ -76,6 +77,7 @@ public class NewCardToHandController extends DuelController {
 
     public String hasScannerMonster() {
         DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
+        DuelModel duelModel = duelController.duelModel;
         ArrayList<Card> monstersInFiled = duelModel.getMonstersInField().get(duelModel.turn);
         int i = 1;
         for (Card card : monstersInFiled) {
@@ -133,8 +135,7 @@ public class NewCardToHandController extends DuelController {
                 if (!card.getCategory().equals("Monster")) {
                     return "you must select monster to add to your hand";
                 } else {
-                    Monster monster = (Monster) card;
-                    if (monster.getLevel() < 7) {
+                    if (card.getLevel() < 7) {
                         return "you must select monster with level 7 or more";
                     } else {
                         duelModel.deleteCardFromHand(duelModel.getHandCards().get(duelModel.turn)
@@ -168,7 +169,7 @@ public class NewCardToHandController extends DuelController {
             if (!card.getCategory().equals("Monster")) {
                 return "you must select monster to insteadOf Scanner";
             } else {
-                duelModel.getMonstersInField().get(duelModel.turn).add(placeOfScanner - 1, card);
+                duelModel.getMonstersInField().get(duelModel.turn).set(placeOfScanner - 1, card);
                 duelModel.setCardsInsteadOfScanners(card, placeOfScanner);
                 return "a monster card insteadOf Scanner";
             }

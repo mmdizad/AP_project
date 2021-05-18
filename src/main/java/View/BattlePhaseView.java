@@ -9,8 +9,8 @@ import java.util.regex.Matcher;
 
 public class BattlePhaseView extends DuelView {
     private static final BattlePhaseView battlePhaseView = new BattlePhaseView();
-    private final DuelModel duelModel = duelView.duelModel;
-    private final DuelController duelController = duelView.duelController;
+    DuelModel duelModel = duelView.duelModel;
+    DuelController duelController = duelView.duelController;
 
     private BattlePhaseView() {
 
