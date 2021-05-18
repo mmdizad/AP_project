@@ -1438,13 +1438,14 @@ public class DuelController {
                 } else {
                     activeSpellFromHand();
                 }
+
                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(thisSpell, false);
                 isOpponentHasAnySpellOrTrapForActivate();
                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(thisSpell)) {
                     if (duelModel.getMonstersInField().get(duelModel.turn).contains(monsterForEquip)) {
                         duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(thisSpell);
 
-                        Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(place);
+                        Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
                         if (duelModel.getMonsterCondition(duelModel.turn, place).startsWith("D")) {
                             monster.setAttackPower(monster.getAttackPower() + monster.getDefensePower());
 
@@ -1511,7 +1512,7 @@ public class DuelController {
                     Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
 
                     unitedWeStand(monster, 1);
-                    Spell spell = (Spell) duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                    Card spell =  duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     duelModel.activeEquip(monster, spell);
                     return "spell activated";
                 }
@@ -1575,7 +1576,7 @@ public class DuelController {
                     Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
 
                     blackPendant(monster, 1);
-                    Spell spell = (Spell) duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                    Card spell =  duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     duelModel.activeEquip(monster, spell);
 
                     return "spell activated";
@@ -1637,6 +1638,7 @@ public class DuelController {
                     duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(thisSpell);
                     Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
                     swordOfDarkstraction(monster, 1);
+                    duelModel.activeEquip(monster, thisSpell);
                     return "spell activated";
                 }
             }
@@ -1669,7 +1671,7 @@ public class DuelController {
                         monster1.setAttackPower(monster1.getAttackPower() + 500 * activeOrdeActive);
                     }
         }
-        deselect();
+
         return "spellZone activated";
     }
 

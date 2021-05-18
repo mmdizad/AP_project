@@ -39,7 +39,7 @@ public class DuelModel {
     private ArrayList<ArrayList<Boolean>> spellZoneActivate;
     private ArrayList<ArrayList<Card>> activatedMonsterEffects;
     private HashMap<Card, Integer> cardsInsteadOfScanners;
-    private ArrayList<HashMap<Spell, Card>> equipSpells;
+    private ArrayList<HashMap<Card, Card>> equipSpells;
 
     public DuelModel(String playerUsername, String opponentUsername) {
         lifePoints = new ArrayList<>();
@@ -180,8 +180,8 @@ public class DuelModel {
         spellOrTrapActivated.add(spellOrTrapActivated1);
         spellOrTrapActivated.add(spellOrTrapActivated2);
         equipSpells = new ArrayList<>();
-        HashMap<Spell, Card> equipspellUser = new HashMap<>();
-        HashMap<Spell, Card> equipspellOpponent = new HashMap<>();
+        HashMap<Card, Card> equipspellUser = new HashMap<>();
+        HashMap<Card, Card> equipspellOpponent = new HashMap<>();
         equipSpells.add(equipspellUser);
         equipSpells.add(equipspellOpponent);
     }
@@ -653,11 +653,11 @@ public class DuelModel {
         cardsInsteadOfScanners.clear();
     }
 
-    public ArrayList<HashMap<Spell, Card>> getEquipSpells() {
+    public ArrayList<HashMap<Card, Card>> getEquipSpells() {
         return equipSpells;
     }
 
-    public void activeEquip(Card monster, Spell spell) {
+    public void activeEquip(Card monster, Card spell) {
         equipSpells.get(turn).put(spell, monster);
     }
 
