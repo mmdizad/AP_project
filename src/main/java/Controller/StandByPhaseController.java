@@ -3,7 +3,7 @@ package Controller;
 import Model.DuelModel;
 
 public class StandByPhaseController extends DuelController {
-   private final DuelModel duelModel = duelController.duelModel;
+    private final DuelModel duelModel = duelController.duelModel;
 
     public Integer hasSpellEffectInThisPhase() {
         return duelModel.getMessengerOfPeace().get(duelModel.turn).size();
@@ -15,10 +15,9 @@ public class StandByPhaseController extends DuelController {
         } else if (response == 1) {
             duelModel.deleteMessengerOfPeaceCards(duelModel.turn, duelModel.getMessengerOfPeace().get(duelModel.turn)
                     .get(0));
-            return "your messenger of peace cards destroyed";
+            return "your messenger of peace card destroyed";
         } else {
-            duelModel.decreaseLifePoint(100 * duelModel.getMessengerOfPeace().get(duelModel.turn).size(),
-                    duelModel.turn);
+            duelModel.decreaseLifePoint(100, duelModel.turn);
             return "your lp decreases 100 unit";
         }
     }
