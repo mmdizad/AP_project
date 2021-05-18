@@ -2,7 +2,6 @@ package Controller;
 
 import Model.Card;
 import Model.DuelModel;
-import Model.Monster;
 import View.DuelView;
 import View.MainPhaseView;
 
@@ -30,13 +29,15 @@ public class MainPhaseController extends DuelController {
         } else {
             if (!(duelModel.getHandCards().get(duelModel.turn)).contains((selectedCards.get(duelModel.turn)).get(0))) {
                 return "you can’t set this card";
-            } else if (duelModel.monsterSetOrSummonInThisTurn != null) {
+            }
+             else if ((selectedCards.get(duelModel.turn).get(0)).getCategory().equals("Monster")) {
+            if (duelModel.monsterSetOrSummonInThisTurn != null)
                 return "you already summoned/set on this turn";
-            } else if ((selectedCards.get(duelModel.turn).get(0)).getCardType().equals("Monster")) {
                 if (selectedCards.get(duelModel.turn).get(0).getLevel() > 5)
                     return "this card can not set";
                 else
                     return this.setMonster();
+
             } else
                 return setTrapOrSpell();
         }
