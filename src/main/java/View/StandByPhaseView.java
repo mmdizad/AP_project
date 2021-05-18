@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class StandByPhaseView extends DuelView {
     private static final StandByPhaseView standByPhaseView = new StandByPhaseView();
-    private final DuelModel duelModel = duelView.duelModel;
+    DuelModel duelModel = duelView.duelModel;
 
     private StandByPhaseView() {
 

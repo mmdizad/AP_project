@@ -1504,7 +1504,7 @@ public class DuelController {
                     Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
 
                     unitedWeStand(monster, 1);
-                    Card spell =  duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                    Card spell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     duelModel.activeEquip(monster, spell);
                     return "spell activated";
                 }
@@ -1568,7 +1568,7 @@ public class DuelController {
                     Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(place);
 
                     blackPendant(monster, 1);
-                    Card spell =  duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                    Card spell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     duelModel.activeEquip(monster, spell);
 
                     return "spell activated";

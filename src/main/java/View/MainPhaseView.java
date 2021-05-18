@@ -10,8 +10,8 @@ import java.util.regex.Matcher;
 
 public class MainPhaseView extends DuelView implements Set, Summon {
     private static final MainPhaseView mainPhaseView = new MainPhaseView();
-    private final DuelController duelController = duelView.duelController;
-    private final DuelModel duelModel = duelView.duelModel;
+    DuelController duelController = duelView.duelController;
+    DuelModel duelModel = duelView.duelModel;
     private String phaseName;
     Scanner scanner1;
 
@@ -211,38 +211,33 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             } else if (newPhase.equals("BattlePhase")) {
                 BattlePhaseView battlePhaseView = BattlePhaseView.getInstance();
                 battlePhaseView.run(scanner, true);
-            } else if (newPhase.equals("EndPhase")) {
-                System.out.println("EndPhase");
-                duelModel.turn = 1 - duelModel.turn;
-                DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
-                drawPhaseView.newCard(scanner, duelModel.getUsernames().get(duelModel.turn), false);
-                duelModel.deleteMonsterSetOrSummonInThisTurn();
             } else {
-                System.out.println("please enter another or correct phase");
-                run(scanner, phaseName, false);
+                endPhaseMethod(scanner, newPhase);
             }
         } else if (phaseName.equals("MainPhase2")) {
-            if (newPhase.equals("EndPhase")) {
-                if (duelModel.getBorrowCards().size() > 0) {
-                    duelController.refundsTheBorrowCards();
-                }
-                duelController.hasSwordCard();
-                duelController.hasSupplySquadCard();
-                duelController.hasSomeCardsInsteadOfScanner();
-                duelModel.deleteMonstersDestroyedInThisTurn();
-                duelModel.deleteSpellAndTrapsSetInThisTurn();
-                duelModel.deleteCardsInsteadOfScanners();
-                duelModel.deleteMonsterSetOrSummonInThisTurn();
-                System.out.println("EndPhase");
-                duelModel.turn = 1 - duelModel.turn;
-                DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
-                drawPhaseView.newCard(scanner, duelModel.getUsernames().get(duelModel.turn), false);
-            } else {
-                System.out.println("please enter another or correct phase");
-                run(scanner, phaseName, false);
-            }
+            endPhaseMethod(scanner, newPhase);
         }
     }
 
-
+    public void endPhaseMethod(Scanner scanner, String newPhase) {
+        if (newPhase.equals("EndPhase")) {
+            if (duelModel.getBorrowCards().size() > 0) {
+                duelController.refundsTheBorrowCards();
+            }
+            duelController.hasSwordCard();
+            duelController.hasSupplySquadCard();
+            duelController.hasSomeCardsInsteadOfScanner();
+            duelModel.deleteMonstersDestroyedInThisTurn();
+            duelModel.deleteSpellAndTrapsSetInThisTurn();
+            duelModel.deleteCardsInsteadOfScanners();
+            duelModel.deleteMonsterSetOrSummonInThisTurn();
+            System.out.println("EndPhase");
+            duelModel.turn = 1 - duelModel.turn;
+            DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
+            drawPhaseView.newCard(scanner, duelModel.getUsernames().get(duelModel.turn), false);
+        } else {
+            System.out.println("please enter another or correct phase");
+            run(scanner, phaseName, false);
+        }
+    }
 }

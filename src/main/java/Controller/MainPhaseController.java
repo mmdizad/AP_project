@@ -12,8 +12,8 @@ import java.util.regex.Matcher;
 
 public class MainPhaseController extends DuelController {
     private static final MainPhaseController mainPhaseController = new MainPhaseController();
-    private final DuelModel duelModel = duelController.duelModel;
-    private final DuelView duelView = duelController.duelView;
+    DuelModel duelModel = duelController.duelModel;
+    DuelView duelView = duelController.duelView;
 
     private MainPhaseController() {
 

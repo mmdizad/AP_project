@@ -2,8 +2,6 @@ package View;
 
 import Controller.*;
 import Model.DuelModel;
-import Model.User;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;

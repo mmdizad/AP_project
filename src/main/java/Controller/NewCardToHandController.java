@@ -11,8 +11,8 @@ import java.util.Comparator;
 public class NewCardToHandController extends DuelController {
 
     private static NewCardToHandController newCardToHandController = null;
-    private final DuelView duelView = duelController.duelView;
-    private final DuelModel duelModel = duelController.duelModel;
+    static DuelView duelView = duelController.duelView;
+    static DuelModel duelModel = duelController.duelModel;
 
     private NewCardToHandController() {
 
@@ -49,6 +49,7 @@ public class NewCardToHandController extends DuelController {
 
     public String hasHeraldOfCreation() {
         DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
+        DuelModel duelModel = duelController.duelModel;
         ArrayList<Card> monstersInFiled = duelModel.getMonstersInField().get(duelModel.turn);
         for (Card card : monstersInFiled) {
             if (card != null) {
@@ -76,6 +77,7 @@ public class NewCardToHandController extends DuelController {
 
     public String hasScannerMonster() {
         DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
+        DuelModel duelModel = duelController.duelModel;
         ArrayList<Card> monstersInFiled = duelModel.getMonstersInField().get(duelModel.turn);
         int i = 1;
         for (Card card : monstersInFiled) {

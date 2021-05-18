@@ -3,7 +3,7 @@ package Controller;
 import Model.DuelModel;
 
 public class StandByPhaseController extends DuelController {
-    private final DuelModel duelModel = duelController.duelModel;
+    DuelModel duelModel = duelController.duelModel;
 
     public Integer hasSpellEffectInThisPhase() {
         return duelModel.getMessengerOfPeace().get(duelModel.turn).size();
