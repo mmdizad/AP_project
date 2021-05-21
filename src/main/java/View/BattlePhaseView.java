@@ -132,6 +132,7 @@ public class BattlePhaseView extends DuelView {
 
     public void activateEffectBattlePhaseView(Matcher matcher) {
         if (matcher.find()) {
+            isCommandInvalid = false;
             BattlePhaseController battlePhaseController = BattlePhaseController.getInstance();
             String result = battlePhaseController.activateEffectBattlePhaseController();
             System.out.println(result);

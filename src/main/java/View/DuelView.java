@@ -100,6 +100,7 @@ public class DuelView {
             } else {
                 System.out.println("now it will be " + duelModel.getUsernames().get(duelModel.turn) + " turn");
                 System.out.println("do you want to activate your trap or spell?");
+                System.out.println("enter YES or NO");
                 String response = scanner1.nextLine();
                 while (!response.equals("NO") && !response.equals("YES")) {
                     System.out.println("you must enter NO or YES");

@@ -10,8 +10,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Scanner;
 
 public class TestMethod {
     @Test
@@ -48,7 +46,7 @@ public class TestMethod {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         InputStream SysInBackUp = System.in;
-        ByteArrayInputStream in = new ByteArrayInputStream("menu showcurrent\nmenu show-current\nmenu enter Menu\nmenu exit"
+        ByteArrayInputStream in = new ByteArrayInputStream("menu showCurrent\nmenu show-current\nmenu enter Menu\nmenu exit"
                 .getBytes(StandardCharsets.UTF_8));
         System.setIn(in);
         new LoginView().run();
@@ -119,7 +117,7 @@ public class TestMethod {
         InputStream SysInBackUp = System.in;
         ByteArrayInputStream in = new ByteArrayInputStream(("user login -u mmd -u mmd\n" +
                 "user login -p 123 -m as\n"
-                +"user login -p mmd -p ali" +
+                + "user login -p mmd -p ali" +
                 "\nuser login -p 123 -u mmd" + "\nmenu exit" + "\nmenu exit")
                 .getBytes(StandardCharsets.UTF_8));
         System.setIn(in);

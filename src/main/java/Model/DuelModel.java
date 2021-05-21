@@ -556,7 +556,9 @@ public class DuelModel {
     }
 
     public void deleteMonstersDestroyedInThisTurn() {
-        monsterDestroyedInThisTurn.clear();
+        for (Card card : new ArrayList<>(monsterDestroyedInThisTurn.get(turn))) {
+            monsterDestroyedInThisTurn.get(turn).remove(card);
+        }
     }
 
     public void setSupplySquad(int turn, Card card) {
