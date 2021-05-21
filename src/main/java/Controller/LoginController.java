@@ -19,7 +19,7 @@ public class LoginController {
         } else if (User.isUserWithThisNicknameExists(nickname)) {
             return "user with nickname " + nickname + " already exists";
         } else {
-            User newUser = new User(username, nickname, password);
+            new User(username, nickname, password);
             return "user created successfully!";
         }
     }
