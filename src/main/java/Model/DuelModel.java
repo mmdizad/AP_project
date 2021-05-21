@@ -495,7 +495,6 @@ public class DuelModel {
 
     public void deleteCardFromHand(Card card) {
         handCards.get(turn).remove(card);
-        DuelView.getInstance().showBoard();
     }
 
     public void deleteCardFromOpponentHand(Card card) {
