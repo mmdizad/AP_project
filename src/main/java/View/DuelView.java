@@ -162,7 +162,7 @@ public class DuelView {
     }
 
     public void showBoard() {
-        ArrayList<String> board = duelModel.getBoard();
+        ArrayList<String> board = duelView.duelModel.getBoard();
         for (String s : board) {
             System.out.println(s);
         }
@@ -171,7 +171,7 @@ public class DuelView {
     public void showGraveyard(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
-            ArrayList<String> output = DuelController.getInstance().showGraveYard(duelModel.turn);
+            ArrayList<String> output = DuelController.getInstance().showGraveYard(duelView.duelModel.turn);
             for (String s : output) {
                 System.out.println(s);
             }
@@ -180,10 +180,12 @@ public class DuelView {
 
     protected void showCard(Matcher matcher) {
         if (matcher.find()) {
-            isCommandInvalid = false;
-            ArrayList<String> output = DuelController.getInstance().checkCard(matcher);
-            for (String s : output) {
-                System.out.println(s);
+            if (!matcher.group(1).equals("--selected")) {
+                isCommandInvalid = false;
+                ArrayList<String> output = DuelController.getInstance().checkCard(matcher);
+                for (String s : output) {
+                    System.out.println(s);
+                }
             }
         }
     }
