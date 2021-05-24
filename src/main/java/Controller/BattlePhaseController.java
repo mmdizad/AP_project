@@ -406,7 +406,7 @@ public class BattlePhaseController extends DuelController {
             Pattern pattern = Pattern.compile("^select --monster (\\d+)$");
             Matcher matcher = pattern.matcher(input);
             if (matcher.find()) {
-                selectMonster(matcher);
+                DuelController.getInstance().selectMonster(matcher);
             }
             ArrayList<Card> opponentMonsters = duelModel.getMonstersInField().get(1 - duelModel.turn);
             int opponentAttackPower = 100000;

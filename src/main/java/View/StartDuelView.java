@@ -46,7 +46,7 @@ public class StartDuelView extends MainMenu {
     private void startTheGameWithAi(int round, User secondUser, Scanner scanner) {
         if (round == 1) {
             DuelView duelView = DuelView.getInstance();
-            duelView.selectFirstPlayer(secondUser.getUsername(), scanner, duelView, false);
+            duelView.selectFirstPlayer(secondUser.getUsername(), scanner, duelView, true);
             printWinnerAndGiveScoreOneRound(duelView, LoginController.user, secondUser);
         } else {
             int userWins = 0;
@@ -56,7 +56,7 @@ public class StartDuelView extends MainMenu {
             maxLPs.add(0);
             for (int i = 0; i < 3; i++) {
                 DuelView duelView = DuelView.getInstance();
-                duelView.selectFirstPlayer(secondUser.getUsername(), scanner, duelView, false);
+                duelView.selectFirstPlayer(secondUser.getUsername(), scanner, duelView, true);
                 int winner = printWinnerThreeRound(duelView, LoginController.user, secondUser);
                 if (winner == 0) userWins++;
                 else secondPlayerWins++;
