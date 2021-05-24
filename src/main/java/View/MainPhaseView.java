@@ -31,43 +31,44 @@ public class MainPhaseView extends DuelView implements Set, Summon {
         }
         if (isAi && duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
             aiMainPhaseView();
-        }
-        while (true) {
-            String command = scanner.nextLine();
-            isCommandInvalid = true;
-            selectMonster(getCommandMatcher(command, "^select --monster (\\d+)$"));
-            selectOpponentMonster(getCommandMatcher(command, "^select --monster (\\d+) --opponent$"));
-            selectOpponentMonster(getCommandMatcher(command, "^select --opponent --monster (\\d+)$"));
-            selectSpellOrTrap(getCommandMatcher(command, "^select --spell (\\d+)$"));
-            selectOpponentSpell(getCommandMatcher(command, "^select --spell (\\d+) --opponent$"));
-            selectOpponentSpell(getCommandMatcher(command, "^select --opponent --spell (\\d+)$"));
-            selectField(getCommandMatcher(command, "^select --field (\\d+)$"));
-            selectOpponentField(getCommandMatcher(command, "^select --opponent --field (\\d+)$"));
-            selectOpponentField(getCommandMatcher(command, "^select --field (\\d+) --opponent$"));
-            deselect(getCommandMatcher(command, "^select -d$"));
-            selectHand(getCommandMatcher(command, "^select --hand (\\d+)$"));
-            showCard(getCommandMatcher(command, "^card show (.+)$"));
-            showSelectedCard(getCommandMatcher(command, "card show --selected"));
-            showGraveyard(getCommandMatcher(command, "show graveyard"));
-            summon(getCommandMatcher(command, "^summon$"));
-            flipSummon(getCommandMatcher(command, "^flip-summon$"));
-            specialSummon(getCommandMatcher(command, "^special-summon$"));
-            activateEffectMainView(getCommandMatcher(command, "^activate esffect$"));
+        } else {
+            while (true) {
+                String command = scanner.nextLine();
+                isCommandInvalid = true;
+                selectMonster(getCommandMatcher(command, "^select --monster (\\d+)$"));
+                selectOpponentMonster(getCommandMatcher(command, "^select --monster (\\d+) --opponent$"));
+                selectOpponentMonster(getCommandMatcher(command, "^select --opponent --monster (\\d+)$"));
+                selectSpellOrTrap(getCommandMatcher(command, "^select --spell (\\d+)$"));
+                selectOpponentSpell(getCommandMatcher(command, "^select --spell (\\d+) --opponent$"));
+                selectOpponentSpell(getCommandMatcher(command, "^select --opponent --spell (\\d+)$"));
+                selectField(getCommandMatcher(command, "^select --field (\\d+)$"));
+                selectOpponentField(getCommandMatcher(command, "^select --opponent --field (\\d+)$"));
+                selectOpponentField(getCommandMatcher(command, "^select --field (\\d+) --opponent$"));
+                deselect(getCommandMatcher(command, "^select -d$"));
+                selectHand(getCommandMatcher(command, "^select --hand (\\d+)$"));
+                showCard(getCommandMatcher(command, "^card show (.+)$"));
+                showSelectedCard(getCommandMatcher(command, "card show --selected"));
+                showGraveyard(getCommandMatcher(command, "show graveyard"));
+                summon(getCommandMatcher(command, "^summon$"));
+                flipSummon(getCommandMatcher(command, "^flip-summon$"));
+                specialSummon(getCommandMatcher(command, "^special-summon$"));
+                activateEffectMainView(getCommandMatcher(command, "^activate esffect$"));
 
-            if (command.equals("enterPhase")) {
-                isCommandInvalid = false;
-                enterPhase(scanner);
-                break;
-            } else if (command.equals("set")) {
-                isCommandInvalid = false;
-                set();
-            } else if (command.equals("surrender")) {
-                break;
-            } else if (isCommandInvalid) {
-                System.out.println("invalid command");
+                if (command.equals("enterPhase")) {
+                    isCommandInvalid = false;
+                    enterPhase(scanner);
+                    break;
+                } else if (command.equals("set")) {
+                    isCommandInvalid = false;
+                    set();
+                } else if (command.equals("surrender")) {
+                    break;
+                } else if (isCommandInvalid) {
+                    System.out.println("invalid command");
+                }
+
+                isCommandInvalid = true;
             }
-
-            isCommandInvalid = true;
         }
     }
 
