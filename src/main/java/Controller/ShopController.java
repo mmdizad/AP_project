@@ -53,6 +53,11 @@ public class ShopController extends LoginController {
         return output;
     }
 
+    public String increaseMoney(Matcher matcher) {
+        user.increaseCoins(Integer.parseInt(matcher.group(1)));
+        return "coin increased";
+    }
+
     public ArrayList<String> checkCard(Matcher matcher) {
         return null;
     }

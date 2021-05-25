@@ -2276,4 +2276,8 @@ public class DuelController {
             }
         }
     }
+
+    public void increaseLP(Matcher matcher) {
+        duelModel.increaseLifePoint(Integer.parseInt(matcher.group(1)), duelModel.turn);
+    }
 }

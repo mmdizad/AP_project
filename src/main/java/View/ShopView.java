@@ -22,6 +22,11 @@ public class ShopView extends MainMenu {
         while (true) {
             String input = scanner.nextLine();
 
+            Pattern pattern = Pattern.compile("^increase --money (\\d+)$");
+            Matcher matcher = pattern.matcher(input);
+            if (matcher.find()){
+                increaseMoney(matcher);
+            }
             //trim matcher later!
             Pattern patternBuy = Pattern.compile("shop buy (.+)");
             Matcher matcherBuy = patternBuy.matcher(input);
@@ -33,6 +38,11 @@ public class ShopView extends MainMenu {
             else if (input.equals("menu show-current")) System.out.println("ShopMenu");
             else System.out.println("invalid command!");
         }
+    }
+
+    public void increaseMoney(Matcher matcher) {
+        ShopController shopController = ShopController.getInstance();
+        System.out.println(shopController.increaseMoney(matcher));
     }
 
     public void buyCard(Matcher matcher) {

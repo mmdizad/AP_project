@@ -53,7 +53,8 @@ public class BattlePhaseView extends DuelView {
                 showSelectedCard(getCommandMatcher(command, "card show --selected"));
                 showGraveyard(getCommandMatcher(command, "show graveyard"));
                 activateEffectBattlePhaseView(getCommandMatcher(command, "^activate effect$"));
-                if (command.equals("enterMenu")) {
+                increaseLP(getCommandMatcher(command,"^increase --LP (\\d+)$"));
+                if (command.equals("enterPhase")) {
                     enterPhase(scanner);
                     break;
                 } else if (command.equals("surrender")) {
@@ -73,6 +74,15 @@ public class BattlePhaseView extends DuelView {
     public boolean anyOneWon() {
         MainPhaseController mainPhaseController = MainPhaseController.getInstance();
         return mainPhaseController.anyoneWon();
+    }
+
+    public void increaseLP(Matcher matcher) {
+        if (matcher.find()){
+            isCommandInvalid = false;
+            DuelController duelController = DuelController.getInstance();
+            duelController.increaseLP(matcher);
+            System.out.println("lifePoint increase");
+        }
     }
 
     public void attack(Matcher matcher, Scanner scanner) {
