@@ -617,7 +617,7 @@ public class MainPhaseController extends DuelController {
     public String activateSpellEffectMainController() {
         if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
             return "no card is selected yet";
-        } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Spell")&&!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Trap")) {
+        } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Spell")) {
             return "activate effect is only for spell cards.";
         } else {
             String[] detailOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn)
@@ -1100,6 +1100,14 @@ public class MainPhaseController extends DuelController {
                     setTrapOrSpell();
                 }
             }
+        }
+    }
+
+    public boolean anyoneWon() {
+        if (duelModel.getLifePoint(0) <= 0 || duelModel.getLifePoint(1) <= 0){
+            return true;
+        }else {
+            return false;
         }
     }
 }

@@ -30,6 +30,9 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             System.out.println(phaseName);
         }
         if (isAi && duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+            if (anyOneWon()){
+                return;
+            }
             aiMainPhaseView();
         } else {
             while (true) {
@@ -68,8 +71,16 @@ public class MainPhaseView extends DuelView implements Set, Summon {
                 }
 
                 isCommandInvalid = true;
+                if (anyOneWon()){
+                    return;
+                }
             }
         }
+    }
+
+    public boolean anyOneWon() {
+        MainPhaseController mainPhaseController = MainPhaseController.getInstance();
+        return mainPhaseController.anyoneWon();
     }
 
     public void aiMainPhaseView() {

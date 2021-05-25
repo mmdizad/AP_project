@@ -2,6 +2,7 @@ package View;
 
 import Controller.BattlePhaseController;
 import Controller.DuelController;
+import Controller.MainPhaseController;
 import Model.DuelModel;
 
 import java.util.Scanner;
@@ -27,6 +28,9 @@ public class BattlePhaseView extends DuelView {
         if (duelModel.getCreatorUsername(duelModel.turn).equals("ai")) {
             BattlePhaseController battlePhaseController = BattlePhaseController.getInstance();
             battlePhaseController.setCommandsForAi();
+            if (anyOneWon()){
+                return;
+            }
             enterPhase(scanner);
         } else {
             while (true) {
@@ -59,8 +63,16 @@ public class BattlePhaseView extends DuelView {
                     System.out.println("invalid command");
                 }
                 isCommandInvalid = true;
+                if (anyOneWon()){
+                    return;
+                }
             }
         }
+    }
+
+    public boolean anyOneWon() {
+        MainPhaseController mainPhaseController = MainPhaseController.getInstance();
+        return mainPhaseController.anyoneWon();
     }
 
     public void attack(Matcher matcher, Scanner scanner) {
