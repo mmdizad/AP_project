@@ -43,7 +43,7 @@ public class DuelController {
     //این تابع حین بازی صدا زده میشه تا کارت های ورودی شامل میدان شوند
     public void activeFieldInGame() {
         if (duelModel.getField().get(duelModel.turn).get(0) != null) {
-            Spell spell = (Spell) duelModel.getField().get(duelModel.turn).get(0);
+            Card spell =  duelModel.getField().get(duelModel.turn).get(0);
             if (spell.getName().equals("Yami"))
                 effectOfYami(1);
             else if (spell.getName().equals("Forest"))
@@ -124,7 +124,7 @@ public class DuelController {
 
     public void deActiveOldField() {
         if (duelModel.getField().get(duelModel.turn).get(0) != null) {
-            Spell spell = (Spell) duelModel.getField().get(duelModel.turn).get(0);
+            Card spell =  duelModel.getField().get(duelModel.turn).get(0);
             if (spell.getName().equals("Yami"))
                 effectOfYami(-1);
             else if (spell.getName().equals("Forest"))
@@ -175,7 +175,7 @@ public class DuelController {
     public String activeSetZone() {
         deActiveOldField();
         duelModel.activeField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
-        Spell spell = (Spell) duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        Card spell =  duelModel.getSelectedCards().get(duelModel.turn).get(0);
         duelModel.getField().get(duelModel.turn).set(1, null);
         deselect();
         if (spell.getName().equals("Yami"))
@@ -195,7 +195,7 @@ public class DuelController {
     public String activeZoneFromHand() {
         deActiveOldField();
         duelModel.activeField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
-        Spell spell = (Spell) duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        Card spell =  duelModel.getSelectedCards().get(duelModel.turn).get(0);
         duelModel.getHandCards().get(duelModel.turn).remove(duelModel.getSelectedCards().get(duelModel.turn).get(0));
         if (spell.getName().equals("Yami"))
             return effectOfYami(1);

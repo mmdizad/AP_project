@@ -52,7 +52,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
                 summon(getCommandMatcher(command, "^summon$"));
                 flipSummon(getCommandMatcher(command, "^flip-summon$"));
                 specialSummon(getCommandMatcher(command, "^special-summon$"));
-                activateEffectMainView(getCommandMatcher(command, "^activate esffect$"));
+                activateEffectMainView(getCommandMatcher(command, "^activate effect$"));
 
                 if (command.equals("enterPhase")) {
                     isCommandInvalid = false;

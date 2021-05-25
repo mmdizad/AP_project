@@ -31,6 +31,8 @@ public class MainPhaseController extends DuelController {
                 return "you can’t set this card";
             }
              else if ((selectedCards.get(duelModel.turn).get(0)).getCategory().equals("Monster")) {
+                 if(selectedCards.get(duelModel.turn).get(0).getLevel()>4)
+                     return "this card cannot set normally";
             if (duelModel.monsterSetOrSummonInThisTurn != null)
                 return "you already summoned/set on this turn";
                 if (selectedCards.get(duelModel.turn).get(0).getLevel() > 5)
@@ -615,7 +617,7 @@ public class MainPhaseController extends DuelController {
     public String activateSpellEffectMainController() {
         if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
             return "no card is selected yet";
-        } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Spell")) {
+        } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Spell")&&!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Trap")) {
             return "activate effect is only for spell cards.";
         } else {
             String[] detailOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn)
