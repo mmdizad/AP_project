@@ -40,6 +40,7 @@ public class StartDuelView extends MainMenu {
             } else if (input.equals("menu exit")) break;
             else if (input.equals("menu show-current")) System.out.println("StartDuel");
             else System.out.println("invalid command");
+            LoginController.saveChangesToFile();
         }
     }
 
@@ -138,6 +139,8 @@ public class StartDuelView extends MainMenu {
         winner.increaseCoins(3000 + 3 * maxLP);
         looser.increaseCoins(300);
         System.out.println(winner.getUsername() + " won the game and the score is: 3000 - 0");
+        LoginController.saveChangesToFileByUser(winner);
+        LoginController.saveChangesToFileByUser(looser);
     }
 
     public int printWinnerThreeRound(DuelView duelView, User firstUser, User secondUser) {
@@ -178,6 +181,8 @@ public class StartDuelView extends MainMenu {
             secondUser.increaseCoins(100);
             System.out.println(firstUser.getUsername() + " won the game and the score is: 1000 - 0");
         }
+        LoginController.saveChangesToFileByUser(secondUser);
+        LoginController.saveChangesToFileByUser(firstUser);
     }
 
     public void changeCardsBetweenRounds(User first, User second, Scanner scanner) {

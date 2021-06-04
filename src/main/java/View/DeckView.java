@@ -97,6 +97,7 @@ public class DeckView extends MainMenu {
             if (!isCommandValid) {
                 System.out.println("Invalid command");
             }
+            LoginController.saveChangesToFile();
         }
     }
 
