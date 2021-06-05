@@ -30,6 +30,9 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             System.out.println(phaseName);
         }
         if (isAi && duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+            if (anyOneWon()){
+                return;
+            }
             aiMainPhaseView();
         } else {
             while (true) {
@@ -52,7 +55,8 @@ public class MainPhaseView extends DuelView implements Set, Summon {
                 summon(getCommandMatcher(command, "^summon$"));
                 flipSummon(getCommandMatcher(command, "^flip-summon$"));
                 specialSummon(getCommandMatcher(command, "^special-summon$"));
-                activateEffectMainView(getCommandMatcher(command, "^activate esffect$"));
+                increaseLP(getCommandMatcher(command,"^increase --LP (\\d+)$"));
+                activateEffectMainView(getCommandMatcher(command, "^activate effect$"));
 
                 if (command.equals("enterPhase")) {
                     isCommandInvalid = false;
@@ -68,13 +72,30 @@ public class MainPhaseView extends DuelView implements Set, Summon {
                 }
 
                 isCommandInvalid = true;
+                if (anyOneWon()){
+                    return;
+                }
             }
         }
+    }
+
+    public boolean anyOneWon() {
+        MainPhaseController mainPhaseController = MainPhaseController.getInstance();
+        return mainPhaseController.anyoneWon();
     }
 
     public void aiMainPhaseView() {
         MainPhaseController mainPhaseController = MainPhaseController.getInstance();
         mainPhaseController.aiMainPhaseController();
+    }
+
+    public void increaseLP(Matcher matcher) {
+        if (matcher.find()){
+            isCommandInvalid = false;
+            DuelController duelController = DuelController.getInstance();
+            duelController.increaseLP(matcher);
+            System.out.println("lifePoint increase");
+        }
     }
 
     @Override

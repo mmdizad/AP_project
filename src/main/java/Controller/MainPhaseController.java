@@ -31,6 +31,8 @@ public class MainPhaseController extends DuelController {
                 return "you can’t set this card";
             }
              else if ((selectedCards.get(duelModel.turn).get(0)).getCategory().equals("Monster")) {
+                 if(selectedCards.get(duelModel.turn).get(0).getLevel()>4)
+                     return "this card cannot set normally";
             if (duelModel.monsterSetOrSummonInThisTurn != null)
                 return "you already summoned/set on this turn";
                 if (selectedCards.get(duelModel.turn).get(0).getLevel() > 5)
@@ -1098,6 +1100,14 @@ public class MainPhaseController extends DuelController {
                     setTrapOrSpell();
                 }
             }
+        }
+    }
+
+    public boolean anyoneWon() {
+        if (duelModel.getLifePoint(0) <= 0 || duelModel.getLifePoint(1) <= 0){
+            return true;
+        }else {
+            return false;
         }
     }
 }
