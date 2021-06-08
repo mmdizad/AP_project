@@ -4,9 +4,14 @@ import Model.*;
 import com.google.gson.*;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 
 import java.io.*;
 import java.net.URL;
@@ -20,6 +25,22 @@ public class LoginAndSignUpController implements Initializable {
 
     @FXML
     public Button SubmitButton;
+
+    @FXML
+    public Button BackButton;
+
+    @FXML
+    public TextField UsernameTextField;
+
+    @FXML
+    public TextField NicknameTextField;
+
+    @FXML
+    public TextField PasswordTextField;
+
+    @FXML
+    public Label errorLabel;
+
 
     public String createUser(String username, String nickname, String password) {
         try {
@@ -449,6 +470,15 @@ public class LoginAndSignUpController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        SubmitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (UsernameTextField.getText().equals("") || NicknameTextField.getText().equals("")
+                        || PasswordTextField.getText().equals("")) {
+                       errorLabel.setText("You must fill all of box");
+                       errorLabel.setTextFill(Color.RED);
+                }
+            }
+        });
     }
 }
