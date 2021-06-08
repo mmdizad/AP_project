@@ -41,9 +41,9 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Label fx:id="errorLabel" layoutX="718.0" layoutY="631.0" prefHeight="28.0" prefWidth="391.0" textFill="#d71818">
+      <Label fx:id="errorLabel" layoutX="632.0" layoutY="637.0" prefHeight="28.0" prefWidth="391.0" textFill="#d71818">
          <font>
-            <Font size="19.0" />
+            <Font size="22.0" />
          </font>
       </Label>
    </children>

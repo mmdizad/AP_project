@@ -47,6 +47,21 @@ public class LoginAndSignUpController implements Initializable {
     @FXML
     public Label errorLabel;
 
+    @FXML
+    public TextField usernameLogin;
+
+    @FXML
+    public TextField passwordLogin;
+
+    @FXML
+    public Button submitLogin;
+
+    @FXML
+    public Button backLogin;
+
+    @FXML
+    public Label labelLogin;
+
 
     public String createUser(String username, String nickname, String password) {
         try {
@@ -464,63 +479,97 @@ public class LoginAndSignUpController implements Initializable {
             e.printStackTrace();
         }
 
-          new Trap(list.get(7)[0], list.get(7)[3], list.get(7)[2], Integer.parseInt(list.get(7)[5])
+        new Trap(list.get(7)[0], list.get(7)[3], list.get(7)[2], Integer.parseInt(list.get(7)[5])
                 , list.get(7)[1], list.get(7)[4]);
-          new Trap(list.get(8)[0], list.get(8)[3], list.get(8)[2], Integer.parseInt(list.get(8)[5])
+        new Trap(list.get(8)[0], list.get(8)[3], list.get(8)[2], Integer.parseInt(list.get(8)[5])
                 , list.get(8)[1], list.get(8)[4]);
-          new Trap(list.get(11)[0], list.get(11)[3], list.get(11)[2], Integer.parseInt(list.get(11)[5])
+        new Trap(list.get(11)[0], list.get(11)[3], list.get(11)[2], Integer.parseInt(list.get(11)[5])
                 , list.get(11)[1], list.get(11)[4]);
-          new Trap(list.get(12)[0], list.get(12)[3], list.get(12)[2], Integer.parseInt(list.get(12)[5])
+        new Trap(list.get(12)[0], list.get(12)[3], list.get(12)[2], Integer.parseInt(list.get(12)[5])
                 , list.get(12)[1], list.get(12)[4]);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        SubmitButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (UsernameTextField.getText().equals("") || NicknameTextField.getText().equals("")
-                        || passwordField.getText().equals("")) {
-                    errorLabel.setText("You must fill all of box");
-                    errorLabel.setTextFill(Color.RED);
-                } else {
-                    String response = createUser(UsernameTextField.getText(), NicknameTextField.getText(),
-                            passwordField.getText());
-                    errorLabel.setText(response);
-                    if (!response.equals("user created successfully!")) {
+        if (SubmitButton != null) {
+            SubmitButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    if (UsernameTextField.getText().equals("") || NicknameTextField.getText().equals("")
+                            || passwordField.getText().equals("")) {
+                        errorLabel.setText("You must fill all of box");
                         errorLabel.setTextFill(Color.RED);
                     } else {
-                        errorLabel.setTextFill(Color.GREEN);
+                        String response = createUser(UsernameTextField.getText(), NicknameTextField.getText(),
+                                passwordField.getText());
+                        errorLabel.setText(response);
+                        if (!response.equals("user created successfully!")) {
+                            errorLabel.setTextFill(Color.RED);
+                        } else {
+                            errorLabel.setTextFill(Color.GREEN);
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        BackButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Stage stage = (Stage) BackButton.getScene().getWindow();
-                stage.close();
-                LoginAndSignUpController.createFolders();
-                URL url = null;
-                try {
-                    url = new File("src/main/java/FXMLFiles/Welcome.fxml").toURI().toURL();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
+            BackButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Stage stage = (Stage) BackButton.getScene().getWindow();
+                    backToWelcomePage(stage);
                 }
-                Parent root = null;
-                try {
-                    assert url != null;
-                    root = FXMLLoader.load(url);
-                } catch (IOException e) {
-                    e.printStackTrace();
+            });
+        } else {
+            submitLogin.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    if (usernameLogin.getText().equals("") || passwordLogin.getText().equals("")) {
+                        errorLabel.setText("You must fill all of box");
+                        errorLabel.setTextFill(Color.RED);
+                    } else {
+                        String response = login(usernameLogin.getText(), passwordLogin.getText());
+                        labelLogin.setText(response);
+                        if (response.equals("user logged in successfully!")) {
+                            labelLogin.setTextFill(Color.GREEN);
+                        } else {
+                            labelLogin.setTextFill(Color.RED);
+                        }
+                    }
                 }
-                Stage welcomeStage = new Stage();
-                welcomeStage.setTitle("SignUpPage");
-                assert root != null;
-                welcomeStage.setScene(new Scene(root, 1920, 1000));
-                welcomeStage.show();
-            }
-        });
+            });
+
+            backLogin.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Stage stage = (Stage) backLogin.getScene().getWindow();
+                    backToWelcomePage(stage);
+                }
+
+            });
+        }
+    }
+
+    public void backToWelcomePage(Stage stage) {
+        stage.close();
+        LoginAndSignUpController.createFolders();
+        URL url = null;
+        try {
+            url = new File("src/main/java/FXMLFiles/Welcome.fxml").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Parent root = null;
+        try {
+            assert url != null;
+            root = FXMLLoader.load(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage welcomeStage = new Stage();
+        welcomeStage.setTitle("WelcomePage");
+        assert root != null;
+        welcomeStage.setScene(new Scene(root, 1920, 1000));
+        welcomeStage.show();
     }
 }
+
