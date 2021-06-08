@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import View.LoginView;
 import com.google.gson.*;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
@@ -12,6 +13,10 @@ import java.util.Scanner;
 
 public class LoginController {
     public static User user;
+
+    public LoginController(){
+        new LoginView();
+    }
 
     public String createUser(String username, String nickname, String password) {
         try {
