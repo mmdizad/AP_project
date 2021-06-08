@@ -1,0 +1,17 @@
+.PasswordField{
+    -fx-background-color:  #614a92;
+    -fx-background-radius: 45;
+    -fx-background-position: center;
+}
+
+.UsernameTextField{
+    -fx-background-color: #614a92;
+    -fx-background-radius: 45;
+    -fx-background-position: center;
+}
+
+.NicknameTextField{
+    -fx-background-color: #614a92;
+    -fx-background-radius: 45;
+    -fx-background-position: center;
+}
