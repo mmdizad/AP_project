@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class LoginAndSignUpView extends Menu {
 
     public void SignUpShow() throws IOException {
+        LoginAndSignUpController.createFolders();
         URL url = new File("src/main/java/FXMLFiles/SignUp.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         Stage stage = new Stage();

@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
@@ -36,7 +37,7 @@ public class LoginAndSignUpController implements Initializable {
     public TextField NicknameTextField;
 
     @FXML
-    public TextField PasswordTextField;
+    public PasswordField passwordField;
 
     @FXML
     public Label errorLabel;
@@ -474,9 +475,18 @@ public class LoginAndSignUpController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if (UsernameTextField.getText().equals("") || NicknameTextField.getText().equals("")
-                        || PasswordTextField.getText().equals("")) {
-                       errorLabel.setText("You must fill all of box");
-                       errorLabel.setTextFill(Color.RED);
+                        || passwordField.getText().equals("")) {
+                    errorLabel.setText("You must fill all of box");
+                    errorLabel.setTextFill(Color.RED);
+                } else {
+                    String response = createUser(UsernameTextField.getText(), NicknameTextField.getText(),
+                            passwordField.getText());
+                    errorLabel.setText(response);
+                    if (!response.equals("user created successfully!")) {
+                        errorLabel.setTextFill(Color.RED);
+                    } else {
+                        errorLabel.setTextFill(Color.GREEN);
+                    }
                 }
             }
         });
