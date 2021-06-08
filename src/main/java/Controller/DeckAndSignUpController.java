@@ -1,11 +1,7 @@
 package Controller;
 
 import Model.*;
-import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.regex.Matcher;
@@ -29,18 +25,6 @@ public class DeckAndSignUpController extends LoginAndSignUpController {
         } else {
             Deck deck = new Deck(matcher.group(1), user.getUsername());
             user.addDeck(deck);
-            File file = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks\\" + matcher.group(1) + "deck.txt");
-            try {
-                if (file.createNewFile()) {
-                    Gson gson = new Gson();
-                    String deckInfo = gson.toJson(deck);
-                    FileWriter fileWriter = new FileWriter(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks\\" + matcher.group(1) + "deck.txt");
-                    fileWriter.write(deckInfo);
-                    fileWriter.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             return "deck created successfully!";
         }
     }
@@ -51,13 +35,11 @@ public class DeckAndSignUpController extends LoginAndSignUpController {
             return "deck with name " + matcher.group(1) + " does not exist";
         } else {
             Deck deck = Deck.getDeckByName(matcher.group(1));
-            if (!userContainsDeck(deck,decks)) {
+            if (!decks.contains(deck)) {
                 return "deck with name " + matcher.group(1) + " does not exist";
             } else {
                 user.deleteDeck(deck);
                 Deck.deleteDeck(deck);
-                File file = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks\\" + matcher.group(1) + "deck.txt");
-                file.delete();
                 return "deck deleted successfully";
             }
         }
@@ -69,11 +51,10 @@ public class DeckAndSignUpController extends LoginAndSignUpController {
             return "deck with name " + matcher.group(1) + " does not exist";
         } else {
             Deck deck = Deck.getDeckByName(matcher.group(1));
-            if (!userContainsDeck(deck,decks)) {
+            if (!decks.contains(deck)) {
                 return "deck with name " + matcher.group(1) + " does not exist";
             } else {
                 user.setActiveDeck(deck);
-                saveChangesToFile(deck);
                 return "deck activated successfully";
             }
         }
@@ -88,7 +69,7 @@ public class DeckAndSignUpController extends LoginAndSignUpController {
                 return "deck with name " + matcher.group(2) + " does not exist";
             } else {
                 Deck deck = Deck.getDeckByName(matcher.group(2));
-                if (!userContainsDeck(deck,decks)) {
+                if (!decks.contains(deck)) {
                     return "deck with name " + matcher.group(2) + " does not exist";
                 } else {
                     ArrayList<Card> mainCards = deck.getCardsMain();
@@ -142,7 +123,6 @@ public class DeckAndSignUpController extends LoginAndSignUpController {
             } else {
                 Card card = Card.getCardByName(matcher.group(1));
                 deck.addCardToMain(card);
-                saveChangesToFile(deck);
                 return "card added to deck successfully";
             }
         }
@@ -171,7 +151,6 @@ public class DeckAndSignUpController extends LoginAndSignUpController {
             } else {
                 Card card = Card.getCardByName(matcher.group(1));
                 deck.addCardToSide(card);
-                saveChangesToFile(deck);
                 return "card added to deck successfully";
             }
         }
@@ -186,7 +165,7 @@ public class DeckAndSignUpController extends LoginAndSignUpController {
                 return "deck with name " + matcher.group(2) + " does not exist";
             } else {
                 Deck deck = Deck.getDeckByName(matcher.group(2));
-                if (!userContainsDeck(deck,decks)) {
+                if (!decks.contains(deck)) {
                     return "deck with name " + matcher.group(2) + " does not exist";
                 } else {
                     if (matcher.groupCount() == 2) {
@@ -206,7 +185,6 @@ public class DeckAndSignUpController extends LoginAndSignUpController {
         for (Card card1 : mainCards) {
             if (card1.getName().equals(card.getName())) {
                 deck.deleteCardFromMain(card);
-                saveChangesToFile(deck);
                 return "card removed form deck successfully";
             }
         }
@@ -220,7 +198,6 @@ public class DeckAndSignUpController extends LoginAndSignUpController {
         for (Card card1 : sideCards){
             if (card1.getName().equals(card.getName())) {
                 deck.deleteCardFromSide(card);
-                saveChangesToFile(deck);
                 return "card removed form deck successfully";
             }
         }
@@ -235,7 +212,7 @@ public class DeckAndSignUpController extends LoginAndSignUpController {
             return output;
         } else {
             Deck deck = Deck.getDeckByName(matcher.group(1));
-            if (!userContainsDeck(deck,decks)) {
+            if (!decks.contains(deck)) {
                 output.add("deck with name " + matcher.group(1) + " does not exist");
                 return output;
             } else {
@@ -436,34 +413,8 @@ public class DeckAndSignUpController extends LoginAndSignUpController {
                     break;
                 }
             }
-            saveChangesToFile(inGameUser.getActiveDeck());
             return "cards changed successfully";
         }
         return "invalid command";
-    }
-
-    public void saveChangesToFile(Deck deck) {
-        File file = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks\\" + deck.getName() + "deck.txt");
-        file.delete();
-        try {
-            if (file.createNewFile()) {
-                Gson gson = new Gson();
-                String deckInfo = gson.toJson(deck);
-                FileWriter fileWriter = new FileWriter(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks\\" + deck.getName() + "deck.txt");
-                fileWriter.write(deckInfo);
-                fileWriter.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public boolean userContainsDeck(Deck deck,ArrayList<Deck> decks) {
-        for (Deck deck1 : decks){
-            if (deck1.getName().equals(deck.getName())){
-                return true;
-            }
-        }
-        return false;
     }
 }

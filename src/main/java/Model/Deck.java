@@ -1,12 +1,7 @@
 package Model;
 
-import com.google.gson.Gson;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class Deck {
     private String name;
@@ -78,26 +73,7 @@ public class Deck {
     }
 
     public static Deck getDeckByName(String name) {
-        File file = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks\\" + name + "deck.txt");
-        if (!file.exists()){
-            return null;
-        }else {
-            Gson gson = new Gson();
-            StringBuilder getDetail = new StringBuilder();
-            Scanner myReader = null;
-            try {
-                myReader = new Scanner(file);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            while (myReader.hasNextLine()) {
-                getDetail.append(myReader.nextLine());
-            }
-            String userInfo = getDetail.toString();
-            Deck deck = gson.fromJson(userInfo,Deck.class);
-            myReader.close();
-            return deck;
-        }
+        return decks.get(name);
     }
 
     public ArrayList<Card> getCardsMain() {

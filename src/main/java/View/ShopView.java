@@ -1,7 +1,7 @@
 package View;
 
-import Controller.LoginAndSignUpController;
-import Controller.ShopAndSignUpController;
+import Controller.LoginController;
+import Controller.ShopController;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -38,22 +38,22 @@ public class ShopView extends MainMenu {
             else if (input.equals("menu exit")) break;
             else if (input.equals("menu show-current")) System.out.println("ShopMenu");
             else System.out.println("invalid command!");
-            LoginAndSignUpController.saveChangesToFile();
+            LoginController.saveChangesToFile();
         }
     }
 
     public void increaseMoney(Matcher matcher) {
-        ShopAndSignUpController shopController = ShopAndSignUpController.getInstance();
+        ShopController shopController = ShopController.getInstance();
         System.out.println(shopController.increaseMoney(matcher));
     }
 
     public void buyCard(Matcher matcher) {
-        ShopAndSignUpController shopController = ShopAndSignUpController.getInstance();
+        ShopController shopController = ShopController.getInstance();
         System.out.println(shopController.buyCard(matcher));
     }
 
     public void showCard() {
-        ShopAndSignUpController shopController = ShopAndSignUpController.getInstance();
+        ShopController shopController = ShopController.getInstance();
         ArrayList<String> cards = shopController.getAllCard();
         for (String card : cards) {
             System.out.println(card);

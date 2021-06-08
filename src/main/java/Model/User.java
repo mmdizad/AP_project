@@ -1,13 +1,7 @@
 package Model;
 
-import com.google.gson.Gson;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class User {
     public static HashMap<String, User> users;
@@ -41,48 +35,12 @@ public class User {
     }
 
     public static User getUserByUsername(String username) {
-        try {
-            File openingUser = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + username + "user.txt");
-            if (!openingUser.exists()) {
-                return null;
-            } else {
-                Gson gson = new Gson();
-                StringBuilder getDetail = new StringBuilder();
-                Scanner myReader = new Scanner(openingUser);
-                while (myReader.hasNextLine()) {
-                    getDetail.append(myReader.nextLine());
-                }
-                String userInfo = getDetail.toString();
-                User user1 = gson.fromJson(userInfo, User.class);
-                myReader.close();
-                return user1;
-            }
-        }catch (IOException e){
-            return null;
-        }
+        return users.get(username);
     }
 
     public static boolean isUserWithThisUsernameExists(String username) {
-        ArrayList<User> users = new ArrayList<>();
-        File folder = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\");
-        File[] files = folder.listFiles();
-        for (File file : files){
-            Gson gson = new Gson();
-            StringBuilder getDetail = new StringBuilder();
-            Scanner myReader = null;
-            try {
-                myReader = new Scanner(file);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            while (myReader.hasNextLine()) {
-                getDetail.append(myReader.nextLine());
-            }
-            String userInfo = getDetail.toString();
-            User user1 = gson.fromJson(userInfo, User.class);
-            myReader.close();
-            users.add(user1);
-            if (user1.getUsername().equals(username)) {
+        for (User user : allUsers) {
+            if (user.getUsername().equals(username)) {
                 return true;
             }
         }
@@ -90,24 +48,8 @@ public class User {
     }
 
     public static boolean isUserWithThisNicknameExists(String nickname) {
-        File folder = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\");
-        File[] files = folder.listFiles();
-        for (File file : files) {
-            Gson gson = new Gson();
-            StringBuilder getDetail = new StringBuilder();
-            Scanner myReader = null;
-            try {
-                myReader = new Scanner(file);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            while (myReader.hasNextLine()) {
-                getDetail.append(myReader.nextLine());
-            }
-            String userInfo = getDetail.toString();
-            User user1 = gson.fromJson(userInfo, User.class);
-            myReader.close();
-            if (user1.getNickname().equals(nickname)) {
+        for (User user : allUsers) {
+            if (user.getNickname().equals(nickname)) {
                 return true;
             }
         }
@@ -115,27 +57,7 @@ public class User {
     }
 
     public static ArrayList<User> getAllUsers() {
-        ArrayList<User> users = new ArrayList<>();
-        File folder = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\");
-        File[] files = folder.listFiles();
-        for (File file : files){
-            Gson gson = new Gson();
-            StringBuilder getDetail = new StringBuilder();
-            Scanner myReader = null;
-            try {
-                myReader = new Scanner(file);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            while (myReader.hasNextLine()) {
-                getDetail.append(myReader.nextLine());
-            }
-            String userInfo = getDetail.toString();
-            User user1 = gson.fromJson(userInfo, User.class);
-            myReader.close();
-            users.add(user1);
-        }
-        return users;
+        return allUsers;
     }
 
     public void addCard(Card card) {
