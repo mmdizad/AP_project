@@ -5,15 +5,15 @@ import Model.Card;
 
 import java.util.regex.Matcher;
 
-public class ImportAndExportAndSignUpController extends LoginAndSignUpController {
+public class ImportAndExportController extends LoginAndSignUpController {
 
-    public static ImportAndExportAndSignUpController importAndExportController = new ImportAndExportAndSignUpController();
+    public static ImportAndExportController importAndExportController = new ImportAndExportController();
 
-    private ImportAndExportAndSignUpController(){
+    private ImportAndExportController(){
 
     }
 
-    public static ImportAndExportAndSignUpController getInstance(){
+    public static ImportAndExportController getInstance(){
         return importAndExportController;
     }
 

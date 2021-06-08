@@ -1,6 +1,6 @@
 package View;
 
-import Controller.ScoreBoardAndSignUpController;
+import Controller.ScoreBoardController;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -30,7 +30,7 @@ public class ScoreBoardView extends MainMenu {
     }
 
     public void showScoreboard() {
-        ScoreBoardAndSignUpController scoreBoardController = ScoreBoardAndSignUpController.getInstance();
+        ScoreBoardController scoreBoardController = ScoreBoardController.getInstance();
         ArrayList<String> output = scoreBoardController.scoreBoard();
         for (int i = 0; i < output.size(); i++) {
             System.out.println(output.get(i));

@@ -11,15 +11,15 @@ import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DeckAndSignUpController extends LoginAndSignUpController {
+public class DeckController extends LoginAndSignUpController {
 
-    private static DeckAndSignUpController deckController = new DeckAndSignUpController();
+    private static DeckController deckController = new DeckController();
 
-    private DeckAndSignUpController() {
+    private DeckController() {
 
     }
 
-    public static DeckAndSignUpController getInstance() {
+    public static DeckController getInstance() {
         return deckController;
     }
 

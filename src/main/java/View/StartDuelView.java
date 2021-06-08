@@ -1,6 +1,6 @@
 package View;
 
-import Controller.DeckAndSignUpController;
+import Controller.DeckController;
 import Controller.LoginAndSignUpController;
 import Model.User;
 
@@ -191,7 +191,7 @@ public class StartDuelView extends MainMenu {
             System.out.println("enter    change --(mainCardName) with --(sideCardName)   or finish to continue");
             String command = scanner.nextLine();
             while (!command.equals("finish")) {
-                DeckAndSignUpController deckController = DeckAndSignUpController.getInstance();
+                DeckController deckController = DeckController.getInstance();
                 System.out.println(deckController.changeMainAndSideCards(command, first));
             }
         }
@@ -200,7 +200,7 @@ public class StartDuelView extends MainMenu {
             System.out.println("enter    change --(mainCardName) with --(sideCardName)   or finish to continue");
             String command = scanner.nextLine();
             while (!command.equals("finish")) {
-                DeckAndSignUpController deckController = DeckAndSignUpController.getInstance();
+                DeckController deckController = DeckController.getInstance();
                 System.out.println(deckController.changeMainAndSideCards(command, second));
             }
         }

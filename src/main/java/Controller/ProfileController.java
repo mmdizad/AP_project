@@ -4,10 +4,10 @@ import Model.User;
 
 import java.util.regex.Matcher;
 
-public class ProfileAndSignUpController extends LoginAndSignUpController {
-    private static final ProfileAndSignUpController profileController = new ProfileAndSignUpController();
+public class ProfileController extends LoginAndSignUpController {
+    private static final ProfileController profileController = new ProfileController();
 
-    public static ProfileAndSignUpController getInstance() {
+    public static ProfileController getInstance() {
         return profileController;
     }
 
@@ -15,7 +15,7 @@ public class ProfileAndSignUpController extends LoginAndSignUpController {
         String nickName = matcher.group(1);
         if (User.isUserWithThisNicknameExists(nickName)) return "user with nickname " + nickName + "already exists";
         else {
-            ProfileAndSignUpController.user.setNickname(nickName);
+            ProfileController.user.setNickname(nickName);
             return "nickname changed successfully!";
         }
 

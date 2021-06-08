@@ -1,7 +1,7 @@
 package View;
 
 import Controller.LoginAndSignUpController;
-import Controller.ProfileAndSignUpController;
+import Controller.ProfileController;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -27,7 +27,7 @@ public class ProfileView extends MainMenu {
             Matcher matcherChangePassword = patternChangePassword.matcher(input);
 
             if (matcherChangeNickName.find()) {
-                ProfileAndSignUpController profileController = ProfileAndSignUpController.getInstance();
+                ProfileController profileController = ProfileController.getInstance();
                 System.out.println(profileController.changeNickName(matcherChangeNickName));
 
             } else if (matcherChangePassword.find()) {
@@ -45,7 +45,7 @@ public class ProfileView extends MainMenu {
     }
 
     public void changePassword(Matcher matcher) {
-        ProfileAndSignUpController profileController = ProfileAndSignUpController.getInstance();
+        ProfileController profileController = ProfileController.getInstance();
         if (matcher.group(1).equals("-current") && matcher.group(3).equals("-new")) {
             String currentPassword = matcher.group(2);
             String newPassword = matcher.group(4);

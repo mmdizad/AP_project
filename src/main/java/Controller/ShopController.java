@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.regex.Matcher;
 
-public class ShopAndSignUpController extends LoginAndSignUpController {
+public class ShopController extends LoginAndSignUpController {
 
-    private static ShopAndSignUpController shopController = new ShopAndSignUpController();
+    private static ShopController shopController = new ShopController();
 
-    private ShopAndSignUpController() {
+    private ShopController() {
 
     }
 
-    public static ShopAndSignUpController getInstance() {
+    public static ShopController getInstance() {
         return shopController;
     }
 
