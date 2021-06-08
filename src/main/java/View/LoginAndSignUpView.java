@@ -34,11 +34,6 @@ public class LoginAndSignUpView extends Menu {
         stage.show();
     }
 
-    public void createUser(String username, String nickname, String password) {
-        LoginAndSignUpController loginAndSignUpController = new LoginAndSignUpController();
-        System.out.println(loginAndSignUpController.createUser(username, nickname, password));
-    }
-
     public void login(String username, String password, Scanner scanner) throws IOException {
         LoginAndSignUpController loginAndSignUpController = new LoginAndSignUpController();
         String response = loginAndSignUpController.login(username, password);
