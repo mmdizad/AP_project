@@ -23,3 +23,17 @@
     -fx-background-position: center;
     -fx-text-fill: black;
 }
+
+.submitLogin{
+    -fx-background-color: #384bb3;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
+    -fx-text-fill: black;
+}
+
+.backLogin{
+    -fx-background-color: #384bb3;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
+    -fx-text-fill: black;
+}

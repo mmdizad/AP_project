@@ -5,3 +5,7 @@
 .AnchorSignUp{
      -fx-background-image: url("../View/yugiohSignUp.jpg")
 }
+
+.AnchorLogin{
+     -fx-background-image: url("../View/yugiohLogin.png")
+}

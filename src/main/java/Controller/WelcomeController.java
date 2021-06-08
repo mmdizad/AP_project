@@ -47,5 +47,19 @@ public class WelcomeController implements Initializable {
                 }
             }
         });
+
+        loginButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = (Stage) loginButton.getScene().getWindow();
+                stage.close();
+                try {
+                    LoginAndSignUpView loginAndSignUpView = new LoginAndSignUpView();
+                    loginAndSignUpView.loginShow();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

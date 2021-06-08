@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="AnchorSignUp" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginAndSignUpController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#07243db4" height="665.0" layoutX="474.0" layoutY="210.0" stroke="BLACK" strokeType="INSIDE" width="646.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d253b7c" height="665.0" layoutX="474.0" layoutY="210.0" stroke="BLACK" strokeType="INSIDE" width="646.0" />
       <TextField fx:id="UsernameTextField" layoutX="680.0" layoutY="383.0" prefHeight="52.0" prefWidth="234.0" promptText="Username" styleClass="UsernameTextField" stylesheets="@../CSSFiles/TextField.css">
          <font>
             <Font size="16.0" />

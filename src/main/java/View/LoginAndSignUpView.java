@@ -24,6 +24,16 @@ public class LoginAndSignUpView extends Menu {
         stage.show();
     }
 
+    public void loginShow() throws IOException {
+        LoginAndSignUpController.createFolders();
+        URL url = new File("src/main/java/FXMLFiles/Login.fxml").toURI().toURL();
+        Parent root = FXMLLoader.load(url);
+        Stage stage = new Stage();
+        stage.setTitle("LoginPage");
+        stage.setScene(new Scene(root, 1920, 1000));
+        stage.show();
+    }
+
     public void createUser(String username, String nickname, String password) {
         LoginAndSignUpController loginAndSignUpController = new LoginAndSignUpController();
         System.out.println(loginAndSignUpController.createUser(username, nickname, password));
