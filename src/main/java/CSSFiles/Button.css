@@ -1,0 +1,23 @@
+.LoginButton{
+    -fx-background-color: black;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
+}
+
+.SignUpButton{
+    -fx-background-color: #000000;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
+}
+
+.SubmitButton{
+    -fx-background-color: pink;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
+}
+
+.BackButton{
+    -fx-background-color: pink;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
+}

@@ -1,14 +1,10 @@
 import Controller.LoginController;
 import Model.Card;
 import Model.User;
-import View.LoginView;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class TestMethod {
@@ -42,34 +38,34 @@ public class TestMethod {
     }
 
     @Test
-    public void TestForLoginView() {
+    public void TestForLoginView() throws IOException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         InputStream SysInBackUp = System.in;
         ByteArrayInputStream in = new ByteArrayInputStream("menu showCurrent\nmenu show-current\nmenu enter Menu\nmenu exit"
                 .getBytes(StandardCharsets.UTF_8));
         System.setIn(in);
-        new LoginView().run();
+//        new LoginView().run();
         Assert.assertEquals("invalid command" + System.lineSeparator() + "Login Menu"
                 + System.lineSeparator() + "menu navigation is not possible" + System.lineSeparator(), outContent.toString());
         System.setIn(SysInBackUp);
     }
 
     @Test
-    public void TestForCreateUserParameter() {
+    public void TestForCreateUserParameter() throws IOException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         InputStream SysInBackUp = System.in;
         ByteArrayInputStream in = new ByteArrayInputStream("user create -y mmd -p 123 -n mmd\nmenu exit"
                 .getBytes(StandardCharsets.UTF_8));
         System.setIn(in);
-        new LoginView().run();
+//        new LoginView().run();
         Assert.assertEquals("invalid command" + System.lineSeparator(), outContent.toString());
         System.setIn(SysInBackUp);
     }
 
     @Test
-    public void TestForCreateUserLoginView() {
+    public void TestForCreateUserLoginView() throws IOException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         InputStream SysInBackUp = System.in;
@@ -81,7 +77,7 @@ public class TestMethod {
                 + "user create -n mmd -u mmd -u 123\n" + "menu exit")
                 .getBytes(StandardCharsets.UTF_8));
         System.setIn(in);
-        new LoginView().run();
+//        new LoginView().run();
         Assert.assertEquals("user created successfully!" + System.lineSeparator()
                 + "user with username mmd already exists" + System.lineSeparator()
                 + "user created successfully!" + System.lineSeparator()
@@ -93,7 +89,7 @@ public class TestMethod {
     }
 
     @Test
-    public void TestForLoginInLoginView() {
+    public void TestForLoginInLoginView() throws IOException {
         new User("mmd", "mmd", "123");
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
@@ -102,7 +98,7 @@ public class TestMethod {
                 "\nuser login -u mmd -p 1234\n" + "user login -u mmd -p 123\n" + "menu exit" + "\nmenu exit")
                 .getBytes(StandardCharsets.UTF_8));
         System.setIn(in);
-        new LoginView().run();
+//        new LoginView().run();
         Assert.assertEquals("invalid command" + System.lineSeparator() +
                 "Username and password didn't match!" + System.lineSeparator() +
                 "user logged in successfully!" + System.lineSeparator(), outContent.toString());
@@ -110,7 +106,7 @@ public class TestMethod {
     }
 
     @Test
-    public void TestForLoginErrorsInLoginView() {
+    public void TestForLoginErrorsInLoginView() throws IOException {
         new User("mmd", "mmd", "123");
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
@@ -121,7 +117,7 @@ public class TestMethod {
                 "\nuser login -p 123 -u mmd" + "\nmenu exit" + "\nmenu exit")
                 .getBytes(StandardCharsets.UTF_8));
         System.setIn(in);
-        new LoginView().run();
+//        new LoginView().run();
         Assert.assertEquals("invalid command" + System.lineSeparator() +
                 "invalid command" + System.lineSeparator() +
                 "invalid command" + System.lineSeparator() +

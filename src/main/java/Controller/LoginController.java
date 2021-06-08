@@ -1,74 +1,77 @@
 package Controller;
 
 import Model.*;
-import View.LoginView;
 import com.google.gson.*;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
-public class LoginController {
+public class LoginController implements Initializable {
     public static User user;
 
-    public LoginController(){
-        new LoginView();
-    }
+    @FXML
+    public Button SubmitButton;
 
     public String createUser(String username, String nickname, String password) {
         try {
-            File openingUser = new File( System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + username + "user.txt");
+            File openingUser = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + username + "user.txt");
             if (!User.isUserWithThisNicknameExists(nickname) && openingUser.createNewFile()) {
                 Gson gson = new Gson();
                 User user = new User(username, nickname, password);
                 String userInfo = gson.toJson(user);
-                FileWriter myWriter = new FileWriter(  System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + username + "user.txt");
+                FileWriter myWriter = new FileWriter(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + username + "user.txt");
                 myWriter.write(userInfo);
                 myWriter.close();
                 return "user created successfully!";
             } else {
-                if (!User.isUserWithThisNicknameExists(nickname)){
+                if (!User.isUserWithThisNicknameExists(nickname)) {
                     return "user with username " + username + " already exists";
                 }
                 return "user with nickname " + nickname + " already exists";
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             return "An error occurred.";
         }
     }
 
     public String login(String username, String password) {
         try {
-            File openingUser = new File(  System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + username + "user.txt");
-            if (!openingUser.exists()){
+            File openingUser = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + username + "user.txt");
+            if (!openingUser.exists()) {
                 return "Username and password didn't match!";
-            }else {
+            } else {
                 Gson gson = new Gson();
                 StringBuilder getDetail = new StringBuilder();
                 Scanner myReader = new Scanner(openingUser);
-                while (myReader.hasNextLine()){
+                while (myReader.hasNextLine()) {
                     getDetail.append(myReader.nextLine());
                 }
                 String userInfo = getDetail.toString();
                 User user1 = gson.fromJson(userInfo, User.class);
                 myReader.close();
-                if (!user1.getPassword().equals(password)){
+                if (!user1.getPassword().equals(password)) {
                     return "Username and password didn't match!";
-                }else {
+                } else {
                     user = user1;
                     return "user logged in successfully!";
                 }
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             return "An error occurred.";
         }
     }
 
-    public static void saveChangesToFile(){
-        File myObj = new File( System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + user.getUsername() + "user.txt");
+    public static void saveChangesToFile() {
+        File myObj = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + user.getUsername() + "user.txt");
         myObj.delete();
         try {
             Gson gson = new Gson();
@@ -76,13 +79,12 @@ public class LoginController {
             FileWriter myWriter = new FileWriter(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + user.getUsername() + "user.txt");
             myWriter.write(userInfo);
             myWriter.close();
-        }
-        catch (IOException ignored){
+        } catch (IOException ignored) {
 
         }
     }
 
-    public static void saveChangesToFileByUser(User user){
+    public static void saveChangesToFileByUser(User user) {
         if (!user.getUsername().equals("ai")) {
             File myObj = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + user.getUsername() + "user.txt");
             myObj.delete();
@@ -100,15 +102,15 @@ public class LoginController {
 
     public static void createFolders() {
         File apFiles = new File(System.getProperty("user.home") + "/Desktop\\AP FILES");
-        if (!apFiles.exists()){
+        if (!apFiles.exists()) {
             apFiles.mkdir();
         }
         File users = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users");
-        if (!users.exists()){
+        if (!users.exists()) {
             users.mkdir();
         }
         File decks = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks");
-        if (!decks.exists()){
+        if (!decks.exists()) {
             decks.mkdir();
         }
     }
@@ -445,4 +447,8 @@ public class LoginController {
                 , list.get(12)[1], list.get(12)[4]);
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 }

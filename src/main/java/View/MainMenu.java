@@ -1,4 +1,5 @@
 package View;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,7 +7,7 @@ import java.util.regex.Pattern;
 public class MainMenu {
     private boolean invalidCommand;
 
-    public void run(Scanner scanner) {
+    public void run(Scanner scanner) throws IOException {
         String input;
 
         while (true) {
@@ -32,13 +33,13 @@ public class MainMenu {
         }
     }
 
-    public void enterMenu(Matcher matcher, Scanner scanner) {
+    public void enterMenu(Matcher matcher, Scanner scanner) throws IOException {
         if (matcher.find()) {
             invalidCommand = false;
             String menuName = matcher.group(1);
             if (menuName.equals("Login")) {
-                LoginView loginView = new LoginView();
-                loginView.run();
+                LoginAndSignUpView loginAndSignUpView = new LoginAndSignUpView();
+//                loginView.run();
             } else if (menuName.equals("Duel")) {
                 StartDuelView startDuelView = new StartDuelView();
                 startDuelView.run(scanner);

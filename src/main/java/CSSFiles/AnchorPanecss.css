@@ -1,0 +1,7 @@
+.AnchorWelcome {
+     -fx-background-image: url("../View/welcomeGame.jpg")
+}
+
+.AnchorSignUp{
+     -fx-background-image: url("../View/yugiohSignUp.jpg")
+}
