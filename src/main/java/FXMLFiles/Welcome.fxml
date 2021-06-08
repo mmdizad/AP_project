@@ -13,7 +13,7 @@
          <font>
             <Font size="46.0" />
          </font></Button>
-      <Button fx:id="signUpButton" layoutX="356.0" layoutY="441.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="322.0" styleClass="SignUpButton" stylesheets="@../CSSFiles/Button.css" text="SignUp" textFill="#7b3131">
+      <Button fx:id="signUpButton" layoutX="356.0" layoutY="441.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="322.0" styleClass="SignUpButton" stylesheets="@../CSSFiles/Button.css" text="SignUp" textFill="#c74c4c">
          <font>
             <Font size="46.0" />
          </font></Button>

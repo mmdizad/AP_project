@@ -15,10 +15,21 @@ import java.util.Scanner;
 public class LoginAndSignUpView extends Menu {
 
     public void SignUpShow() throws IOException {
+        LoginAndSignUpController.createFolders();
         URL url = new File("src/main/java/FXMLFiles/SignUp.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         Stage stage = new Stage();
         stage.setTitle("SignUpPage");
+        stage.setScene(new Scene(root, 1920, 1000));
+        stage.show();
+    }
+
+    public void loginShow() throws IOException {
+        LoginAndSignUpController.createFolders();
+        URL url = new File("src/main/java/FXMLFiles/Login.fxml").toURI().toURL();
+        Parent root = FXMLLoader.load(url);
+        Stage stage = new Stage();
+        stage.setTitle("LoginPage");
         stage.setScene(new Scene(root, 1920, 1000));
         stage.show();
     }

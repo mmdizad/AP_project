@@ -1,23 +1,39 @@
-.LoginButton{
+.LoginButton {
     -fx-background-color: black;
     -fx-background-radius: 30;
     -fx-background-position: center;
 }
 
-.SignUpButton{
+.SignUpButton {
     -fx-background-color: #000000;
     -fx-background-radius: 30;
     -fx-background-position: center;
 }
 
-.SubmitButton{
-    -fx-background-color: pink;
+.SubmitButton {
+    -fx-background-color: #384bb3;
     -fx-background-radius: 30;
     -fx-background-position: center;
+    -fx-text-fill: black;
 }
 
-.BackButton{
-    -fx-background-color: pink;
+.BackButton {
+    -fx-background-color: #384bb3;
     -fx-background-radius: 30;
     -fx-background-position: center;
+    -fx-text-fill: black;
+}
+
+.submitLogin{
+    -fx-background-color: #384bb3;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
+    -fx-text-fill: black;
+}
+
+.backLogin{
+    -fx-background-color: #384bb3;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
+    -fx-text-fill: black;
 }
