@@ -1,4 +1,4 @@
-import Controller.LoginController;
+import Controller.LoginAndSignUpController;
 import Model.Card;
 import Model.User;
 import org.junit.Assert;
@@ -11,29 +11,29 @@ public class TestMethod {
     @Test
     public void TestForCreateUserController() {
         new User("mohammad", "mmd", "123456");
-        LoginController loginController = new LoginController();
-        Assert.assertEquals("user with username mohammad already exists", loginController.createUser("mohammad"
+        LoginAndSignUpController loginAndSignUpController = new LoginAndSignUpController();
+        Assert.assertEquals("user with username mohammad already exists", loginAndSignUpController.createUser("mohammad"
                 , "mmd", "123456"));
-        Assert.assertEquals("user with nickname mmd already exists", loginController.createUser("amir",
+        Assert.assertEquals("user with nickname mmd already exists", loginAndSignUpController.createUser("amir",
                 "mmd", "123456"));
-        Assert.assertEquals("user created successfully!", loginController.createUser("amir",
+        Assert.assertEquals("user created successfully!", loginAndSignUpController.createUser("amir",
                 "mohammad", "324247"));
     }
 
     @Test
     public void TestForLoginController() {
-        LoginController loginController = new LoginController();
-        Assert.assertEquals("Username and password didn't match!", loginController.login("mmd",
+        LoginAndSignUpController loginAndSignUpController = new LoginAndSignUpController();
+        Assert.assertEquals("Username and password didn't match!", loginAndSignUpController.login("mmd",
                 "123456"));
         new User("mohammad", "mmd", "3241");
-        Assert.assertEquals("Username and password didn't match!", loginController.login("mohammad",
+        Assert.assertEquals("Username and password didn't match!", loginAndSignUpController.login("mohammad",
                 "2222"));
-        Assert.assertEquals("user logged in successfully!", loginController.login("mohammad", "3241"));
+        Assert.assertEquals("user logged in successfully!", loginAndSignUpController.login("mohammad", "3241"));
     }
 
     @Test
     public void TestForCreateCardLoginController() {
-        LoginController.createCard();
+        LoginAndSignUpController.createCard();
         Assert.assertNotNull(Card.getCardByName("Trap Hole"));
     }
 

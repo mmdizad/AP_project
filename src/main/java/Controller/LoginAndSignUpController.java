@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-public class LoginController implements Initializable {
+public class LoginAndSignUpController implements Initializable {
     public static User user;
 
     @FXML

@@ -1,6 +1,6 @@
 package View;
 
-import Controller.ImportAndExportController;
+import Controller.ImportAndExportAndSignUpController;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -36,7 +36,7 @@ public class ImportAndExport extends MainMenu {
     public void importCard(Matcher matcher) {
         if (matcher.find()){
             isCommandInvalid = false;
-            ImportAndExportController importAndExportController = ImportAndExportController.getInstance();
+            ImportAndExportAndSignUpController importAndExportController = ImportAndExportAndSignUpController.getInstance();
             System.out.println(importAndExportController.importController(matcher));
         }
     }
@@ -44,7 +44,7 @@ public class ImportAndExport extends MainMenu {
     public void exportCard(Matcher matcher) {
         if (matcher.find()){
             isCommandInvalid = false;
-            ImportAndExportController importAndExportController = ImportAndExportController.getInstance();
+            ImportAndExportAndSignUpController importAndExportController = ImportAndExportAndSignUpController.getInstance();
             System.out.println(importAndExportController.exportController(matcher));
         }
     }

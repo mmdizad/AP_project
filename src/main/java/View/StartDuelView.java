@@ -1,7 +1,7 @@
 package View;
 
-import Controller.DeckController;
-import Controller.LoginController;
+import Controller.DeckAndSignUpController;
+import Controller.LoginAndSignUpController;
 import Model.User;
 
 import java.util.ArrayList;
@@ -27,20 +27,20 @@ public class StartDuelView extends MainMenu {
                 startTheGame(scanner, matcher1, 2, 1);
             } else if (matcher2.find()) {
                 int round = Integer.parseInt(matcher2.group(1));
-                if (LoginController.user.getActiveDeck() == null) {
-                    System.out.println(LoginController.user.getUsername() + " has no active deck");
-                } else if (LoginController.user.getActiveDeck().getCardsMain().size() < 40) {
-                    System.out.println(LoginController.user.getUsername() + "'s deck is invalid");
+                if (LoginAndSignUpController.user.getActiveDeck() == null) {
+                    System.out.println(LoginAndSignUpController.user.getUsername() + " has no active deck");
+                } else if (LoginAndSignUpController.user.getActiveDeck().getCardsMain().size() < 40) {
+                    System.out.println(LoginAndSignUpController.user.getUsername() + "'s deck is invalid");
                 } else if (round == 3 || round == 1) {
                     User ai = new User("ai", "ai", "ai");
-                    ai.addDeck(LoginController.user.getActiveDeck());
-                    ai.setActiveDeck(LoginController.user.getActiveDeck());
+                    ai.addDeck(LoginAndSignUpController.user.getActiveDeck());
+                    ai.setActiveDeck(LoginAndSignUpController.user.getActiveDeck());
                     startTheGameWithAi(round, ai, scanner);
                 } else System.out.println("number of rounds is not supported");
             } else if (input.equals("menu exit")) break;
             else if (input.equals("menu show-current")) System.out.println("StartDuel");
             else System.out.println("invalid command");
-            LoginController.saveChangesToFile();
+            LoginAndSignUpController.saveChangesToFile();
         }
     }
 
@@ -48,7 +48,7 @@ public class StartDuelView extends MainMenu {
         if (round == 1) {
             DuelView duelView = DuelView.getInstance();
             duelView.selectFirstPlayer(secondUser.getUsername(), scanner, duelView, true);
-            printWinnerAndGiveScoreOneRound(duelView, LoginController.user, secondUser);
+            printWinnerAndGiveScoreOneRound(duelView, LoginAndSignUpController.user, secondUser);
         } else {
             int userWins = 0;
             int secondPlayerWins = 0;
@@ -58,7 +58,7 @@ public class StartDuelView extends MainMenu {
             for (int i = 0; i < 3; i++) {
                 DuelView duelView = DuelView.getInstance();
                 duelView.selectFirstPlayer(secondUser.getUsername(), scanner, duelView, true);
-                int winner = printWinnerThreeRound(duelView, LoginController.user, secondUser);
+                int winner = printWinnerThreeRound(duelView, LoginAndSignUpController.user, secondUser);
                 if (winner == 0) userWins++;
                 else secondPlayerWins++;
                 if (duelView.duelModel.getLifePoint(0) > maxLPs.get(0)) {
@@ -68,14 +68,14 @@ public class StartDuelView extends MainMenu {
                     maxLPs.set(1, duelView.duelModel.getLifePoint(1));
                 }
                 if (userWins == 2) {
-                    finishThreeRound(duelView, LoginController.user, secondUser, maxLPs.get(0));
+                    finishThreeRound(duelView, LoginAndSignUpController.user, secondUser, maxLPs.get(0));
                     return;
                 }
                 if (secondPlayerWins == 2) {
-                    finishThreeRound(duelView, secondUser, LoginController.user, maxLPs.get(1));
+                    finishThreeRound(duelView, secondUser, LoginAndSignUpController.user, maxLPs.get(1));
                     return;
                 }
-                changeCardsBetweenRounds(LoginController.user, secondUser, scanner);
+                changeCardsBetweenRounds(LoginAndSignUpController.user, secondUser, scanner);
             }
         }
     }
@@ -88,19 +88,19 @@ public class StartDuelView extends MainMenu {
             System.out.println("there is no player with this username");
         else {
             User secondUser = User.getUserByUsername(secondPlayerUserName);
-            if (LoginController.user.getActiveDeck() == null)
-                System.out.println(LoginController.user.getUsername() + " has no active deck");
+            if (LoginAndSignUpController.user.getActiveDeck() == null)
+                System.out.println(LoginAndSignUpController.user.getUsername() + " has no active deck");
             else if (secondUser.getActiveDeck() == null)
                 System.out.println(secondUser.getUsername() + " has no active deck");
-            else if (LoginController.user.getActiveDeck().getCardsMain().size() < 40) {
-                System.out.println(LoginController.user.getUsername() + "'s deck is invalid");
+            else if (LoginAndSignUpController.user.getActiveDeck().getCardsMain().size() < 40) {
+                System.out.println(LoginAndSignUpController.user.getUsername() + "'s deck is invalid");
             } else if (secondUser.getActiveDeck().getCardsMain().size() < 40) {
                 System.out.println(secondUser.getUsername() + "'s deck is invalid");
             } else if (round == 3 || round == 1) {
                 if (round == 1) {
                     DuelView duelView = DuelView.getInstance();
                     duelView.selectFirstPlayer(secondPlayerUserName, scanner, duelView, false);
-                    printWinnerAndGiveScoreOneRound(duelView, LoginController.user, secondUser);
+                    printWinnerAndGiveScoreOneRound(duelView, LoginAndSignUpController.user, secondUser);
                 } else {
                     int userWins = 0;
                     int secondPlayerWins = 0;
@@ -110,7 +110,7 @@ public class StartDuelView extends MainMenu {
                     for (int i = 0; i < 3; i++) {
                         DuelView duelView = DuelView.getInstance();
                         duelView.selectFirstPlayer(secondPlayerUserName, scanner, duelView, false);
-                        int winner = printWinnerThreeRound(duelView, LoginController.user, secondUser);
+                        int winner = printWinnerThreeRound(duelView, LoginAndSignUpController.user, secondUser);
                         if (winner == 0) userWins++;
                         else secondPlayerWins++;
                         if (duelView.duelModel.getLifePoint(0) > maxLPs.get(0)) {
@@ -120,14 +120,14 @@ public class StartDuelView extends MainMenu {
                             maxLPs.set(1, duelView.duelModel.getLifePoint(1));
                         }
                         if (userWins == 2) {
-                            finishThreeRound(duelView, LoginController.user, secondUser, maxLPs.get(0));
+                            finishThreeRound(duelView, LoginAndSignUpController.user, secondUser, maxLPs.get(0));
                             return;
                         }
                         if (secondPlayerWins == 2) {
-                            finishThreeRound(duelView, secondUser, LoginController.user, maxLPs.get(1));
+                            finishThreeRound(duelView, secondUser, LoginAndSignUpController.user, maxLPs.get(1));
                             return;
                         }
-                        changeCardsBetweenRounds(LoginController.user, secondUser, scanner);
+                        changeCardsBetweenRounds(LoginAndSignUpController.user, secondUser, scanner);
                     }
                 }
             } else System.out.println("number of rounds is not supported");
@@ -139,8 +139,8 @@ public class StartDuelView extends MainMenu {
         winner.increaseCoins(3000 + 3 * maxLP);
         looser.increaseCoins(300);
         System.out.println(winner.getUsername() + " won the game and the score is: 3000 - 0");
-        LoginController.saveChangesToFileByUser(winner);
-        LoginController.saveChangesToFileByUser(looser);
+        LoginAndSignUpController.saveChangesToFileByUser(winner);
+        LoginAndSignUpController.saveChangesToFileByUser(looser);
     }
 
     public int printWinnerThreeRound(DuelView duelView, User firstUser, User secondUser) {
@@ -181,8 +181,8 @@ public class StartDuelView extends MainMenu {
             secondUser.increaseCoins(100);
             System.out.println(firstUser.getUsername() + " won the game and the score is: 1000 - 0");
         }
-        LoginController.saveChangesToFileByUser(secondUser);
-        LoginController.saveChangesToFileByUser(firstUser);
+        LoginAndSignUpController.saveChangesToFileByUser(secondUser);
+        LoginAndSignUpController.saveChangesToFileByUser(firstUser);
     }
 
     public void changeCardsBetweenRounds(User first, User second, Scanner scanner) {
@@ -191,7 +191,7 @@ public class StartDuelView extends MainMenu {
             System.out.println("enter    change --(mainCardName) with --(sideCardName)   or finish to continue");
             String command = scanner.nextLine();
             while (!command.equals("finish")) {
-                DeckController deckController = DeckController.getInstance();
+                DeckAndSignUpController deckController = DeckAndSignUpController.getInstance();
                 System.out.println(deckController.changeMainAndSideCards(command, first));
             }
         }
@@ -200,7 +200,7 @@ public class StartDuelView extends MainMenu {
             System.out.println("enter    change --(mainCardName) with --(sideCardName)   or finish to continue");
             String command = scanner.nextLine();
             while (!command.equals("finish")) {
-                DeckController deckController = DeckController.getInstance();
+                DeckAndSignUpController deckController = DeckAndSignUpController.getInstance();
                 System.out.println(deckController.changeMainAndSideCards(command, second));
             }
         }

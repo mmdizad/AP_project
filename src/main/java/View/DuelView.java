@@ -37,12 +37,12 @@ public class DuelView {
         Collections.shuffle(someRandomNumbers);
         int starterGame = someRandomNumbers.get(0);
         if (starterGame % 2 == 0) {
-            duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
+            duelModel = new DuelModel(LoginAndSignUpController.user.getUsername(), secondPlayerUsername);
             duelController = DuelController.getInstance();
             NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
             duelController.setDuelModel(duelModel, duelView, duelController, isAi);
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
-            drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);
+            drawPhaseView.newCard(scanner, LoginAndSignUpController.user.getUsername(), true);
             System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
             drawPhaseView.newCard(scanner, secondPlayerUsername, true);
@@ -52,14 +52,14 @@ public class DuelView {
             showBoard();
             standByPhaseView.run(scanner);
         } else {
-            duelModel = new DuelModel(secondPlayerUsername, LoginController.user.getUsername());
+            duelModel = new DuelModel(secondPlayerUsername, LoginAndSignUpController.user.getUsername());
             duelController = DuelController.getInstance();
             duelController.setDuelModel(duelModel, duelView, duelController, isAi);
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, secondPlayerUsername, true);
             System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
-            drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);
+            drawPhaseView.newCard(scanner, LoginAndSignUpController.user.getUsername(), true);
             System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
             StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
