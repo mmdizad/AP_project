@@ -547,7 +547,7 @@ public class LoginAndSignUpController implements Initializable {
                                 e.printStackTrace();
                             }
                             Stage mainMenuStage = new Stage();
-                            mainMenuStage.setTitle("WelcomePage");
+                            mainMenuStage.setTitle("MainMenu");
                             assert root != null;
                             mainMenuStage.setScene(new Scene(root, 1920, 1000));
                             mainMenuStage.show();
