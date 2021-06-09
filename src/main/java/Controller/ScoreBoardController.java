@@ -5,15 +5,15 @@ import Model.User;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class ScoreBoardAndSignUpController extends LoginAndSignUpController {
+public class ScoreBoardController extends LoginAndSignUpController {
 
-    private static ScoreBoardAndSignUpController scoreBoardController = new ScoreBoardAndSignUpController();
+    private static ScoreBoardController scoreBoardController = new ScoreBoardController();
 
-    private ScoreBoardAndSignUpController() {
+    private ScoreBoardController() {
 
     }
 
-    public static ScoreBoardAndSignUpController getInstance() {
+    public static ScoreBoardController getInstance() {
         return scoreBoardController;
     }
 

@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginAndSignUpController;
 import Controller.ProfileController;
 
 import java.util.Scanner;
@@ -35,6 +36,7 @@ public class ProfileView extends MainMenu {
             } else if (input.equals("menu exit")) break;
             else if (input.equals("menu show-current")) System.out.println("ProfileMenu");
             else System.out.println("invalid command!");
+            LoginAndSignUpController.saveChangesToFile();
         }
     }
 
