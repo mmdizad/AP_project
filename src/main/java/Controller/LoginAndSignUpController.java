@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import View.MainMenu;
 import com.google.gson.*;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
@@ -531,6 +532,10 @@ public class LoginAndSignUpController implements Initializable {
                         labelLogin.setText(response);
                         if (response.equals("user logged in successfully!")) {
                             labelLogin.setTextFill(Color.GREEN);
+                            Stage stage = (Stage) backLogin.getScene().getWindow();
+                            stage.close();
+                            MainMenu mainMenu = new MainMenu();
+                            mainMenu.showMenu();
                         } else {
                             labelLogin.setTextFill(Color.RED);
                         }

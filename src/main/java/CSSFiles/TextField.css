@@ -1,28 +1,28 @@
-.PasswordField{
-    -fx-background-color:  #614a92;
-    -fx-background-radius: 45;
-    -fx-background-position: center;
-}
-
-.UsernameTextField{
+.PasswordField {
     -fx-background-color: #614a92;
     -fx-background-radius: 45;
     -fx-background-position: center;
 }
 
-.NicknameTextField{
+.UsernameTextField {
     -fx-background-color: #614a92;
     -fx-background-radius: 45;
     -fx-background-position: center;
 }
 
-.usernameLogin{
+.NicknameTextField {
+    -fx-background-color: #614a92;
+    -fx-background-radius: 45;
+    -fx-background-position: center;
+}
+
+.usernameLogin {
     -fx-background-color: #384e5a;
     -fx-background-radius: 45;
     -fx-background-position: center;
 }
 
-.passwordLogin{
+.passwordLogin {
     -fx-background-color: #384e5a;
     -fx-background-radius: 45;
     -fx-background-position: center;
