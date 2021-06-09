@@ -24,16 +24,52 @@
     -fx-text-fill: black;
 }
 
-.submitLogin{
+.submitLogin {
     -fx-background-color: #384bb3;
     -fx-background-radius: 30;
     -fx-background-position: center;
     -fx-text-fill: black;
 }
 
-.backLogin{
+.backLogin {
     -fx-background-color: #384bb3;
     -fx-background-radius: 30;
     -fx-background-position: center;
     -fx-text-fill: black;
+}
+
+.scoreBoardButton {
+    -fx-background-color: #081d39;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
+}
+
+.deckButton {
+    -fx-background-color: #081d39;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
+}
+
+.profileButton {
+    -fx-background-color: #081d39;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
+}
+
+.duelButton {
+    -fx-background-color: #081d39;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
+}
+
+.shopButton {
+    -fx-background-color: #081d39;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
+}
+
+.loginButton {
+    -fx-background-color: #081d39;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
 }

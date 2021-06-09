@@ -6,21 +6,32 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorWelcome" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="AnchorWelcome" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.WelcomeController">
-   <children>
-      <Rectangle fx:id="rectangle" arcHeight="5.0" arcWidth="5.0" disable="true" fill="#0d263dbb" height="630.0" layoutX="132.0" layoutY="81.0" stroke="BLACK" strokeType="INSIDE" width="763.0" />
-      <Button fx:id="loginButton" layoutX="356.0" layoutY="272.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="322.0" styleClass="LoginButton" stylesheets="@../CSSFiles/Button.css" text="Login" textFill="#c74c4c">
-         <font>
-            <Font size="46.0" />
-         </font></Button>
-      <Button fx:id="signUpButton" layoutX="356.0" layoutY="441.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="322.0" styleClass="SignUpButton" stylesheets="@../CSSFiles/Button.css" text="SignUp" textFill="#c74c4c">
-         <font>
-            <Font size="46.0" />
-         </font></Button>
-      <Label layoutX="299.0" layoutY="105.0" prefHeight="90.0" prefWidth="488.0" text="    Welcome!" textFill="#d93333">
-         <font>
-            <Font size="62.0" />
-         </font>
-      </Label>
-   </children>
+<AnchorPane fx:id="AnchorWelcome" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="1080.0" prefWidth="1920.0" styleClass="AnchorWelcome"
+            stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8.0"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.WelcomeController">
+    <children>
+        <Rectangle fx:id="rectangle" arcHeight="5.0" arcWidth="5.0" disable="true" fill="#0d263dbb" height="630.0"
+                   layoutX="132.0" layoutY="81.0" stroke="BLACK" strokeType="INSIDE" width="763.0"/>
+        <Button fx:id="loginButton" layoutX="356.0" layoutY="272.0" mnemonicParsing="false" prefHeight="90.0"
+                prefWidth="322.0" styleClass="LoginButton" stylesheets="@../CSSFiles/Button.css" text="Login"
+                textFill="#c74c4c">
+            <font>
+                <Font size="46.0"/>
+            </font>
+        </Button>
+        <Button fx:id="signUpButton" layoutX="356.0" layoutY="441.0" mnemonicParsing="false" prefHeight="90.0"
+                prefWidth="322.0" styleClass="SignUpButton" stylesheets="@../CSSFiles/Button.css" text="SignUp"
+                textFill="#c74c4c">
+            <font>
+                <Font size="46.0"/>
+            </font>
+        </Button>
+        <Label layoutX="299.0" layoutY="105.0" prefHeight="90.0" prefWidth="488.0" text="    Welcome!"
+               textFill="#d93333">
+            <font>
+                <Font size="62.0"/>
+            </font>
+        </Label>
+    </children>
 </AnchorPane>

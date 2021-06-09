@@ -531,6 +531,26 @@ public class LoginAndSignUpController implements Initializable {
                         labelLogin.setText(response);
                         if (response.equals("user logged in successfully!")) {
                             labelLogin.setTextFill(Color.GREEN);
+                            Stage stage = (Stage) backLogin.getScene().getWindow();
+                            stage.close();
+                            URL url = null;
+                            try {
+                                url = new File("src/main/java/FXMLFiles/MainMenu.fxml").toURI().toURL();
+                            } catch (MalformedURLException e) {
+                                e.printStackTrace();
+                            }
+                            Parent root = null;
+                            try {
+                                assert url != null;
+                                root = FXMLLoader.load(url);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Stage mainMenuStage = new Stage();
+                            mainMenuStage.setTitle("WelcomePage");
+                            assert root != null;
+                            mainMenuStage.setScene(new Scene(root, 1920, 1000));
+                            mainMenuStage.show();
                         } else {
                             labelLogin.setTextFill(Color.RED);
                         }

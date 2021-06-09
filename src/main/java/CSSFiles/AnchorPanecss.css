@@ -1,11 +1,15 @@
 .AnchorWelcome {
-     -fx-background-image: url("../View/welcomeGame.jpg")
+    -fx-background-image: url("../View/welcomeGame.jpg")
 }
 
-.AnchorSignUp{
-     -fx-background-image: url("../View/yugiohSignUp.jpg")
+.AnchorSignUp {
+    -fx-background-image: url("../View/yugiohSignUp.jpg")
 }
 
-.AnchorLogin{
-     -fx-background-image: url("../View/yugiohLogin.png")
+.AnchorLogin {
+    -fx-background-image: url("../View/yugiohLogin.png")
+}
+
+.AnchorMainMenu {
+    -fx-background-image: url("../View/MainMenuYugioh.jpg")
 }
