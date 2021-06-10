@@ -1,6 +1,7 @@
 package Controller;
 
 import View.LoginAndSignUpView;
+import View.ShopView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -45,6 +46,19 @@ public class MainMenuController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+        shopButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = (Stage) loginButton.getScene().getWindow();
+                ShopView shopView = ShopView.getInstance();
+                try {
+                    shopView.start(stage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }

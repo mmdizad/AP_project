@@ -1,5 +1,7 @@
 package Model;
 
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -24,6 +26,7 @@ public class Card {
     private int attackPower;
     private int level;
     private boolean hasSpecialSummon;
+    private Image image ;
 
     public Card(String name, String description, String cardType, int price, String category) {
         setName(name);
@@ -31,6 +34,10 @@ public class Card {
         setCardType(cardType);
         setPrice(price);
         setCategory(category);
+        if(category.equals("Monster"))
+        image = new Image("../resource/Monsters/"+name);
+                else
+            image = new Image("../resource/SpellTrap/"+name);
         if (getCardByName(name) == null) {
             cards.put(name, this);
             allCards.add(this);

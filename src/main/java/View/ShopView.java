@@ -2,8 +2,16 @@ package View;
 
 import Controller.LoginAndSignUpController;
 import Controller.ShopController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,7 +22,13 @@ public class ShopView extends MainMenu {
     private ShopView() {
 
     }
-
+   public void start(@org.jetbrains.annotations.NotNull Stage stage) throws IOException {
+       URL url = new File("src/main/java/FXMLFiles/Shop.fxml").toURI().toURL();
+       Parent root = FXMLLoader.load(Objects.requireNonNull(url));
+       stage.setTitle("Shop");
+       stage.setScene(new Scene(root, 1920, 1000));
+       stage.show();
+   }
     public static ShopView getInstance() {
         return shopView;
     }

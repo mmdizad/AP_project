@@ -1,5 +1,3 @@
-import Controller.WelcomeController;
-import View.WelcomeView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
