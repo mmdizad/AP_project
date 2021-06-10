@@ -1,13 +1,41 @@
 package Controller;
 
 import Model.*;
+import com.google.gson.Gson;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DeckController extends LoginAndSignUpController {
+
+    @FXML
+    Button showAllDeckBtn;
+
+    @FXML
+    TableView<Deck> showAllDeckTable;
+
+    @FXML
+    Text activeDeckText;
+
 
     private static DeckController deckController = new DeckController();
 
@@ -25,8 +53,32 @@ public class DeckController extends LoginAndSignUpController {
         } else {
             Deck deck = new Deck(matcher.group(1), user.getUsername());
             user.addDeck(deck);
+            File file = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks\\" + matcher.group(1) + "deck.txt");
+            try {
+                if (file.createNewFile()) {
+                    Gson gson = new Gson();
+                    String deckInfo = gson.toJson(deck);
+                    FileWriter fileWriter = new FileWriter(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks\\" + matcher.group(1) + "deck.txt");
+                    fileWriter.write(deckInfo);
+                    fileWriter.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return "deck created successfully!";
         }
+    }
+
+    public ArrayList<Deck> getAllDecks() {
+        return null;
+    }
+
+    public void showAllDeckBtnEvent(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/ShowAllDeck.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public String deckDelete(Matcher matcher) {
@@ -35,11 +87,13 @@ public class DeckController extends LoginAndSignUpController {
             return "deck with name " + matcher.group(1) + " does not exist";
         } else {
             Deck deck = Deck.getDeckByName(matcher.group(1));
-            if (!decks.contains(deck)) {
+            if (!userContainsDeck(deck,decks)) {
                 return "deck with name " + matcher.group(1) + " does not exist";
             } else {
                 user.deleteDeck(deck);
                 Deck.deleteDeck(deck);
+                File file = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks\\" + matcher.group(1) + "deck.txt");
+                file.delete();
                 return "deck deleted successfully";
             }
         }
@@ -51,10 +105,11 @@ public class DeckController extends LoginAndSignUpController {
             return "deck with name " + matcher.group(1) + " does not exist";
         } else {
             Deck deck = Deck.getDeckByName(matcher.group(1));
-            if (!decks.contains(deck)) {
+            if (!userContainsDeck(deck,decks)) {
                 return "deck with name " + matcher.group(1) + " does not exist";
             } else {
                 user.setActiveDeck(deck);
+                saveChangesToFile(deck);
                 return "deck activated successfully";
             }
         }
@@ -69,7 +124,7 @@ public class DeckController extends LoginAndSignUpController {
                 return "deck with name " + matcher.group(2) + " does not exist";
             } else {
                 Deck deck = Deck.getDeckByName(matcher.group(2));
-                if (!decks.contains(deck)) {
+                if (!userContainsDeck(deck,decks)) {
                     return "deck with name " + matcher.group(2) + " does not exist";
                 } else {
                     ArrayList<Card> mainCards = deck.getCardsMain();
@@ -123,6 +178,7 @@ public class DeckController extends LoginAndSignUpController {
             } else {
                 Card card = Card.getCardByName(matcher.group(1));
                 deck.addCardToMain(card);
+                saveChangesToFile(deck);
                 return "card added to deck successfully";
             }
         }
@@ -151,6 +207,7 @@ public class DeckController extends LoginAndSignUpController {
             } else {
                 Card card = Card.getCardByName(matcher.group(1));
                 deck.addCardToSide(card);
+                saveChangesToFile(deck);
                 return "card added to deck successfully";
             }
         }
@@ -165,7 +222,7 @@ public class DeckController extends LoginAndSignUpController {
                 return "deck with name " + matcher.group(2) + " does not exist";
             } else {
                 Deck deck = Deck.getDeckByName(matcher.group(2));
-                if (!decks.contains(deck)) {
+                if (!userContainsDeck(deck,decks)) {
                     return "deck with name " + matcher.group(2) + " does not exist";
                 } else {
                     if (matcher.groupCount() == 2) {
@@ -185,6 +242,7 @@ public class DeckController extends LoginAndSignUpController {
         for (Card card1 : mainCards) {
             if (card1.getName().equals(card.getName())) {
                 deck.deleteCardFromMain(card);
+                saveChangesToFile(deck);
                 return "card removed form deck successfully";
             }
         }
@@ -198,6 +256,7 @@ public class DeckController extends LoginAndSignUpController {
         for (Card card1 : sideCards){
             if (card1.getName().equals(card.getName())) {
                 deck.deleteCardFromSide(card);
+                saveChangesToFile(deck);
                 return "card removed form deck successfully";
             }
         }
@@ -212,7 +271,7 @@ public class DeckController extends LoginAndSignUpController {
             return output;
         } else {
             Deck deck = Deck.getDeckByName(matcher.group(1));
-            if (!decks.contains(deck)) {
+            if (!userContainsDeck(deck,decks)) {
                 output.add("deck with name " + matcher.group(1) + " does not exist");
                 return output;
             } else {
@@ -416,5 +475,30 @@ public class DeckController extends LoginAndSignUpController {
             return "cards changed successfully";
         }
         return "invalid command";
+    }
+
+    public void saveChangesToFile(Deck deck) {
+        File file = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks\\" + deck.getName() + "deck.txt");
+        file.delete();
+        try {
+            if (file.createNewFile()) {
+                Gson gson = new Gson();
+                String deckInfo = gson.toJson(deck);
+                FileWriter fileWriter = new FileWriter(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks\\" + deck.getName() + "deck.txt");
+                fileWriter.write(deckInfo);
+                fileWriter.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean userContainsDeck(Deck deck,ArrayList<Deck> decks) {
+        for (Deck deck1 : decks){
+            if (deck1.getName().equals(deck.getName())){
+                return true;
+            }
+        }
+        return false;
     }
 }

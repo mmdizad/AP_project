@@ -4,12 +4,12 @@ import java.util.HashMap;
 
 public class Monster extends Card {
     public static HashMap<String, Monster> monsters = new HashMap<>();
-    private int defensePower;
-    private int attackPower;
-    private int level;
+    private int defensePowerMonster;
+    private int attackPowerMonster;
+    private int levelMonster;
     private String monsterType;
     private String attribute;
-    private boolean hasSpecialSummon;
+    private boolean hasSpecialSummonMonster;
 
     public Monster(String name, String description, String cardType, int price, String category, int defensePower, int attackPower
             , String monsterType, String attribute, int level, boolean hasSpecialSummon) {
@@ -24,15 +24,15 @@ public class Monster extends Card {
     }
 
     public int getDefensePower() {
-        return defensePower;
+        return defensePowerMonster;
     }
 
     public int getAttackPower() {
-        return attackPower;
+        return attackPowerMonster;
     }
 
     public int getLevel() {
-        return level;
+        return levelMonster;
     }
 
     public void setMonsterType(String monsterType) {
@@ -52,23 +52,23 @@ public class Monster extends Card {
     }
 
     public void setDefensePower(int defensePower) {
-        this.defensePower = defensePower;
+        this.defensePowerMonster = defensePower;
     }
 
     public void setAttackPower(int attackPower) {
-        this.attackPower = attackPower;
+        this.attackPowerMonster = attackPower;
     }
 
     public void setLevel(int level) {
-        this.level = level;
+        this.levelMonster = level;
     }
 
     public void setHasSpecialSummon(boolean hasSpecialSummon) {
-        this.hasSpecialSummon = hasSpecialSummon;
+        this.hasSpecialSummonMonster = hasSpecialSummon;
     }
 
     public boolean isHasSpecialSummon() {
-        return hasSpecialSummon;
+        return hasSpecialSummonMonster;
     }
 
     public static Monster getMonsterByName(String name) {
