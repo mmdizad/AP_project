@@ -15,6 +15,7 @@ public class Deck {
     private ArrayList<Card> cardsSide = new ArrayList<>();
     private ArrayList<Card> allMonsters = new ArrayList<>();
     private ArrayList<Card> allSpellsAndTraps = new ArrayList<>();
+    private int numberOfCards = 0;
     public static HashMap<String, Deck> decks;
 
     static {
@@ -40,6 +41,7 @@ public class Deck {
             Card card1 = new Card(card.getName(),card.getDescription(),card.getCardType(),card.getPrice(),card.getCategory());
             cardsMain.add(card1);
         }
+        numberOfCards = cardsMain.size();
     }
 
     public void addCardToSide(Card card) {
@@ -59,6 +61,7 @@ public class Deck {
         for (Card card1 : cardsMain){
             if (card1.getName().equals(card.getName())){
                 cardsMain.remove(card1);
+                numberOfCards = cardsMain.size();
                 return;
             }
         }
@@ -110,6 +113,14 @@ public class Deck {
 
     public void sortCards() {
 
+    }
+
+    public int getNumberOfCards() {
+        return numberOfCards;
+    }
+
+    public String getCreatorName() {
+        return creatorName;
     }
 
     public String getName() {
