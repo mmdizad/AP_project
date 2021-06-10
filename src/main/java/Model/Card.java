@@ -1,9 +1,14 @@
 package Model;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Card {
     private static final ArrayList<Card> firstCards;
@@ -25,8 +30,8 @@ public class Card {
     private int defensePower;
     private int attackPower;
     private int level;
-    private boolean hasSpecialSummon;
-    private Image image ;
+    private  boolean hasSpecialSummon;
+    private transient final ImageView imageView;
 
     public Card(String name, String description, String cardType, int price, String category) {
         setName(name);
@@ -34,10 +39,26 @@ public class Card {
         setCardType(cardType);
         setPrice(price);
         setCategory(category);
-        if(category.equals("Monster"))
-        image = new Image("../resource/Monsters/"+name);
-                else
-            image = new Image("../resource/SpellTrap/"+name);
+        if(category.equals("Monster")) {
+            URL url = null;
+            try {
+                url = new File("src/main/java/Monster/"+name+".jpg").toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            imageView =new ImageView( new Image(Objects.requireNonNull(url).toString()));
+        }
+                else{
+            URL url = null;
+            try {
+                url = new File("src/main/java/resource/SpellTrap/+"+name+".jpg").toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            imageView =new ImageView( new Image(Objects.requireNonNull(url).toString()));
+        }
+
         if (getCardByName(name) == null) {
             cards.put(name, this);
             allCards.add(this);
@@ -151,5 +172,9 @@ public class Card {
 
     public void setCardID(String cardID) {
         this.cardID = cardID;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
     }
 }

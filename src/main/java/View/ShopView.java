@@ -2,9 +2,16 @@ package View;
 
 import Controller.LoginAndSignUpController;
 import Controller.ShopController;
+import Model.Card;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -12,22 +19,28 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ShopView extends MainMenu {
+public class ShopView extends MainMenu implements Initializable {
     private static ShopView shopView = new ShopView();
 
-    private ShopView() {
+    public TableView cardTable;
+    private ObservableList<Card> cardList;
+    public ShopView() {
 
     }
-   public void start(@org.jetbrains.annotations.NotNull Stage stage) throws IOException {
-       URL url = new File("src/main/java/FXMLFiles/Shop.fxml").toURI().toURL();
+
+   public void start( Stage stage) throws IOException {
+       URL url = new File("src/main/java/FXMLFiles/ShopMenu.fxml").toURI().toURL();
        Parent root = FXMLLoader.load(Objects.requireNonNull(url));
        stage.setTitle("Shop");
+
        stage.setScene(new Scene(root, 1920, 1000));
        stage.show();
+
    }
     public static ShopView getInstance() {
         return shopView;
@@ -74,4 +87,20 @@ public class ShopView extends MainMenu {
         }
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        cardList= FXCollections.observableArrayList();
+        TableColumn number = new TableColumn("num") ;
+        TableColumn picture = new TableColumn("picture") ;
+        TableColumn name = new TableColumn("name") ;
+        TableColumn description = new TableColumn("description") ;
+        number.setCellValueFactory(new PropertyValueFactory<>("level"));
+        picture.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        cardList.addAll(Card.getAllCardsCard());
+        cardTable.getColumns().addAll(number,picture,name,description);
+        cardTable.setItems(cardList);
+
+    }
 }

@@ -1,6 +1,6 @@
 package View;
 
-import Controller.LoginController;
+import Controller.LoginAndSignUpController;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class LoginView extends Menu {
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
-        LoginController.createCard();
+        LoginAndSignUpController.createCard();
         while (true) {
             invalidCommand = true;
             String input = scanner.nextLine();
@@ -40,12 +40,12 @@ public class LoginView extends Menu {
     }
 
     public void createUser(String username, String nickname, String password) {
-        LoginController loginController = new LoginController();
+        LoginAndSignUpController loginController = new LoginAndSignUpController();
         System.out.println(loginController.createUser(username, nickname, password));
     }
 
     public void login(String username, String password, Scanner scanner) {
-        LoginController loginController = new LoginController();
+        LoginAndSignUpController loginController = new LoginAndSignUpController();
         String response = loginController.login(username, password);
         System.out.println(response);
         if (response.equals("user logged in successfully!")) {

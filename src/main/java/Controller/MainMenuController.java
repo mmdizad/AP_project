@@ -39,7 +39,6 @@ public class MainMenuController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 Stage stage = (Stage) loginButton.getScene().getWindow();
-                stage.close();
                 LoginAndSignUpView loginAndSignUpView = new LoginAndSignUpView();
                 try {
                     loginAndSignUpView.loginShow();
