@@ -2,16 +2,40 @@ package Controller;
 
 import Model.*;
 import com.google.gson.Gson;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DeckController extends LoginAndSignUpController {
+
+    @FXML
+    Button showAllDeckBtn;
+
+    @FXML
+    TableView<Deck> showAllDeckTable;
+
+    @FXML
+    Text activeDeckText;
+
 
     private static DeckController deckController = new DeckController();
 
@@ -43,6 +67,18 @@ public class DeckController extends LoginAndSignUpController {
             }
             return "deck created successfully!";
         }
+    }
+
+    public ArrayList<Deck> getAllDecks() {
+        return null;
+    }
+
+    public void showAllDeckBtnEvent(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/ShowAllDeck.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public String deckDelete(Matcher matcher) {
@@ -436,7 +472,6 @@ public class DeckController extends LoginAndSignUpController {
                     break;
                 }
             }
-            saveChangesToFile(inGameUser.getActiveDeck());
             return "cards changed successfully";
         }
         return "invalid command";

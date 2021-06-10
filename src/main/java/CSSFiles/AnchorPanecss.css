@@ -13,3 +13,7 @@
 .AnchorMainMenu {
     -fx-background-image: url("../View/MainMenuYugioh.jpg")
 }
+
+.AnchorShowAllDeck {
+    -fx-background-image: url("../View/showAllDeck.jpg");
+}

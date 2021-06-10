@@ -1,6 +1,7 @@
 package View;
 
 import Controller.*;
+import Model.Deck;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -96,7 +97,6 @@ public class DeckView extends MainMenu {
             if (!isCommandValid) {
                 System.out.println("Invalid command");
             }
-            LoginAndSignUpController.saveChangesToFile();
         }
     }
 
