@@ -4,11 +4,16 @@ import View.LoginAndSignUpView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -45,6 +50,32 @@ public class MainMenuController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        duelButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage mainMenuStage = (Stage) duelButton.getScene().getWindow();
+                mainMenuStage.close();
+                URL url = null;
+                try {
+                    url = new File("src/main/java/FXMLFiles/ChooseDuel.fxml").toURI().toURL();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                Parent root = null;
+                try {
+                    assert url != null;
+                    root = FXMLLoader.load(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Stage stage = new Stage();
+                stage.setTitle("chooseDuel");
+                assert root != null;
+                stage.setScene(new Scene(root, 1920, 1080));
+                stage.show();
             }
         });
     }

@@ -13,3 +13,7 @@
 .AnchorMainMenu {
     -fx-background-image: url("../View/MainMenuYugioh.jpg")
 }
+
+.AnchorChooseDuel{
+    -fx-background-image: url("../View/chooseDuel.jpg");
+}

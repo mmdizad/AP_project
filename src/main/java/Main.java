@@ -1,5 +1,3 @@
-import Controller.WelcomeController;
-import View.WelcomeView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +18,7 @@ public class Main extends Application {
         URL url = new File("src/main/java/FXMLFiles/Welcome.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("WelcomePage");
-        primaryStage.setScene(new Scene(root, 1920, 1000));
+        primaryStage.setScene(new Scene(root, 1920, 1080));
         primaryStage.show();
     }
 }

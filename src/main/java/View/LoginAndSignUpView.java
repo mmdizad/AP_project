@@ -10,7 +10,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Scanner;
 
 public class LoginAndSignUpView extends Menu {
 
@@ -30,7 +29,7 @@ public class LoginAndSignUpView extends Menu {
         Parent root = FXMLLoader.load(url);
         Stage stage = new Stage();
         stage.setTitle("LoginPage");
-        stage.setScene(new Scene(root, 1920, 1000));
+        stage.setScene(new Scene(root, 1920, 1080));
         stage.show();
     }
 
