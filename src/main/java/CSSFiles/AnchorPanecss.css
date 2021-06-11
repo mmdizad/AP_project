@@ -14,6 +14,11 @@
     -fx-background-image: url("../View/MainMenuYugioh.jpg")
 }
 
-.AnchorChooseDuel{
-    -fx-background-image: url("../View/chooseDuel.jpg");
+.AnchorShowAllDeck {
+    -fx-background-image: url("../View/showAllDeck.jpg");
+}
+.ShopAnchorPane{
+
+    -fx-background-image: url(../pics/50051.png);
+    -fx-background-size: cover;
 }

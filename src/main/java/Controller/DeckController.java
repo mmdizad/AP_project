@@ -2,16 +2,70 @@ package Controller;
 
 import Model.*;
 import com.google.gson.Gson;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DeckController extends LoginAndSignUpController {
+
+    @FXML
+    Button showAllDeckBtn;
+
+    @FXML
+    TableView<Deck> showAllDeckTable;
+
+    @FXML
+    Text activeDeckText;
+
+    @FXML
+    TableView<Deck> deckDeleteTable;
+
+    @FXML
+    Button deckDeleteBtn;
+
+    @FXML
+    Button deckSetActiveBtn;
+
+    @FXML
+    Text deckDeleteText;
+
+    @FXML
+    Button deckCreateBtn;
+
+    @FXML
+    Button deckCreateSubmitBtn;
+
+    @FXML
+    Text deckCreateText;
+
+    @FXML
+    TextField deckCreateTextField;
+
 
     private static DeckController deckController = new DeckController();
 
@@ -42,6 +96,137 @@ public class DeckController extends LoginAndSignUpController {
                 e.printStackTrace();
             }
             return "deck created successfully!";
+        }
+    }
+
+    public ArrayList<Deck> getAllDecks() {
+        ArrayList<Deck> decks = new ArrayList<>();
+        File folder = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks\\");
+        File[] files = folder.listFiles();
+        for (File file : files){
+            Gson gson = new Gson();
+            StringBuilder getDetail = new StringBuilder();
+            Scanner myReader = null;
+            try {
+                myReader = new Scanner(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            while (myReader.hasNextLine()) {
+                getDetail.append(myReader.nextLine());
+            }
+            String userInfo = getDetail.toString();
+            Deck deck = gson.fromJson(userInfo, Deck.class);
+            myReader.close();
+            if (deck.getCreatorName().equals(user.getUsername())) {
+                decks.add(deck);
+            }
+        }
+        return decks;
+    }
+
+    public void showAllDeckBtnEvent(ActionEvent event) throws IOException {
+        showAllDeckTable.getColumns().clear();
+        TableColumn<Deck,String> nameColumn = new TableColumn<>("DECK NAME");
+        TableColumn<Deck,Integer> numberOfCardsColumn = new TableColumn<>("NUMBER OF CARDS");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        numberOfCardsColumn.setCellValueFactory(new PropertyValueFactory<>("numberOfCards"));
+
+        showAllDeckTable.getColumns().addAll(nameColumn,numberOfCardsColumn);
+
+        ArrayList<Deck> decks = getAllDecks();
+
+        for (Deck deck : decks) {
+            showAllDeckTable.getItems().add(deck);
+        }
+
+        String activeDeck = user.getActiveDeck().getName() + ": " + user.getActiveDeck().getNumberOfCards();
+
+        activeDeckText.setText(activeDeck);
+
+        Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/ShowAllDeck.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void deleteDeckBtnEvent(ActionEvent actionEvent) throws IOException {
+        deckDeleteTable.getColumns().clear();
+        TableColumn<Deck,String> nameColumn = new TableColumn<>("DECK NAME");
+        TableColumn<Deck,Integer> numberOfCardsColumn = new TableColumn<>("NUMBER OF CARDS");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        numberOfCardsColumn.setCellValueFactory(new PropertyValueFactory<>("numberOfCards"));
+
+        deckDeleteTable.getColumns().addAll(nameColumn,numberOfCardsColumn);
+
+        ArrayList<Deck> decks = getAllDecks();
+
+        for (Deck deck : decks) {
+            deckDeleteTable.getItems().add(deck);
+        }
+
+        Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/DeleteDeck.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void deckDeleteBtnEvent(ActionEvent actionEvent) {
+        if (deckDeleteTable.getSelectionModel().getSelectedItem() != null) {
+            Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
+            if (Deck.getDeckByName(deck.getName()) == null) {
+                deckDeleteText.setText("YOU HAVE DELETED THIS DECK BEFORE");
+            }else {
+                Pattern pattern = Pattern.compile("^deck delete (.+)$");
+                Matcher matcher = pattern.matcher("deck delete " + deck.getName());
+                if (matcher.find()) {
+                    deckDelete(matcher);
+                }
+                deckDeleteText.setText("DECK DELETED SUCCESSFULLY");
+                deckDeleteText.setFill(Color.GREEN);
+            }
+        }
+    }
+
+    public void deckSetActiveBtnEvent(ActionEvent event) {
+        if (deckDeleteTable.getSelectionModel().getSelectedItem() != null) {
+            Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
+            if (Deck.getDeckByName(deck.getName()) == null) {
+                deckDeleteText.setText("YOU HAVE DELETED THIS DECK BEFORE");
+            }else {
+                Pattern pattern = Pattern.compile("^deck set active (.+)$");
+                Matcher matcher = pattern.matcher("deck set active " + deck.getName());
+                if (matcher.find()) {
+                    deckSetActivate(matcher);
+                }
+                deckDeleteText.setText("DECK ACTIVATED SUCCESSFULLY");
+                deckDeleteText.setFill(Color.GREEN);
+            }
+        }
+    }
+
+    public void deckCreateBtnEvent(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/DeckCreate.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void deckCreateSubmitBtnEvent(ActionEvent event) {
+        String deckName = deckCreateTextField.getText();
+        if (Deck.getDeckByName(deckName) != null) {
+            deckCreateText.setText("DECK WITH THIS NAME EXISTS");
+        }else {
+            Pattern pattern = Pattern.compile("^deck create (.+)$");
+            Matcher matcher = pattern.matcher("deck create " + deckName);
+            if (matcher.find()) {
+                deckCreate(matcher);
+            }
+            deckCreateText.setFill(Color.GREEN);
+            deckCreateText.setText("DECK CREATED SUCCESSFULLY");
         }
     }
 
@@ -436,7 +621,6 @@ public class DeckController extends LoginAndSignUpController {
                     break;
                 }
             }
-            saveChangesToFile(inGameUser.getActiveDeck());
             return "cards changed successfully";
         }
         return "invalid command";

@@ -38,6 +38,11 @@
     -fx-text-fill: black;
 }
 
+.DeckMenuButton{
+    -fx-background-radius: 30;
+    -fx-background-image: url("../View/DeckButtonBackgroud.jpg");
+}
+
 .scoreBoardButton {
     -fx-background-color: #081d39;
     -fx-background-radius: 30;
