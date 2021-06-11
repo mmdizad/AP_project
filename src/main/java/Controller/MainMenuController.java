@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
-
+   public static Stage stage;
     @FXML
     public Button duelButton;
 
@@ -35,10 +35,11 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         loginButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = (Stage) loginButton.getScene().getWindow();
+
                 LoginAndSignUpView loginAndSignUpView = new LoginAndSignUpView();
                 try {
                     loginAndSignUpView.loginShow();
@@ -60,5 +61,6 @@ public class MainMenuController implements Initializable {
 
             }
         });
+
     }
 }
