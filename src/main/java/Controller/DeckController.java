@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -66,6 +67,57 @@ public class DeckController extends LoginAndSignUpController {
     @FXML
     TextField deckCreateTextField;
 
+    @FXML
+    Button showDeckBtn;
+
+    @FXML
+    TableView<Card> showDeckTableMain;
+
+    @FXML
+    TableView<Card> showDeckTableSide;
+
+    @FXML
+    Button showDeckInMenuBtn;
+
+    @FXML
+    TextField showDeckTextField;
+
+    @FXML
+    Text showDeckText;
+
+    @FXML
+    Button addCardBtn;
+
+    @FXML
+    Button removeCardBtn;
+
+    @FXML
+    TableView<Card> addCardTable;
+
+    @FXML
+    Button addCardToMainBtn;
+
+    @FXML
+    Button addCardToSideBtn;
+
+    @FXML
+    Text addCardText;
+
+    @FXML
+    TableView<Card> removeCardFromMainTable;
+
+    @FXML
+    TableView<Card> removeCardFromSideTable;
+
+    @FXML
+    Button removeFromMainBtn;
+
+    @FXML
+    Button removeFromSideBtn;
+
+    @FXML
+    Text removeCardText;
+
 
     private static DeckController deckController = new DeckController();
 
@@ -103,7 +155,7 @@ public class DeckController extends LoginAndSignUpController {
         ArrayList<Deck> decks = new ArrayList<>();
         File folder = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks\\");
         File[] files = folder.listFiles();
-        for (File file : files){
+        for (File file : files) {
             Gson gson = new Gson();
             StringBuilder getDetail = new StringBuilder();
             Scanner myReader = null;
@@ -127,12 +179,12 @@ public class DeckController extends LoginAndSignUpController {
 
     public void showAllDeckBtnEvent(ActionEvent event) throws IOException {
         showAllDeckTable.getColumns().clear();
-        TableColumn<Deck,String> nameColumn = new TableColumn<>("DECK NAME");
-        TableColumn<Deck,Integer> numberOfCardsColumn = new TableColumn<>("NUMBER OF CARDS");
+        TableColumn<Deck, String> nameColumn = new TableColumn<>("DECK NAME");
+        TableColumn<Deck, Integer> numberOfCardsColumn = new TableColumn<>("NUMBER OF CARDS");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         numberOfCardsColumn.setCellValueFactory(new PropertyValueFactory<>("numberOfCards"));
 
-        showAllDeckTable.getColumns().addAll(nameColumn,numberOfCardsColumn);
+        showAllDeckTable.getColumns().addAll(nameColumn, numberOfCardsColumn);
 
         ArrayList<Deck> decks = getAllDecks();
 
@@ -145,7 +197,7 @@ public class DeckController extends LoginAndSignUpController {
         activeDeckText.setText(activeDeck);
 
         Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/ShowAllDeck.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
@@ -153,12 +205,12 @@ public class DeckController extends LoginAndSignUpController {
 
     public void deleteDeckBtnEvent(ActionEvent actionEvent) throws IOException {
         deckDeleteTable.getColumns().clear();
-        TableColumn<Deck,String> nameColumn = new TableColumn<>("DECK NAME");
-        TableColumn<Deck,Integer> numberOfCardsColumn = new TableColumn<>("NUMBER OF CARDS");
+        TableColumn<Deck, String> nameColumn = new TableColumn<>("DECK NAME");
+        TableColumn<Deck, Integer> numberOfCardsColumn = new TableColumn<>("NUMBER OF CARDS");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         numberOfCardsColumn.setCellValueFactory(new PropertyValueFactory<>("numberOfCards"));
 
-        deckDeleteTable.getColumns().addAll(nameColumn,numberOfCardsColumn);
+        deckDeleteTable.getColumns().addAll(nameColumn, numberOfCardsColumn);
 
         ArrayList<Deck> decks = getAllDecks();
 
@@ -167,7 +219,7 @@ public class DeckController extends LoginAndSignUpController {
         }
 
         Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/DeleteDeck.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
@@ -178,7 +230,7 @@ public class DeckController extends LoginAndSignUpController {
             Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
             if (Deck.getDeckByName(deck.getName()) == null) {
                 deckDeleteText.setText("YOU HAVE DELETED THIS DECK BEFORE");
-            }else {
+            } else {
                 Pattern pattern = Pattern.compile("^deck delete (.+)$");
                 Matcher matcher = pattern.matcher("deck delete " + deck.getName());
                 if (matcher.find()) {
@@ -195,7 +247,7 @@ public class DeckController extends LoginAndSignUpController {
             Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
             if (Deck.getDeckByName(deck.getName()) == null) {
                 deckDeleteText.setText("YOU HAVE DELETED THIS DECK BEFORE");
-            }else {
+            } else {
                 Pattern pattern = Pattern.compile("^deck set active (.+)$");
                 Matcher matcher = pattern.matcher("deck set active " + deck.getName());
                 if (matcher.find()) {
@@ -209,7 +261,7 @@ public class DeckController extends LoginAndSignUpController {
 
     public void deckCreateBtnEvent(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/DeckCreate.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
@@ -219,7 +271,7 @@ public class DeckController extends LoginAndSignUpController {
         String deckName = deckCreateTextField.getText();
         if (Deck.getDeckByName(deckName) != null) {
             deckCreateText.setText("DECK WITH THIS NAME EXISTS");
-        }else {
+        } else {
             Pattern pattern = Pattern.compile("^deck create (.+)$");
             Matcher matcher = pattern.matcher("deck create " + deckName);
             if (matcher.find()) {
@@ -230,13 +282,151 @@ public class DeckController extends LoginAndSignUpController {
         }
     }
 
+    public void showDeckBtnEvent(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/ShowDeck.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void showDeckInMenuBtnEvent(ActionEvent actionEvent) {
+        String deckName = showDeckTextField.getText();
+        if (Deck.getDeckByName(deckName) == null || !userContainsDeck(Deck.getDeckByName(deckName), user.getDecks())) {
+            showDeckText.setText("YOU DONT HAVE DECK WITH THIS NAME");
+        } else {
+            showDeckTableSide.getColumns().clear();
+            showDeckTableMain.getColumns().clear();
+            Deck deck = Deck.getDeckByName(deckName);
+            ArrayList<Card> mainCards = deck.getCardsMain();
+            ArrayList<Card> sideCards = deck.getCardsSide();
+
+            TableColumn<Card, ImageView> main = new TableColumn<>("MAIN CARDS");
+            TableColumn<Card, ImageView> side = new TableColumn<>("SIDE CARDS");
+
+            main.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+            side.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+
+            showDeckTableMain.getColumns().add(main);
+            showDeckTableSide.getColumns().add(side);
+
+            showDeckTableMain.getItems().addAll(mainCards);
+            showDeckTableSide.getItems().addAll(sideCards);
+        }
+    }
+
+    public void addCardBtnEvent(ActionEvent actionEvent) throws IOException {
+        if (deckDeleteTable.getSelectionModel().getSelectedItem() != null) {
+            addCardTable.getColumns().clear();
+            ArrayList<Card> cards = user.getCards();
+            TableColumn<Card, ImageView> ourCards = new TableColumn<>("CARDS");
+
+            ourCards.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+
+            addCardTable.getColumns().add(ourCards);
+
+            addCardTable.getItems().addAll(cards);
+
+            Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/AddCardToDeck.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
+
+    public void addCardToMainBtnEvent(ActionEvent actionEvent) {
+        Card card = addCardTable.getSelectionModel().getSelectedItem();
+        Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
+        if (card == null) {
+            addCardText.setText("SELECT A CARD FIRST");
+        } else {
+            Pattern pattern = Pattern.compile("^add card (.+) to deck (.+)$");
+            Matcher matcher = pattern.matcher("add card " + card.getName() + " to deck " + deck.getName());
+            if (matcher.find()) {
+                addCardText.setText(addCard(matcher));
+            }
+        }
+    }
+
+    public void addCardToSideBtnEvent(ActionEvent actionEvent) {
+        Card card = addCardTable.getSelectionModel().getSelectedItem();
+        Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
+        if (card == null) {
+            addCardText.setText("SELECT A CARD FIRST");
+        } else {
+            Pattern pattern = Pattern.compile("^add card (.+) to deck (.+) (side)$");
+            Matcher matcher = pattern.matcher("add card " + card.getName() + " to deck " + deck.getName() + " side");
+            if (matcher.find()) {
+                addCardText.setText(addCard(matcher));
+            }
+        }
+    }
+
+    public void removeCardBtnEvent(ActionEvent actionEvent) throws IOException {
+        if (deckDeleteTable.getSelectionModel().getSelectedItem() != null) {
+            removeCardFromMainTable.getColumns().clear();
+            removeCardFromSideTable.getColumns().clear();
+            Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
+            ArrayList<Card> mainCards = deck.getCardsMain();
+            ArrayList<Card> sideCards = deck.getCardsSide();
+
+
+            TableColumn<Card, ImageView> main = new TableColumn<>("MAIN CARDS");
+            TableColumn<Card, ImageView> side = new TableColumn<>("SIDE CARDS");
+
+            main.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+            side.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+
+            removeCardFromMainTable.getColumns().add(main);
+            removeCardFromSideTable.getColumns().add(side);
+
+            removeCardFromMainTable.getItems().addAll(mainCards);
+            removeCardFromSideTable.getItems().addAll(sideCards);
+
+            Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/RemoveCardFromDeck.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
+
+    public void removeFromMainBtnEvent(ActionEvent event) {
+        if (removeCardFromMainTable.getSelectionModel().getSelectedItem() == null) {
+            removeCardText.setText("SELECT A CARD FIRST");
+        } else {
+            Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
+            Card card = removeCardFromMainTable.getSelectionModel().getSelectedItem();
+            Pattern pattern = Pattern.compile("^remove card (.+) from deck (.+)$");
+            Matcher matcher = pattern.matcher("remove card " + card.getName() + " from deck " + deck.getName());
+            if (matcher.find()) {
+                removeCardText.setText(deleteCard(matcher));
+            }
+        }
+    }
+
+    public void removeFromSideBtnEvent(ActionEvent actionEvent) {
+        if (removeCardFromSideTable.getSelectionModel().getSelectedItem() == null) {
+            removeCardText.setText("SELECT A CARD FIRST");
+        } else {
+            Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
+            Card card = removeCardFromSideTable.getSelectionModel().getSelectedItem();
+            Pattern pattern = Pattern.compile("^remove card (.+) from deck (.+) (side)$");
+            Matcher matcher = pattern.matcher("remove card " + card.getName() + " from deck " + deck.getName() + " side");
+            if (matcher.find()) {
+                removeCardText.setText(deleteCard(matcher));
+            }
+        }
+    }
+
     public String deckDelete(Matcher matcher) {
         ArrayList<Deck> decks = user.getDecks();
         if (Deck.getDeckByName(matcher.group(1)) == null) {
             return "deck with name " + matcher.group(1) + " does not exist";
         } else {
             Deck deck = Deck.getDeckByName(matcher.group(1));
-            if (!userContainsDeck(deck,decks)) {
+            if (!userContainsDeck(deck, decks)) {
                 return "deck with name " + matcher.group(1) + " does not exist";
             } else {
                 user.deleteDeck(deck);
@@ -254,7 +444,7 @@ public class DeckController extends LoginAndSignUpController {
             return "deck with name " + matcher.group(1) + " does not exist";
         } else {
             Deck deck = Deck.getDeckByName(matcher.group(1));
-            if (!userContainsDeck(deck,decks)) {
+            if (!userContainsDeck(deck, decks)) {
                 return "deck with name " + matcher.group(1) + " does not exist";
             } else {
                 user.setActiveDeck(deck);
@@ -273,7 +463,7 @@ public class DeckController extends LoginAndSignUpController {
                 return "deck with name " + matcher.group(2) + " does not exist";
             } else {
                 Deck deck = Deck.getDeckByName(matcher.group(2));
-                if (!userContainsDeck(deck,decks)) {
+                if (!userContainsDeck(deck, decks)) {
                     return "deck with name " + matcher.group(2) + " does not exist";
                 } else {
                     ArrayList<Card> mainCards = deck.getCardsMain();
@@ -371,7 +561,7 @@ public class DeckController extends LoginAndSignUpController {
                 return "deck with name " + matcher.group(2) + " does not exist";
             } else {
                 Deck deck = Deck.getDeckByName(matcher.group(2));
-                if (!userContainsDeck(deck,decks)) {
+                if (!userContainsDeck(deck, decks)) {
                     return "deck with name " + matcher.group(2) + " does not exist";
                 } else {
                     if (matcher.groupCount() == 2) {
@@ -402,7 +592,7 @@ public class DeckController extends LoginAndSignUpController {
         Deck deck = Deck.getDeckByName(matcher.group(2));
         ArrayList<Card> sideCards = deck.getCardsSide();
         Card card = Card.getCardByName(matcher.group(1));
-        for (Card card1 : sideCards){
+        for (Card card1 : sideCards) {
             if (card1.getName().equals(card.getName())) {
                 deck.deleteCardFromSide(card);
                 saveChangesToFile(deck);
@@ -420,7 +610,7 @@ public class DeckController extends LoginAndSignUpController {
             return output;
         } else {
             Deck deck = Deck.getDeckByName(matcher.group(1));
-            if (!userContainsDeck(deck,decks)) {
+            if (!userContainsDeck(deck, decks)) {
                 output.add("deck with name " + matcher.group(1) + " does not exist");
                 return output;
             } else {
@@ -583,39 +773,39 @@ public class DeckController extends LoginAndSignUpController {
         return output;
     }
 
-    public String changeMainAndSideCards(String command,User inGameUser){
+    public String changeMainAndSideCards(String command, User inGameUser) {
         ArrayList<Card> mainCards = inGameUser.getActiveDeck().getCardsMain();
         ArrayList<Card> sideCards = inGameUser.getActiveDeck().getCardsSide();
         Pattern pattern = Pattern.compile("^change --(.+) with --(.+)$");
         Matcher matcher = pattern.matcher(command);
-        if (matcher.find()){
+        if (matcher.find()) {
             boolean cardExistInMain = false;
             boolean cardExistInSide = false;
-            for (Card card : mainCards){
-                if (card.getName().equals(matcher.group(1))){
-                 cardExistInMain = true;
+            for (Card card : mainCards) {
+                if (card.getName().equals(matcher.group(1))) {
+                    cardExistInMain = true;
                 }
             }
-            for (Card card : sideCards){
-                if (card.getName().equals(matcher.group(2))){
+            for (Card card : sideCards) {
+                if (card.getName().equals(matcher.group(2))) {
                     cardExistInSide = true;
                 }
             }
-            if (!cardExistInMain){
+            if (!cardExistInMain) {
                 return "Card with name " + matcher.group(1) + " doesnt exist in main cards";
             }
-            if (!cardExistInSide){
+            if (!cardExistInSide) {
                 return "Card with name " + matcher.group(2) + " doesnt exist in side cards";
             }
-            for (Card card : mainCards){
-                if (card.getName().equals(matcher.group(1))){
+            for (Card card : mainCards) {
+                if (card.getName().equals(matcher.group(1))) {
                     sideCards.add(card);
                     mainCards.remove(card);
                     break;
                 }
             }
-            for (Card card : sideCards){
-                if (card.getName().equals(matcher.group(2))){
+            for (Card card : sideCards) {
+                if (card.getName().equals(matcher.group(2))) {
                     mainCards.add(card);
                     sideCards.remove(card);
                     break;
@@ -642,9 +832,9 @@ public class DeckController extends LoginAndSignUpController {
         }
     }
 
-    public boolean userContainsDeck(Deck deck,ArrayList<Deck> decks) {
-        for (Deck deck1 : decks){
-            if (deck1.getName().equals(deck.getName())){
+    public boolean userContainsDeck(Deck deck, ArrayList<Deck> decks) {
+        for (Deck deck1 : decks) {
+            if (deck1.getName().equals(deck.getName())) {
                 return true;
             }
         }
