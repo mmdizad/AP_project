@@ -2,7 +2,15 @@ package View;
 
 import Controller.*;
 import Model.DuelModel;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -16,6 +24,7 @@ public class DuelView {
     protected Scanner scanner1;
     protected boolean isCommandInvalid = true;
     protected boolean isAi;
+    public static String secondPlayerUsername1;
 
     protected DuelView() {
 
@@ -28,15 +37,31 @@ public class DuelView {
     }
 
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView, boolean isAi) {
+        secondPlayerUsername1 = secondPlayerUsername;
+        URL url = null;
+        try {
+            url = new File("src/main/java/FXMLFiles/RockPaperScissors.fxml").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Parent root = null;
+        try {
+            assert url != null;
+            root = FXMLLoader.load(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+
+        stage.setTitle("RockPaperScissorsPage");
+        assert root != null;
+        stage.setScene(new Scene(root, 1920, 1080));
+        stage.show();
+
         scanner1 = scanner;
         this.isAi = isAi;
-        ArrayList<Integer> someRandomNumbers = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            someRandomNumbers.add(i + 1);
-        }
-        Collections.shuffle(someRandomNumbers);
-        int starterGame = someRandomNumbers.get(0);
-        if (starterGame % 2 == 0) {
+
+        if (RockPaperScissors.starterTheGame == 0) {
             duelModel = new DuelModel(LoginAndSignUpController.user.getUsername(), secondPlayerUsername);
             duelController = DuelController.getInstance();
             NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();

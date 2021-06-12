@@ -18,17 +18,8 @@ public class StartDuelView extends MainMenu {
         scanner1 = scanner;
         while (true) {
             String input = scanner.nextLine();
-            Pattern pattern = Pattern.compile("duel --new --second-player (\\S+) --rounds (\\d+)");
-            Matcher matcher = pattern.matcher(input);
-            Pattern pattern1 = Pattern.compile("duel --new --rounds (\\d+) --second-player (\\S+)");
-            Matcher matcher1 = pattern1.matcher(input);
             Pattern pattern2 = Pattern.compile("duel --new --ai --rounds (\\d+)");
             Matcher matcher2 = pattern2.matcher(input);
-
-//            if (matcher.find()) {
-//                startTheGame(scanner, matcher, 1, 2);
-//            } else if (matcher1.find()) {
-//                startTheGame(scanner, matcher1, 2, 1);
             if (matcher2.find()) {
                 int round = Integer.parseInt(matcher2.group(1));
                 if (LoginAndSignUpController.user.getActiveDeck() == null) {
@@ -40,7 +31,7 @@ public class StartDuelView extends MainMenu {
                     ai.addDeck(LoginAndSignUpController.user.getActiveDeck());
                     ai.setActiveDeck(LoginAndSignUpController.user.getActiveDeck());
                     startTheGameWithAi(round, ai, scanner);
-                } else System.out.println("number of rounds is not supported");
+                }
             }
             LoginAndSignUpController.saveChangesToFile();
         }

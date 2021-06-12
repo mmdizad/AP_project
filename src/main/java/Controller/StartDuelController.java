@@ -40,15 +40,18 @@ public class StartDuelController extends LoginAndSignUpController implements Ini
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        singleDuelBTN .setOnAction(new EventHandler<ActionEvent>() {
+        singleDuelBTN.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 StartDuelView startDuelView = new StartDuelView();
                 String response = startDuelView.startTheGame(opponentUsername.getText(), 1);
-                if (opponentUsername.getText().equals("")){
+                if (opponentUsername.getText().equals("")) {
                     label.setText("you must fill opponentUsername TextField");
-                }else {
+                } else if (!response.equals("")){
                     label.setText(response);
+                } else {
+                    Stage stage =  (Stage) singleDuelBTN.getScene().getWindow();
+                    stage.close();
                 }
             }
         });
@@ -78,15 +81,19 @@ public class StartDuelController extends LoginAndSignUpController implements Ini
                 chooseDuelStage.show();
             }
         });
-        matchDuelBTN .setOnAction(new EventHandler<ActionEvent>() {
+
+        matchDuelBTN.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 StartDuelView startDuelView = new StartDuelView();
-                String response = startDuelView.startTheGame(opponentUsername.getText(), 1);
-                if (opponentUsername.getText().equals("")){
+                String response = startDuelView.startTheGame(opponentUsername.getText(), 3);
+                if (opponentUsername.getText().equals("")) {
                     label.setText("you must fill opponentUsername TextField");
-                }else {
+                } else if (!response.equals("")){
                     label.setText(response);
+                } else {
+                   Stage stage =  (Stage) matchDuelBTN.getScene().getWindow();
+                   stage.close();
                 }
             }
         });
