@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -91,7 +92,7 @@ public class ShopView extends MainMenu implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         cardList = FXCollections.observableArrayList();
         TableColumn number = new TableColumn("price");
-        TableColumn picture = new TableColumn("picture");
+        TableColumn<Card, ImageView> picture = new TableColumn("picture");
         TableColumn name = new TableColumn("name");
         TableColumn description = new TableColumn("description");
         number.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -102,6 +103,8 @@ public class ShopView extends MainMenu implements Initializable {
         cardTable.getColumns().addAll(number, picture, name, description);
         cardTable.setItems(cardList);
         userMoney.setText( String.valueOf(LoginAndSignUpController.user.getCoins()));
+
+
     }
 
     public void buyCard(MouseEvent mouseEvent) {
@@ -109,6 +112,7 @@ public class ShopView extends MainMenu implements Initializable {
         result.setText(run("shop buy " + cardNameTXT.getText()));
         cardNameTXT.clear();
         System.out.println(result);
+        userMoney.setText( String.valueOf(LoginAndSignUpController.user.getCoins()));
     }
 
     public void increaseMoney(MouseEvent mouseEvent) {
@@ -117,7 +121,7 @@ public class ShopView extends MainMenu implements Initializable {
         result.setText(run("increase --money " + money)+money);
         moneyToIncrease.adjustValue(1000);
         userMoney.setText( String.valueOf(LoginAndSignUpController.user.getCoins()));
-        
+
     }
 
     public void back(MouseEvent mouseEvent) {
