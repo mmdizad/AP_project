@@ -15,6 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Controller.LoginAndSignUpController.createCard();
         URL url = new File("src/main/java/FXMLFiles/Welcome.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("WelcomePage");

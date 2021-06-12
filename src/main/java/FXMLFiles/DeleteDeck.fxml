@@ -15,7 +15,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="deckDeleteBtn" layoutX="136.0" layoutY="753.0" mnemonicParsing="false" onAction="#deckDeleteBtnEvent" prefHeight="75.0" prefWidth="330.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="DELETE" textFill="#970d0d">
+      <Button fx:id="deckDeleteBtn" layoutX="141.0" layoutY="716.0" mnemonicParsing="false" onAction="#deckDeleteBtnEvent" prefHeight="75.0" prefWidth="330.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="DELETE" textFill="#970d0d">
          <font>
             <Font name="Gill Sans Ultra Bold" size="38.0" />
          </font>
@@ -25,9 +25,19 @@
             <Font name="Gill Sans Ultra Bold" size="34.0" />
          </font>
       </Text>
-      <Button fx:id="deckSetActiveBtn" layoutX="490.0" layoutY="753.0" mnemonicParsing="false" onAction="#deckSetActiveBtnEvent" prefHeight="75.0" prefWidth="330.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="SET ACTIVE" textFill="#970d0d">
+      <Button fx:id="deckSetActiveBtn" layoutX="489.0" layoutY="716.0" mnemonicParsing="false" onAction="#deckSetActiveBtnEvent" prefHeight="75.0" prefWidth="330.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="SET ACTIVE" textFill="#970d0d">
          <font>
             <Font name="Gill Sans Ultra Bold" size="38.0" />
+         </font>
+      </Button>
+      <Button fx:id="addCardBtn" layoutX="141.0" layoutY="817.0" mnemonicParsing="false" onAction="#addCardBtnEvent" prefHeight="75.0" prefWidth="330.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="ADD CARD" textFill="#970d0d">
+         <font>
+            <Font name="Gill Sans Ultra Bold" size="38.0" />
+         </font>
+      </Button>
+      <Button fx:id="removeCardBtn" layoutX="489.0" layoutY="817.0" mnemonicParsing="false" onAction="#removeCardBtnEvent" prefHeight="75.0" prefWidth="330.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="REMOVE CARD" textFill="#970d0d">
+         <font>
+            <Font name="Gill Sans Ultra Bold" size="31.0" />
          </font>
       </Button>
    </children>

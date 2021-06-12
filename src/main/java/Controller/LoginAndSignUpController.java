@@ -532,7 +532,6 @@ public class LoginAndSignUpController implements Initializable {
                         labelLogin.setText(response);
                         if (response.equals("user logged in successfully!")) {
                             labelLogin.setTextFill(Color.GREEN);
-                            createCard();
                             Stage stage = (Stage) backLogin.getScene().getWindow();
                             stage.close();
                             MainMenu mainMenu = new MainMenu();
