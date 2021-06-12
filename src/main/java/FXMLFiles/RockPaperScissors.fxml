@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="imageView" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RockPaperScissors">
+   <children>
+      <ImageView fx:id="imageView2" fitHeight="320.0" fitWidth="450.0" layoutX="-760.0" layoutY="736.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../View/jya_gu_2.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imageView1" fitHeight="320.0" fitWidth="450.0" layoutX="-391.0" layoutY="736.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../View/jya_pa_2.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imageView5" fitHeight="320.0" fitWidth="450.0" layoutX="-746.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../View/woodImage.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imageView4" fitHeight="320.0" fitWidth="450.0" layoutX="-384.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../View/woodImage.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imageView6" fitHeight="320.0" fitWidth="450.0" layoutX="-1091.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../View/woodImage.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imageView3" fitHeight="320.0" fitWidth="450.0" layoutX="-1127.0" layoutY="736.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../View/jya_cyo_2.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="label" layoutX="561.0" layoutY="446.0" text=" " textFill="#88b0ec">
+         <font>
+            <Font size="89.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
