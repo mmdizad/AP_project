@@ -1,5 +1,6 @@
 package Controller;
 
+import View.DuelView;
 import View.StartDuelView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -51,7 +52,7 @@ public class StartDuelController extends LoginAndSignUpController implements Ini
                     label.setText(response);
                 } else {
                     Stage stage =  (Stage) singleDuelBTN.getScene().getWindow();
-                    stage.close();
+                    DuelView.getInstance().start(stage);
                 }
             }
         });

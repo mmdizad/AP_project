@@ -1,10 +1,17 @@
 package View;
 
-import Controller.*;
+import Controller.DuelController;
+import Controller.LoginAndSignUpController;
+import Controller.NewCardToHandController;
+import Controller.RockPaperScissors;
 import Model.DuelModel;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -12,13 +19,15 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DuelView {
+public class DuelView implements Initializable {
     protected static DuelView duelView;
+    public GridPane fieldsGridPane;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
@@ -34,6 +43,20 @@ public class DuelView {
         if (duelView == null)
             duelView = new DuelView();
         return duelView;
+    }
+    public void start(Stage stage){
+        try {
+        URL url = new File("src/main/java/FXMLFiles/DuelField.fxml").toURI().toURL();
+        Parent root ;
+            root = FXMLLoader.load(Objects.requireNonNull(url));
+            stage.setTitle("duel");
+            stage.setScene(new Scene(root, 1000, 600));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView, boolean isAi) {
@@ -299,4 +322,13 @@ public class DuelView {
         }
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 5; j++) {
+                Image image = new Image("src/main/resource/Monsters/Unknown.jpg");
+                fieldsGridPane.add(new ImageView(image),i,j);
+            }
+        }
+    }
 }
