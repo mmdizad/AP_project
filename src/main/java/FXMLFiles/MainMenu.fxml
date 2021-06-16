@@ -29,7 +29,7 @@
                 <Font size="25.0" />
             </font>
         </Button>
-        <Button fx:id="deckButton" layoutX="1015.0" layoutY="313.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="280.0" styleClass="deckButton" stylesheets="@../CSSFiles/Button.css" text="Deck" textFill="#9e4f3a" onMouseClicked="#goDeck">
+        <Button fx:id="deckButton" layoutX="1015.0" layoutY="313.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="280.0" styleClass="deckButton" stylesheets="@../CSSFiles/Button.css" text="Deck" textFill="#9e4f3a">
             <font>
                 <Font size="25.0" />
             </font>
