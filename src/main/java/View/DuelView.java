@@ -54,7 +54,7 @@ public class DuelView implements Initializable {
         Parent root ;
             root = FXMLLoader.load(Objects.requireNonNull(url));
             stage.setTitle("duel");
-            stage.setScene(new Scene(root, 700, 400));
+            stage.setScene(new Scene(root, 1300, 780));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -336,11 +336,11 @@ public class DuelView implements Initializable {
                 }
               Image image = new Image(Objects.requireNonNull(url).toString());
                 ImageView imageView=new ImageView(image);
-                imageView.setFitHeight(70);
-                imageView.setFitWidth(60);
+                imageView.setFitHeight(120);
+                imageView.setFitWidth(100);
                 fieldsGridPane.add(imageView,j,i);
-                fieldsGridPane.setHgap(30);
-                fieldsGridPane.setVgap(20);
+                fieldsGridPane.setHgap(90);
+                fieldsGridPane.setVgap(15);
 
             }
         }
@@ -353,11 +353,13 @@ public class DuelView implements Initializable {
             }
             Image image = new Image(Objects.requireNonNull(url).toString());
             ImageView imageView=new ImageView(image);
-            imageView.setFitHeight(70);
-            imageView.setFitWidth(60);
+            imageView.setFitHeight(100);
+            imageView.setFitWidth(80);
             ImageView imageView1=new ImageView(image);
-            imageView1.setFitHeight(70);
-            imageView1.setFitWidth(60);
+            imageView1.setFitHeight(100);
+            imageView1.setFitWidth(80);
+            upHBox.setSpacing(20);
+            downHBox.setSpacing(20);
             upHBox.getChildren().add(imageView);
             downHBox.getChildren().add(imageView1);
         }

@@ -573,7 +573,7 @@ public class LoginAndSignUpController implements Initializable {
         Stage welcomeStage = new Stage();
         welcomeStage.setTitle("WelcomePage");
         assert root != null;
-        welcomeStage.setScene(new Scene(root, 1920, 1000));
+        welcomeStage.setScene(new Scene(root, 1900,1000));
         welcomeStage.show();
     }
 }

@@ -76,7 +76,7 @@ public class MainMenuController implements Initializable {
                 Stage stage = new Stage();
                 stage.setTitle("chooseDuel");
                 assert root != null;
-                stage.setScene(new Scene(root, 1000, 600));
+                stage.setScene(new Scene(root, 1000, 700));
                 stage.show();
             }
         });

@@ -9,23 +9,23 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="AnchorChooseDuel" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.StartDuelController">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#326c6ead" height="528.0" layoutX="165.0" layoutY="29.0" stroke="BLACK" strokeType="INSIDE" width="670.0" />
-        <Button fx:id="singleDuelBTN" layoutX="400.0" layoutY="64.0" mnemonicParsing="false" onMouseClicked="#newSinglePlay" prefHeight="66.0" prefWidth="248.0" styleClass="chooseDuelButton" stylesheets="@../CSSFiles/Button.css" text="SingleDuel" textFill="#d46363">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#326c6ead" height="458.0" layoutX="246.0" layoutY="99.0" stroke="BLACK" strokeType="INSIDE" width="623.0" />
+        <Button fx:id="singleDuelBTN" layoutX="431.0" layoutY="129.0" mnemonicParsing="false" onMouseClicked="#newSinglePlay" prefHeight="66.0" prefWidth="248.0" styleClass="chooseDuelButton" stylesheets="@../CSSFiles/Button.css" text="SingleDuel" textFill="#d46363">
             <font>
                 <Font size="31.0" />
             </font>
         </Button>
-        <Button fx:id="matchDuelBTN" layoutX="400.0" layoutY="173.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="248.0" styleClass="chooseDuelButton" stylesheets="@../CSSFiles/Button.css" text="MatchDuel" textFill="#d46363">
+        <Button fx:id="matchDuelBTN" layoutX="431.0" layoutY="216.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="248.0" styleClass="chooseDuelButton" stylesheets="@../CSSFiles/Button.css" text="MatchDuel" textFill="#d46363">
             <font>
                 <Font size="31.0" />
             </font>
         </Button>
-        <Button fx:id="aiDuelBTN" layoutX="400.0" layoutY="267.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="248.0" styleClass="chooseDuelButton" stylesheets="@../CSSFiles/Button.css" text="AiDuel" textFill="#d46363">
+        <Button fx:id="aiDuelBTN" layoutX="443.0" layoutY="295.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="248.0" styleClass="chooseDuelButton" stylesheets="@../CSSFiles/Button.css" text="AiDuel" textFill="#d46363">
             <font>
                 <Font size="31.0" />
             </font>
         </Button>
-        <TextField fx:id="opponentUsername" layoutX="400.0" layoutY="449.0" prefHeight="55.0" prefWidth="293.0" promptText="OpponentUsername" styleClass="chooseDuelTextFiled" stylesheets="@../CSSFiles/TextField.css">
+        <TextField fx:id="opponentUsername" layoutX="431.0" layoutY="462.0" prefHeight="55.0" prefWidth="293.0" promptText="OpponentUsername" styleClass="chooseDuelTextFiled" stylesheets="@../CSSFiles/TextField.css">
             <font>
                 <Font size="24.0" />
             </font>
@@ -35,7 +35,7 @@
                 <Font size="28.0" />
             </font>
         </Label>
-      <Button fx:id="backButton" layoutX="400.0" layoutY="369.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="248.0" styleClass="chooseDuelButton" stylesheets="@../CSSFiles/Button.css" text="Back" textFill="#d46363">
+      <Button fx:id="backButton" layoutX="445.0" layoutY="377.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="248.0" styleClass="chooseDuelButton" stylesheets="@../CSSFiles/Button.css" text="Back" textFill="#d46363">
          <font>
             <Font size="31.0" />
          </font>
