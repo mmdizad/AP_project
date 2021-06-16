@@ -11,7 +11,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="AnchorShowAllDeck" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DeckController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#284661" height="899.0" layoutX="125.0" layoutY="121.0" opacity="0.43" stroke="BLACK" strokeType="INSIDE" width="649.0" />
-      <TableView fx:id="showDeckTableMain" layoutX="178.0" layoutY="322.0" prefHeight="659.0" prefWidth="286.0">
+      <TableView id="showDeckTableMain1" fx:id="showDeckTableMain" layoutX="178.0" layoutY="322.0" prefHeight="659.0" prefWidth="286.0">
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
@@ -31,7 +31,7 @@
             <Font name="Gill Sans Ultra Bold" size="29.0" />
          </font>
       </Text>
-      <TableView fx:id="showDeckTableSide" layoutX="464.0" layoutY="322.0" prefHeight="659.0" prefWidth="286.0">
+      <TableView id="showDeckTableSide1" fx:id="showDeckTableSide" layoutX="464.0" layoutY="322.0" prefHeight="659.0" prefWidth="286.0">
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>

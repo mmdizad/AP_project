@@ -7,16 +7,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="AnchorShowAllDeck" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DeckController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#13314d" height="844.0" layoutX="112.0" layoutY="111.0" opacity="0.56" stroke="BLACK" strokeType="INSIDE" width="659.0" />
-      <TableView fx:id="removeCardFromMainTable" layoutX="136.0" layoutY="155.0" prefHeight="573.0" prefWidth="306.0">
+      <TableView id="removeCardFromMainTable1" fx:id="removeCardFromMainTable" layoutX="136.0" layoutY="155.0" prefHeight="573.0" prefWidth="306.0">
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TableView fx:id="removeCardFromSideTable" layoutX="450.0" layoutY="155.0" prefHeight="573.0" prefWidth="306.0">
+      <TableView id="removeCardFromSideTable1" fx:id="removeCardFromSideTable" layoutX="450.0" layoutY="155.0" prefHeight="573.0" prefWidth="306.0">
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>

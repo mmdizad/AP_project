@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
@@ -86,6 +87,18 @@ public class MainMenuController implements Initializable {
                 ShopView shopView = ShopView.getInstance();
                 try {
                     shopView.start(stage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        deckButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = (Stage) deckButton.getScene().getWindow();
+                DeckController deckController = DeckController.getInstance();
+                try {
+                    deckController.showScene(stage);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

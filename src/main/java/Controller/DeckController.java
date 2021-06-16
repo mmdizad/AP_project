@@ -2,6 +2,8 @@ package Controller;
 
 import Model.*;
 import com.google.gson.Gson;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,27 +17,34 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sun.tools.jar.Main;
 
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.ResourceBundle;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DeckController extends LoginAndSignUpController {
+public class DeckController {
+
+    private User user = LoginAndSignUpController.user;
+
+    public static Deck deck;
 
     @FXML
-    Button showAllDeckBtn;
+    public Button deleteDeckBtn;
+
+    @FXML
+    public Button showAllDeckBtn;
 
     @FXML
     TableView<Deck> showAllDeckTable;
@@ -44,7 +53,7 @@ public class DeckController extends LoginAndSignUpController {
     Text activeDeckText;
 
     @FXML
-    TableView<Deck> deckDeleteTable;
+    public TableView<Deck> deckDeleteTable;
 
     @FXML
     Button deckDeleteBtn;
@@ -121,12 +130,22 @@ public class DeckController extends LoginAndSignUpController {
 
     private static DeckController deckController = new DeckController();
 
-    private DeckController() {
+    public DeckController() {
 
     }
 
     public static DeckController getInstance() {
         return deckController;
+    }
+
+    public void showScene(Stage stage) throws IOException {
+        URL url = new File("src/main/java/FXMLFiles/DeckMenu.fxml").toURI().toURL();
+        Parent root = FXMLLoader.load(Objects.requireNonNull(url));
+        stage.setTitle("Deck");
+
+        stage.setScene(new Scene(root, 1920, 1000));
+        stage.show();
+
     }
 
     public String deckCreate(Matcher matcher) {
@@ -178,6 +197,13 @@ public class DeckController extends LoginAndSignUpController {
     }
 
     public void showAllDeckBtnEvent(ActionEvent event) throws IOException {
+        URL url = new File("src/main/java/FXMLFiles/ShowAllDeck.fxml").toURI().toURL();
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(url));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+        showAllDeckTable = (TableView<Deck>) scene.lookup("#showAllDeckTable1");
         showAllDeckTable.getColumns().clear();
         TableColumn<Deck, String> nameColumn = new TableColumn<>("DECK NAME");
         TableColumn<Deck, Integer> numberOfCardsColumn = new TableColumn<>("NUMBER OF CARDS");
@@ -192,18 +218,23 @@ public class DeckController extends LoginAndSignUpController {
             showAllDeckTable.getItems().add(deck);
         }
 
+        activeDeckText = (Text) scene.lookup("#activeDeckText1") ;
+
         String activeDeck = user.getActiveDeck().getName() + ": " + user.getActiveDeck().getNumberOfCards();
 
         activeDeckText.setText(activeDeck);
 
-        Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/ShowAllDeck.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(parent);
-        stage.setScene(scene);
-        stage.show();
+
     }
 
     public void deleteDeckBtnEvent(ActionEvent actionEvent) throws IOException {
+        URL url = new File("src/main/java/FXMLFiles/DeleteDeck.fxml").toURI().toURL();
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(url));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+        deckDeleteTable = (TableView<Deck>) scene.lookup("#deckDeleteTable1");
         deckDeleteTable.getColumns().clear();
         TableColumn<Deck, String> nameColumn = new TableColumn<>("DECK NAME");
         TableColumn<Deck, Integer> numberOfCardsColumn = new TableColumn<>("NUMBER OF CARDS");
@@ -218,11 +249,7 @@ public class DeckController extends LoginAndSignUpController {
             deckDeleteTable.getItems().add(deck);
         }
 
-        Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/DeleteDeck.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(parent);
-        stage.setScene(scene);
-        stage.show();
+
     }
 
     public void deckDeleteBtnEvent(ActionEvent actionEvent) {
@@ -259,9 +286,10 @@ public class DeckController extends LoginAndSignUpController {
         }
     }
 
-    public void deckCreateBtnEvent(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/DeckCreate.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    public void deckCreateBtnEvent(ActionEvent actionEvent) throws IOException {
+        URL url = new File("src/main/java/FXMLFiles/DeckCreate.fxml").toURI().toURL();
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(url));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
@@ -283,18 +311,27 @@ public class DeckController extends LoginAndSignUpController {
     }
 
     public void showDeckBtnEvent(ActionEvent actionEvent) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/ShowDeck.fxml"));
+        URL url = new File("src/main/java/FXMLFiles/ShowDeck.fxml").toURI().toURL();
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(url));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
     }
 
-    public void showDeckInMenuBtnEvent(ActionEvent actionEvent) {
+    public void showDeckInMenuBtnEvent(ActionEvent actionEvent) throws IOException {
         String deckName = showDeckTextField.getText();
         if (Deck.getDeckByName(deckName) == null || !userContainsDeck(Deck.getDeckByName(deckName), user.getDecks())) {
             showDeckText.setText("YOU DONT HAVE DECK WITH THIS NAME");
         } else {
+            URL url = new File("src/main/java/FXMLFiles/ShowDeck.fxml").toURI().toURL();
+            Parent parent = FXMLLoader.load(Objects.requireNonNull(url));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.show();
+            showDeckTableSide = (TableView<Card>) scene.lookup("#showDeckTableSide1");
+            showDeckTableMain = (TableView<Card>) scene.lookup("#showDeckTableMain1");
             showDeckTableSide.getColumns().clear();
             showDeckTableMain.getColumns().clear();
             Deck deck = Deck.getDeckByName(deckName);
@@ -317,27 +354,32 @@ public class DeckController extends LoginAndSignUpController {
 
     public void addCardBtnEvent(ActionEvent actionEvent) throws IOException {
         if (deckDeleteTable.getSelectionModel().getSelectedItem() != null) {
-            addCardTable.getColumns().clear();
-            ArrayList<Card> cards = user.getCards();
-            TableColumn<Card, ImageView> ourCards = new TableColumn<>("CARDS");
-
-            ourCards.setCellValueFactory(new PropertyValueFactory<>("imageView"));
-
-            addCardTable.getColumns().add(ourCards);
-
-            addCardTable.getItems().addAll(cards);
-
-            Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/AddCardToDeck.fxml"));
+            URL url = new File("src/main/java/FXMLFiles/AddCardToDeck.fxml").toURI().toURL();
+            Parent parent = FXMLLoader.load(Objects.requireNonNull(url));
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(parent);
             stage.setScene(scene);
             stage.show();
+            addCardTable = (TableView<Card>) scene.lookup("#addCardTable1") ;
+            ObservableList<Card> cardList;
+            cardList = FXCollections.observableArrayList();
+
+            TableColumn<Card, ImageView> picture = new TableColumn("picture");
+            TableColumn name = new TableColumn("name");
+            TableColumn description = new TableColumn("description");
+            picture.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+            name.setCellValueFactory(new PropertyValueFactory<>("name"));
+            description.setCellValueFactory(new PropertyValueFactory<>("description"));
+            cardList.addAll(Card.getAllCardsCard());
+            addCardTable.getColumns().addAll(picture, name, description);
+            addCardTable.setItems(cardList);
+            deck = deckDeleteTable.getSelectionModel().getSelectedItem();
+
         }
     }
 
     public void addCardToMainBtnEvent(ActionEvent actionEvent) {
         Card card = addCardTable.getSelectionModel().getSelectedItem();
-        Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
         if (card == null) {
             addCardText.setText("SELECT A CARD FIRST");
         } else {
@@ -351,7 +393,6 @@ public class DeckController extends LoginAndSignUpController {
 
     public void addCardToSideBtnEvent(ActionEvent actionEvent) {
         Card card = addCardTable.getSelectionModel().getSelectedItem();
-        Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
         if (card == null) {
             addCardText.setText("SELECT A CARD FIRST");
         } else {
@@ -365,6 +406,14 @@ public class DeckController extends LoginAndSignUpController {
 
     public void removeCardBtnEvent(ActionEvent actionEvent) throws IOException {
         if (deckDeleteTable.getSelectionModel().getSelectedItem() != null) {
+            URL url = new File("src/main/java/FXMLFiles/RemoveCardFromDeck.fxml").toURI().toURL();
+            Parent parent = FXMLLoader.load(Objects.requireNonNull(url));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.show();
+            removeCardFromMainTable = (TableView<Card>) scene.lookup("#removeCardFromMainTable1") ;
+            removeCardFromSideTable = (TableView<Card>) scene.lookup("#removeCardFromSideTable1") ;
             removeCardFromMainTable.getColumns().clear();
             removeCardFromSideTable.getColumns().clear();
             Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
@@ -384,11 +433,6 @@ public class DeckController extends LoginAndSignUpController {
             removeCardFromMainTable.getItems().addAll(mainCards);
             removeCardFromSideTable.getItems().addAll(sideCards);
 
-            Parent parent = FXMLLoader.load(getClass().getResource("FXMLFiles/RemoveCardFromDeck.fxml"));
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(parent);
-            stage.setScene(scene);
-            stage.show();
         }
     }
 
@@ -833,11 +877,13 @@ public class DeckController extends LoginAndSignUpController {
     }
 
     public boolean userContainsDeck(Deck deck, ArrayList<Deck> decks) {
-        for (Deck deck1 : decks) {
-            if (deck1.getName().equals(deck.getName())) {
-                return true;
-            }
+        Deck deck1 = Deck.getDeckByName(deck.getName());
+        if (deck1 == null) {
+            return false;
+        }else if (deck1.getCreatorName().equals(user.getUsername())) {
+            return true;
+        }else {
+            return false;
         }
-        return false;
     }
 }
