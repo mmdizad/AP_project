@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 public class ShopView extends MainMenu implements Initializable {
     private static ShopView shopView = new ShopView();
-    private static Stage stage;
+    public static Stage stage;
     public TableView cardTable;
     public TextField cardNameTXT;
     public Slider moneyToIncrease;

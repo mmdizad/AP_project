@@ -1,5 +1,6 @@
 package Controller;
 
+import View.DuelView;
 import View.StartDuelView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -51,10 +53,11 @@ public class StartDuelController extends LoginAndSignUpController implements Ini
                     label.setText(response);
                 } else {
                     Stage stage =  (Stage) singleDuelBTN.getScene().getWindow();
-                    stage.close();
+                    DuelView.getInstance().start(stage);
                 }
             }
         });
+
 
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -97,6 +100,21 @@ public class StartDuelController extends LoginAndSignUpController implements Ini
                 }
             }
         });
+
+    }
+
+    public void newSinglePlay(MouseEvent mouseEvent) {
+        StartDuelView startDuelView = new StartDuelView();
+        String response = startDuelView.startTheGame(opponentUsername.getText(), 1);
+        if (opponentUsername.getText().equals("")) {
+            label.setText("you must fill opponentUsername TextField"); }
+//        else if (!response.equals("")){
+//            label.setText(response);
+//        }
+      else {
+            Stage stage =  (Stage) singleDuelBTN.getScene().getWindow();
+            DuelView.getInstance().start(stage);
+        }
 
     }
 }

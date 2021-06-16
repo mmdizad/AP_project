@@ -1,60 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DeckController">
-   <children>
-      <ImageView fitHeight="1080.0" fitWidth="2240.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../View/deck.jpg" />
-         </image>
-      </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#323639" height="913.0" layoutX="94.0" layoutY="65.0" opacity="0.43" stroke="BLACK" strokeType="INSIDE" width="687.0" />
-      <Text fill="#ff0101" layoutX="249.0" layoutY="191.0" stroke="#e40c0c" strokeLineCap="ROUND" text="DECK MENU" textAlignment="CENTER" wrappingWidth="365.13671875">
+<?import javafx.scene.text.*?>
+<Pane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DeckController">
+   <ImageView fitHeight="1080.0" fitWidth="2240.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@../View/deck.jpg"/>
+   </ImageView>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#323639" height="913.0" layoutX="94.0" layoutY="65.0" opacity="0.43"
+              stroke="BLACK" strokeType="INSIDE" width="687.0"/>
+   <Text fill="#ff0101" layoutX="249.0" layoutY="191.0" stroke="#e40c0c" strokeLineCap="ROUND" text="DECK MENU"
+         textAlignment="CENTER" wrappingWidth="365.13671875">
+      <font>
+         <Font name="Consolas Bold" size="62.0"/>
+      </font>
+   </Text>
+   <Rectangle arcHeight="50.0" arcWidth="5.0" fill="#10141b" height="157.0" layoutX="133.0" layoutY="97.0"
+              opacity="0.49" stroke="#a1a0a0" strokeWidth="30.0" width="609.0"/>
+   <VBox layoutX="118.0" layoutY="329.0" prefHeight="481.0" prefWidth="310.0" spacing="40.0">
+      <Button fx:id="showDeckBtn" mnemonicParsing="false" onAction="#showDeckBtnEvent" prefHeight="62.0"
+              prefWidth="310.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="SHOW DECK"
+              textAlignment="CENTER" textFill="#ab2323">
          <font>
-            <Font name="Consolas Bold" size="62.0" />
-         </font>
-      </Text>
-      <Rectangle arcHeight="50.0" arcWidth="5.0" fill="#10141b" height="157.0" layoutX="133.0" layoutY="97.0" opacity="0.49" stroke="#a1a0a0" strokeWidth="30.0" width="609.0" />
-      <VBox layoutX="118.0" layoutY="329.0" prefHeight="481.0" prefWidth="310.0" spacing="40.0">
-         <children>
-            <Button fx:id="showDeckBtn" mnemonicParsing="false" onAction="#showDeckBtnEvent" prefHeight="62.0" prefWidth="310.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="SHOW DECK" textAlignment="CENTER" textFill="#ab2323">
-               <font>
-                  <Font name="Gill Sans Ultra Bold" size="25.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#deleteDeckBtnEvent" prefHeight="62.0" prefWidth="310.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="SET ACTIVE DECK" textAlignment="CENTER" textFill="#ab2323">
-               <font>
-                  <Font name="Gill Sans Ultra Bold" size="25.0" />
-               </font>
-            </Button>
-         </children>
-      </VBox>
-      <VBox layoutX="451.0" layoutY="334.0" prefHeight="536.0" prefWidth="310.0" spacing="40.0">
-         <children>
-            <Button fx:id="showAllDeckBtn" mnemonicParsing="false" onAction="#showAllDeckBtnEvent" prefHeight="62.0" prefWidth="310.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="SHOW ALL DECKS" textAlignment="CENTER" textFill="#ab2323">
-               <font>
-                  <Font name="Gill Sans Ultra Bold" size="25.0" />
-               </font>
-            </Button>
-            <Button fx:id="deckCreateBtn" mnemonicParsing="false" onAction="#deckCreateBtnEvent" prefHeight="62.0" prefWidth="310.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="CREATE NEW DECK" textAlignment="CENTER" textFill="#ab2323">
-               <font>
-                  <Font name="Gill Sans Ultra Bold" size="23.0" />
-               </font>
-            </Button>
-         </children>
-      </VBox>
-      <Button fx:id="deleteDeckBtn" layoutX="187.0" layoutY="532.0" mnemonicParsing="false" onAction="#deleteDeckBtnEvent" prefHeight="62.0" prefWidth="502.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="DELETE AND EDIT DECK" textAlignment="CENTER" textFill="#ab2323">
-         <font>
-            <Font name="Gill Sans Ultra Bold" size="25.0" />
+            <Font name="Gill Sans Ultra Bold" size="25.0"/>
          </font>
       </Button>
-   </children>
-</AnchorPane>
+      <Button mnemonicParsing="false" onAction="#deleteDeckBtnEvent" prefHeight="62.0" prefWidth="310.0"
+              styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="SET ACTIVE DECK"
+              textAlignment="CENTER" textFill="#ab2323">
+         <font>
+            <Font name="Gill Sans Ultra Bold" size="25.0"/>
+         </font>
+      </Button>
+   </VBox>
+   <VBox layoutX="451.0" layoutY="334.0" prefHeight="536.0" prefWidth="310.0" spacing="40.0">
+      <Button fx:id="showAllDeckBtn" mnemonicParsing="false" onAction="#showAllDeckBtnEvent" prefHeight="62.0"
+              prefWidth="310.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css"
+              text="SHOW ALL DECKS" textAlignment="CENTER" textFill="#ab2323">
+         <font>
+            <Font name="Gill Sans Ultra Bold" size="25.0"/>
+         </font>
+      </Button>
+      <Button fx:id="deckCreateBtn" mnemonicParsing="false" onAction="#deckCreateBtnEvent" prefHeight="62.0"
+              prefWidth="310.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css"
+              text="CREATE NEW DECK" textAlignment="CENTER" textFill="#ab2323">
+         <font>
+            <Font name="Gill Sans Ultra Bold" size="23.0"/>
+         </font>
+      </Button>
+   </VBox>
+   <Button fx:id="deleteDeckBtn" layoutX="187.0" layoutY="532.0" mnemonicParsing="false" onAction="#deleteDeckBtnEvent"
+           prefHeight="62.0" prefWidth="502.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css"
+           text="DELETE AND EDIT DECK" textAlignment="CENTER" textFill="#ab2323">
+      <font>
+         <Font name="Gill Sans Ultra Bold" size="25.0"/>
+      </font>
+   </Button>
+</Pane>

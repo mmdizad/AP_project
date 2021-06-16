@@ -1,10 +1,19 @@
 package View;
 
-import Controller.*;
+import Controller.DuelController;
+import Controller.LoginAndSignUpController;
+import Controller.NewCardToHandController;
+import Controller.RockPaperScissors;
 import Model.DuelModel;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -12,13 +21,17 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DuelView {
-    protected static DuelView duelView;
+public class DuelView implements Initializable {
+    public static DuelView duelView;
+    public GridPane fieldsGridPane;
+    public HBox upHBox;
+    public HBox downHBox;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
@@ -26,7 +39,7 @@ public class DuelView {
     protected boolean isAi;
     public static String secondPlayerUsername1;
 
-    protected DuelView() {
+    public DuelView() {
 
     }
 
@@ -34,6 +47,18 @@ public class DuelView {
         if (duelView == null)
             duelView = new DuelView();
         return duelView;
+    }
+    public void start(Stage stage){
+        try {
+        URL url = new File("src/main/java/FXMLFiles/DuelField.fxml").toURI().toURL();
+        Parent root ;
+            root = FXMLLoader.load(Objects.requireNonNull(url));
+            stage.setTitle("duel");
+            stage.setScene(new Scene(root, 1300, 780));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView, boolean isAi) {
@@ -299,4 +324,46 @@ public class DuelView {
         }
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 5; j++) {
+                URL url = null;
+                try {
+                    url = new File("src/main/resource/Monsters/Unknown.jpg").toURI().toURL();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+              Image image = new Image(Objects.requireNonNull(url).toString());
+                ImageView imageView=new ImageView(image);
+                imageView.setFitHeight(120);
+                imageView.setFitWidth(100);
+                fieldsGridPane.add(imageView,j,i);
+                fieldsGridPane.setHgap(90);
+                fieldsGridPane.setVgap(15);
+
+            }
+        }
+        for (int i = 0; i < 5; i++) {
+            URL url = null;
+            try {
+                url = new File("src/main/resource/Monsters/Unknown.jpg").toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            Image image = new Image(Objects.requireNonNull(url).toString());
+            ImageView imageView=new ImageView(image);
+            imageView.setFitHeight(100);
+            imageView.setFitWidth(80);
+            ImageView imageView1=new ImageView(image);
+            imageView1.setFitHeight(100);
+            imageView1.setFitWidth(80);
+            upHBox.setSpacing(20);
+            downHBox.setSpacing(20);
+            upHBox.getChildren().add(imageView);
+            downHBox.getChildren().add(imageView1);
+        }
+        downHBox.setAlignment(Pos.CENTER_RIGHT);
+
+    }
 }
