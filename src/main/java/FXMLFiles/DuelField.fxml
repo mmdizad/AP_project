@@ -3,54 +3,43 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane prefHeight="489.0" prefWidth="766.0" style="-fx-background-image: url(../../resource/Field/fie_normal.bmp);" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DuelView">
+<AnchorPane prefHeight="489.0" prefWidth="766.0" styleClass="normalField" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DuelView">
    <children>
-      <GridPane fx:id="fieldsGridPane" layoutX="148.0" layoutY="109.0" prefHeight="253.0" prefWidth="465.0" >
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="60.0" minHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="109.0" minHeight="10.0" prefHeight="85.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <GridPane fx:id="fieldsGridPane" layoutX="145.0" layoutY="131.0" prefHeight="543.0" prefWidth="518.0">
+
       </GridPane>
-      <HBox layoutX="147.0" layoutY="18.0" prefHeight="85.0" prefWidth="476.0" />
-      <HBox layoutX="165.0" layoutY="374.0" prefHeight="84.0" prefWidth="436.0" />
-      <ImageView fitHeight="84.0" fitWidth="74.0" layoutX="637.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true">
+      <HBox fx:id="upHBox" layoutX="92.0" layoutY="40.0" prefHeight="85.0" prefWidth="476.0" />
+      <HBox fx:id="downHBox" layoutX="171.0" layoutY="674.0" prefHeight="84.0" prefWidth="436.0" />
+      <ImageView fitHeight="84.0" fitWidth="74.0" layoutX="693.0" layoutY="701.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../resource/Monsters/Unknown.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="90.0" fitWidth="107.0" layoutX="58.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="90.0" fitWidth="59.0" layoutX="58.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="90.0" fitWidth="107.0" layoutX="3.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="90.0" fitWidth="59.0" layoutX="42.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../resource/Monsters/Unknown.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="90.0" fitWidth="59.0" layoutX="637.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="90.0" fitWidth="59.0" layoutX="693.0" layoutY="563.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../resource/Monsters/Unknown.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="90.0" fitWidth="59.0" layoutX="637.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="90.0" fitWidth="59.0" layoutX="685.0" layoutY="430.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../resource/Monsters/Unknown.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="84.0" fitWidth="66.0" layoutX="55.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="84.0" fitWidth="66.0" layoutX="42.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../resource/Monsters/Unknown.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="84.0" fitWidth="59.0" layoutX="58.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="84.0" fitWidth="59.0" layoutX="42.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../resource/Monsters/Unknown.jpg" />
          </image>

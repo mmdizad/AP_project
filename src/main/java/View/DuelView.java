@@ -7,11 +7,13 @@ import Controller.RockPaperScissors;
 import Model.DuelModel;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -26,8 +28,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DuelView implements Initializable {
-    protected static DuelView duelView;
+    public static DuelView duelView;
     public GridPane fieldsGridPane;
+    public HBox upHBox;
+    public HBox downHBox;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
@@ -35,7 +39,7 @@ public class DuelView implements Initializable {
     protected boolean isAi;
     public static String secondPlayerUsername1;
 
-    protected DuelView() {
+    public DuelView() {
 
     }
 
@@ -50,13 +54,11 @@ public class DuelView implements Initializable {
         Parent root ;
             root = FXMLLoader.load(Objects.requireNonNull(url));
             stage.setTitle("duel");
-            stage.setScene(new Scene(root, 1000, 600));
+            stage.setScene(new Scene(root, 700, 400));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView, boolean isAi) {
@@ -326,9 +328,40 @@ public class DuelView implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
-                Image image = new Image("src/main/resource/Monsters/Unknown.jpg");
-                fieldsGridPane.add(new ImageView(image),i,j);
+                URL url = null;
+                try {
+                    url = new File("src/main/resource/Monsters/Unknown.jpg").toURI().toURL();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+              Image image = new Image(Objects.requireNonNull(url).toString());
+                ImageView imageView=new ImageView(image);
+                imageView.setFitHeight(70);
+                imageView.setFitWidth(60);
+                fieldsGridPane.add(imageView,j,i);
+                fieldsGridPane.setHgap(30);
+                fieldsGridPane.setVgap(20);
+
             }
         }
+        for (int i = 0; i < 5; i++) {
+            URL url = null;
+            try {
+                url = new File("src/main/resource/Monsters/Unknown.jpg").toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            Image image = new Image(Objects.requireNonNull(url).toString());
+            ImageView imageView=new ImageView(image);
+            imageView.setFitHeight(70);
+            imageView.setFitWidth(60);
+            ImageView imageView1=new ImageView(image);
+            imageView1.setFitHeight(70);
+            imageView1.setFitWidth(60);
+            upHBox.getChildren().add(imageView);
+            downHBox.getChildren().add(imageView1);
+        }
+        downHBox.setAlignment(Pos.CENTER_RIGHT);
+
     }
 }

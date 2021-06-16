@@ -3,7 +3,6 @@ package Controller;
 import Model.*;
 import com.google.gson.Gson;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -19,7 +18,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -27,13 +25,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.ResourceBundle;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DeckController extends LoginAndSignUpController {
 
+    public Button deleteDeckBtn;
     @FXML
     Button showAllDeckBtn;
 
@@ -119,11 +118,21 @@ public class DeckController extends LoginAndSignUpController {
     Text removeCardText;
 
 
-    private static DeckController deckController = new DeckController();
+    public static DeckController deckController = new DeckController();
 
-    private DeckController() {
+    public DeckController() {
 
     }
+
+    public void start(Stage stage) throws IOException{
+        URL url = new File("src/main/java/FXMLFiles/DeckMenu.fxml").toURI().toURL();
+        Parent root = FXMLLoader.load(Objects.requireNonNull(url));
+        stage.setTitle("deck");
+        stage.setScene(new Scene(root, 1920, 1000));
+        stage.show();
+
+    }
+
 
     public static DeckController getInstance() {
         return deckController;

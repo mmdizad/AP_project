@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -91,5 +92,15 @@ public class MainMenuController implements Initializable {
                 }
             }
         });
+
+    }
+
+    public void goDeck(MouseEvent mouseEvent) {
+        Stage stage = (Stage) loginButton.getScene().getWindow();
+        try {
+            DeckController.getInstance().start(stage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
