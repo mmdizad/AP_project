@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Card;
 import Model.Deck;
 import Model.DuelModel;
 import Model.User;
@@ -18,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import javax.jws.soap.SOAPBinding;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -53,10 +55,10 @@ public class StartDuelController extends LoginAndSignUpController implements Ini
                 String response = startDuelView.startTheGame(opponentUsername.getText(), 1);
                 if (opponentUsername.getText().equals("")) {
                     label.setText("you must fill opponentUsername TextField");
-                } else if (!response.equals("")){
+                } else if (!response.equals("")) {
                     label.setText(response);
                 } else {
-                    Stage stage =  (Stage) matchDuelBTN.getScene().getWindow();
+                    Stage stage = (Stage) matchDuelBTN.getScene().getWindow();
                     stage.close();
                 }
             }
@@ -96,11 +98,11 @@ public class StartDuelController extends LoginAndSignUpController implements Ini
                 String response = startDuelView.startTheGame(opponentUsername.getText(), 3);
                 if (opponentUsername.getText().equals("")) {
                     label.setText("you must fill opponentUsername TextField");
-                } else if (!response.equals("")){
+                } else if (!response.equals("")) {
                     label.setText(response);
                 } else {
-                   Stage stage =  (Stage) matchDuelBTN.getScene().getWindow();
-                   stage.close();
+                    Stage stage = (Stage) matchDuelBTN.getScene().getWindow();
+                    stage.close();
                 }
             }
         });
@@ -108,15 +110,17 @@ public class StartDuelController extends LoginAndSignUpController implements Ini
     }
 
     public void newSinglePlay(MouseEvent mouseEvent) {
+        // test method
         StartDuelView startDuelView = new StartDuelView();
         String response = startDuelView.startTheGame(opponentUsername.getText(), 1);
         if (opponentUsername.getText().equals("")) {
-            label.setText("you must fill opponentUsername TextField"); }
+            label.setText("you must fill opponentUsername TextField");
+        }
 //        else if (!response.equals("")){
 //            label.setText(response);
 //        }
-      else {
-            Stage stage =  (Stage) singleDuelBTN.getScene().getWindow();
+        else {
+            Stage stage = (Stage) singleDuelBTN.getScene().getWindow();
             DuelView.getInstance().start(stage);
         }
 

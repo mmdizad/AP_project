@@ -71,6 +71,7 @@ public class DuelModel {
             playersCards.get(0).add(card);
         }
         User opponentUser = User.getUserByUsername(opponentUsername);
+        assert opponentUser != null;
         Deck activeOpponentDeck = opponentUser.getActiveDeck();
         ArrayList<Card> cardsInOpponentActiveDeck = activeOpponentDeck.getCardsMain();
         Collections.shuffle(cardsInOpponentActiveDeck);
