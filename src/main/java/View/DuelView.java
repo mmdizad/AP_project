@@ -4,7 +4,9 @@ import Controller.DuelController;
 import Controller.LoginAndSignUpController;
 import Controller.NewCardToHandController;
 import Controller.RockPaperScissors;
+import Model.Deck;
 import Model.DuelModel;
+import Model.User;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -54,7 +56,7 @@ public class DuelView implements Initializable {
         return duelView;
     }
     public void start(Stage stage){
-        try {
+         try {
         URL url = new File("src/main/java/FXMLFiles/DuelField.fxml").toURI().toURL();
         Parent root ;
             root = FXMLLoader.load(Objects.requireNonNull(url));

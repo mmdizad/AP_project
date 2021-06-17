@@ -1,5 +1,8 @@
 package Controller;
 
+import Model.Deck;
+import Model.DuelModel;
+import Model.User;
 import View.DuelView;
 import View.StartDuelView;
 import javafx.event.ActionEvent;
@@ -19,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class StartDuelController extends LoginAndSignUpController implements Initializable {

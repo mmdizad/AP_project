@@ -58,8 +58,9 @@ public class DuelModel {
 
     public void someNewFieldsForStartDuel(String playerUsername, String opponentUsername) {
         User user = User.getUserByUsername(playerUsername);
+        assert user != null;
         Deck activeDeck = user.getActiveDeck();
-        ArrayList<Card> cardsInPlayerActiveDeck =null;
+        ArrayList<Card> cardsInPlayerActiveDeck = activeDeck.getCardsMain();
         Collections.shuffle(cardsInPlayerActiveDeck);
         playersCards = new ArrayList<>();
         ArrayList<Card> playerCard1 = new ArrayList<>();
