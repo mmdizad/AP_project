@@ -54,7 +54,7 @@ public class DuelView implements Initializable {
         Parent root ;
             root = FXMLLoader.load(Objects.requireNonNull(url));
             stage.setTitle("duel");
-            stage.setScene(new Scene(root, 1300, 780));
+            stage.setScene(new Scene(root, 1349, 764));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

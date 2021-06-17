@@ -8,18 +8,20 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="489.0" prefWidth="766.0" styleClass="normalField" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DuelView">
+<AnchorPane prefHeight="764.0" prefWidth="1349.0" styleClass="normalField" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DuelView">
    <children>
       <GridPane fx:id="fieldsGridPane" layoutX="276.0" layoutY="118.0" prefHeight="543.0" prefWidth="390.0">
          <columnConstraints>
             <ColumnConstraints />
+            <ColumnConstraints />
          </columnConstraints>
          <rowConstraints>
+            <RowConstraints />
             <RowConstraints />
          </rowConstraints></GridPane>
       <HBox fx:id="upHBox" layoutX="389.0" layoutY="14.0" prefHeight="85.0" prefWidth="476.0" />
       <HBox fx:id="downHBox" layoutX="582.0" layoutY="673.0" prefHeight="84.0" prefWidth="436.0" />
-      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1278.0" layoutY="521.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1208.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../resource/Monsters/Unknown.jpg" />
          </image>
@@ -30,7 +32,7 @@
             <Image url="@../../resource/Monsters/Unknown.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="140.0" fitWidth="106.0" layoutX="1278.0" layoutY="368.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="140.0" fitWidth="106.0" layoutX="1208.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../resource/Monsters/Unknown.jpg" />
          </image>
@@ -40,12 +42,177 @@
             <Image url="@../../resource/Monsters/Unknown.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="141.0" fitWidth="78.0" layoutX="179.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="141.0" fitWidth="78.0" layoutX="90.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../resource/Monsters/Unknown.jpg" />
          </image>
       </ImageView>
       <ImageView fitHeight="137.0" fitWidth="84.0" layoutX="87.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1215.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1222.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1222.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1229.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1215.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1222.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1222.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1229.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="137.0" fitWidth="84.0" layoutX="87.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="137.0" fitWidth="84.0" layoutX="84.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="137.0" fitWidth="84.0" layoutX="84.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="137.0" fitWidth="84.0" layoutX="84.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="137.0" fitWidth="84.0" layoutX="84.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="137.0" fitWidth="84.0" layoutX="84.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="137.0" fitWidth="84.0" layoutX="84.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="137.0" fitWidth="84.0" layoutX="84.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="137.0" fitWidth="84.0" layoutX="84.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="137.0" fitWidth="84.0" layoutX="84.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="121.0" fitWidth="90.0" layoutX="76.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="121.0" fitWidth="90.0" layoutX="76.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="121.0" fitWidth="90.0" layoutX="68.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1229.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1229.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1229.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1229.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="140.0" fitWidth="120.0" layoutX="1229.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="121.0" fitWidth="90.0" layoutX="68.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="121.0" fitWidth="90.0" layoutX="68.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="121.0" fitWidth="90.0" layoutX="68.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="121.0" fitWidth="90.0" layoutX="68.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="121.0" fitWidth="90.0" layoutX="68.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="121.0" fitWidth="90.0" layoutX="68.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Monsters/Unknown.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="121.0" fitWidth="90.0" layoutX="68.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../resource/Monsters/Unknown.jpg" />
          </image>

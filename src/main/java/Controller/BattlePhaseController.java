@@ -2,9 +2,7 @@ package Controller;
 
 import Model.Card;
 import Model.DuelModel;
-import Model.Monster;
 import View.BattlePhaseView;
-import View.DuelView;
 
 import java.util.ArrayList;
 import java.util.HashMap;

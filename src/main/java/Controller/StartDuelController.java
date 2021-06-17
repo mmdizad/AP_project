@@ -52,8 +52,8 @@ public class StartDuelController extends LoginAndSignUpController implements Ini
                 } else if (!response.equals("")){
                     label.setText(response);
                 } else {
-                    Stage stage =  (Stage) singleDuelBTN.getScene().getWindow();
-                    DuelView.getInstance().start(stage);
+                    Stage stage =  (Stage) matchDuelBTN.getScene().getWindow();
+                    stage.close();
                 }
             }
         });

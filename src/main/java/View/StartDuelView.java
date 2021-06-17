@@ -3,6 +3,7 @@ package View;
 import Controller.DeckController;
 import Controller.LoginAndSignUpController;
 import Model.User;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -80,44 +81,49 @@ public class StartDuelView extends MainMenu {
             User secondUser = User.getUserByUsername(secondPlayerUserName);
             if (LoginAndSignUpController.user.getActiveDeck() == null)
                 return LoginAndSignUpController.user.getUsername() + " has no active deck";
-            else if (secondUser.getActiveDeck() == null)
-                return secondUser.getUsername() + " has no active deck";
-            else if (LoginAndSignUpController.user.getActiveDeck().getCardsMain().size() < 40) {
-                return LoginAndSignUpController.user.getUsername() + "'s deck is invalid";
-            } else if (secondUser.getActiveDeck().getCardsMain().size() < 40) {
-                return secondUser.getUsername() + "'s deck is invalid";
-            } else if (round == 3 || round == 1) {
-                if (round == 1) {
-                    DuelView duelView = DuelView.getInstance();
-                    duelView.selectFirstPlayer(secondPlayerUserName, scanner1, duelView, false);
-                    printWinnerAndGiveScoreOneRound(duelView, LoginAndSignUpController.user, secondUser);
-                } else {
-                    int userWins = 0;
-                    int secondPlayerWins = 0;
-                    ArrayList<Integer> maxLPs = new ArrayList<>();
-                    maxLPs.add(0);
-                    maxLPs.add(0);
-                    for (int i = 0; i < 3; i++) {
+            else {
+                assert secondUser != null;
+                if (secondUser.getActiveDeck() == null)
+                    return secondUser.getUsername() + " has no active deck";
+                else if (LoginAndSignUpController.user.getActiveDeck().getCardsMain().size() < 40) {
+                    return LoginAndSignUpController.user.getUsername() + "'s deck is invalid";
+                } else if (secondUser.getActiveDeck().getCardsMain().size() < 40) {
+                    return secondUser.getUsername() + "'s deck is invalid";
+                } else if (round == 3 || round == 1) {
+                    if (round == 1) {
                         DuelView duelView = DuelView.getInstance();
                         duelView.selectFirstPlayer(secondPlayerUserName, scanner1, duelView, false);
-                        int winner = printWinnerThreeRound(duelView, LoginAndSignUpController.user, secondUser);
-                        if (winner == 0) userWins++;
-                        else secondPlayerWins++;
-                        if (duelView.duelModel.getLifePoint(0) > maxLPs.get(0)) {
-                            maxLPs.set(0, duelView.duelModel.getLifePoint(0));
+                        Stage stage = new Stage();
+                        DuelView.getInstance().start(stage);
+                        printWinnerAndGiveScoreOneRound(duelView, LoginAndSignUpController.user, secondUser);
+                    } else {
+                        int userWins = 0;
+                        int secondPlayerWins = 0;
+                        ArrayList<Integer> maxLPs = new ArrayList<>();
+                        maxLPs.add(0);
+                        maxLPs.add(0);
+                        for (int i = 0; i < 3; i++) {
+                            DuelView duelView = DuelView.getInstance();
+                            duelView.selectFirstPlayer(secondPlayerUserName, scanner1, duelView, false);
+                            int winner = printWinnerThreeRound(duelView, LoginAndSignUpController.user, secondUser);
+                            if (winner == 0) userWins++;
+                            else secondPlayerWins++;
+                            if (duelView.duelModel.getLifePoint(0) > maxLPs.get(0)) {
+                                maxLPs.set(0, duelView.duelModel.getLifePoint(0));
+                            }
+                            if (duelView.duelModel.getLifePoint(1) > maxLPs.get(1)) {
+                                maxLPs.set(1, duelView.duelModel.getLifePoint(1));
+                            }
+                            if (userWins == 2) {
+                                finishThreeRound(duelView, LoginAndSignUpController.user, secondUser, maxLPs.get(0));
+                                return "";
+                            }
+                            if (secondPlayerWins == 2) {
+                                finishThreeRound(duelView, secondUser, LoginAndSignUpController.user, maxLPs.get(1));
+                                return "";
+                            }
+                            changeCardsBetweenRounds(LoginAndSignUpController.user, secondUser, scanner1);
                         }
-                        if (duelView.duelModel.getLifePoint(1) > maxLPs.get(1)) {
-                            maxLPs.set(1, duelView.duelModel.getLifePoint(1));
-                        }
-                        if (userWins == 2) {
-                            finishThreeRound(duelView, LoginAndSignUpController.user, secondUser, maxLPs.get(0));
-                            return "";
-                        }
-                        if (secondPlayerWins == 2) {
-                            finishThreeRound(duelView, secondUser, LoginAndSignUpController.user, maxLPs.get(1));
-                            return "";
-                        }
-                        changeCardsBetweenRounds(LoginAndSignUpController.user, secondUser, scanner1);
                     }
                 }
             }
