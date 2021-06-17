@@ -32,6 +32,11 @@ public class DuelView implements Initializable {
     public GridPane fieldsGridPane;
     public HBox upHBox;
     public HBox downHBox;
+    public ImageView userBin;
+    public ImageView opponentField;
+    public ImageView userField;
+    public ImageView opponentDeck;
+    public ImageView opponentBin;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
@@ -213,10 +218,10 @@ public class DuelView implements Initializable {
     }
 
     public void showBoard() {
-        ArrayList<String> board = duelView.duelModel.getBoard();
-        for (String s : board) {
-            System.out.println(s);
-        }
+//        ArrayList<String> board = duelView.duelModel.getBoard();
+//        for (String s : board) {
+//            System.out.println(s);
+//        }
     }
 
     public void showGraveyard(Matcher matcher) {
@@ -326,6 +331,7 @@ public class DuelView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+         duelModel= new DuelModel("ali","erfan");
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 URL url = null;
@@ -341,7 +347,6 @@ public class DuelView implements Initializable {
                 fieldsGridPane.add(imageView,j,i);
                 fieldsGridPane.setHgap(90);
                 fieldsGridPane.setVgap(15);
-
             }
         }
         for (int i = 0; i < 5; i++) {
@@ -364,6 +369,7 @@ public class DuelView implements Initializable {
             downHBox.getChildren().add(imageView1);
         }
         downHBox.setAlignment(Pos.CENTER_RIGHT);
-
+       duelModel.getBoard();
     }
+
 }
