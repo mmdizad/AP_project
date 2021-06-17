@@ -42,15 +42,15 @@ public class Card {
         if(category.equals("Monster")) {
             URL url = null;
             try {
-                url = new File("src/main/resource/Monster/"+name+".jpg").toURI().toURL();
+                url = new File("src/main/java/View/Monster/"+name+".jpg").toURI().toURL();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
 
             imageView =new ImageView( new Image(Objects.requireNonNull(url).toString()));
-
             imageView.setFitWidth(40);
             imageView.setFitHeight(50);
+
         }
                 else{
             URL url = null;

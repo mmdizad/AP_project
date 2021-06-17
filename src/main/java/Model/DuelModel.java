@@ -2,13 +2,17 @@ package Model;
 
 import Controller.DuelController;
 import View.DuelView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.*;
 
 public class DuelModel {
+    private final ArrayList<Integer> lifePoints;
+    private final ArrayList<String> usernames;
     public int turn = 0;
     public Card monsterSetOrSummonInThisTurn;
     public int thePlaceOfMonsterSetOrSummonInThisTurn;
@@ -26,8 +30,6 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> graveyard;
     private ArrayList<ArrayList<Card>> handCards;
     private ArrayList<ArrayList<Card>> field;
-    private final ArrayList<Integer> lifePoints;
-    private final ArrayList<String> usernames;
     private ArrayList<Card> borrowCards;
     private ArrayList<String> conditionOfBorrowCards;
     private ArrayList<HashMap<Card, Integer>> swordsCard;
@@ -57,7 +59,7 @@ public class DuelModel {
     public void someNewFieldsForStartDuel(String playerUsername, String opponentUsername) {
         User user = User.getUserByUsername(playerUsername);
         Deck activeDeck = user.getActiveDeck();
-        ArrayList<Card> cardsInPlayerActiveDeck = activeDeck.getCardsMain();
+        ArrayList<Card> cardsInPlayerActiveDeck =null;
         Collections.shuffle(cardsInPlayerActiveDeck);
         playersCards = new ArrayList<>();
         ArrayList<Card> playerCard1 = new ArrayList<>();
@@ -401,16 +403,20 @@ public class DuelModel {
         return detailOfSelectedCard;
     }
 
-    public ArrayList<String> getBoard() {
+    public void getBoard() {
+        DuelView duelView = DuelView.getInstance();
         ArrayList<String> board = new ArrayList<>();
-
         String handCardOpponent = "    ";
         String handCardUser = "    ";
         for (int i = 0; i < handCards.get(1 - turn).size(); i++) {
             handCardOpponent = handCardOpponent + "c    ";
+
+
+            duelView.upHBox.getChildren().set(i, getUnknownCard());
         }
         for (int i = 0; i < handCards.get(turn).size(); i++) {
             handCardUser = handCardUser + "c    ";
+            duelView.downHBox.getChildren().set(i, handCards.get(turn).get(i).getImageView());
         }
         ArrayList<String> spellConditionOpponent = new ArrayList<>();
         ArrayList<String> spellConditionUser = new ArrayList<>();
@@ -418,20 +424,32 @@ public class DuelModel {
         ArrayList<String> conditionMonsterUser = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             if (monstersInField.get(1 - turn).get(i) != null) {
-                String[] monsterCondition1 = monsterCondition.get(1 - turn).get(i).split("/");
-                conditionMonsterOpponent.add(monsterCondition1[0]);
+
             } else
-                conditionMonsterOpponent.add("E");
-            if (monstersInField.get(turn).get(i) != null)
+                duelView.fieldsGridPane.add(new ImageView((Image) null), i, 0);
+            if (monstersInField.get(turn).get(i) != null) {
                 conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
-            else
+                duelView.fieldsGridPane.add(monstersInField.get(turn).get(i).getImageView(), i, 3);
+            } else {
                 conditionMonsterUser.add("E");
-            if (spellsAndTrapsInFiled.get(1 - turn).get(i) != null)
+                duelView.fieldsGridPane.add(new ImageView((Image) null), i, 3);
+            }
+
+            if (spellsAndTrapsInFiled.get(1 - turn).get(i) != null) {
                 spellConditionOpponent.add(spellAndTrapCondition.get(1 - turn).get(i).split("/")[0]);
-            else spellConditionOpponent.add("E");
-            if (spellsAndTrapsInFiled.get(turn).get(i) != null)
+                duelView.fieldsGridPane.add(getUnknownCard(), i, 1);
+            } else {
+                spellConditionOpponent.add("E");
+                duelView.fieldsGridPane.add(new ImageView((Image) null), i, 0);
+            }
+            if (spellsAndTrapsInFiled.get(turn).get(i) != null) {
                 spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/")[0]);
-            else spellConditionUser.add("E");
+                duelView.fieldsGridPane.add(spellsAndTrapsInFiled.get(turn).get(i).getImageView(), i, 0);
+            } else {
+                spellConditionUser.add("E");
+                duelView.fieldsGridPane.add(new ImageView((Image) null), i, 0);
+            }
+
         }
 
         String spellFieldofOpponet = "    " + spellConditionOpponent.get(3) + "    " + spellConditionOpponent.get(1) + "    " + spellConditionOpponent.get(0) + "    " + spellConditionOpponent.get(2) + "    " + spellConditionOpponent.get(4);
@@ -455,9 +473,24 @@ public class DuelModel {
         board.add(handCardUser);
         board.add(String.valueOf(playersCards.get(turn).size()));
         board.add(usernames.get(turn) + ":" + lifePoints.get(turn));
-        return board;
 
     }
+
+    public ImageView getUnknownCard() {
+        ImageView imageView;
+
+        URL url = null;
+        try {
+            url = new File("src/main/java/View/Monster/" + "unknown.jpg").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        imageView = new ImageView(new Image(Objects.requireNonNull(url).toString()));
+        imageView.setFitWidth(40);
+        imageView.setFitHeight(50);
+        return imageView;
+    }
+
 
     public ArrayList<String> getUsernames() {
         return usernames;
