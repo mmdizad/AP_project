@@ -20,7 +20,7 @@ public class StandByPhaseView extends DuelView {
         if (response > 0) {
             int i;
             for (int j = 0; j < response; j++) {
-                if (!isAi) {
+                if (!duelView.isAi) {
                     System.out.println("you want to destroy Messenger of peace spell (in order of time being on the field)" +
                             " or decrease your lp(100 unit)");
                     System.out.println("enter 1 (destroy cards) or 2(decrease lp)");
@@ -34,7 +34,7 @@ public class StandByPhaseView extends DuelView {
                     i = 1;
                 }
                 String result = standByPhaseController.effectOfSpellInThisPhase(i);
-                if (!isAi) {
+                if (!duelView.isAi) {
                     System.out.println(result);
                 } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
                     System.out.println(result);

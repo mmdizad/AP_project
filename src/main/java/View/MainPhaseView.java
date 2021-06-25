@@ -29,11 +29,13 @@ public class MainPhaseView extends DuelView implements Set, Summon {
         if (startOfPhase) {
             System.out.println(phaseName);
         }
-        if (isAi && duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
+        if (duelView.isAi && duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
             if (anyOneWon()){
                 return;
             }
             aiMainPhaseView();
+            BattlePhaseView battlePhaseView = BattlePhaseView.getInstance();
+            battlePhaseView.run(scanner, true);
         } else {
             while (true) {
                 String command = scanner.nextLine();

@@ -225,7 +225,7 @@ public class DuelView {
 
     public void selectField(Matcher matcher) {
         if (matcher.find()) {
-            int place = Integer.parseInt(matcher.group(1));
+            int place = Integer.parseInt(matcher.group(1)) - 1;
             isCommandInvalid = false;
             System.out.println(DuelController.getInstance().selectFieldZone(place));
         }
@@ -233,7 +233,7 @@ public class DuelView {
 
     public void selectOpponentField(Matcher matcher) {
         if (matcher.find()) {
-            int place = Integer.parseInt(matcher.group(1));
+            int place = Integer.parseInt(matcher.group(1)) - 1;
             isCommandInvalid = false;
             System.out.println(DuelController.getInstance().selectOpponentFieldZone(place));
         }

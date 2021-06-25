@@ -53,7 +53,7 @@ public class DuelController {
             else if (spell.getName().equals("UMIIRUKA"))
                 effectOfUmiiruka(1);
         } else if (duelModel.getField().get(1 - duelModel.turn).get(0) != null) {
-            Spell spell = (Spell) duelModel.getField().get(1 - duelModel.turn).get(0);
+            Card spell = duelModel.getField().get(1 - duelModel.turn).get(0);
             if (spell.getName().equals("Yami"))
                 effectOfYami(1);
             else if (spell.getName().equals("Forest"))
@@ -134,7 +134,7 @@ public class DuelController {
             else if (spell.getName().equals("UMIIRUKA"))
                 effectOfUmiiruka(-1);
         } else if (duelModel.getField().get(1 - duelModel.turn).get(0) != null) {
-            Spell spell = (Spell) duelModel.getField().get(1 - duelModel.turn).get(0);
+            Card spell = duelModel.getField().get(1 - duelModel.turn).get(0);
             if (spell.getName().equals("Yami"))
                 effectOfYami(-1);
             else if (spell.getName().equals("Forest"))
@@ -196,7 +196,7 @@ public class DuelController {
         deActiveOldField();
         duelModel.activeField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
         Card spell =  duelModel.getSelectedCards().get(duelModel.turn).get(0);
-        duelModel.getHandCards().get(duelModel.turn).remove(duelModel.getSelectedCards().get(duelModel.turn).get(0));
+        duelModel.getHandCards().get(duelModel.turn).remove(spell);
         if (spell.getName().equals("Yami"))
             return effectOfYami(1);
         else if (spell.getName().equals("Forest"))
@@ -206,6 +206,7 @@ public class DuelController {
             return effectOfClosedForest(1);
         } else if (spell.getName().equals("UMIIRUKA"))
             return effectOfUmiiruka(1);
+
         return "spell zone activate";
     }
 
@@ -1645,8 +1646,8 @@ public class DuelController {
 
     public String effectOfUmiiruka(int activeOrdeActive) {
         for (int i = 0; i < 5; i++) {
-            Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
-            Monster monster1 = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            Card monster1 = duelModel.getMonstersInField().get(duelModel.turn).get(i);
             if (monster != null)
                 if (monster.getCardType().equals("Aqua"))
                     if (duelModel.getSpellZoneActivate().get(duelModel.turn).get(i)) {
@@ -1669,9 +1670,9 @@ public class DuelController {
     public String effectOfClosedForest(int activeOrdeActive) {
 
         for (int i = 0; i < 5; i++) {
-            Monster monster = (Monster) duelModel.getMonstersInField().get(playerActiveCloseForest).get(i);
+            Card monster = duelModel.getMonstersInField().get(playerActiveCloseForest).get(i);
             if (monster != null)
-                if (monster.getMonsterType().equals("Beast-Type")) {
+                if (monster.getCardType().equals("Beast-Type")) {
                     if (!duelModel.getSpellZoneActivate().get(playerActiveCloseForest).get(i))
                         duelModel.getSpellZoneActivate().get(playerActiveCloseForest).add(i, true);
                     if (activeOrdeActive == 1)
@@ -1688,23 +1689,23 @@ public class DuelController {
     public String effectOfForest(int activeOrdeActive) {
 
         for (int i = 0; i < 5; i++) {
-            Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
-            Monster monster1 = (Monster) duelModel.getMonstersInField().get(1 - duelModel.turn).get(i);
+            Card monster =  duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            Card monster1 = duelModel.getMonstersInField().get(1 - duelModel.turn).get(i);
             if (monster != null)
-                if (monster.getMonsterType().equals("Beast-Warrior") || monster.getMonsterType().equals("Beast") || monster.getMonsterType().equals("Insect")) {
+                if (monster.getCardType().equals("Beast-Warrior") || monster.getCardType().equals("Beast") || monster.getCardType().equals("Insect")) {
                     forest(i, monster, activeOrdeActive);
                 }
             if (monster1 != null)
-                if (monster1.getMonsterType().equals("Beast-Warrior") || monster.getMonsterType().equals("Beast") || monster.getMonsterType().equals("Insect"))
+                if (monster1.getCardType().equals("Beast-Warrior") || monster.getCardType().equals("Beast") || monster.getCardType().equals("Insect"))
                     forest(i, monster1, activeOrdeActive);
         }
         return "spellZone activated";
     }
 
-    private void forest(int i, Monster monster, int activeOrdeActive) {
+    private void forest(int i, Card monster, int activeOrdeActive) {
         if (!duelModel.getSpellZoneActivate().get(duelModel.turn).get(i)) {
             duelModel.getSpellZoneActivate().get(duelModel.turn).add(i, true);
-            Monster monster2 = Monster.getMonsterByName(monster.getName());
+            Card monster2 = Card.getCardByName(monster.getName());
             monster.setAttackPower(monster2.getAttackPower() + 200 * activeOrdeActive);
             monster.setDefensePower(monster2.getDefensePower() + 200 * activeOrdeActive);
         }
@@ -1712,29 +1713,29 @@ public class DuelController {
 
     public String effectOfYami(int activeOrdeActive) {
         for (int i = 0; i < 5; i++) {
-            Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
-            Monster monster1 = (Monster) duelModel.getMonstersInField().get(1 - duelModel.turn).get(i);
+            Card monster =  duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            Card monster1 = duelModel.getMonstersInField().get(1 - duelModel.turn).get(i);
             if (monster != null) {
-                if (monster.getMonsterType().equals("Fiend") || monster.getMonsterType().equals("Spellcaster")) {
+                if (monster.getCardType().equals("Fiend") || monster.getCardType().equals("Spellcaster")) {
                     forest(i, monster, activeOrdeActive);
                     forest(i, monster1, activeOrdeActive);
-                } else if (monster.getMonsterType().equals("Fairy")) {
+                } else if (monster.getCardType().equals("Fairy")) {
                     forest(i, monster, activeOrdeActive * -1);
                     forest(i, monster1, activeOrdeActive * -1);
                 }
             }
             if (monster1 != null) {
-                if (monster1.getMonsterType().equals("Fiend") || monster1.getMonsterType().equals("Spellcaster")) {
+                if (monster1.getCardType().equals("Fiend") || monster1.getCardType().equals("Spellcaster")) {
                     if (!duelModel.getSpellZoneActivate().get(1 - duelModel.turn).get(i)) {
                         duelModel.getSpellZoneActivate().get(1 - duelModel.turn).add(i, true);
-                        monster1.setAttackPower(Monster.getMonsterByName(monster1.getName()).getAttackPower() + 200);
-                        monster1.setDefensePower(Monster.getMonsterByName(monster1.getName()).getDefensePower() + 200);
+                        monster1.setAttackPower(Card.getCardByName(monster1.getName()).getAttackPower() + 200);
+                        monster1.setDefensePower(Card.getCardByName(monster1.getName()).getDefensePower() + 200);
 
                     }
-                } else if (monster1.getMonsterType().equals("Fairy")) {
+                } else if (monster1.getCardType().equals("Fairy")) {
                     if (!duelModel.getSpellZoneActivate().get(1 - duelModel.turn).get(i)) {
                         duelModel.getSpellZoneActivate().get(1 - duelModel.turn).add(i, true);
-                        Monster monster2 = Monster.getMonsterByName(monster.getName());
+                        Card monster2 = Card.getCardByName(monster.getName());
                         monster1.setAttackPower(monster2.getAttackPower() - 200);
                         monster1.setDefensePower(monster2.getDefensePower() - 200);
                     }
@@ -2102,11 +2103,11 @@ public class DuelController {
     }
 
     private ArrayList<String> showMonster(String cardName) {
-        Monster monster = Monster.getMonsterByName(cardName);
+        Card monster = Card.getCardByName(cardName);
         ArrayList<String> output = new ArrayList<>();
         output.add("Name: " + monster.getName());
         output.add("Level: " + monster.getLevel());
-        output.add("Type: " + monster.getMonsterType());
+        output.add("Type: " + monster.getCardType());
         output.add("ATK: " + monster.getAttackPower());
         output.add("DEF: " + monster.getDefensePower());
         output.add("Description: " + monster.getDescription());
@@ -2114,7 +2115,7 @@ public class DuelController {
     }
 
     private ArrayList<String> showSpell(String cardName) {
-        Spell spell = Spell.getSpellByName(cardName);
+        Card spell = Card.getCardByName(cardName);
         ArrayList<String> output = new ArrayList<>();
         output.add("Name: " + spell.getName());
         output.add("Spell");
@@ -2124,7 +2125,7 @@ public class DuelController {
     }
 
     private ArrayList<String> showTrap(String cardName) {
-        Trap trap = Trap.getTrapByName(cardName);
+        Card trap = Card.getCardByName(cardName);
         ArrayList<String> output = new ArrayList<>();
         output.add("Name: " + trap.getName());
         output.add("Trap");
@@ -2265,7 +2266,7 @@ public class DuelController {
         HashMap<Card, Integer> cardsInsteadOfScanner = duelModel.getCardsInsteadOfScanners();
         if (cardsInsteadOfScanner.size() > 0) {
             for (Map.Entry<Card, Integer> entry : cardsInsteadOfScanner.entrySet()) {
-                Monster monster = new Monster("Scanner", "Once per turn, you can select 1 of your opponent's monsters" +
+                Card monster = new Monster("Scanner", "Once per turn, you can select 1 of your opponent's monsters" +
                         " that is removed from play. Until the End Phase, this card's name is treated" +
                         " as the selected monster's name, and this card has the same Attribute, Level, ATK," +
                         " and DEF as the selected monster. If this card is removed from the field while this effect" +

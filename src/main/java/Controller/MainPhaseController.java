@@ -584,7 +584,10 @@ public class MainPhaseController extends DuelController {
                         if (monster.getLevel() <= 4) {
                             int placeOfMonster = duelModel.getHandCards().get(duelModel.turn).indexOf(monster) + 1;
                             String aiCommand = "select --hand " + placeOfMonster;
-                            duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
+                            Matcher matcher =duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$");
+                            if (matcher.find()) {
+                                duelController.selectHand(matcher);
+                            }
                         }
                     }
                 }
@@ -651,7 +654,10 @@ public class MainPhaseController extends DuelController {
                     String state = duelModel.getSpellAndTrapCondition(duelModel.turn, placeOfSpellCard).split("/")[0];
                     if (state.equals("H")) {
                         String aiCommand = "select --spell " + placeOfSpellCard;
-                        duelController.selectSpellOrTrap(duelView.getCommandMatcher(aiCommand, "^select --spell (\\d+)$"));
+                        Matcher matcher = duelView.getCommandMatcher(aiCommand, "^select --spell (\\d+)$");
+                        if (matcher.find()) {
+                            duelController.selectSpellOrTrap(matcher);
+                        }
                         if (card.getName().equals("Monster Reborn")) {
                             aiActiveMonsterReborn(placeOfSpellCard);
                         } else if (card.getName().equals("Terraforming")) {
@@ -940,7 +946,10 @@ public class MainPhaseController extends DuelController {
                         if (monster.getLevel() <= 4) {
                             int placeOfMonsterCard = duelModel.getHandCards().get(duelModel.turn).indexOf(monster) + 1;
                             String aiCommand = "select --hand " + placeOfMonsterCard;
-                            duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
+                            Matcher matcher = duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$");
+                            if (matcher.find()) {
+                                duelController.selectHand(matcher);
+                            }
                             if (monster.getAttackPower() >= monster.getDefensePower()) {
                                 summon();
                             } else {
@@ -953,7 +962,10 @@ public class MainPhaseController extends DuelController {
                             }
                             int placeOfMonsterCard = duelModel.getHandCards().get(duelModel.turn).indexOf(monster) + 1;
                             String aiCommand = "select --hand " + placeOfMonsterCard;
-                            duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
+                            Matcher matcher = duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$");
+                            if (matcher.find()) {
+                                duelController.selectHand(matcher);
+                            }
                             if (isMonsterInFieldExists) {
                                 summon();
                             }
@@ -964,7 +976,10 @@ public class MainPhaseController extends DuelController {
                             }
                             int placeOfMonsterCard = duelModel.getHandCards().get(duelModel.turn).indexOf(monster) + 1;
                             String aiCommand = "select --hand " + placeOfMonsterCard;
-                            duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
+                            Matcher matcher = duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$");
+                            if (matcher.find()) {
+                                duelController.selectHand(matcher);
+                            }
                             if (hasEnoughMonsterInFieldForTribute) {
                                 summon();
                             }
@@ -985,7 +1000,10 @@ public class MainPhaseController extends DuelController {
                     if (card != duelModel.monsterSetOrSummonInThisTurn) {
                         int placeOfMonsterCard = duelModel.getMonstersInField().get(duelModel.turn).indexOf(card) + 1;
                         String aiCommand = "select --monster " + placeOfMonsterCard;
-                        duelController.selectMonster(duelView.getCommandMatcher(aiCommand, "^select --monster (\\d+)$"));
+                        Matcher matcher = duelView.getCommandMatcher(aiCommand, "^select --monster (\\d+)$");
+                        if (matcher.find()) {
+                            duelController.selectMonster(matcher);
+                        }
                         flipSummon();
                     }
                 }
@@ -1070,14 +1088,20 @@ public class MainPhaseController extends DuelController {
                     if (duelModel.getHandCards().get(duelModel.turn).size() > 0) {
                         int placeOfMonsterCard = duelModel.getHandCards().get(duelModel.turn).indexOf(card) + 1;
                         String aiCommand = "select --hand " + placeOfMonsterCard;
-                        duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
+                        Matcher matcher = duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$");
+                        if (matcher.find()) {
+                            duelController.selectHand(matcher);
+                        }
                         specialSummon();
                     }
                 } else if (card.getName().equals("Gate Guardian")) {
                     if (getNumberOfMonstersInPlayerField() >= 3) {
                         int placeOfMonsterCard = duelModel.getHandCards().get(duelModel.turn).indexOf(card) + 1;
                         String aiCommand = "select --hand " + placeOfMonsterCard;
-                        duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
+                        Matcher matcher = duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$");
+                        if (matcher.find()) {
+                            duelController.selectHand(matcher);
+                        }
                         specialSummon();
                     }
                 }
@@ -1091,13 +1115,20 @@ public class MainPhaseController extends DuelController {
                 if (card.getCardType().equals("Field")) {
                     int placeOfSpellCard = duelModel.getHandCards().get(duelModel.turn).indexOf(card) + 1;
                     String aiCommand = "select --hand " + placeOfSpellCard;
-                    duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
+                    Matcher matcher = duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$");
+                    if (matcher.find()) {
+                        duelController.selectHand(matcher);
+                    }
                     duelController.activeZoneFromHand();
                 } else if (!duelController.isSpellZoneFull(duelModel.turn)) {
                     int placeOfSpellCard = duelModel.getHandCards().get(duelModel.turn).indexOf(card) + 1;
                     String aiCommand = "select --hand " + placeOfSpellCard;
-                    duelController.selectHand(duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$"));
+                    Matcher matcher = duelView.getCommandMatcher(aiCommand, "^select --hand (\\d+)$");
+                    if (matcher.find()) {
+                        duelController.selectHand(matcher);
+                    }
                     setTrapOrSpell();
+                    return;
                 }
             }
         }

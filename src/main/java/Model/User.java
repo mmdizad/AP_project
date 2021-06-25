@@ -35,30 +35,34 @@ public class User {
         setPassword(password);
         users.put(username, this);
         allUsers.add(this);
-        coins = 100000;
+        coins = 1000000;
         this.cards = new ArrayList<>();
         this.addFirstCards(Card.getFirstCards());
     }
 
     public static User getUserByUsername(String username) {
-        try {
-            File openingUser = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + username + "user.txt");
-            if (!openingUser.exists()) {
-                return null;
-            } else {
-                Gson gson = new Gson();
-                StringBuilder getDetail = new StringBuilder();
-                Scanner myReader = new Scanner(openingUser);
-                while (myReader.hasNextLine()) {
-                    getDetail.append(myReader.nextLine());
+        if (!username.equals("ai")) {
+            try {
+                File openingUser = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + username + "user.txt");
+                if (!openingUser.exists()) {
+                    return null;
+                } else {
+                    Gson gson = new Gson();
+                    StringBuilder getDetail = new StringBuilder();
+                    Scanner myReader = new Scanner(openingUser);
+                    while (myReader.hasNextLine()) {
+                        getDetail.append(myReader.nextLine());
+                    }
+                    String userInfo = getDetail.toString();
+                    User user1 = gson.fromJson(userInfo, User.class);
+                    myReader.close();
+                    return user1;
                 }
-                String userInfo = getDetail.toString();
-                User user1 = gson.fromJson(userInfo, User.class);
-                myReader.close();
-                return user1;
+            } catch (IOException e) {
+                return null;
             }
-        }catch (IOException e){
-            return null;
+        }else {
+            return users.get("ai");
         }
     }
 
