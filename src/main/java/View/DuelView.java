@@ -87,7 +87,7 @@ public class DuelView implements Initializable {
 
         stage.setTitle("RockPaperScissorsPage");
         assert root != null;
-        stage.setScene(new Scene(root, 1920, 1080));
+        stage.setScene(new Scene(root, 1360, 765));
         stage.show();
 
         scanner1 = scanner;

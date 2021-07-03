@@ -74,7 +74,7 @@ public class StartDuelView extends MainMenu {
         }
     }
 
-    public String startTheGame(String secondPlayerUserName, int round) {
+    public String startTheGame(String secondPlayerUserName, int round, Stage stage) {
         if (!User.isUserWithThisUsernameExists(secondPlayerUserName))
             return "there is no player with this username";
         else {
@@ -92,9 +92,10 @@ public class StartDuelView extends MainMenu {
                 } else if (round == 3 || round == 1) {
                     if (round == 1) {
                         DuelView duelView = DuelView.getInstance();
+                        stage.close();
                         duelView.selectFirstPlayer(secondPlayerUserName, scanner1, duelView, false);
-                        Stage stage = new Stage();
-                        DuelView.getInstance().start(stage);
+                        Stage stage1 = new Stage();
+                        DuelView.getInstance().start(stage1);
                         printWinnerAndGiveScoreOneRound(duelView, LoginAndSignUpController.user, secondUser);
                     } else {
                         int userWins = 0;

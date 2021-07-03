@@ -1,10 +1,5 @@
 package Controller;
 
-import Model.Card;
-import Model.Deck;
-import Model.DuelModel;
-import Model.User;
-import View.DuelView;
 import View.StartDuelView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,12 +14,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import javax.jws.soap.SOAPBinding;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class StartDuelController extends LoginAndSignUpController implements Initializable {
@@ -51,15 +44,13 @@ public class StartDuelController extends LoginAndSignUpController implements Ini
         singleDuelBTN.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                Stage stage = (Stage) matchDuelBTN.getScene().getWindow();
                 StartDuelView startDuelView = new StartDuelView();
-                String response = startDuelView.startTheGame(opponentUsername.getText(), 1);
+                String response = startDuelView.startTheGame(opponentUsername.getText(), 1, stage);
                 if (opponentUsername.getText().equals("")) {
                     label.setText("you must fill opponentUsername TextField");
                 } else if (!response.equals("")) {
                     label.setText(response);
-                } else {
-                    Stage stage = (Stage) matchDuelBTN.getScene().getWindow();
-                    stage.close();
                 }
             }
         });
@@ -70,7 +61,6 @@ public class StartDuelController extends LoginAndSignUpController implements Ini
             public void handle(ActionEvent event) {
                 Stage chooseDuelStage = (Stage) backButton.getScene().getWindow();
                 chooseDuelStage.close();
-
                 URL url = null;
                 try {
                     url = new File("src/main/java/FXMLFiles/MainMenu.fxml").toURI().toURL();
@@ -94,15 +84,13 @@ public class StartDuelController extends LoginAndSignUpController implements Ini
         matchDuelBTN.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                Stage stage = (Stage) matchDuelBTN.getScene().getWindow();
                 StartDuelView startDuelView = new StartDuelView();
-                String response = startDuelView.startTheGame(opponentUsername.getText(), 3);
+                String response = startDuelView.startTheGame(opponentUsername.getText(), 3, stage);
                 if (opponentUsername.getText().equals("")) {
                     label.setText("you must fill opponentUsername TextField");
                 } else if (!response.equals("")) {
                     label.setText(response);
-                } else {
-                    Stage stage = (Stage) matchDuelBTN.getScene().getWindow();
-                    stage.close();
                 }
             }
         });
@@ -112,17 +100,14 @@ public class StartDuelController extends LoginAndSignUpController implements Ini
     public void newSinglePlay(MouseEvent mouseEvent) {
         // test method
         StartDuelView startDuelView = new StartDuelView();
-        String response = startDuelView.startTheGame(opponentUsername.getText(), 1);
+        Stage stage = (Stage) singleDuelBTN.getScene().getWindow();
+        String response = startDuelView.startTheGame(opponentUsername.getText(), 1, stage);
         if (opponentUsername.getText().equals("")) {
             label.setText("you must fill opponentUsername TextField");
         }
 //        else if (!response.equals("")){
 //            label.setText(response);
 //        }
-        else {
-            Stage stage = (Stage) singleDuelBTN.getScene().getWindow();
-            DuelView.getInstance().start(stage);
-        }
 
     }
 }
