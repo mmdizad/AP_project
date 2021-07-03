@@ -92,9 +92,9 @@ public class DuelView implements Initializable {
 
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView, boolean isAi) {
         secondPlayerUsername1 = secondPlayerUsername;
+        showRockPaperScissors();
         scanner1 = scanner;
         this.isAi = isAi;
-
         if (RockPaperScissors.starterTheGame == 0) {
             duelModel = new DuelModel(LoginAndSignUpController.user.getUsername(), secondPlayerUsername);
             duelController = DuelController.getInstance();

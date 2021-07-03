@@ -1,6 +1,7 @@
 package Controller;
 
 import View.DuelView;
+import View.StartDuelView;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
@@ -18,16 +19,12 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 public class RockPaperScissors implements Initializable {
 
     public static int turnOfGame;
     public static int starterTheGame;
     private int numberOfImageSelected1;
-    private String secondPlayerUsername;
-    private DuelView duelView;
-    private Boolean isAi;
 
     @FXML
     public ImageView imageView1;
@@ -188,14 +185,13 @@ public class RockPaperScissors implements Initializable {
         ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(okButton, noButton);
+        DuelView duelView = DuelView.getInstance();
         alert.showAndWait().ifPresent(type -> {
             if (type == okButton) {
                 starterTheGame = turnOfGame;
-                DuelView duelView = DuelView.getInstance();
                 duelView.start(new Stage());
             } else if (type == noButton) {
                 starterTheGame = 1 - turnOfGame;
-                DuelView duelView = DuelView.getInstance();
                 duelView.start(new Stage());
             }
         });
