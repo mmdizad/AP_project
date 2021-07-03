@@ -90,12 +90,11 @@ public class StartDuelView extends MainMenu {
                 } else if (secondUser.getActiveDeck().getCardsMain().size() < 40) {
                     return secondUser.getUsername() + "'s deck is invalid";
                 } else if (round == 3 || round == 1) {
+                    stage.close();
                     if (round == 1) {
                         DuelView duelView = DuelView.getInstance();
-                        stage.close();
-                        duelView.selectFirstPlayer(secondPlayerUserName, scanner1, duelView, false);
-                        Stage stage1 = new Stage();
-                        DuelView.getInstance().start(stage1);
+//                        duelView.selectFirstPlayer(secondPlayerUserName, scanner1, duelView, false);
+                        duelView.showRockPaperScissors();
                         printWinnerAndGiveScoreOneRound(duelView, LoginAndSignUpController.user, secondUser);
                     } else {
                         int userWins = 0;
@@ -105,7 +104,8 @@ public class StartDuelView extends MainMenu {
                         maxLPs.add(0);
                         for (int i = 0; i < 3; i++) {
                             DuelView duelView = DuelView.getInstance();
-                            duelView.selectFirstPlayer(secondPlayerUserName, scanner1, duelView, false);
+                           // duelView.selectFirstPlayer(secondPlayerUserName, scanner1, duelView, false);
+                            duelView.showRockPaperScissors();
                             int winner = printWinnerThreeRound(duelView, LoginAndSignUpController.user, secondUser);
                             if (winner == 0) userWins++;
                             else secondPlayerWins++;

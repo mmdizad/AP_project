@@ -11,18 +11,23 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class RockPaperScissors implements Initializable {
 
     public static int turnOfGame;
     public static int starterTheGame;
     private int numberOfImageSelected1;
+    private String secondPlayerUsername;
+    private DuelView duelView;
+    private Boolean isAi;
 
     @FXML
     public ImageView imageView1;
@@ -186,8 +191,12 @@ public class RockPaperScissors implements Initializable {
         alert.showAndWait().ifPresent(type -> {
             if (type == okButton) {
                 starterTheGame = turnOfGame;
+                DuelView duelView = DuelView.getInstance();
+                duelView.start(new Stage());
             } else if (type == noButton) {
                 starterTheGame = 1 - turnOfGame;
+                DuelView duelView = DuelView.getInstance();
+                duelView.start(new Stage());
             }
         });
 

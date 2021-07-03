@@ -68,8 +68,7 @@ public class DuelView implements Initializable {
         }
     }
 
-    public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView, boolean isAi) {
-        secondPlayerUsername1 = secondPlayerUsername;
+    public void showRockPaperScissors(){
         URL url = null;
         try {
             url = new File("src/main/java/FXMLFiles/RockPaperScissors.fxml").toURI().toURL();
@@ -89,7 +88,10 @@ public class DuelView implements Initializable {
         assert root != null;
         stage.setScene(new Scene(root, 1360, 765));
         stage.show();
+    }
 
+    public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView, boolean isAi) {
+        secondPlayerUsername1 = secondPlayerUsername;
         scanner1 = scanner;
         this.isAi = isAi;
 
@@ -333,7 +335,6 @@ public class DuelView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-         duelModel= new DuelModel("ali","erfan");
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 URL url = null;
@@ -371,7 +372,7 @@ public class DuelView implements Initializable {
             downHBox.getChildren().add(imageView1);
         }
         downHBox.setAlignment(Pos.CENTER_RIGHT);
-       duelModel.getBoard();
+      // duelModel.getBoard();
     }
 
 }
