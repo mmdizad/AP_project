@@ -493,6 +493,19 @@ public class DeckController {
             } else {
                 user.setActiveDeck(deck);
                 saveChangesToFile(deck);
+                File file = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + user.getUsername() + "user.txt");
+                file.delete();
+                try {
+                    if (file.createNewFile()) {
+                        Gson gson = new Gson();
+                        String deckInfo = gson.toJson(user);
+                        FileWriter fileWriter = new FileWriter(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + user.getUsername() + "user.txt");
+                        fileWriter.write(deckInfo);
+                        fileWriter.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 return "deck activated successfully";
             }
         }
