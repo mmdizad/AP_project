@@ -157,7 +157,6 @@ public class DuelController {
         else if (spellName.equals("Magnum Shield"))
             deActiveMagnumShield(card);
 
-
     }
 
     public void deActiveMagnumShield(Card card) {
@@ -168,8 +167,6 @@ public class DuelController {
         } else {
             card.setDefensePower(card.getDefensePower() - Card.getCardByName(card.getName()).getAttackPower());
         }
-
-
     }
 
     public String activeSetZone() {

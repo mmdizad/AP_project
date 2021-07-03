@@ -1,7 +1,6 @@
 package Controller;
 
 import View.DuelView;
-import View.StartDuelView;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
@@ -63,7 +62,7 @@ public class RockPaperScissors implements Initializable {
     public void translateTransitionImageView(ImageView imageView, int turn) {
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setFromX(0f);
-        translateTransition.setByX(1550);
+        translateTransition.setByX(1200);
         translateTransition.setCycleCount(1);
         translateTransition.setNode(imageView);
         translateTransition.setDuration(new Duration(2500));
@@ -166,7 +165,7 @@ public class RockPaperScissors implements Initializable {
         fadeTransition.setFromValue(1.0);
         fadeTransition.setToValue(0.0);
 
-        fadeTransition.setDuration(new Duration(4000));
+        fadeTransition.setDuration(new Duration(5000));
         fadeTransition.play();
     }
 
