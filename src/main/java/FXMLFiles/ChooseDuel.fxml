@@ -10,7 +10,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="1376.0" styleClass="AnchorChooseDuel" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.StartDuelController">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#326c6ead" height="473.0" layoutX="377.0" layoutY="120.0" stroke="BLACK" strokeType="INSIDE" width="623.0" />
-        <Button fx:id="singleDuelBTN" layoutX="406.0" layoutY="189.0" mnemonicParsing="false" onMouseClicked="#newSinglePlay" prefHeight="44.0" prefWidth="242.0" styleClass="chooseDuelButton" stylesheets="@../CSSFiles/Button.css" text="SingleDuel" textFill="#d46363">
+        <Button fx:id="singleDuelBTN" layoutX="406.0" layoutY="189.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="242.0" styleClass="chooseDuelButton" stylesheets="@../CSSFiles/Button.css" text="SingleDuel" textFill="#d46363">
             <font>
                 <Font size="31.0" />
             </font>

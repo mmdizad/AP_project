@@ -67,7 +67,7 @@ public class RockPaperScissors implements Initializable {
         translateTransition.setByX(1200);
         translateTransition.setCycleCount(1);
         translateTransition.setNode(imageView);
-        translateTransition.setDuration(new Duration(2500));
+        translateTransition.setDuration(new Duration(2000));
         translateTransition.setAutoReverse(true);
         translateTransition.play();
         imageView1.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -178,21 +178,20 @@ public class RockPaperScissors implements Initializable {
             alert.setContentText(LoginAndSignUpController.user.getUsername() + " must choose starter Duel" + "\n" +
                     "Do you want to start the Duel?");
         } else {
-            alert.setContentText(DuelView.secondPlayerUsername1 + " must choose start Duel" + "\n" +
+            alert.setContentText(StartDuelView.secondPlayerUserName1 + " must choose start Duel" + "\n" +
                     "Do you want to start the Duel?");
         }
 
         ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(okButton, noButton);
-        DuelView duelView = DuelView.getInstance();
         alert.showAndWait().ifPresent(type -> {
             if (type == okButton) {
                 starterTheGame = turnOfGame;
-                duelView.start(new Stage());
+                StartDuelView.startTheGame();
             } else if (type == noButton) {
                 starterTheGame = 1 - turnOfGame;
-                duelView.start(new Stage());
+                StartDuelView.startTheGame();
             }
         });
 
