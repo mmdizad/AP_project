@@ -35,7 +35,7 @@ public class User {
         setPassword(password);
         users.put(username, this);
         allUsers.add(this);
-        coins = 100000;
+        coins = 10000000;
         this.cards = new ArrayList<>();
         this.addFirstCards(Card.getFirstCards());
     }

@@ -1685,20 +1685,20 @@ public class DuelController {
     public String effectOfForest(int activeOrdeActive) {
 
         for (int i = 0; i < 5; i++) {
-            Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
-            Monster monster1 = (Monster) duelModel.getMonstersInField().get(1 - duelModel.turn).get(i);
+            Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            Card monster1 = duelModel.getMonstersInField().get(1 - duelModel.turn).get(i);
             if (monster != null)
-                if (monster.getMonsterType().equals("Beast-Warrior") || monster.getMonsterType().equals("Beast") || monster.getMonsterType().equals("Insect")) {
+                if (monster.getCardType().equals("Beast-Warrior") || monster.getCardType().equals("Beast") || monster.getCardType().equals("Insect")) {
                     forest(i, monster, activeOrdeActive);
                 }
             if (monster1 != null)
-                if (monster1.getMonsterType().equals("Beast-Warrior") || monster.getMonsterType().equals("Beast") || monster.getMonsterType().equals("Insect"))
+                if (monster1.getCardType().equals("Beast-Warrior") || monster.getCardType().equals("Beast") || monster.getCardType().equals("Insect"))
                     forest(i, monster1, activeOrdeActive);
         }
         return "spellZone activated";
     }
 
-    private void forest(int i, Monster monster, int activeOrdeActive) {
+    private void forest(int i, Card monster, int activeOrdeActive) {
         if (!duelModel.getSpellZoneActivate().get(duelModel.turn).get(i)) {
             duelModel.getSpellZoneActivate().get(duelModel.turn).add(i, true);
             Monster monster2 = Monster.getMonsterByName(monster.getName());

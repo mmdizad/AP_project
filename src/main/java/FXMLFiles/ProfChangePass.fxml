@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane onMouseClicked="#backToProfMenuP" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ProfileView">
+   <children>
+      <TextField fx:id="oldPasswordTXT" layoutX="206.0" layoutY="109.0" prefHeight="25.0" prefWidth="167.0" promptText="your old Password" />
+      <PasswordField layoutX="206.0" layoutY="151.0" prefHeight="25.0" prefWidth="167.0" promptText="new password" />
+      <PasswordField layoutX="206.0" layoutY="200.0" prefHeight="25.0" prefWidth="167.0" promptText="please repeat new password" />
+      <Label alignment="CENTER" layoutX="206.0" layoutY="38.0" prefHeight="50.0" prefWidth="167.0" text="Change Password" textAlignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="254.0" layoutY="243.0" mnemonicParsing="false" onMouseClicked="#ChangePasswordBTN" prefHeight="36.0" prefWidth="78.0" text="OK" />
+      <Button layoutX="62.0" layoutY="38.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="56.0" text="Back" />
+   </children>
+</AnchorPane>

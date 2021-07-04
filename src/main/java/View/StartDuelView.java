@@ -23,16 +23,14 @@ public class StartDuelView extends MainMenu {
             Matcher matcher2 = pattern2.matcher(input);
             if (matcher2.find()) {
                 int round = Integer.parseInt(matcher2.group(1));
-                if (LoginAndSignUpController.user.getActiveDeck() == null) {
                     System.out.println(LoginAndSignUpController.user.getUsername() + " has no active deck");
-                } else if (LoginAndSignUpController.user.getActiveDeck().getCardsMain().size() < 40) {
                     System.out.println(LoginAndSignUpController.user.getUsername() + "'s deck is invalid");
-                } else if (round == 3 || round == 1) {
+
                     User ai = new User("ai", "ai", "ai");
                     ai.addDeck(LoginAndSignUpController.user.getActiveDeck());
                     ai.setActiveDeck(LoginAndSignUpController.user.getActiveDeck());
                     startTheGameWithAi(round, ai, scanner);
-                }
+
             }
             LoginAndSignUpController.saveChangesToFile();
         }
@@ -79,17 +77,17 @@ public class StartDuelView extends MainMenu {
             return "there is no player with this username";
         else {
             User secondUser = User.getUserByUsername(secondPlayerUserName);
-            if (LoginAndSignUpController.user.getActiveDeck() == null)
-                return LoginAndSignUpController.user.getUsername() + " has no active deck";
-            else {
+//            if (LoginAndSignUpController.user.getActiveDeck() == null)
+//                return LoginAndSignUpController.user.getUsername() + " has no active deck";
+//            else {
                 assert secondUser != null;
-                if (secondUser.getActiveDeck() == null)
-                    return secondUser.getUsername() + " has no active deck";
-                else if (LoginAndSignUpController.user.getActiveDeck().getCardsMain().size() < 40) {
-                    return LoginAndSignUpController.user.getUsername() + "'s deck is invalid";
-                } else if (secondUser.getActiveDeck().getCardsMain().size() < 40) {
-                    return secondUser.getUsername() + "'s deck is invalid";
-                } else if (round == 3 || round == 1) {
+//                if (secondUser.getActiveDeck() == null)
+//                    return secondUser.getUsername() + " has no active deck";
+//                else if (LoginAndSignUpController.user.getActiveDeck().getCardsMain().size() < 40) {
+//                    return LoginAndSignUpController.user.getUsername() + "'s deck is invalid";
+//                } else if (secondUser.getActiveDeck().getCardsMain().size() < 40) {
+//                    return secondUser.getUsername() + "'s deck is invalid";
+//                } else if (round == 3 || round == 1) {
                     if (round == 1) {
                         DuelView duelView = DuelView.getInstance();
                         stage.close();
@@ -127,8 +125,8 @@ public class StartDuelView extends MainMenu {
                         }
                     }
                 }
-            }
-        }
+//            }
+
         return "";
     }
 

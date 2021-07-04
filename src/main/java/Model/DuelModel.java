@@ -131,7 +131,9 @@ public class DuelModel {
         field = new ArrayList<>();
         ArrayList<Card> field1 = new ArrayList<>();
         field1.add(null);
+        field1.add(null);
         ArrayList<Card> field2 = new ArrayList<>();
+        field2.add(null);
         field2.add(null);
         field.add(field1);
         field.add(field2);
