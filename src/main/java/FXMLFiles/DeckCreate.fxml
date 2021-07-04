@@ -7,33 +7,44 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="AnchorShowAllDeck" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DeckController">
-   <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2f4961" height="721.0" layoutX="173.0" layoutY="132.0" opacity="0.46" stroke="BLACK" strokeType="INSIDE" width="589.0" />
-      <Text fill="#8a1212" layoutX="264.0" layoutY="224.0" strokeLineCap="ROUND" strokeWidth="0.0" text="ENTER DECK NAME:" textAlignment="CENTER">
-         <font>
-            <Font name="Gill Sans Ultra Bold" size="34.0" />
-         </font>
-      </Text>
-      <TextField fx:id="deckCreateTextField" alignment="CENTER" layoutX="258.0" layoutY="308.0" prefHeight="92.0" prefWidth="407.0" promptText="DECK NAME" styleClass="usernameLogin" stylesheets="@../CSSFiles/TextField.css">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </TextField>
-      <Button fx:id="deckCreateSubmitBtn" layoutX="264.0" layoutY="631.0" mnemonicParsing="false" onAction="#deckCreateSubmitBtnEvent" prefHeight="92.0" prefWidth="407.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="SUBMIT" textFill="#801515">
-         <font>
-            <Font name="Gill Sans Ultra Bold" size="39.0" />
-         </font>
-      </Button>
-      <Text fx:id="deckCreateText" fill="#8a1212" layoutX="264.0" layoutY="553.0" strokeLineCap="ROUND" strokeWidth="0.0" textAlignment="CENTER">
-         <font>
-            <Font name="Gill Sans Ultra Bold" size="34.0" />
-         </font>
-      </Text>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#deckCreateBackBtnEvent" prefHeight="53.0" prefWidth="114.0" styleClass="deckButton" stylesheets="@../CSSFiles/Button.css" text="BACK" textFill="#891111">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-   </children>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0"
+      prefWidth="1920.0" styleClass="AnchorShowAllDeck" stylesheets="@../CSSFiles/AnchorPanecss.css"
+      xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DeckController">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2f4961" height="721.0" layoutX="173.0" layoutY="132.0"
+                   opacity="0.46" stroke="BLACK" strokeType="INSIDE" width="589.0"/>
+        <Text fill="#8a1212" layoutX="264.0" layoutY="224.0" strokeLineCap="ROUND" strokeWidth="0.0"
+              text="ENTER DECK NAME:" textAlignment="CENTER">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="34.0"/>
+            </font>
+        </Text>
+        <TextField fx:id="deckCreateTextField" alignment="CENTER" layoutX="258.0" layoutY="308.0" prefHeight="92.0"
+                   prefWidth="407.0" promptText="DECK NAME" styleClass="usernameLogin"
+                   stylesheets="@../CSSFiles/TextField.css">
+            <font>
+                <Font size="36.0"/>
+            </font>
+        </TextField>
+        <Button fx:id="deckCreateSubmitBtn" layoutX="264.0" layoutY="631.0" mnemonicParsing="false"
+                onAction="#deckCreateSubmitBtnEvent" prefHeight="92.0" prefWidth="407.0" styleClass="DeckMenuButton"
+                stylesheets="@../CSSFiles/Button.css" text="SUBMIT" textFill="#801515">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="39.0"/>
+            </font>
+        </Button>
+        <Text fx:id="deckCreateText" fill="#8a1212" layoutX="264.0" layoutY="553.0" strokeLineCap="ROUND"
+              strokeWidth="0.0" textAlignment="CENTER">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="34.0"/>
+            </font>
+        </Text>
+        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#deckCreateBackBtnEvent"
+                prefHeight="53.0" prefWidth="114.0" styleClass="deckButton" stylesheets="@../CSSFiles/Button.css"
+                text="BACK" textFill="#891111">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Button>
+    </children>
 </Pane>
