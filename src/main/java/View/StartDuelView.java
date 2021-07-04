@@ -108,8 +108,6 @@ public class StartDuelView extends MainMenu {
         DuelView duelView = DuelView.getInstance();
         if (round1 == 1) {
             duelView.selectFirstPlayer(secondPlayerUserName1, scanner1, duelView, false);
-            Stage stage = new Stage();
-            duelView.start(stage);
             printWinnerAndGiveScoreOneRound(duelView, LoginAndSignUpController.user, secondUser);
         } else {
             int userWins = 0;

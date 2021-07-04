@@ -45,7 +45,7 @@ public class DuelView implements Initializable {
     protected boolean isCommandInvalid = true;
     protected boolean isAi;
     public static String secondPlayerUsername1;
-
+    public static Stage stage = new Stage();
     public DuelView() {
 
     }
@@ -56,7 +56,7 @@ public class DuelView implements Initializable {
         return duelView;
     }
 
-    public void start(Stage stage) {
+    public void start() {
         try {
             URL url = new File("src/main/java/FXMLFiles/DuelField.fxml").toURI().toURL();
             Parent root;
@@ -83,7 +83,6 @@ public class DuelView implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Stage stage = new Stage();
 
         stage.setTitle("RockPaperScissorsPage");
         assert root != null;
@@ -100,6 +99,7 @@ public class DuelView implements Initializable {
             duelController = DuelController.getInstance();
             NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
             duelController.setDuelModel(duelModel, duelView, duelController, isAi);
+            start();
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, LoginAndSignUpController.user.getUsername(), true);
             System.out.println("EndPhase");
@@ -114,6 +114,7 @@ public class DuelView implements Initializable {
             duelModel = new DuelModel(secondPlayerUsername, LoginAndSignUpController.user.getUsername());
             duelController = DuelController.getInstance();
             duelController.setDuelModel(duelModel, duelView, duelController, isAi);
+            start();
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, secondPlayerUsername, true);
             System.out.println("EndPhase");
