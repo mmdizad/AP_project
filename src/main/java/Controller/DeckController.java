@@ -127,6 +127,9 @@ public class DeckController {
     @FXML
     Text removeCardText;
 
+    @FXML
+    Button deckMenuBackBtn;
+
 
     private static DeckController deckController = new DeckController();
 
@@ -220,9 +223,11 @@ public class DeckController {
 
         activeDeckText = (Text) scene.lookup("#activeDeckText1") ;
 
-        String activeDeck = user.getActiveDeck().getName() + ": " + user.getActiveDeck().getNumberOfCards();
+        if (user.getActiveDeck() != null) {
+            String activeDeck = user.getActiveDeck().getName() + ": " + Deck.getDeckByName(user.getActiveDeck().getName()).getNumberOfCards();
 
-        activeDeckText.setText(activeDeck);
+            activeDeckText.setText(activeDeck);
+        }
 
 
     }
@@ -256,6 +261,7 @@ public class DeckController {
         if (deckDeleteTable.getSelectionModel().getSelectedItem() != null) {
             Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
             if (Deck.getDeckByName(deck.getName()) == null) {
+                deckCreateText.setFill(Color.RED);
                 deckDeleteText.setText("YOU HAVE DELETED THIS DECK BEFORE");
             } else {
                 Pattern pattern = Pattern.compile("^deck delete (.+)$");
@@ -273,6 +279,7 @@ public class DeckController {
         if (deckDeleteTable.getSelectionModel().getSelectedItem() != null) {
             Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
             if (Deck.getDeckByName(deck.getName()) == null) {
+                deckCreateText.setFill(Color.RED);
                 deckDeleteText.setText("YOU HAVE DELETED THIS DECK BEFORE");
             } else {
                 Pattern pattern = Pattern.compile("^deck set active (.+)$");
@@ -298,6 +305,7 @@ public class DeckController {
     public void deckCreateSubmitBtnEvent(ActionEvent event) {
         String deckName = deckCreateTextField.getText();
         if (Deck.getDeckByName(deckName) != null) {
+            deckCreateText.setFill(Color.RED);
             deckCreateText.setText("DECK WITH THIS NAME EXISTS");
         } else {
             Pattern pattern = Pattern.compile("^deck create (.+)$");
@@ -322,6 +330,7 @@ public class DeckController {
     public void showDeckInMenuBtnEvent(ActionEvent actionEvent) throws IOException {
         String deckName = showDeckTextField.getText();
         if (Deck.getDeckByName(deckName) == null || !userContainsDeck(Deck.getDeckByName(deckName), user.getDecks())) {
+            deckCreateText.setFill(Color.RED);
             showDeckText.setText("YOU DONT HAVE DECK WITH THIS NAME");
         } else {
             URL url = new File("src/main/java/FXMLFiles/ShowDeck.fxml").toURI().toURL();
@@ -370,7 +379,7 @@ public class DeckController {
             picture.setCellValueFactory(new PropertyValueFactory<>("imageView"));
             name.setCellValueFactory(new PropertyValueFactory<>("name"));
             description.setCellValueFactory(new PropertyValueFactory<>("description"));
-            cardList.addAll(Card.getAllCardsCard());
+            cardList.addAll(user.getCards());
             addCardTable.getColumns().addAll(picture, name, description);
             addCardTable.setItems(cardList);
             deck = deckDeleteTable.getSelectionModel().getSelectedItem();
@@ -412,26 +421,26 @@ public class DeckController {
             Scene scene = new Scene(parent);
             stage.setScene(scene);
             stage.show();
+            deck = deckDeleteTable.getSelectionModel().getSelectedItem();
             removeCardFromMainTable = (TableView<Card>) scene.lookup("#removeCardFromMainTable1") ;
             removeCardFromSideTable = (TableView<Card>) scene.lookup("#removeCardFromSideTable1") ;
-            removeCardFromMainTable.getColumns().clear();
-            removeCardFromSideTable.getColumns().clear();
-            Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
-            ArrayList<Card> mainCards = deck.getCardsMain();
-            ArrayList<Card> sideCards = deck.getCardsSide();
+            ObservableList<Card> cardListMain;
+            cardListMain = FXCollections.observableArrayList();
 
+            TableColumn name = new TableColumn("name");
+            name.setCellValueFactory(new PropertyValueFactory<>("name"));
+            cardListMain.addAll(deck.getCardsMain());
+            removeCardFromMainTable.getColumns().addAll( name);
+            removeCardFromMainTable.setItems(cardListMain);
 
-            TableColumn<Card, ImageView> main = new TableColumn<>("MAIN CARDS");
-            TableColumn<Card, ImageView> side = new TableColumn<>("SIDE CARDS");
+            ObservableList<Card> cardListSide;
+            cardListSide = FXCollections.observableArrayList();
 
-            main.setCellValueFactory(new PropertyValueFactory<>("imageView"));
-            side.setCellValueFactory(new PropertyValueFactory<>("imageView"));
-
-            removeCardFromMainTable.getColumns().add(main);
-            removeCardFromSideTable.getColumns().add(side);
-
-            removeCardFromMainTable.getItems().addAll(mainCards);
-            removeCardFromSideTable.getItems().addAll(sideCards);
+            TableColumn name1 = new TableColumn("name");
+            name1.setCellValueFactory(new PropertyValueFactory<>("name"));
+            cardListSide.addAll(deck.getCardsSide());
+            removeCardFromSideTable.getColumns().addAll(name1);
+            removeCardFromSideTable.setItems(cardListSide);
 
         }
     }
@@ -440,12 +449,17 @@ public class DeckController {
         if (removeCardFromMainTable.getSelectionModel().getSelectedItem() == null) {
             removeCardText.setText("SELECT A CARD FIRST");
         } else {
-            Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
             Card card = removeCardFromMainTable.getSelectionModel().getSelectedItem();
             Pattern pattern = Pattern.compile("^remove card (.+) from deck (.+)$");
             Matcher matcher = pattern.matcher("remove card " + card.getName() + " from deck " + deck.getName());
             if (matcher.find()) {
-                removeCardText.setText(deleteCard(matcher));
+                String response = deleteCard(matcher);
+                removeCardText.setText(response);
+                if (response.equals("card removed form deck successfully")) {
+                    removeCardText.setFill(Color.GREEN);
+                }else {
+                    removeCardText.setFill(Color.RED);
+                }
             }
         }
     }
@@ -454,14 +468,55 @@ public class DeckController {
         if (removeCardFromSideTable.getSelectionModel().getSelectedItem() == null) {
             removeCardText.setText("SELECT A CARD FIRST");
         } else {
-            Deck deck = deckDeleteTable.getSelectionModel().getSelectedItem();
             Card card = removeCardFromSideTable.getSelectionModel().getSelectedItem();
             Pattern pattern = Pattern.compile("^remove card (.+) from deck (.+) (side)$");
             Matcher matcher = pattern.matcher("remove card " + card.getName() + " from deck " + deck.getName() + " side");
             if (matcher.find()) {
-                removeCardText.setText(deleteCard(matcher));
+                String response = deleteCard(matcher);
+                removeCardText.setText(response);
+                if (response.equals("card removed form deck successfully")) {
+                    removeCardText.setFill(Color.GREEN);
+                }else {
+                    removeCardText.setFill(Color.RED);
+                }
             }
         }
+    }
+
+    public void deckMenuBackBtnEvent(ActionEvent actionEvent) throws IOException {
+        URL url = new File("src/main/java/FXMLFiles/MainMenu.fxml").toURI().toURL();
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(url));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void deckCreateBackBtnEvent(ActionEvent actionEvent) throws IOException {
+        URL url = new File("src/main/java/FXMLFiles/DeckMenu.fxml").toURI().toURL();
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(url));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void deleteDeckBackBtnEvent(ActionEvent actionEvent) throws IOException {
+        URL url = new File("src/main/java/FXMLFiles/DeckMenu.fxml").toURI().toURL();
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(url));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void addCardToDeckBackBtnEvent(ActionEvent actionEvent) throws IOException {
+        URL url = new File("src/main/java/FXMLFiles/DeleteDeck.fxml").toURI().toURL();
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(url));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public String deckDelete(Matcher matcher) {
@@ -477,6 +532,19 @@ public class DeckController {
                 Deck.deleteDeck(deck);
                 File file = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks\\" + matcher.group(1) + "deck.txt");
                 file.delete();
+                File file1 = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + user.getUsername() + "user.txt");
+                file1.delete();
+                try {
+                    if (file1.createNewFile()) {
+                        Gson gson = new Gson();
+                        String deckInfo = gson.toJson(user);
+                        FileWriter fileWriter = new FileWriter(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + user.getUsername() + "user.txt");
+                        fileWriter.write(deckInfo);
+                        fileWriter.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 return "deck deleted successfully";
             }
         }
