@@ -6,42 +6,52 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1360.0" styleClass="imageView" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RockPaperScissors">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="765.0" prefWidth="1360.0" styleClass="imageView" stylesheets="@../CSSFiles/AnchorPanecss.css"
+            xmlns="http://javafx.com/javafx/8.0.291" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.RockPaperScissors">
     <children>
-        <ImageView fx:id="imageView2" fitHeight="200.0" fitWidth="330.0" layoutX="-624.0" layoutY="551.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="imageView2" fitHeight="200.0" fitWidth="330.0" layoutX="-624.0" layoutY="551.0"
+                   pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/jya_gu_2.jpg" />
+                <Image url="@../View/jya_gu_2.jpg"/>
             </image>
         </ImageView>
-        <ImageView fx:id="imageView1" fitHeight="200.0" fitWidth="330.0" layoutX="-381.0" layoutY="551.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="imageView1" fitHeight="200.0" fitWidth="330.0" layoutX="-381.0" layoutY="551.0"
+                   pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/jya_pa_2.jpg" />
+                <Image url="@../View/jya_pa_2.jpg"/>
             </image>
         </ImageView>
-        <ImageView fx:id="imageView5" fitHeight="200.0" fitWidth="330.0" layoutX="-604.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="imageView5" fitHeight="200.0" fitWidth="330.0" layoutX="-604.0" pickOnBounds="true"
+                   preserveRatio="true">
             <image>
-                <Image url="@../View/woodImage.jpg" />
+                <Image url="@../View/woodImage.jpg"/>
             </image>
         </ImageView>
-        <ImageView fx:id="imageView4" fitHeight="200.0" fitWidth="330.0" layoutX="-363.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="imageView4" fitHeight="200.0" fitWidth="330.0" layoutX="-363.0" pickOnBounds="true"
+                   preserveRatio="true">
             <image>
-                <Image url="@../View/woodImage.jpg" />
+                <Image url="@../View/woodImage.jpg"/>
             </image>
         </ImageView>
-        <ImageView fx:id="imageView6" fitHeight="200.0" fitWidth="330.0" layoutX="-839.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="imageView6" fitHeight="200.0" fitWidth="330.0" layoutX="-839.0" pickOnBounds="true"
+                   preserveRatio="true">
             <image>
-                <Image url="@../View/woodImage.jpg" />
+                <Image url="@../View/woodImage.jpg"/>
             </image>
         </ImageView>
-        <ImageView fitHeight="150.0" layoutX="-162.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="imageView3" fitHeight="200.0" fitWidth="330.0" layoutX="-863.0" layoutY="551.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="150.0" layoutX="-162.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true"/>
+        <ImageView fx:id="imageView3" fitHeight="200.0" fitWidth="330.0" layoutX="-863.0" layoutY="551.0"
+                   pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/jya_cyo_2.jpg" />
+                <Image url="@../View/jya_cyo_2.jpg"/>
             </image>
         </ImageView>
-        <Label fx:id="label" layoutX="426.0" layoutY="331.0" prefHeight="130.0" prefWidth="543.0" text=" " textFill="#88b0ec">
+        <Label fx:id="label" layoutX="426.0" layoutY="331.0" prefHeight="130.0" prefWidth="543.0" text=" "
+               textFill="#88b0ec">
             <font>
-                <Font size="56.0" />
+                <Font size="56.0"/>
             </font>
         </Label>
     </children>

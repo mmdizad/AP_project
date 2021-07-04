@@ -22,7 +22,7 @@
     -fx-background-position: center;
 }
 
-.chooseDuelTextFiled{
+.chooseDuelTextFiled {
     -fx-prompt-text-fill: black;
     -fx-background-color: #ffffff;
     -fx-background-radius: 25;

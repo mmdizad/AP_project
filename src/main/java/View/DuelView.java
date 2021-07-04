@@ -43,7 +43,7 @@ public class DuelView implements Initializable {
     protected boolean isCommandInvalid = true;
     protected boolean isAi;
     public static String secondPlayerUsername1;
-
+    public static Stage stage = new Stage();
     public DuelView() {
 
     }
@@ -53,10 +53,11 @@ public class DuelView implements Initializable {
             duelView = new DuelView();
         return duelView;
     }
-    public void start(Stage stage){
-         try {
-        URL url = new File("src/main/java/FXMLFiles/DuelField.fxml").toURI().toURL();
-        Parent root ;
+
+    public void start() {
+        try {
+            URL url = new File("src/main/java/FXMLFiles/DuelField.fxml").toURI().toURL();
+            Parent root;
             root = FXMLLoader.load(Objects.requireNonNull(url));
             stage.setTitle("duel");
             stage.setScene(new Scene(root, 1349, 764));
@@ -66,7 +67,7 @@ public class DuelView implements Initializable {
         }
     }
 
-    public void showRockPaperScissors(){
+    public void showRockPaperScissors() {
         URL url = null;
         try {
             url = new File("src/main/java/FXMLFiles/RockPaperScissors.fxml").toURI().toURL();
@@ -80,7 +81,6 @@ public class DuelView implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Stage stage = new Stage();
 
         stage.setTitle("RockPaperScissorsPage");
         assert root != null;
@@ -90,7 +90,6 @@ public class DuelView implements Initializable {
 
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView, boolean isAi) {
         secondPlayerUsername1 = secondPlayerUsername;
-        showRockPaperScissors();
         scanner1 = scanner;
         this.isAi = isAi;
         if (RockPaperScissors.starterTheGame == 0) {
@@ -98,6 +97,7 @@ public class DuelView implements Initializable {
             duelController = DuelController.getInstance();
             NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
             duelController.setDuelModel(duelModel, duelView, duelController, isAi);
+            start();
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, LoginAndSignUpController.user.getUsername(), true);
             System.out.println("EndPhase");
@@ -112,6 +112,7 @@ public class DuelView implements Initializable {
             duelModel = new DuelModel(secondPlayerUsername, LoginAndSignUpController.user.getUsername());
             duelController = DuelController.getInstance();
             duelController.setDuelModel(duelModel, duelView, duelController, isAi);
+            start();
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, secondPlayerUsername, true);
             System.out.println("EndPhase");
@@ -341,11 +342,11 @@ public class DuelView implements Initializable {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-              Image image = new Image(Objects.requireNonNull(url).toString());
-                ImageView imageView=new ImageView(image);
+                Image image = new Image(Objects.requireNonNull(url).toString());
+                ImageView imageView = new ImageView(image);
                 imageView.setFitHeight(120);
                 imageView.setFitWidth(100);
-                fieldsGridPane.add(imageView,j,i);
+                fieldsGridPane.add(imageView, j, i);
                 fieldsGridPane.setHgap(90);
                 fieldsGridPane.setVgap(15);
             }
@@ -358,10 +359,10 @@ public class DuelView implements Initializable {
                 e.printStackTrace();
             }
             Image image = new Image(Objects.requireNonNull(url).toString());
-            ImageView imageView=new ImageView(image);
+            ImageView imageView = new ImageView(image);
             imageView.setFitHeight(100);
             imageView.setFitWidth(80);
-            ImageView imageView1=new ImageView(image);
+            ImageView imageView1 = new ImageView(image);
             imageView1.setFitHeight(100);
             imageView1.setFitWidth(80);
             upHBox.setSpacing(20);
@@ -370,7 +371,7 @@ public class DuelView implements Initializable {
             downHBox.getChildren().add(imageView1);
         }
         downHBox.setAlignment(Pos.CENTER_RIGHT);
-      // duelModel.getBoard();
+        // duelModel.getBoard();
     }
 
 }
