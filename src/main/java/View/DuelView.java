@@ -104,9 +104,9 @@ public class DuelView implements Initializable {
         if (RockPaperScissors.starterTheGame == 0) {
             duelModel = new DuelModel(LoginAndSignUpController.user.getUsername(), secondPlayerUsername);
             duelController = DuelController.getInstance();
-            start();
             NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
             duelController.setDuelModel(duelModel, duelView, duelController, isAi);
+            start();
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, LoginAndSignUpController.user.getUsername(), true);
             System.out.println("EndPhase");
@@ -382,7 +382,7 @@ public class DuelView implements Initializable {
             downHBox.getChildren().add(imageView1);
         }
         downHBox.setAlignment(Pos.CENTER_RIGHT);
-        // duelModel.getBoard();
+        //duelModel.getBoard();
     }
 
 }

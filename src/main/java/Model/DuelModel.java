@@ -1,6 +1,9 @@
 package Model;
 
 import Controller.DuelController;
+import Model.Card;
+import Model.Deck;
+import Model.User;
 import View.DuelView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -127,11 +130,7 @@ public class DuelModel {
         ArrayList<Card> graveyard2 = new ArrayList<>();
         graveyard.add(graveyard1);
         graveyard.add(graveyard2);
-        ArrayList handcards1 = new ArrayList();
-        ArrayList handCards2 = new ArrayList();
         handCards = new ArrayList<>();
-        handCards.add(handcards1);
-        handCards.add(handCards2);
         field = new ArrayList<>();
         ArrayList<Card> field1 = new ArrayList<>();
         field1.add(null);
@@ -418,7 +417,9 @@ public class DuelModel {
         String handCardUser = "    ";
         for (int i = 0; i < handCards.get(1 - turn).size(); i++) {
             handCardOpponent = handCardOpponent + "c    ";
-            duelView.upHBox.getChildren().set(i, handCards.get(1-turn).get(i).getImageView());
+
+
+            duelView.upHBox.getChildren().set(i, getUnknownCard());
         }
         for (int i = 0; i < handCards.get(turn).size(); i++) {
             handCardUser = handCardUser + "c    ";
@@ -431,10 +432,8 @@ public class DuelModel {
         for (int i = 0; i < 5; i++) {
             if (monstersInField.get(1 - turn).get(i) != null) {
 
-            } else {
-                System.out.println(duelView.fieldsGridPane);
+            } else
                 duelView.fieldsGridPane.add(new ImageView((Image) null), i, 0);
-            }
             if (monstersInField.get(turn).get(i) != null) {
                 conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
                 duelView.fieldsGridPane.add(monstersInField.get(turn).get(i).getImageView(), i, 3);
