@@ -111,5 +111,17 @@ public class MainMenuController implements Initializable {
                 profileView.showMenu();
             }
         });
+        scoreBoardButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = (Stage) scoreBoardButton.getScene().getWindow();
+                ScoreBoardController scoreBoardController = ScoreBoardController.getInstance();
+                try {
+                    scoreBoardController.showScoreBoard(stage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
