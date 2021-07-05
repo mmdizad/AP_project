@@ -5,7 +5,6 @@ import Controller.LoginAndSignUpController;
 import Controller.NewCardToHandController;
 import Controller.RockPaperScissors;
 import Model.DuelModel;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -48,6 +47,7 @@ public class DuelView implements Initializable {
     public static String secondPlayerUsername1;
     public static Stage stage = new Stage();
     public static AnchorPane pane = new AnchorPane();
+    public static HBox hBoxS= new HBox();
 
     public DuelView() {
 
@@ -57,6 +57,10 @@ public class DuelView implements Initializable {
         if (duelView == null)
             duelView = new DuelView();
         return duelView;
+    }
+
+    public  void addToUpBox(ImageView imageView){
+        upHBox.getChildren().add(imageView);
     }
 
     public void start() {
@@ -100,9 +104,9 @@ public class DuelView implements Initializable {
         if (RockPaperScissors.starterTheGame == 0) {
             duelModel = new DuelModel(LoginAndSignUpController.user.getUsername(), secondPlayerUsername);
             duelController = DuelController.getInstance();
+            start();
             NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
             duelController.setDuelModel(duelModel, duelView, duelController, isAi);
-            start();
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, LoginAndSignUpController.user.getUsername(), true);
             System.out.println("EndPhase");
@@ -340,11 +344,12 @@ public class DuelView implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         pane = DuelFieldPane;
+      hBoxS =upHBox;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 URL url = null;
                 try {
-                    url = new File("src/main/resource/Monsters/Unknown.jpg").toURI().toURL();
+                    url = new File("src/main/resource/Icons/_images_circle_06.png").toURI().toURL();
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
@@ -360,7 +365,7 @@ public class DuelView implements Initializable {
         for (int i = 0; i < 5; i++) {
             URL url = null;
             try {
-                url = new File("src/main/resource/Monsters/Unknown.jpg").toURI().toURL();
+                url = new File("src/main/resource/Icons/_images_circle_06.png").toURI().toURL();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }

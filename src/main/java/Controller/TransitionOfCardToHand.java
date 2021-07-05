@@ -2,6 +2,8 @@ package Controller;
 
 import Model.Card;
 import View.DuelView;
+import javafx.scene.image.ImageView;
+
 import java.util.ArrayList;
 
 public class TransitionOfCardToHand {
@@ -19,7 +21,13 @@ public class TransitionOfCardToHand {
         for (Card card: cards) {
             String cardName = card.getName();
             Card card1 = Card.getCardByName(cardName);
-            DuelView.pane.getChildren().add(card1.getImageView());
+            ImageView imageView =card1.getImageView();
+            imageView.setX(200);
+            imageView.setY(300);
+            imageView.prefWidth(100);
+            imageView.prefHeight(120);
+
+            DuelView.hBoxS.getChildren().add(card1.getImageView());
         }
     }
 }

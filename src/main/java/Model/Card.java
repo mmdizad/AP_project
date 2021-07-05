@@ -48,8 +48,8 @@ public class Card {
             }
 
             imageView = new ImageView(new Image(Objects.requireNonNull(url).toString()));
-            imageView.setFitWidth(40);
-            imageView.setFitHeight(50);
+            imageView.setFitWidth(100);
+            imageView.setFitHeight(120);
 
         } else {
             URL url = null;
@@ -60,8 +60,8 @@ public class Card {
             }
             imageView = new ImageView();
             imageView.setImage(new Image(Objects.requireNonNull(url).toString()));
-            imageView.setFitWidth(40);
-            imageView.setFitHeight(50);
+            imageView.setFitWidth(100);
+            imageView.setFitHeight(120);
         }
 
         if (getCardByName(name) == null) {

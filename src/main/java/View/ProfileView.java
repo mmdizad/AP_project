@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 public class ProfileView extends MainMenu {
     private static ProfileView profileView = new ProfileView();
 
-    private ProfileView() {
+    public ProfileView() {
 
     }
 
@@ -66,27 +66,7 @@ public class ProfileView extends MainMenu {
         } else System.out.println("invalid command!");
     }
 
-    public void goChangePass(MouseEvent mouseEvent) {
-        URL url = null;
-        try {
-            url = new File("src/main/java/FXMLFiles/MainMenu.fxml").toURI().toURL();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        Parent root = null;
-        try {
-            assert url != null;
-            root = FXMLLoader.load(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage mainMenuStage = MainMenu.stage;
-        mainMenuStage.setTitle("MainMenu");
-        assert root != null;
-        mainMenuStage.setScene(new Scene(root, 1920, 1000));
-        mainMenuStage.show();
 
-    }
 
     public void goChangeName(MouseEvent mouseEvent) {
         URL url = null;
@@ -127,7 +107,7 @@ public class ProfileView extends MainMenu {
     public void showMenu(){
         URL url = null;
         try {
-            url = new File("src/main/java/FXMLFiles/profChangePass.fxml").toURI().toURL();
+            url = new File("src/main/java/FXMLFiles/profileMenu.fxml").toURI().toURL();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -142,6 +122,27 @@ public class ProfileView extends MainMenu {
         mainMenuStage.setTitle("MainMenu");
         assert root != null;
         mainMenuStage.setScene(new Scene(root, 1920, 1000));
+        mainMenuStage.show();
+    }
+
+    public void changePassMenu(MouseEvent mouseEvent) {
+        URL url = null;
+        try {
+            url = new File("src/main/java/FXMLFiles/ProfChangePass.fxml").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Parent root = null;
+        try {
+            assert url != null;
+            root = FXMLLoader.load(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage mainMenuStage = MainMenu.stage;
+        mainMenuStage.setTitle("MainMenu");
+        assert root != null;
+        mainMenuStage.setScene(new Scene(root, 1300, 700));
         mainMenuStage.show();
     }
 }

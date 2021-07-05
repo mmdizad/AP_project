@@ -4,24 +4,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0" styleClass="AnchorShowAllDeck" stylesheets="@../CSSFiles/AnchorPanecss.css"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ProfileView">
-   <Button layoutX="290.0" layoutY="214.0" mnemonicParsing="false" mouseTransparent="true"
-           onMouseClicked="#goChangePass" prefHeight="166.0" prefWidth="365.0" text="change password">
+<AnchorPane prefHeight="700.0" prefWidth="1300.0" styleClass="ProfileBackground" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ProfileView">
+   <Button layoutX="290.0" layoutY="214.0" mnemonicParsing="false"  onMouseClicked="#changePassMenu" prefHeight="166.0" prefWidth="365.0" text="change password">
       <font>
-         <Font size="18.0"/>
+         <Font size="18.0" />
       </font>
    </Button>
-   <Button layoutX="702.0" layoutY="209.0" mnemonicParsing="false" onMouseClicked="#goChangeName" prefHeight="174.0"
-           prefWidth="335.0" text="change name">
+   <Button layoutX="702.0" layoutY="209.0" mnemonicParsing="false" onMouseClicked="#goChangeName" prefHeight="174.0" prefWidth="335.0" text="change name">
       <font>
-         <Font size="18.0"/>
+         <Font size="18.0" />
       </font>
    </Button>
-   <Button layoutX="491.0" layoutY="410.0" mnemonicParsing="false" onMouseClicked="#backtoMainMenuBTN"
-           prefHeight="147.0" prefWidth="370.0" text="Back">
+   <Button layoutX="491.0" layoutY="410.0" mnemonicParsing="false" onMouseClicked="#backtoMainMenuBTN" prefHeight="147.0" prefWidth="370.0" text="Back">
       <font>
-         <Font size="18.0"/>
+         <Font size="18.0" />
       </font>
    </Button>
 </AnchorPane>
