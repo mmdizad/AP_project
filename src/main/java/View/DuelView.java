@@ -5,6 +5,7 @@ import Controller.LoginAndSignUpController;
 import Controller.NewCardToHandController;
 import Controller.RockPaperScissors;
 import Model.DuelModel;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -12,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -37,6 +39,7 @@ public class DuelView implements Initializable {
     public ImageView userField;
     public ImageView opponentDeck;
     public ImageView opponentBin;
+    public AnchorPane DuelFieldPane;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
@@ -44,6 +47,8 @@ public class DuelView implements Initializable {
     protected boolean isAi;
     public static String secondPlayerUsername1;
     public static Stage stage = new Stage();
+    public static AnchorPane pane = new AnchorPane();
+
     public DuelView() {
 
     }
@@ -334,6 +339,7 @@ public class DuelView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        pane = DuelFieldPane;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 URL url = null;

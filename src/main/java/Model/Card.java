@@ -30,8 +30,8 @@ public class Card {
     private int defensePower;
     private int attackPower;
     private int level;
-    private  boolean hasSpecialSummon;
-    private transient final ImageView imageView;
+    private boolean hasSpecialSummon;
+    private transient ImageView imageView;
 
     public Card(String name, String description, String cardType, int price, String category) {
         setName(name);
@@ -39,27 +39,26 @@ public class Card {
         setCardType(cardType);
         setPrice(price);
         setCategory(category);
-        if(category.equals("Monster")) {
+        if (category.equals("Monster")) {
             URL url = null;
             try {
-                url = new File("src/main/java/View/Monster/"+name+".jpg").toURI().toURL();
+                url = new File("src/main/resource/Monsters/" + name + ".jpg").toURI().toURL();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
 
-            imageView =new ImageView( new Image(Objects.requireNonNull(url).toString()));
+            imageView = new ImageView(new Image(Objects.requireNonNull(url).toString()));
             imageView.setFitWidth(40);
             imageView.setFitHeight(50);
 
-        }
-                else{
+        } else {
             URL url = null;
             try {
-                url = new File("src/main/resource/SpellTrap/"+name+".jpg").toURI().toURL();
+                url = new File("src/main/resource/SpellTrap/" + name + ".jpg").toURI().toURL();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            imageView =new ImageView();
+            imageView = new ImageView();
             imageView.setImage(new Image(Objects.requireNonNull(url).toString()));
             imageView.setFitWidth(40);
             imageView.setFitHeight(50);
@@ -69,6 +68,10 @@ public class Card {
             cards.put(name, this);
             allCards.add(this);
         }
+    }
+
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
     }
 
     public void setAttackPower(int attackPower) {

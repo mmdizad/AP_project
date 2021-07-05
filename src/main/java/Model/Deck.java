@@ -36,9 +36,13 @@ public class Deck {
             card1.setAttackPower(Monster.getMonsterByName(card.getName()).getAttackPower());
             card1.setDefensePower(Monster.getMonsterByName(card.getName()).getDefensePower());
             card1.setLevel(Monster.getMonsterByName(card.getName()).getLevel());
+            card1.setImageView(card.getImageView());
+            System.out.println(card.getImageView());
             cardsMain.add(card1);
         }else {
             Card card1 = new Card(card.getName(),card.getDescription(),card.getCardType(),card.getPrice(),card.getCategory());
+            card1.setImageView(card.getImageView());
+            System.out.println(card.getImageView());
             cardsMain.add(card1);
         }
         numberOfCards = cardsMain.size();
@@ -50,9 +54,11 @@ public class Deck {
             card1.setAttackPower(Monster.getMonsterByName(card.getName()).getAttackPower());
             card1.setDefensePower(Monster.getMonsterByName(card.getName()).getDefensePower());
             card1.setLevel(Monster.getMonsterByName(card.getName()).getLevel());
+            card1.setImageView(card.getImageView());
             cardsSide.add(card1);
         }else {
             Card card1 = new Card(card.getName(),card.getDescription(),card.getCardType(),card.getPrice(),card.getCategory());
+            card1.setImageView(card.getImageView());
             cardsSide.add(card1);
         }
     }

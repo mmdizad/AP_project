@@ -25,7 +25,9 @@ public class NewCardToHandController extends DuelController {
     }
 
     public ArrayList<Card> newCardToHand(String playerUsername) {
+        TransitionOfCardToHand transitionOfCardToHand = TransitionOfCardToHand.getInstance();
         User user = User.getUserByUsername(playerUsername);
+        assert user != null;
         Deck deck = user.getActiveDeck();
         ArrayList<Card> cardsInDeck = deck.getCardsMain();
         if (cardsInDeck.size() >= 1) {
@@ -40,7 +42,9 @@ public class NewCardToHandController extends DuelController {
                     }
                 }
             }
-            return duelController.duelModel.addCardToHand();
+            ArrayList<Card> cards = duelController.duelModel.addCardToHand();
+            transitionOfCardToHand.transition(cards);
+            return cards;
         } else {
             return null;
             // جایگزین دارد

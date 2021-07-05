@@ -8,171 +8,144 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="489.0" prefWidth="766.0" styleClass="normalField" stylesheets="@../CSSFiles/AnchorPanecss.css"
-            xmlns="http://javafx.com/javafx/8.0.291" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DuelView">
+<AnchorPane fx:id="DuelFieldPane" prefHeight="489.0" prefWidth="766.0" styleClass="normalField" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DuelView">
     <children>
         <GridPane fx:id="fieldsGridPane" layoutX="276.0" layoutY="118.0" prefHeight="543.0" prefWidth="390.0">
             <columnConstraints>
-                <ColumnConstraints/>
-                <ColumnConstraints/>
+                <ColumnConstraints />
+                <ColumnConstraints />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints/>
-                <RowConstraints/>
+                <RowConstraints />
+                <RowConstraints />
             </rowConstraints>
         </GridPane>
-        <HBox fx:id="upHBox" layoutX="389.0" layoutY="14.0" prefHeight="85.0" prefWidth="476.0"/>
-        <HBox fx:id="downHBox" layoutX="582.0" layoutY="673.0" prefHeight="84.0" prefWidth="436.0"/>
-        <ImageView fx:id="userBin" fitHeight="140.0" fitWidth="120.0" layoutX="1252.0" layoutY="511.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <HBox fx:id="upHBox" layoutX="389.0" layoutY="14.0" prefHeight="85.0" prefWidth="476.0" />
+        <HBox fx:id="downHBox" layoutX="582.0" layoutY="673.0" prefHeight="84.0" prefWidth="436.0" />
+        <ImageView fx:id="userBin" fitHeight="140.0" fitWidth="120.0" layoutX="1252.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fitHeight="90.0" fitWidth="107.0" layoutX="3.0" layoutY="63.0" pickOnBounds="true"
-                   preserveRatio="true"/>
-        <ImageView fx:id="userField" fitHeight="121.0" fitWidth="84.0" layoutX="87.0" layoutY="531.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="90.0" fitWidth="107.0" layoutX="3.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="userField" fitHeight="121.0" fitWidth="84.0" layoutX="87.0" layoutY="531.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentField" fitHeight="140.0" fitWidth="106.0" layoutX="1265.0" layoutY="83.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentField" fitHeight="140.0" fitWidth="106.0" layoutX="1265.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentDeck" fitHeight="141.0" fitWidth="78.0" layoutX="65.0" layoutY="118.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentDeck" fitHeight="141.0" fitWidth="78.0" layoutX="65.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="userBin1" fitHeight="140.0" fitWidth="120.0" layoutX="1258.0" layoutY="511.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="userBin1" fitHeight="140.0" fitWidth="120.0" layoutX="1258.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="userBin11" fitHeight="140.0" fitWidth="120.0" layoutX="1265.0" layoutY="511.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="userBin11" fitHeight="140.0" fitWidth="120.0" layoutX="1265.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="userBin111" fitHeight="140.0" fitWidth="120.0" layoutX="1272.0" layoutY="511.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="userBin111" fitHeight="140.0" fitWidth="120.0" layoutX="1272.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="userBin1111" fitHeight="140.0" fitWidth="120.0" layoutX="1272.0" layoutY="511.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="userBin1111" fitHeight="140.0" fitWidth="120.0" layoutX="1272.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="userBin11111" fitHeight="140.0" fitWidth="120.0" layoutX="1272.0" layoutY="511.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="userBin11111" fitHeight="140.0" fitWidth="120.0" layoutX="1272.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="userBin111111" fitHeight="140.0" fitWidth="120.0" layoutX="1272.0" layoutY="511.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="userBin111111" fitHeight="140.0" fitWidth="120.0" layoutX="1272.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="userBin1111111" fitHeight="140.0" fitWidth="120.0" layoutX="1265.0" layoutY="511.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="userBin1111111" fitHeight="140.0" fitWidth="120.0" layoutX="1265.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="userBin11111111" fitHeight="140.0" fitWidth="120.0" layoutX="1272.0" layoutY="511.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="userBin11111111" fitHeight="140.0" fitWidth="120.0" layoutX="1272.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="userBin111111111" fitHeight="140.0" fitWidth="120.0" layoutX="1272.0" layoutY="511.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="userBin111111111" fitHeight="140.0" fitWidth="120.0" layoutX="1272.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentDeck1" fitHeight="112.0" fitWidth="64.0" layoutX="90.0" layoutY="118.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentDeck1" fitHeight="112.0" fitWidth="64.0" layoutX="90.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentDeck111" fitHeight="141.0" fitWidth="78.0" layoutX="79.0" layoutY="118.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentDeck111" fitHeight="141.0" fitWidth="78.0" layoutX="79.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentDeck11" fitHeight="141.0" fitWidth="78.0" layoutX="71.0" layoutY="118.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentDeck11" fitHeight="141.0" fitWidth="78.0" layoutX="71.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentDeck112" fitHeight="141.0" fitWidth="78.0" layoutX="71.0" layoutY="118.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentDeck112" fitHeight="141.0" fitWidth="78.0" layoutX="71.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentDeck1121" fitHeight="141.0" fitWidth="78.0" layoutX="71.0" layoutY="118.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentDeck1121" fitHeight="141.0" fitWidth="78.0" layoutX="71.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentDeck11211" fitHeight="141.0" fitWidth="78.0" layoutX="71.0" layoutY="118.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentDeck11211" fitHeight="141.0" fitWidth="78.0" layoutX="71.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentDeck112111" fitHeight="141.0" fitWidth="78.0" layoutX="71.0" layoutY="118.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentDeck112111" fitHeight="141.0" fitWidth="78.0" layoutX="71.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentDeck1121111" fitHeight="141.0" fitWidth="78.0" layoutX="65.0" layoutY="118.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentDeck1121111" fitHeight="141.0" fitWidth="78.0" layoutX="65.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentDeck11211111" fitHeight="141.0" fitWidth="78.0" layoutX="65.0" layoutY="118.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentDeck11211111" fitHeight="141.0" fitWidth="78.0" layoutX="65.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentDeck112111111" fitHeight="141.0" fitWidth="78.0" layoutX="65.0" layoutY="118.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentDeck112111111" fitHeight="141.0" fitWidth="78.0" layoutX="65.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentDeck1121111111" fitHeight="141.0" fitWidth="78.0" layoutX="57.0" layoutY="118.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentDeck1121111111" fitHeight="141.0" fitWidth="78.0" layoutX="57.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentDeck11211111111" fitHeight="141.0" fitWidth="78.0" layoutX="57.0" layoutY="118.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentDeck11211111111" fitHeight="141.0" fitWidth="78.0" layoutX="57.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../View/Monsters/Unknown.jpg"/>
+                <Image url="@../View/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
     </children>
