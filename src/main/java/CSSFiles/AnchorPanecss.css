@@ -33,10 +33,11 @@
     -fx-background-size: cover;
 }
 
-.imageView{
+.imageView {
     -fx-background-image: url("../View/rock-paper-scissors.jpg");
 }
-.normalField{
+
+.normalField {
     -fx-background-image: url(../../resource/Field/fie_normal.jpg);
     -fx-background-size: cover;
 }

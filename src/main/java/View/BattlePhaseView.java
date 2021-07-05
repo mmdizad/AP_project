@@ -21,7 +21,7 @@ public class BattlePhaseView extends DuelView {
         return battlePhaseView;
     }
 
-    public void run(Scanner scanner, boolean startOfPhase) {
+    public void  run(Scanner scanner, boolean startOfPhase) {
         if (startOfPhase) {
             System.out.println("BattlePhase");
         }

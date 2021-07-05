@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainMenu {
-
+    public static Stage stage;
     public void showMenu(){
         URL url = null;
         try {
@@ -29,6 +29,7 @@ public class MainMenu {
             e.printStackTrace();
         }
         Stage mainMenuStage = new Stage();
+        stage = mainMenuStage;
         mainMenuStage.setTitle("MainMenu");
         assert root != null;
         mainMenuStage.setScene(new Scene(root, 1920, 1000));

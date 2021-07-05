@@ -2,7 +2,16 @@ package View;
 
 import Controller.LoginAndSignUpController;
 import Controller.ProfileController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,4 +66,82 @@ public class ProfileView extends MainMenu {
         } else System.out.println("invalid command!");
     }
 
+    public void goChangePass(MouseEvent mouseEvent) {
+        URL url = null;
+        try {
+            url = new File("src/main/java/FXMLFiles/MainMenu.fxml").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Parent root = null;
+        try {
+            assert url != null;
+            root = FXMLLoader.load(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage mainMenuStage = MainMenu.stage;
+        mainMenuStage.setTitle("MainMenu");
+        assert root != null;
+        mainMenuStage.setScene(new Scene(root, 1920, 1000));
+        mainMenuStage.show();
+
+    }
+
+    public void goChangeName(MouseEvent mouseEvent) {
+        URL url = null;
+        try {
+            url = new File("src/main/java/FXMLFiles/ProfChangeName.fxml").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Parent root = null;
+        try {
+            assert url != null;
+            root = FXMLLoader.load(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage mainMenuStage = MainMenu.stage;
+        mainMenuStage.setTitle("MainMenu");
+        assert root != null;
+        mainMenuStage.setScene(new Scene(root, 1320, 700));
+        mainMenuStage.show();
+
+    }
+
+    public void ChangePasswordBTN(MouseEvent mouseEvent) {
+    }
+
+    public void changeNameBTN(MouseEvent mouseEvent) {
+    }
+
+    public void backToProfMenu(MouseEvent mouseEvent) {
+    }
+
+    public void backToProfMenuP(MouseEvent mouseEvent) {
+    }
+
+    public void backtoMainMenuBTN(MouseEvent mouseEvent) {
+    }
+    public void showMenu(){
+        URL url = null;
+        try {
+            url = new File("src/main/java/FXMLFiles/profChangePass.fxml").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Parent root = null;
+        try {
+            assert url != null;
+            root = FXMLLoader.load(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage mainMenuStage = MainMenu.stage;
+        mainMenuStage.setTitle("MainMenu");
+        assert root != null;
+        mainMenuStage.setScene(new Scene(root, 1920, 1000));
+        mainMenuStage.show();
+    }
 }

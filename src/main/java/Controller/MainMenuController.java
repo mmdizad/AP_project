@@ -1,6 +1,7 @@
 package Controller;
 
 import View.LoginAndSignUpView;
+import View.ProfileView;
 import View.ShopView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,7 +17,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
@@ -102,6 +102,13 @@ public class MainMenuController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+        profileButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               ProfileView profileView = ProfileView.getInstance();
+                profileView.showMenu();
             }
         });
         scoreBoardButton.setOnAction(new EventHandler<ActionEvent>() {

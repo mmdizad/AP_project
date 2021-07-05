@@ -7,29 +7,40 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="AnchorShowAllDeck" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DeckController">
-   <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#184168" height="869.0" layoutX="105.0" layoutY="110.0" opacity="0.43" stroke="BLACK" strokeType="INSIDE" width="710.0" />
-      <TableView id="addCardTable1" fx:id="addCardTable" layoutX="219.0" layoutY="164.0" prefHeight="552.0" prefWidth="483.0" />
-      <Button fx:id="addCardToMainBtn" layoutX="154.0" layoutY="821.0" mnemonicParsing="false" onAction="#addCardToMainBtnEvent" prefHeight="73.0" prefWidth="301.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="ADD CARD TO MAIN" textFill="#970d0d">
-         <font>
-            <Font name="Gill Sans Ultra Bold" size="22.0" />
-         </font>
-      </Button>
-      <Button fx:id="addCardToSideBtn" layoutX="483.0" layoutY="821.0" mnemonicParsing="false" onAction="#addCardToSideBtnEvent" prefHeight="73.0" prefWidth="301.0" styleClass="DeckMenuButton" stylesheets="@../CSSFiles/Button.css" text="ADD CARD TO SIDE" textFill="#970f0f">
-         <font>
-            <Font name="Gill Sans Ultra Bold" size="22.0" />
-         </font>
-      </Button>
-      <Text fx:id="addCardText" fill="#941010" layoutX="428.0" layoutY="782.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
-         <font>
-            <Font name="Gill Sans Ultra Bold" size="26.0" />
-         </font>
-      </Text>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#addCardToDeckBackBtnEvent" prefHeight="47.0" prefWidth="95.0" styleClass="deckButton" stylesheets="@../CSSFiles/Button.css" text="BACK" textFill="#9c1717">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-   </children>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0"
+      prefWidth="1920.0" styleClass="AnchorShowAllDeck" stylesheets="@../CSSFiles/AnchorPanecss.css"
+      xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DeckController">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#184168" height="869.0" layoutX="105.0" layoutY="110.0"
+                   opacity="0.43" stroke="BLACK" strokeType="INSIDE" width="710.0"/>
+        <TableView id="addCardTable1" fx:id="addCardTable" layoutX="219.0" layoutY="164.0" prefHeight="552.0"
+                   prefWidth="483.0"/>
+        <Button fx:id="addCardToMainBtn" layoutX="154.0" layoutY="821.0" mnemonicParsing="false"
+                onAction="#addCardToMainBtnEvent" prefHeight="73.0" prefWidth="301.0" styleClass="DeckMenuButton"
+                stylesheets="@../CSSFiles/Button.css" text="ADD CARD TO MAIN" textFill="#970d0d">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="22.0"/>
+            </font>
+        </Button>
+        <Button fx:id="addCardToSideBtn" layoutX="483.0" layoutY="821.0" mnemonicParsing="false"
+                onAction="#addCardToSideBtnEvent" prefHeight="73.0" prefWidth="301.0" styleClass="DeckMenuButton"
+                stylesheets="@../CSSFiles/Button.css" text="ADD CARD TO SIDE" textFill="#970f0f">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="22.0"/>
+            </font>
+        </Button>
+        <Text fx:id="addCardText" fill="#941010" layoutX="428.0" layoutY="782.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              textAlignment="CENTER">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="26.0"/>
+            </font>
+        </Text>
+        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#addCardToDeckBackBtnEvent"
+                prefHeight="47.0" prefWidth="95.0" styleClass="deckButton" stylesheets="@../CSSFiles/Button.css"
+                text="BACK" textFill="#9c1717">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Button>
+    </children>
 </Pane>
