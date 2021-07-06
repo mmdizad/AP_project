@@ -5,6 +5,9 @@ import Controller.LoginAndSignUpController;
 import Controller.NewCardToHandController;
 import Controller.RockPaperScissors;
 import Model.DuelModel;
+import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -15,7 +18,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +34,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DuelView implements Initializable {
+
+    @FXML
+    Text changePhaseTxt;
+
     public static DuelView duelView;
     public GridPane fieldsGridPane;
     public HBox upHBox;
@@ -48,6 +57,7 @@ public class DuelView implements Initializable {
     public static Stage stage = new Stage();
     public static AnchorPane pane = new AnchorPane();
     public static HBox hBoxS= new HBox();
+    public static String currentPhase = "mainPhase1";
 
     public DuelView() {
 
@@ -74,6 +84,43 @@ public class DuelView implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void battlePhaseBtnEvent(ActionEvent actionEvent) {
+        if (currentPhase.equals("mainPhase1")) {
+            currentPhase = "battlePhase";
+            changePhaseTxt.setText("BATTLE PHASE");
+            FadeTransition fadeTransition = new FadeTransition();
+            fadeTransition.setDuration(Duration.seconds(2));
+            fadeTransition.setNode(changePhaseTxt);
+            fadeTransition.setFromValue(1);
+            fadeTransition.setToValue(0);
+            fadeTransition.play();
+        }
+    }
+
+    public void mainPhase2BtnEvent(ActionEvent actionEvent) {
+        if (currentPhase.equals("battlePhase") || currentPhase.equals("mainPhase1")) {
+            currentPhase.equals("mainPhase2");
+            changePhaseTxt.setText("MAIN PHASE 2");
+            FadeTransition fadeTransition = new FadeTransition();
+            fadeTransition.setDuration(Duration.seconds(2));
+            fadeTransition.setNode(changePhaseTxt);
+            fadeTransition.setFromValue(1);
+            fadeTransition.setToValue(0);
+            fadeTransition.play();
+        }
+    }
+
+    public void endPhaseBtnEvent(ActionEvent actionEvent) {
+        currentPhase.equals("mainPhase1");
+        changePhaseTxt.setText("MAIN PHASE 1");
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.seconds(2));
+        fadeTransition.setNode(changePhaseTxt);
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.play();
     }
 
     public void showRockPaperScissors() {
