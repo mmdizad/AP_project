@@ -416,11 +416,11 @@ public class DuelModel {
             handCardOpponent = handCardOpponent + "c    ";
 
 
-            duelView.upHBox.getChildren().set(i, getUnknownCard());
+            DuelView.hBoxS.getChildren().set(i, getUnknownCard());
         }
         for (int i = 0; i < handCards.get(turn).size(); i++) {
             handCardUser = handCardUser + "c    ";
-            duelView.downHBox.getChildren().set(i, handCards.get(turn).get(i).getImageView());
+            DuelView.downHBoxS.getChildren().set(i, handCards.get(turn).get(i).getImageView());
         }
         ArrayList<String> spellConditionOpponent = new ArrayList<>();
         ArrayList<String> spellConditionUser = new ArrayList<>();
@@ -430,28 +430,28 @@ public class DuelModel {
             if (monstersInField.get(1 - turn).get(i) != null) {
 
             } else
-                duelView.fieldsGridPane.add(new ImageView((Image) null), i, 0);
+                DuelView.gridPane.add(new ImageView((Image) null), i, 0);
             if (monstersInField.get(turn).get(i) != null) {
                 conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
-                duelView.fieldsGridPane.add(monstersInField.get(turn).get(i).getImageView(), i, 3);
+                DuelView.gridPane.add(monstersInField.get(turn).get(i).getImageView(), i, 3);
             } else {
                 conditionMonsterUser.add("E");
-                duelView.fieldsGridPane.add(new ImageView((Image) null), i, 3);
+                DuelView.gridPane.add(new ImageView((Image) null), i, 3);
             }
 
             if (spellsAndTrapsInFiled.get(1 - turn).get(i) != null) {
                 spellConditionOpponent.add(spellAndTrapCondition.get(1 - turn).get(i).split("/")[0]);
-                duelView.fieldsGridPane.add(getUnknownCard(), i, 1);
+                DuelView.gridPane.add(getUnknownCard(), i, 1);
             } else {
                 spellConditionOpponent.add("E");
-                duelView.fieldsGridPane.add(new ImageView((Image) null), i, 0);
+                DuelView.gridPane.add(new ImageView((Image) null), i, 0);
             }
             if (spellsAndTrapsInFiled.get(turn).get(i) != null) {
                 spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/")[0]);
-                duelView.fieldsGridPane.add(spellsAndTrapsInFiled.get(turn).get(i).getImageView(), i, 0);
+                DuelView.gridPane.add(spellsAndTrapsInFiled.get(turn).get(i).getImageView(), i, 0);
             } else {
                 spellConditionUser.add("E");
-                duelView.fieldsGridPane.add(new ImageView((Image) null), i, 0);
+                DuelView.gridPane.add(new ImageView((Image) null), i, 0);
             }
 
         }

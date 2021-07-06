@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -56,7 +57,9 @@ public class DuelView implements Initializable {
     public static String secondPlayerUsername1;
     public static Stage stage = new Stage();
     public static AnchorPane pane = new AnchorPane();
-    public static HBox hBoxS= new HBox();
+    public static HBox hBoxS = new HBox();
+    public static HBox downHBoxS = new HBox();
+    public static GridPane gridPane = new GridPane();
     public static String currentPhase = "mainPhase1";
 
     public DuelView() {
@@ -69,7 +72,7 @@ public class DuelView implements Initializable {
         return duelView;
     }
 
-    public  void addToUpBox(ImageView imageView){
+    public void addToUpBox(ImageView imageView) {
         upHBox.getChildren().add(imageView);
     }
 
@@ -277,6 +280,7 @@ public class DuelView implements Initializable {
     }
 
     public void showBoard() {
+        duelModel.getBoard();
 //        ArrayList<String> board = duelView.duelModel.getBoard();
 //        for (String s : board) {
 //            System.out.println(s);
@@ -391,7 +395,9 @@ public class DuelView implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         pane = DuelFieldPane;
-      hBoxS =upHBox;
+        hBoxS = upHBox;
+        downHBoxS = downHBox;
+        gridPane = fieldsGridPane;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 URL url = null;
@@ -432,4 +438,8 @@ public class DuelView implements Initializable {
         //duelModel.getBoard();
     }
 
+    public void setCard(MouseEvent mouseEvent) {
+        selectHand(getCommandMatcher("select --hand 1", "^select --hand (\\d+)$"));
+        MainPhaseView.getInstance().set();
+    }
 }
