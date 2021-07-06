@@ -1,9 +1,6 @@
 package Model;
 
 import Controller.DuelController;
-import Model.Card;
-import Model.Deck;
-import Model.User;
 import View.DuelView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
