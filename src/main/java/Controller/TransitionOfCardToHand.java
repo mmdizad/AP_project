@@ -45,10 +45,12 @@ public class TransitionOfCardToHand {
                     e.printStackTrace();
                 }
                 imageView = new ImageView();
-                imageView.setImage(new Image(Objects.requireNonNull(url).toString()));
+                 imageView.setImage(new Image(Objects.requireNonNull(url).toString()));
                 imageView.setFitWidth(100);
                 imageView.setFitHeight(120);
             }
+            imageView.setTranslateX(-600);
+            imageView.setTranslateY(-15);
             DuelView.hBoxS.getChildren().add(imageView);
         }
     }

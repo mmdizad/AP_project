@@ -12,7 +12,7 @@
 <Pane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="Controller.DeckController">
     <ImageView fitHeight="1080.0" fitWidth="2240.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../View/deck.jpg"/>
+        <Image url="@../../resource/OtherImagesInGame/deck.jpg"/>
     </ImageView>
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#323639" height="913.0" layoutX="94.0" layoutY="65.0" opacity="0.43"
                stroke="BLACK" strokeType="INSIDE" width="687.0"/>

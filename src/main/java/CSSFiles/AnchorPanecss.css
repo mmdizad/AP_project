@@ -1,25 +1,25 @@
 .AnchorWelcome {
-    -fx-background-image: url("../View/welcomeGame.jpg");
+    -fx-background-image: url("../../resource/OtherImagesInGame/welcomeGame.jpg");
     -fx-background-size: cover;
 }
 
 .AnchorSignUp {
-    -fx-background-image: url("../View/yugiohSignUp.jpg");
+    -fx-background-image: url("../../resource/OtherImagesInGame/yugiohSignUp.jpg");
     -fx-background-size: cover;
 }
 
 .AnchorLogin {
-    -fx-background-image: url("../View/yugiohLogin.png");
+    -fx-background-image: url("../../resource/OtherImagesInGame/yugiohLogin.png");
     -fx-background-size: cover;
 }
 
 .AnchorMainMenu {
-    -fx-background-image: url("../View/MainMenuYugioh.jpg");
+    -fx-background-image: url("../../resource/OtherImagesInGame/MainMenuYugioh.jpg");
     -fx-background-size: cover;
 }
 
 .AnchorShowAllDeck {
-    -fx-background-image: url("../View/showAllDeck.jpg");
+    -fx-background-image: url("../../resource/OtherImagesInGame/showAllDeck.jpg");
     -fx-background-size: cover;
 }
 
@@ -29,12 +29,12 @@
 }
 
 .AnchorChooseDuel {
-    -fx-background-image: url("../View/chooseDuel.jpg");
+    -fx-background-image: url("../../resource/OtherImagesInGame/chooseDuel.jpg");
     -fx-background-size: cover;
 }
 
 .imageView {
-    -fx-background-image: url("../View/rock-paper-scissors.jpg");
+    -fx-background-image: url("../../resource/OtherImagesInGame/rock-paper-scissors.jpg");
 }
 
 .normalField {
