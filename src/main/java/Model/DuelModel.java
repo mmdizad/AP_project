@@ -420,7 +420,7 @@ public class DuelModel {
         }
         for (int i = 0; i < handCards.get(turn).size(); i++) {
             handCardUser = handCardUser + "c    ";
-            DuelView.downHBoxS.getChildren().set(i, handCards.get(turn).get(i).getImageView());
+            DuelView.downHBoxS.getChildren().set(i,getUnknownCard());
         }
         ArrayList<String> spellConditionOpponent = new ArrayList<>();
         ArrayList<String> spellConditionUser = new ArrayList<>();
@@ -430,13 +430,13 @@ public class DuelModel {
             if (monstersInField.get(1 - turn).get(i) != null) {
 
             } else
-                DuelView.gridPane.add(new ImageView((Image) null), i, 0);
+                DuelView.gridPane.add(getUnknownCard(), i, 0);
             if (monstersInField.get(turn).get(i) != null) {
                 conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
-                DuelView.gridPane.add(monstersInField.get(turn).get(i).getImageView(), i, 3);
+                DuelView.gridPane.add(getUnknownCard(), i, 3);
             } else {
                 conditionMonsterUser.add("E");
-                DuelView.gridPane.add(new ImageView((Image) null), i, 3);
+                DuelView.gridPane.add(getUnknownCard(), i, 3);
             }
 
             if (spellsAndTrapsInFiled.get(1 - turn).get(i) != null) {
@@ -444,14 +444,14 @@ public class DuelModel {
                 DuelView.gridPane.add(getUnknownCard(), i, 1);
             } else {
                 spellConditionOpponent.add("E");
-                DuelView.gridPane.add(new ImageView((Image) null), i, 0);
+                DuelView.gridPane.add(getUnknownCard(), i, 0);
             }
             if (spellsAndTrapsInFiled.get(turn).get(i) != null) {
                 spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/")[0]);
-                DuelView.gridPane.add(spellsAndTrapsInFiled.get(turn).get(i).getImageView(), i, 0);
+                DuelView.gridPane.add(getUnknownCard(), i, 0);
             } else {
                 spellConditionUser.add("E");
-                DuelView.gridPane.add(new ImageView((Image) null), i, 0);
+                DuelView.gridPane.add(getUnknownCard(), i, 0);
             }
 
         }
@@ -459,12 +459,12 @@ public class DuelModel {
         String spellFieldofOpponet = "    " + spellConditionOpponent.get(3) + "    " + spellConditionOpponent.get(1) + "    " + spellConditionOpponent.get(0) + "    " + spellConditionOpponent.get(2) + "    " + spellConditionOpponent.get(4);
         String spellFieldUser = "    " + spellConditionUser.get(4) + "    " + spellConditionUser.get(2) + "    " + spellConditionUser.get(0) + "    " + spellConditionUser.get(1) + "    " + spellConditionUser.get(3);
         String monsterFieldUser = "    " + conditionMonsterUser.get(4) + "    " + conditionMonsterUser.get(2) + "    " + conditionMonsterUser.get(0) + "    " + conditionMonsterUser.get(1) + "    " + conditionMonsterUser.get(3);
-        String monsterFieldOpponent = "    " + conditionMonsterOpponent.get(3) + "    " + conditionMonsterOpponent.get(1) + "    " + conditionMonsterOpponent.get(0) + "    " + conditionMonsterOpponent.get(2) + "    " + conditionMonsterOpponent.get(4);
+//        String monsterFieldOpponent = "    " + conditionMonsterOpponent.get(3) + "    " + conditionMonsterOpponent.get(1) + "    " + conditionMonsterOpponent.get(0) + "    " + conditionMonsterOpponent.get(2) + "    " + conditionMonsterOpponent.get(4);
         board.add(usernames.get(1 - turn) + ":" + lifePoints.get(1 - turn));
         board.add(handCardOpponent);
         board.add(String.valueOf(playersCards.get(1 - turn).size()));
         board.add(spellFieldofOpponet);
-        board.add(monsterFieldOpponent);
+     //   board.add(monsterFieldOpponent);
         if (field.get(1 - turn).get(0) == null)
             board.add(graveyard.get(1 - turn).size() + "                        " + "E");
         else board.add(graveyard.get(1 - turn).size() + "                        " + "O");
@@ -485,7 +485,7 @@ public class DuelModel {
 
         URL url = null;
         try {
-            url = new File("src/main/java/View/Monster/" + "unknown.jpg").toURI().toURL();
+            url = new File("src/main/resource/Monsters/Unknown.jpg").toURI().toURL();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

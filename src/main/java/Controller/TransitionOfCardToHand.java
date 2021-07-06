@@ -51,7 +51,7 @@ public class TransitionOfCardToHand {
             }
             imageView.setTranslateX(-600);
             imageView.setTranslateY(-15);
-            DuelView.hBoxS.getChildren().add(imageView);
+            //DuelView.hBoxS.getChildren().add(imageView);
         }
     }
 }
