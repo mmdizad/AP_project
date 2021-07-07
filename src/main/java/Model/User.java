@@ -42,9 +42,9 @@ public class User {
         this.cards = new ArrayList<>();
         this.addFirstCards(Card.getFirstCards());
         Random random = new Random();
-        int num =Math.abs( random.nextInt())% 18;
-         num=num+7000;
-        profileURL = "src/main/resource/Icons/" +num+ ".dds.png";
+        int num = Math.abs(random.nextInt()) % 17;
+        num = num + 7000;
+        profileURL = "src/main/resource/Icons/" + num + ".dds.png";
 
     }
 

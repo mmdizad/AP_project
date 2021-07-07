@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.DuelController;
+import Controller.LoginAndSignUpController;
 import View.DuelView;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
@@ -410,6 +411,28 @@ public class DuelModel {
     }
 
     public void getBoard() {
+        ImageView imageView1;
+        URL url = null;
+        try {
+            url = new File(Objects.requireNonNull(User.getUserByUsername(usernames.get(turn))).getProfileURL()).
+                    toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        imageView1 = new ImageView(new Image(Objects.requireNonNull(url).toString()));
+        DuelView.userProfile.setImage(imageView1.getImage());
+
+        ImageView imageView2;
+        URL url1 = null;
+        try {
+            System.out.println(User.getUserByUsername(usernames.get(1 -turn )));
+            url1 = new File(Objects.requireNonNull(User.getUserByUsername(usernames.get(1 - turn))).getProfileURL()).
+                    toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        imageView2 = new ImageView(new Image(Objects.requireNonNull(url1).toString()));
+        DuelView.opponentProfile.setImage(imageView2.getImage());
 
         DuelView duelView = DuelView.getInstance();
         ArrayList<String> board = new ArrayList<>();

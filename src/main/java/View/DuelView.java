@@ -51,6 +51,8 @@ public class DuelView implements Initializable {
     public static Label opponentLifPointLBL;
     public static Label specificationsOfCard;
     public static ImageView showCardImage;
+    public static ImageView userProfile;
+    public static ImageView opponentProfile;
     public GridPane fieldsGridPane;
     public HBox upHBox;
     public HBox downHBox;
@@ -64,6 +66,8 @@ public class DuelView implements Initializable {
     public Label lifePointOfOpponent;
     public Label cardSpecifications;
     public ImageView showCard;
+    public ImageView profileOfUser;
+    public ImageView profileOfOpponent;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
@@ -418,6 +422,8 @@ public class DuelView implements Initializable {
         opponentLifPointLBL = lifePointOfOpponent;
         showCardImage = showCard;
         specificationsOfCard = cardSpecifications;
+        userProfile = profileOfUser;
+        opponentProfile = profileOfOpponent;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 URL url = null;

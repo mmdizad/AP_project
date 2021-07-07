@@ -149,5 +149,7 @@
                 <Image url="@../../resource/Monsters/Unknown.jpg" />
             </image>
         </ImageView>
+      <ImageView fx:id="profileOfOpponent" fitHeight="142.0" fitWidth="167.0" layoutX="1169.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="profileOfUser" fitHeight="112.0" fitWidth="180.0" layoutX="1156.0" layoutY="654.0" pickOnBounds="true" preserveRatio="true" />
     </children>
 </AnchorPane>
