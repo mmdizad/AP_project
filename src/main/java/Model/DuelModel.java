@@ -420,7 +420,8 @@ public class DuelModel {
         }
         for (int i = 0; i < handCards.get(turn).size(); i++) {
             handCardUser = handCardUser + "c    ";
-            DuelView.downHBoxS.getChildren().set(i,getUnknownCard());
+            ImageView image = getCardImage(handCards.get(turn).get(i));
+            DuelView.downHBoxS.getChildren().set(i,image);
         }
         ArrayList<String> spellConditionOpponent = new ArrayList<>();
         ArrayList<String> spellConditionUser = new ArrayList<>();
@@ -428,15 +429,15 @@ public class DuelModel {
         ArrayList<String> conditionMonsterUser = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             if (monstersInField.get(1 - turn).get(i) != null) {
-
-            } else
                 DuelView.gridPane.add(getUnknownCard(), i, 0);
+            } else
+                DuelView.gridPane.add(null, i, 0);
             if (monstersInField.get(turn).get(i) != null) {
                 conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
-                DuelView.gridPane.add(getUnknownCard(), i, 3);
+                DuelView.gridPane.add(getCardImage(monstersInField.get(turn).get(i)), i, 3);
             } else {
                 conditionMonsterUser.add("E");
-                DuelView.gridPane.add(getUnknownCard(), i, 3);
+                DuelView.gridPane.add(null, i, 3);
             }
 
             if (spellsAndTrapsInFiled.get(1 - turn).get(i) != null) {
@@ -444,17 +445,27 @@ public class DuelModel {
                 DuelView.gridPane.add(getUnknownCard(), i, 1);
             } else {
                 spellConditionOpponent.add("E");
-                DuelView.gridPane.add(getUnknownCard(), i, 0);
+                DuelView.gridPane.add(null, i, 0);
             }
             if (spellsAndTrapsInFiled.get(turn).get(i) != null) {
                 spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/")[0]);
-                DuelView.gridPane.add(getUnknownCard(), i, 0);
+                DuelView.gridPane.add(getCardImage(spellsAndTrapsInFiled.get(turn).get(i)), i, 0);
             } else {
                 spellConditionUser.add("E");
-                DuelView.gridPane.add(getUnknownCard(), i, 0);
+                DuelView.gridPane.add(null, i, 0);
             }
 
         }
+        for(int i=0;i<graveyard.get(1-turn).size();i++){
+            DuelView.opponentBinS=getCardImage(graveyard.get(1-turn).get(i));
+        }
+        for(int i=0;i<graveyard.get(turn).size();i++){
+            DuelView.userBinS=getCardImage(graveyard.get(turn).get(i));
+        }
+        if(field.get(turn).get(0)!=null)
+            DuelView.userFieldS=getCardImage(field.get(turn).get(0));
+        if(field.get(1-turn).get(0)!=null)
+            DuelView.opponentFieldS=getCardImage(field.get(1-turn).get(0));
 
         String spellFieldofOpponet = "    " + spellConditionOpponent.get(3) + "    " + spellConditionOpponent.get(1) + "    " + spellConditionOpponent.get(0) + "    " + spellConditionOpponent.get(2) + "    " + spellConditionOpponent.get(4);
         String spellFieldUser = "    " + spellConditionUser.get(4) + "    " + spellConditionUser.get(2) + "    " + spellConditionUser.get(0) + "    " + spellConditionUser.get(1) + "    " + spellConditionUser.get(3);
@@ -479,6 +490,38 @@ public class DuelModel {
         board.add(usernames.get(turn) + ":" + lifePoints.get(turn));
 
     }
+    public ImageView getCardImage(Card card){
+        if(card.getCategory().equals("Monster")){
+        ImageView imageView;
+
+        URL url = null;
+        try {
+            url = new File("src/main/resource/Monsters/" + card.getName() + ".jpg").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        imageView = new ImageView(new Image(Objects.requireNonNull(url).toString()));
+        imageView.setFitWidth(80);
+        imageView.setFitHeight(100);
+        return imageView;
+        }
+        else{
+            ImageView imageView;
+
+            URL url = null;
+            try {
+                url = new File("src/main/resource/SpellTrap/" + card.getName() + ".jpg").toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            imageView = new ImageView(new Image(Objects.requireNonNull(url).toString()));
+            imageView.setFitWidth(80);
+            imageView.setFitHeight(100);
+
+            return imageView;
+        }
+
+    }
 
     public ImageView getUnknownCard() {
         ImageView imageView;
@@ -490,8 +533,8 @@ public class DuelModel {
             e.printStackTrace();
         }
         imageView = new ImageView(new Image(Objects.requireNonNull(url).toString()));
-        imageView.setFitWidth(40);
-        imageView.setFitHeight(50);
+        imageView.setFitWidth(80);
+        imageView.setFitHeight(100);
         return imageView;
     }
 

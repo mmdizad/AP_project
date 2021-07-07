@@ -36,10 +36,19 @@ import java.util.regex.Pattern;
 
 public class DuelView implements Initializable {
 
-    @FXML
-    Text changePhaseTxt;
-
     public static DuelView duelView;
+    public static String secondPlayerUsername1;
+    public static Stage stage = new Stage();
+    public static AnchorPane pane = new AnchorPane();
+    public static HBox hBoxS = new HBox();
+    public static HBox downHBoxS = new HBox();
+    public static GridPane gridPane = new GridPane();
+    public static String currentPhase = "mainPhase1";
+    public static ImageView userBinS;
+    public static ImageView opponentFieldS;
+    public static ImageView userFieldS;
+    public static ImageView opponentDeckS;
+    public static ImageView opponentBinS;
     public GridPane fieldsGridPane;
     public HBox upHBox;
     public HBox downHBox;
@@ -54,13 +63,8 @@ public class DuelView implements Initializable {
     protected Scanner scanner1;
     protected boolean isCommandInvalid = true;
     protected boolean isAi;
-    public static String secondPlayerUsername1;
-    public static Stage stage = new Stage();
-    public static AnchorPane pane = new AnchorPane();
-    public static HBox hBoxS = new HBox();
-    public static HBox downHBoxS = new HBox();
-    public static GridPane gridPane = new GridPane();
-    public static String currentPhase = "mainPhase1";
+    @FXML
+    Text changePhaseTxt;
 
     public DuelView() {
 
@@ -394,6 +398,10 @@ public class DuelView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        opponentFieldS = opponentField;
+        opponentBinS = opponentBin;
+        userFieldS=userField;
+        userBinS=userBin;
         pane = DuelFieldPane;
         hBoxS = upHBox;
         downHBoxS = downHBox;
