@@ -6,10 +6,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane onMouseClicked="#backToMainMenu" prefHeight="636.0" prefWidth="983.0" styleClass="ProfileBackground" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ProfileView">
+<AnchorPane  prefHeight="636.0" prefWidth="983.0" styleClass="ProfileBackground" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ProfileView">
    <children>
       <TextField fx:id="nameField" layoutX="272.0" layoutY="303.0" prefHeight="30.0" prefWidth="225.0" promptText=" name" />
-      <Button fx:id="changeNameBTN" layoutX="333.0" layoutY="360.0" mnemonicParsing="false" mouseTransparent="true" onMouseClicked="#changeNameBTN" prefHeight="30.0" prefWidth="103.0" text="changeName" />
+      <Button  layoutX="333.0" layoutY="360.0" mnemonicParsing="false"  onMouseClicked="#changeNameBTN" prefHeight="30.0" prefWidth="103.0" text="changeName" />
       <Label layoutX="186.0" layoutY="235.0" prefHeight="30.0" prefWidth="412.0" text="please enter new name to change acounts name" textFill="#202217">
          <font>
             <Font size="18.0" />

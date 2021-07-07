@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Scanner;
 
 public class User {
@@ -25,9 +26,11 @@ public class User {
     private int score;
     private int wins;
     private int losses;
+    private String profileURL;
     private ArrayList<Deck> decks = new ArrayList<>();
     private Deck activeDeck;
     private ArrayList<Card> cards;
+
 
     public User(String username, String nickname, String password) {
         setUsername(username);
@@ -38,6 +41,11 @@ public class User {
         coins = 10000000;
         this.cards = new ArrayList<>();
         this.addFirstCards(Card.getFirstCards());
+        Random random = new Random();
+        int num =Math.abs( random.nextInt())% 18;
+         num=num+7000;
+        profileURL = "src/main/resource/Icons/" +num+ ".dds.png";
+
     }
 
     public static User getUserByUsername(String username) {
@@ -57,7 +65,7 @@ public class User {
                 myReader.close();
                 return user1;
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             return null;
         }
     }
@@ -66,7 +74,7 @@ public class User {
         ArrayList<User> users = new ArrayList<>();
         File folder = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\");
         File[] files = folder.listFiles();
-        for (File file : files){
+        for (File file : files) {
             Gson gson = new Gson();
             StringBuilder getDetail = new StringBuilder();
             Scanner myReader = null;
@@ -118,7 +126,7 @@ public class User {
         ArrayList<User> users = new ArrayList<>();
         File folder = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\");
         File[] files = folder.listFiles();
-        for (File file : files){
+        for (File file : files) {
             Gson gson = new Gson();
             StringBuilder getDetail = new StringBuilder();
             Scanner myReader = null;
@@ -136,6 +144,14 @@ public class User {
             users.add(user1);
         }
         return users;
+    }
+
+    public String getProfileURL() {
+        return profileURL;
+    }
+
+    public void setProfileURL(String profileURL) {
+        this.profileURL = profileURL;
     }
 
     public void addCard(Card card) {

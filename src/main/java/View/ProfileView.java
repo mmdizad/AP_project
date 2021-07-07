@@ -5,10 +5,11 @@ import Controller.ProfileController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -17,20 +18,23 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ProfileView extends MainMenu {
+public class ProfileView extends MainMenu  {
     private static ProfileView profileView = new ProfileView();
     public Label resultChangeName;
-    public Button changeNameBTN;
     public TextField nameField;
     public TextField oldPasswordTXT;
     public PasswordField newPassword;
     public PasswordField newPassword2;
     public Label resultChangePassword;
-
+    public ImageView profImageView;
+    public Label nameLBL;
+    public static Label nameLBLS;
+    public static ImageView profImageViewS;
 
     public ProfileView() {
 
@@ -122,11 +126,12 @@ public class ProfileView extends MainMenu {
     }
 
     public void changeNameBTN(MouseEvent mouseEvent) {
-        if(nameField.getText()!=null){
+        if(nameField.getText().length()!=0){
             LoginAndSignUpController.user.setUsername(nameField.getText());
             resultChangeName.setText("UserName Changed!");
             resultChangeName.setTextFill(Color.GREEN);
-        }
+            nameField.clear();
+        }else resultChangeName.setText("please type a name");
     }
 
     public void backToProfMenu(MouseEvent mouseEvent) {
@@ -148,8 +153,8 @@ public class ProfileView extends MainMenu {
         assert root != null;
         mainMenuStage.setScene(new Scene(root, 1920, 1000));
         mainMenuStage.show();
+        initializeLBL();
     }
-
 
     public void backtoMainMenuBTN(MouseEvent mouseEvent) {
         URL url = null;
@@ -172,26 +177,7 @@ public class ProfileView extends MainMenu {
         mainMenuStage.setScene(new Scene(root, 1920, 1000));
         mainMenuStage.show();
     }
-    public void showMenu(){
-        URL url = null;
-        try {
-            url = new File("src/main/java/FXMLFiles/profileMenu.fxml").toURI().toURL();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        Parent root = null;
-        try {
-            assert url != null;
-            root = FXMLLoader.load(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage mainMenuStage = MainMenu.stage;
-        mainMenuStage.setTitle("MainMenu");
-        assert root != null;
-        mainMenuStage.setScene(new Scene(root, 1920, 1000));
-        mainMenuStage.show();
-    }
+
 
     public void changePassMenu(MouseEvent mouseEvent) {
         URL url = null;
@@ -234,4 +220,26 @@ public class ProfileView extends MainMenu {
         mainMenuStage.setScene(new Scene(root, 1920, 1000));
         mainMenuStage.show();
     }
+
+     public void initialize(){
+        nameLBLS=nameLBL;
+        profImageViewS=profImageView;
+     }
+
+    public static void initializeLBL() {
+      nameLBLS.setText("name : "+LoginAndSignUpController.user.getUsername());
+
+        ImageView imageView;
+        URL url = null;
+        try {
+            url = new File(LoginAndSignUpController.user.getProfileURL()).toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        imageView = new ImageView(new Image(Objects.requireNonNull(url).toString()));
+        imageView.setFitWidth(90);
+        imageView.setFitHeight(110);
+      profImageViewS.setImage(imageView.getImage());
+    }
+
 }

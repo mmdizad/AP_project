@@ -1,8 +1,6 @@
 package Controller;
 
-import View.LoginAndSignUpView;
-import View.ProfileView;
-import View.ShopView;
+import View.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -107,10 +105,28 @@ public class MainMenuController implements Initializable {
         profileButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-               ProfileView profileView = ProfileView.getInstance();
-                profileView.showMenu();
+                URL url = null;
+                try {
+                    url = new File("src/main/java/FXMLFiles/profileMenu.fxml").toURI().toURL();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                Parent root = null;
+                try {
+                    assert url != null;
+                    root = FXMLLoader.load(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Stage mainMenuStage = MainMenu.stage;
+                mainMenuStage.setTitle("MainMenu");
+                assert root != null;
+                mainMenuStage.setScene(new Scene(root, 1920, 1000));
+                mainMenuStage.show();
+                ProfileView.initializeLBL();
             }
         });
+
         scoreBoardButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

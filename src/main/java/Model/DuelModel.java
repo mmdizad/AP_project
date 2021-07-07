@@ -1,18 +1,12 @@
 package Model;
 
 import Controller.DuelController;
-import Controller.MainPhaseController;
 import View.DuelView;
-import View.MainPhaseView;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
-import org.junit.Test;
 
-import javax.swing.event.DocumentEvent;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -416,6 +410,7 @@ public class DuelModel {
     }
 
     public void getBoard() {
+
         DuelView duelView = DuelView.getInstance();
         ArrayList<String> board = new ArrayList<>();
         String handCardOpponent = "    ";

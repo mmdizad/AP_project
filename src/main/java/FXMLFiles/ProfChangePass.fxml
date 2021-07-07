@@ -18,7 +18,7 @@
          </font>
       </Label>
       <Button layoutX="360.0" layoutY="329.0" mnemonicParsing="false" onMouseClicked="#ChangePasswordBTN" prefHeight="36.0" prefWidth="78.0" text="OK" />
-      <Button layoutX="101.0" layoutY="54.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="56.0" text="Back" />
+      <Button layoutX="101.0" layoutY="54.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="56.0" text="Back" onMouseClicked="#backToProfMenu" />
       <Label fx:id="resultChangePassword" layoutX="287.0" layoutY="383.0" prefHeight="50.0" prefWidth="221.0" text="Label">
          <font>
             <Font size="14.0" />
