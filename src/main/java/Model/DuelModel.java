@@ -414,8 +414,6 @@ public class DuelModel {
         String handCardUser = "    ";
         for (int i = 0; i < handCards.get(1 - turn).size(); i++) {
             handCardOpponent = handCardOpponent + "c    ";
-
-
             DuelView.hBoxS.getChildren().set(i, getUnknownCard());
         }
         for (int i = 0; i < handCards.get(turn).size(); i++) {
@@ -430,14 +428,13 @@ public class DuelModel {
         for (int i = 0; i < 5; i++) {
             if (monstersInField.get(1 - turn).get(i) != null) {
                 DuelView.gridPane.add(getUnknownCard(), i, 0);
-            } else
-                DuelView.gridPane.add(null, i, 0);
+            }
             if (monstersInField.get(turn).get(i) != null) {
                 conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
                 DuelView.gridPane.add(getCardImage(monstersInField.get(turn).get(i)), i, 3);
             } else {
                 conditionMonsterUser.add("E");
-                DuelView.gridPane.add(null, i, 3);
+
             }
 
             if (spellsAndTrapsInFiled.get(1 - turn).get(i) != null) {
@@ -445,14 +442,13 @@ public class DuelModel {
                 DuelView.gridPane.add(getUnknownCard(), i, 1);
             } else {
                 spellConditionOpponent.add("E");
-                DuelView.gridPane.add(null, i, 0);
+
             }
             if (spellsAndTrapsInFiled.get(turn).get(i) != null) {
                 spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/")[0]);
                 DuelView.gridPane.add(getCardImage(spellsAndTrapsInFiled.get(turn).get(i)), i, 0);
             } else {
                 spellConditionUser.add("E");
-                DuelView.gridPane.add(null, i, 0);
             }
 
         }

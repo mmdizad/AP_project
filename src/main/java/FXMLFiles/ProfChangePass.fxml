@@ -7,17 +7,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane  prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ProfileView" styleClass="ProfileBackground" stylesheets="@../CSSFiles/AnchorPanecss.css">
+<AnchorPane prefHeight="560.0" prefWidth="797.0" styleClass="ProfileBackground" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ProfileView">
    <children>
-      <TextField fx:id="oldPasswordTXT" layoutX="206.0" layoutY="109.0" prefHeight="25.0" prefWidth="167.0" promptText="your old Password" />
-      <PasswordField layoutX="206.0" layoutY="151.0" prefHeight="25.0" prefWidth="167.0" promptText="new password" />
-      <PasswordField layoutX="206.0" layoutY="200.0" prefHeight="25.0" prefWidth="167.0" promptText="please repeat new password" />
-      <Label alignment="CENTER" layoutX="206.0" layoutY="38.0" prefHeight="50.0" prefWidth="167.0" text="Change Password" textAlignment="CENTER">
+      <TextField fx:id="oldPasswordTXT" layoutX="309.0" layoutY="196.0" prefHeight="25.0" prefWidth="167.0" promptText="your old Password" />
+      <PasswordField fx:id="newPassword" layoutX="309.0" layoutY="240.0" prefHeight="25.0" prefWidth="167.0" promptText="new password" />
+      <PasswordField fx:id="newPassword2" layoutX="309.0" layoutY="280.0" prefHeight="25.0" prefWidth="167.0" promptText="please repeat new password" />
+      <Label alignment="CENTER" layoutX="309.0" layoutY="130.0" prefHeight="50.0" prefWidth="167.0" text="Change Password" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="254.0" layoutY="243.0" mnemonicParsing="false" onMouseClicked="#ChangePasswordBTN" prefHeight="36.0" prefWidth="78.0" text="OK" />
-      <Button layoutX="62.0" layoutY="38.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="56.0" text="Back" />
+      <Button layoutX="360.0" layoutY="329.0" mnemonicParsing="false" onMouseClicked="#ChangePasswordBTN" prefHeight="36.0" prefWidth="78.0" text="OK" />
+      <Button layoutX="101.0" layoutY="54.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="56.0" text="Back" />
+      <Label fx:id="resultChangePassword" layoutX="287.0" layoutY="383.0" prefHeight="50.0" prefWidth="221.0" text="Label">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

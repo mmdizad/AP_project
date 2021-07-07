@@ -6,17 +6,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ProfileView"
-            styleClass="ProfileBackground" stylesheets="@../CSSFiles/AnchorPanecss.css">
+<AnchorPane onMouseClicked="#backToMainMenu" prefHeight="636.0" prefWidth="983.0" styleClass="ProfileBackground" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ProfileView">
    <children>
-      <TextField fx:id="nameField" layoutX="188.0" layoutY="149.0" prefHeight="30.0" prefWidth="225.0" promptText=" name" />
-      <Button layoutX="249.0" layoutY="200.0" mnemonicParsing="false" mouseTransparent="true" onMouseClicked="#changeNameBTN" prefHeight="30.0" prefWidth="103.0" text="changeName" />
-      <Label layoutX="136.0" layoutY="99.0" prefHeight="30.0" prefWidth="306.0" text="please enter new name to change acounts name" textFill="#26c2e0">
+      <TextField fx:id="nameField" layoutX="272.0" layoutY="303.0" prefHeight="30.0" prefWidth="225.0" promptText=" name" />
+      <Button fx:id="changeNameBTN" layoutX="333.0" layoutY="360.0" mnemonicParsing="false" mouseTransparent="true" onMouseClicked="#changeNameBTN" prefHeight="30.0" prefWidth="103.0" text="changeName" />
+      <Label layoutX="186.0" layoutY="235.0" prefHeight="30.0" prefWidth="412.0" text="please enter new name to change acounts name" textFill="#202217">
          <font>
-            <Font size="14.0" />
+            <Font size="18.0" />
          </font>
       </Label>
       <Button layoutX="52.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#backToProfMenu" text="back" />
+      <Label fx:id="resultChangeName" layoutX="357.0" layoutY="424.0" text="result" />
    </children>
 </AnchorPane>

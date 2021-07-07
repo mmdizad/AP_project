@@ -1,9 +1,6 @@
 package View;
 
-import Controller.DuelController;
-import Controller.LoginAndSignUpController;
-import Controller.NewCardToHandController;
-import Controller.RockPaperScissors;
+import Controller.*;
 import Model.DuelModel;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -120,6 +117,7 @@ public class DuelView implements Initializable {
     }
 
     public void endPhaseBtnEvent(ActionEvent actionEvent) {
+
         currentPhase.equals("mainPhase1");
         changePhaseTxt.setText("MAIN PHASE 1");
         FadeTransition fadeTransition = new FadeTransition();
@@ -128,6 +126,7 @@ public class DuelView implements Initializable {
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.play();
+        MainPhaseView.getInstance().enterPhase("EndPhase");
     }
 
     public void showRockPaperScissors() {

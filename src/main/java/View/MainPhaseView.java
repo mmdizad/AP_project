@@ -227,8 +227,9 @@ public class MainPhaseView extends DuelView implements Set, Summon {
 
     }
 
-    public void enterPhase(Scanner scanner) {
-        String newPhase = scanner.nextLine();
+    public void enterPhase( String newPhaseNeme) {
+        String newPhase =newPhaseNeme;
+        Scanner scanner = new Scanner(System.in);
         if (phaseName.equals("MainPhase1")) {
             if (newPhase.equals("MainPhase2")) {
                 run(scanner, "MainPhase2", true);
