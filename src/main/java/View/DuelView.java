@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -46,6 +47,10 @@ public class DuelView implements Initializable {
     public static ImageView userFieldS;
     public static ImageView opponentDeckS;
     public static ImageView opponentBinS;
+    public static Label userLifPointLBL;
+    public static Label opponentLifPointLBL;
+    public static Label specificationsOfCard;
+    public static ImageView showCardImage;
     public GridPane fieldsGridPane;
     public HBox upHBox;
     public HBox downHBox;
@@ -55,6 +60,10 @@ public class DuelView implements Initializable {
     public ImageView opponentDeck;
     public ImageView opponentBin;
     public AnchorPane DuelFieldPane;
+    public Label lifePointOfUser;
+    public Label lifePointOfOpponent;
+    public Label cardSpecifications;
+    public ImageView showCard;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
@@ -399,17 +408,21 @@ public class DuelView implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         opponentFieldS = opponentField;
         opponentBinS = opponentBin;
-        userFieldS=userField;
-        userBinS=userBin;
+        userFieldS = userField;
+        userBinS = userBin;
         pane = DuelFieldPane;
         hBoxS = upHBox;
         downHBoxS = downHBox;
         gridPane = fieldsGridPane;
+        userLifPointLBL = lifePointOfUser;
+        opponentLifPointLBL = lifePointOfOpponent;
+        showCardImage = showCard;
+        specificationsOfCard = cardSpecifications;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 URL url = null;
                 try {
-                    url = new File("src/main/resource/Icons/_images_circle_06.png").toURI().toURL();
+                    url = new File("src/main/resource/Icons/_images_circle_.png").toURI().toURL();
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
@@ -425,7 +438,7 @@ public class DuelView implements Initializable {
         for (int i = 0; i < 5; i++) {
             URL url = null;
             try {
-                url = new File("src/main/resource/Icons/_images_circle_06.png").toURI().toURL();
+                url = new File("src/main/resource/Icons/_images_circle_.png").toURI().toURL();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }

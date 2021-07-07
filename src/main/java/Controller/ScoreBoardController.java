@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class ScoreBoardController  {
+public class ScoreBoardController {
 
     @FXML
     TableView<User> scoreBoardTable;
@@ -58,6 +58,7 @@ public class ScoreBoardController  {
         TableColumn<User, String> nameColumn = new TableColumn<>("USERNAME");
         TableColumn<User, Integer> scoreColumn = new TableColumn<>("SCORE");
 
+
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
 
@@ -65,7 +66,7 @@ public class ScoreBoardController  {
 
         ArrayList<User> users = User.getAllUsers();
 
-        Comparator<User> comparator = Comparator.comparing(User:: getScore).reversed();
+        Comparator<User> comparator = Comparator.comparing(User::getScore).reversed();
 
         users.sort(comparator);
 

@@ -8,23 +8,30 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane prefHeight="700.0" prefWidth="1300.0" styleClass="AnchorShowAllDeck" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ScoreBoardController">
-   <children>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#scoreBoardBackBtnEvent" prefHeight="50.0" prefWidth="112.0" styleClass="deckButton" stylesheets="@../CSSFiles/Button.css" text="BACK" textFill="#9c1010">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="542.0" layoutX="134.0" layoutY="109.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="433.0" />
-      <TableView id="scoreBoardTable1" fx:id="scoreBoardTable" layoutX="176.0" layoutY="196.0" prefHeight="433.0" prefWidth="362.0">
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TableView>
-      <Text fill="#b11616" layoutX="227.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCOREBOARD" textAlignment="CENTER" wrappingWidth="259.20002746582026">
-         <font>
-            <Font size="33.0" />
-         </font>
-      </Text>
-   </children>
+<AnchorPane prefHeight="700.0" prefWidth="1300.0" styleClass="AnchorShowAllDeck"
+            stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ScoreBoardController">
+    <children>
+        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#scoreBoardBackBtnEvent"
+                prefHeight="50.0" prefWidth="112.0" styleClass="deckButton" stylesheets="@../CSSFiles/Button.css"
+                text="BACK" textFill="#9c1010">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Button>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="542.0" layoutX="134.0" layoutY="109.0"
+                   opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="433.0"/>
+        <TableView id="scoreBoardTable1" fx:id="scoreBoardTable" layoutX="176.0" layoutY="196.0" prefHeight="433.0"
+                   prefWidth="362.0">
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+        <Text fill="#b11616" layoutX="227.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCOREBOARD"
+              textAlignment="CENTER" wrappingWidth="259.20002746582026">
+            <font>
+                <Font size="33.0"/>
+            </font>
+        </Text>
+    </children>
 </AnchorPane>

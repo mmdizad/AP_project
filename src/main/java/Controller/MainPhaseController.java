@@ -105,7 +105,7 @@ public class MainPhaseController extends DuelController {
         else if (newPosition.equals("attack")) {
             if (duelModel.getMonsterCondition(duelModel.turn, place).equals("OO"))
                 return "this card is already in the wanted position";
-            else if (duelModel.setposition[place - 1])
+            else if (duelModel.setPosition[place - 1])
                 return "you already changed this card position in this turn";
             else {
                 duelModel.changeAttackAndDefense(place);
@@ -115,7 +115,7 @@ public class MainPhaseController extends DuelController {
         } else {
             if (duelModel.getMonsterCondition(duelModel.turn, place).equals("DO"))
                 return "this card is already in the wanted position";
-            else if (duelModel.setposition[place - 1])
+            else if (duelModel.setPosition[place - 1])
                 return "you already changed this card position in this turn";
             else {
                 duelModel.changeAttackAndDefense(place);

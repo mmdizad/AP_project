@@ -1,10 +1,18 @@
 package Model;
 
 import Controller.DuelController;
+import Controller.MainPhaseController;
 import View.DuelView;
+import View.MainPhaseView;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
+import org.junit.Test;
 
+import javax.swing.event.DocumentEvent;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,7 +24,7 @@ public class DuelModel {
     public int turn = 0;
     public Card monsterSetOrSummonInThisTurn;
     public int thePlaceOfMonsterSetOrSummonInThisTurn;
-    public boolean[] setposition = new boolean[5];
+    public boolean[] setPosition = new boolean[5];
     public Card monsterFlipSummonOrNormalSummonForTrapHole = null;
     public Card monsterSummonForEffectOfSomeTraps = null;
     ArrayList<LinkedHashMap<Card, Boolean>> spellOrTrapActivated;
@@ -414,12 +422,41 @@ public class DuelModel {
         String handCardUser = "    ";
         for (int i = 0; i < handCards.get(1 - turn).size(); i++) {
             handCardOpponent = handCardOpponent + "c    ";
-            DuelView.hBoxS.getChildren().set(i, getUnknownCard());
+            ImageView image = getUnknownCard();
+            DuelView.hBoxS.getChildren().set(i, image);
+            image.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    DuelView.showCardImage.setImage(image.getImage());
+                }
+            });
+            image.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    DuelView.showCardImage.setImage(null);
+                }
+            });
         }
         for (int i = 0; i < handCards.get(turn).size(); i++) {
             handCardUser = handCardUser + "c    ";
             ImageView image = getCardImage(handCards.get(turn).get(i));
-            DuelView.downHBoxS.getChildren().set(i,image);
+            DuelView.downHBoxS.getChildren().set(i, image);
+            String descriptionOfCard = handCards.get(turn).get(i).getDescription();
+            image.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    DuelView.showCardImage.setImage(image.getImage());
+                    DuelView.specificationsOfCard.setText(descriptionOfCard);
+                }
+            });
+
+            image.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    DuelView.showCardImage.setImage(null);
+                    DuelView.specificationsOfCard.setText("");
+                }
+            });
         }
         ArrayList<String> spellConditionOpponent = new ArrayList<>();
         ArrayList<String> spellConditionUser = new ArrayList<>();
@@ -434,7 +471,6 @@ public class DuelModel {
                 DuelView.gridPane.add(getCardImage(monstersInField.get(turn).get(i)), i, 3);
             } else {
                 conditionMonsterUser.add("E");
-
             }
 
             if (spellsAndTrapsInFiled.get(1 - turn).get(i) != null) {
@@ -452,26 +488,26 @@ public class DuelModel {
             }
 
         }
-        for(int i=0;i<graveyard.get(1-turn).size();i++){
-            DuelView.opponentBinS=getCardImage(graveyard.get(1-turn).get(i));
+        for (int i = 0; i < graveyard.get(1 - turn).size(); i++) {
+            DuelView.opponentBinS = getCardImage(graveyard.get(1 - turn).get(i));
         }
-        for(int i=0;i<graveyard.get(turn).size();i++){
-            DuelView.userBinS=getCardImage(graveyard.get(turn).get(i));
+        for (int i = 0; i < graveyard.get(turn).size(); i++) {
+            DuelView.userBinS = getCardImage(graveyard.get(turn).get(i));
         }
-        if(field.get(turn).get(0)!=null)
-            DuelView.userFieldS=getCardImage(field.get(turn).get(0));
-        if(field.get(1-turn).get(0)!=null)
-            DuelView.opponentFieldS=getCardImage(field.get(1-turn).get(0));
+        if (field.get(turn).get(0) != null)
+            DuelView.userFieldS = getCardImage(field.get(turn).get(0));
+        if (field.get(1 - turn).get(0) != null)
+            DuelView.opponentFieldS = getCardImage(field.get(1 - turn).get(0));
 
-        String spellFieldofOpponet = "    " + spellConditionOpponent.get(3) + "    " + spellConditionOpponent.get(1) + "    " + spellConditionOpponent.get(0) + "    " + spellConditionOpponent.get(2) + "    " + spellConditionOpponent.get(4);
+        String spellFieldOfOpponent = "    " + spellConditionOpponent.get(3) + "    " + spellConditionOpponent.get(1) + "    " + spellConditionOpponent.get(0) + "    " + spellConditionOpponent.get(2) + "    " + spellConditionOpponent.get(4);
         String spellFieldUser = "    " + spellConditionUser.get(4) + "    " + spellConditionUser.get(2) + "    " + spellConditionUser.get(0) + "    " + spellConditionUser.get(1) + "    " + spellConditionUser.get(3);
         String monsterFieldUser = "    " + conditionMonsterUser.get(4) + "    " + conditionMonsterUser.get(2) + "    " + conditionMonsterUser.get(0) + "    " + conditionMonsterUser.get(1) + "    " + conditionMonsterUser.get(3);
 //        String monsterFieldOpponent = "    " + conditionMonsterOpponent.get(3) + "    " + conditionMonsterOpponent.get(1) + "    " + conditionMonsterOpponent.get(0) + "    " + conditionMonsterOpponent.get(2) + "    " + conditionMonsterOpponent.get(4);
         board.add(usernames.get(1 - turn) + ":" + lifePoints.get(1 - turn));
         board.add(handCardOpponent);
         board.add(String.valueOf(playersCards.get(1 - turn).size()));
-        board.add(spellFieldofOpponet);
-     //   board.add(monsterFieldOpponent);
+        board.add(spellFieldOfOpponent);
+        //   board.add(monsterFieldOpponent);
         if (field.get(1 - turn).get(0) == null)
             board.add(graveyard.get(1 - turn).size() + "                        " + "E");
         else board.add(graveyard.get(1 - turn).size() + "                        " + "O");
@@ -486,22 +522,22 @@ public class DuelModel {
         board.add(usernames.get(turn) + ":" + lifePoints.get(turn));
 
     }
-    public ImageView getCardImage(Card card){
-        if(card.getCategory().equals("Monster")){
-        ImageView imageView;
 
-        URL url = null;
-        try {
-            url = new File("src/main/resource/Monsters/" + card.getName() + ".jpg").toURI().toURL();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        imageView = new ImageView(new Image(Objects.requireNonNull(url).toString()));
-        imageView.setFitWidth(80);
-        imageView.setFitHeight(100);
-        return imageView;
-        }
-        else{
+    public ImageView getCardImage(Card card) {
+        if (card.getCategory().equals("Monster")) {
+            ImageView imageView;
+
+            URL url = null;
+            try {
+                url = new File("src/main/resource/Monsters/" + card.getName() + ".jpg").toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            imageView = new ImageView(new Image(Objects.requireNonNull(url).toString()));
+            imageView.setFitWidth(90);
+            imageView.setFitHeight(110);
+            return imageView;
+        } else {
             ImageView imageView;
 
             URL url = null;
@@ -511,8 +547,8 @@ public class DuelModel {
                 e.printStackTrace();
             }
             imageView = new ImageView(new Image(Objects.requireNonNull(url).toString()));
-            imageView.setFitWidth(80);
-            imageView.setFitHeight(100);
+            imageView.setFitWidth(90);
+            imageView.setFitHeight(110);
 
             return imageView;
         }
@@ -529,8 +565,8 @@ public class DuelModel {
             e.printStackTrace();
         }
         imageView = new ImageView(new Image(Objects.requireNonNull(url).toString()));
-        imageView.setFitWidth(80);
-        imageView.setFitHeight(100);
+        imageView.setFitWidth(90);
+        imageView.setFitHeight(110);
         return imageView;
     }
 
