@@ -570,14 +570,14 @@ public class DuelModel {
     public ImageView getEmptyCard(){
         URL url = null;
         try {
-            url = new File("src/main/resource/Icons/100401Parts1.dds.png").toURI().toURL();
+            url = new File("src/main/resource/Icons/100201Parts1.dds.png").toURI().toURL();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         Image image = new Image(Objects.requireNonNull(url).toString());
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(100);
-        imageView.setFitWidth(80);
+        imageView.setFitHeight(110);
+        imageView.setFitWidth(90);
        return imageView;
     }
 

@@ -68,6 +68,14 @@ public class DuelView implements Initializable {
     public ImageView showCard;
     public ImageView profileOfUser;
     public ImageView profileOfOpponent;
+    public HBox hboxOpponenetSpell;
+    public HBox hboxOpponentMonster;
+    public HBox hboxMonster;
+    public HBox hboxSpell;
+    public static HBox hboxOpponenetSpellS;
+    public static HBox hboxOpponentMonsterS;
+    public static HBox hboxMonsterS;
+    public static HBox hboxSpellS;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
