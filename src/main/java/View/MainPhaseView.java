@@ -265,4 +265,5 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             run(scanner, phaseName, false);
         }
     }
+
 }
