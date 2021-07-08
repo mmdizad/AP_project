@@ -1,9 +1,6 @@
 package View;
 
-import Controller.DuelController;
-import Controller.LoginAndSignUpController;
-import Controller.NewCardToHandController;
-import Controller.RockPaperScissors;
+import Controller.*;
 import Model.DuelModel;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -18,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -42,6 +40,7 @@ public class DuelView implements Initializable {
     public static AnchorPane pane = new AnchorPane();
     public static HBox hBoxS = new HBox();
     public static HBox downHBoxS = new HBox();
+    public static GridPane gridPane = new GridPane();
     public static String currentPhase = "mainPhase1";
     public static ImageView userBinS;
     public static ImageView opponentFieldS;
@@ -54,10 +53,7 @@ public class DuelView implements Initializable {
     public static ImageView showCardImage;
     public static ImageView userProfile;
     public static ImageView opponentProfile;
-    public static HBox hboxOpponenetSpellS;
-    public static HBox hboxOpponentMonsterS;
-    public static HBox hboxMonsterS;
-    public static HBox hboxSpellS;
+    public GridPane fieldsGridPane;
     public HBox upHBox;
     public HBox downHBox;
     public ImageView userBin;
@@ -72,10 +68,6 @@ public class DuelView implements Initializable {
     public ImageView showCard;
     public ImageView profileOfUser;
     public ImageView profileOfOpponent;
-    public HBox hboxOpponenetSpell;
-    public HBox hboxOpponentMonster;
-    public HBox hboxMonster;
-    public HBox hboxSpell;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
@@ -421,6 +413,7 @@ public class DuelView implements Initializable {
         pane = DuelFieldPane;
         hBoxS = upHBox;
         downHBoxS = downHBox;
+        gridPane = fieldsGridPane;
         userLifPointLBL = lifePointOfUser;
         opponentLifPointLBL = lifePointOfOpponent;
         showCardImage = showCard;
@@ -452,7 +445,6 @@ public class DuelView implements Initializable {
             hboxOpponenetSpellS.setSpacing(90);
             hboxOpponenetSpellS.getChildren().add(j, imageView);
         }
-
         for (int i = 0; i < 8; i++) {
             URL url = null;
             try {
@@ -470,12 +462,11 @@ public class DuelView implements Initializable {
             upHBox.setSpacing(20);
             downHBox.setSpacing(20);
             if (i != 7)
+            upHBox.getChildren().add(imageView);
             downHBox.getChildren().add(imageView1);
-            hBoxS.getChildren().add(imageView);
         }
         downHBox.setAlignment(Pos.CENTER_RIGHT);
         //duelModel.getBoard();
-
     }
 
     public void setCard(MouseEvent mouseEvent) {

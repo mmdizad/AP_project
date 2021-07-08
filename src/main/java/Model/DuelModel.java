@@ -427,7 +427,6 @@ public class DuelModel {
         ImageView imageView2;
         URL url1 = null;
         try {
-            System.out.println(User.getUserByUsername(usernames.get(1 - turn)));
             url1 = new File(Objects.requireNonNull(User.getUserByUsername(usernames.get(1 - turn))).getProfileURL()).
                     toURI().toURL();
         } catch (MalformedURLException e) {
@@ -468,7 +467,13 @@ public class DuelModel {
                 @Override
                 public void handle(MouseEvent event) {
                     DuelView.showCardImage.setImage(image.getImage());
-                    DuelView.specificationsOfCard.setText(descriptionOfCard);
+                    if (card.getCategory().equals("Monster")) {
+                        DuelView.specificationsOfCard.setText("Level: " + card.getLevel() + "\n" +
+                                "AttackPower: " + card.getAttackPower() + "\n" + "DefensePower: "
+                                + card.getDefensePower() + "\n" + descriptionOfCard);
+                    }else {
+                        DuelView.specificationsOfCard.setText(descriptionOfCard);
+                    }
                 }
             });
 
@@ -485,7 +490,7 @@ public class DuelModel {
                 public void handle(MouseEvent event) {
                     if (card.getCategory().equals("Monster")) {
                         if (!card.isHasSpecialSummon() && !card.getCardType().equals("Ritual")
-                                && card.getLevel() >= 4) {
+                                && card.getLevel() <= 4) {
                             normalSummonGraphic(card);
                         }
                     }
