@@ -1,18 +1,14 @@
 package Model;
 
 import Controller.DuelController;
-import Controller.LoginAndSignUpController;
 import Controller.MainPhaseController;
 import View.DuelView;
-import View.StartDuelView;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -502,25 +498,31 @@ public class DuelModel {
         ArrayList<String> conditionMonsterUser = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             if (monstersInField.get(1 - turn).get(i) != null) {
-                DuelView.gridPane.add(getUnknownCard(), i, 0);
+                if(monsterCondition.get(1-turn).get(i).split("/")[0].equals("OO"))
+                  DuelView.hboxOpponentMonsterS.getChildren().set(i,getCardImage(monstersInField.get(1 - turn).get(i)));
+                else DuelView.hboxOpponentMonsterS.getChildren().set(i,getUnknownCard());
+            }else {
+                DuelView.hboxOpponentMonsterS.getChildren().set(i,getEmptyCard());
             }
             if (monstersInField.get(turn).get(i) != null) {
                 conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
-                DuelView.gridPane.add(getCardImage(monstersInField.get(turn).get(i)), i, 3);
+                DuelView.hboxMonsterS.getChildren().set(i,getCardImage(monstersInField.get(turn).get(i)));
             } else {
+
+                DuelView.hboxMonsterS.getChildren().set(i,getEmptyCard());
                 conditionMonsterUser.add("E");
             }
 
             if (spellsAndTrapsInFiled.get(1 - turn).get(i) != null) {
                 spellConditionOpponent.add(spellAndTrapCondition.get(1 - turn).get(i).split("/")[0]);
-                DuelView.gridPane.add(getUnknownCard(), i, 1);
+                DuelView.hboxOpponenetSpellS.getChildren().set(i,getUnknownCard());
             } else {
                 spellConditionOpponent.add("E");
 
             }
             if (spellsAndTrapsInFiled.get(turn).get(i) != null) {
                 spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/")[0]);
-                DuelView.gridPane.add(getCardImage(spellsAndTrapsInFiled.get(turn).get(i)), i, 0);
+                DuelView.hboxSpellS.getChildren().set(i,getCardImage(spellsAndTrapsInFiled.get(turn).get(i)));
             } else {
                 spellConditionUser.add("E");
             }
@@ -559,6 +561,19 @@ public class DuelModel {
         board.add(String.valueOf(playersCards.get(turn).size()));
         board.add(usernames.get(turn) + ":" + lifePoints.get(turn));
 
+    }
+    public ImageView getEmptyCard(){
+        URL url = null;
+        try {
+            url = new File("src/main/resource/Icons/100401Parts1.dds.png").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Image image = new Image(Objects.requireNonNull(url).toString());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(80);
+       return imageView;
     }
 
     public void normalSummonGraphic(Card card) {

@@ -1,6 +1,9 @@
 package View;
 
-import Controller.*;
+import Controller.DuelController;
+import Controller.LoginAndSignUpController;
+import Controller.NewCardToHandController;
+import Controller.RockPaperScissors;
 import Model.DuelModel;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -15,7 +18,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -40,7 +42,6 @@ public class DuelView implements Initializable {
     public static AnchorPane pane = new AnchorPane();
     public static HBox hBoxS = new HBox();
     public static HBox downHBoxS = new HBox();
-    public static GridPane gridPane = new GridPane();
     public static String currentPhase = "mainPhase1";
     public static ImageView userBinS;
     public static ImageView opponentFieldS;
@@ -53,7 +54,10 @@ public class DuelView implements Initializable {
     public static ImageView showCardImage;
     public static ImageView userProfile;
     public static ImageView opponentProfile;
-    public GridPane fieldsGridPane;
+    public static HBox hboxOpponenetSpellS;
+    public static HBox hboxOpponentMonsterS;
+    public static HBox hboxMonsterS;
+    public static HBox hboxSpellS;
     public HBox upHBox;
     public HBox downHBox;
     public ImageView userBin;
@@ -68,6 +72,10 @@ public class DuelView implements Initializable {
     public ImageView showCard;
     public ImageView profileOfUser;
     public ImageView profileOfOpponent;
+    public HBox hboxOpponenetSpell;
+    public HBox hboxOpponentMonster;
+    public HBox hboxMonster;
+    public HBox hboxSpell;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
@@ -413,30 +421,38 @@ public class DuelView implements Initializable {
         pane = DuelFieldPane;
         hBoxS = upHBox;
         downHBoxS = downHBox;
-        gridPane = fieldsGridPane;
         userLifPointLBL = lifePointOfUser;
         opponentLifPointLBL = lifePointOfOpponent;
         showCardImage = showCard;
         specificationsOfCard = cardSpecifications;
         userProfile = profileOfUser;
         opponentProfile = profileOfOpponent;
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 5; j++) {
-                URL url = null;
-                try {
-                    url = new File("src/main/resource/Icons/100201Parts1.dds.png").toURI().toURL();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-                Image image = new Image(Objects.requireNonNull(url).toString());
-                ImageView imageView = new ImageView(image);
-                imageView.setFitHeight(120);
-                imageView.setFitWidth(100);
-                fieldsGridPane.add(imageView, j, i);
-                fieldsGridPane.setHgap(90);
-                fieldsGridPane.setVgap(15);
+        hboxOpponenetSpellS = hboxOpponenetSpell;
+        hboxOpponentMonsterS = hboxOpponentMonster;
+        hboxMonsterS = hboxMonster;
+        hboxSpellS = hboxSpell;
+
+        for (int j = 0; j < 5; j++) {
+            URL url = null;
+            try {
+                url = new File("src/main/resource/Icons/100201Parts1.dds.png").toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
             }
+            Image image = new Image(Objects.requireNonNull(url).toString());
+            ImageView imageView = new ImageView(image);
+            imageView.setFitHeight(120);
+            imageView.setFitWidth(100);
+            hboxMonsterS.setSpacing(90);
+            hboxMonsterS.getChildren().add(j, imageView);
+            hboxOpponentMonsterS.setSpacing(90);
+            hboxOpponentMonsterS.getChildren().add(j, imageView);
+            hboxSpellS.setSpacing(90);
+            hboxSpellS.getChildren().add(j, imageView);
+            hboxOpponenetSpellS.setSpacing(90);
+            hboxOpponenetSpellS.getChildren().add(j, imageView);
         }
+
         for (int i = 0; i < 8; i++) {
             URL url = null;
             try {
@@ -454,11 +470,12 @@ public class DuelView implements Initializable {
             upHBox.setSpacing(20);
             downHBox.setSpacing(20);
             if (i != 7)
-            upHBox.getChildren().add(imageView);
             downHBox.getChildren().add(imageView1);
+            hBoxS.getChildren().add(imageView);
         }
         downHBox.setAlignment(Pos.CENTER_RIGHT);
         //duelModel.getBoard();
+
     }
 
     public void setCard(MouseEvent mouseEvent) {
