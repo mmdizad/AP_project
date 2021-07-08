@@ -2,6 +2,7 @@ package View;
 
 import Controller.LoginAndSignUpController;
 import Controller.ProfileController;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -35,6 +37,13 @@ public class ProfileView extends MainMenu  {
     public Label nameLBL;
     public static Label nameLBLS;
     public static ImageView profImageViewS;
+    public GridPane profileImages;
+    public ImageView profImageInChangeImg;
+    public static GridPane profImagesS;
+    private static ImageView profImageInChangeImgS;
+    public Label resaultOfChangeImage;
+    public static Label resaultOfChangeImageS;
+
 
     public ProfileView() {
 
@@ -170,7 +179,7 @@ public class ProfileView extends MainMenu  {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Stage mainMenuStage = new Stage();
+        Stage mainMenuStage = MainMenu.stage;
         stage = mainMenuStage;
         mainMenuStage.setTitle("MainMenu");
         assert root != null;
@@ -224,6 +233,53 @@ public class ProfileView extends MainMenu  {
      public void initialize(){
         nameLBLS=nameLBL;
         profImageViewS=profImageView;
+        profImagesS=profileImages;
+        resaultOfChangeImageS=resaultOfChangeImage;
+     }
+    public void initializeProfImage(){
+        for (int i = 1; i <= 18; i++) {
+            int num = i;
+            num = num + 7000;
+
+            ImageView imageView;
+            URL url = null;
+            try {
+                url = new File("src/main/resource/Icons/" + num + ".dds.png").toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            imageView = new ImageView(new Image(Objects.requireNonNull(url).toString()));
+            imageView.setFitWidth(90);
+            imageView.setFitHeight(110);
+            int finalNum = num;
+            imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    LoginAndSignUpController.user.setProfileURL("src/main/resource/Icons/" + finalNum + ".dds.png");
+                    resaultOfChangeImageS.setTextFill(Color.GREEN);
+                    resaultOfChangeImageS.setText("image changed");
+                }
+            });
+            if(i<=9)
+            profImagesS.add(imageView, i,0);
+            else
+                profImagesS.add(imageView,i-9,1);
+            profImagesS.setHgap(30);
+            profImagesS.setVgap(60);
+            ImageView imageViewUser;
+            URL urls = null;
+            try {
+                urls = new File(LoginAndSignUpController.user.getProfileURL()).toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            imageView = new ImageView(new Image(Objects.requireNonNull(urls).toString()));
+            imageView.setFitWidth(90);
+            imageView.setFitHeight(110);
+            profImageInChangeImgS.setImage(imageView.getImage());
+        }
+
+
      }
 
     public static void initializeLBL() {
@@ -242,4 +298,25 @@ public class ProfileView extends MainMenu  {
       profImageViewS.setImage(imageView.getImage());
     }
 
+    public void goChangeImage(MouseEvent mouseEvent) {
+        URL url = null;
+        try {
+            url = new File("src/main/java/FXMLFiles/changeProfilePic.fxml").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Parent root = null;
+        try {
+            assert url != null;
+            root = FXMLLoader.load(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage mainMenuStage = MainMenu.stage;
+        mainMenuStage.setTitle("changeImage");
+        assert root != null;
+        mainMenuStage.setScene(new Scene(root, 1920, 1000));
+        mainMenuStage.show();
+        initializeProfImage();
+    }
 }

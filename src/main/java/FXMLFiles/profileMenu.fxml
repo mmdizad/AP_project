@@ -17,7 +17,7 @@
          <Font size="18.0" />
       </font>
    </Button>
-   <Button layoutX="491.0" layoutY="431.0" mnemonicParsing="false" onMouseClicked="#backtoMainMenuBTN" prefHeight="147.0" prefWidth="370.0" text="Back">
+   <Button layoutX="696.0" layoutY="425.0" mnemonicParsing="false" onMouseClicked="#backtoMainMenuBTN" prefHeight="147.0" prefWidth="335.0" text="Back">
       <font>
          <Font size="18.0" />
       </font>
@@ -28,4 +28,9 @@
          <Font size="18.0" />
       </font>
    </Label>
+   <Button layoutX="285.0" layoutY="413.0" mnemonicParsing="false" onMouseClicked="#goChangeImage" prefHeight="166.0" prefWidth="365.0" text="change profile Image">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Button>
 </AnchorPane>
