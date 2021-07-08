@@ -40,7 +40,6 @@ public class DuelView implements Initializable {
     public static AnchorPane pane = new AnchorPane();
     public static HBox hBoxS = new HBox();
     public static HBox downHBoxS = new HBox();
-    public static GridPane gridPane = new GridPane();
     public static String currentPhase = "mainPhase1";
     public static ImageView userBinS;
     public static ImageView opponentFieldS;
@@ -53,7 +52,6 @@ public class DuelView implements Initializable {
     public static ImageView showCardImage;
     public static ImageView userProfile;
     public static ImageView opponentProfile;
-    public GridPane fieldsGridPane;
     public HBox upHBox;
     public HBox downHBox;
     public ImageView userBin;
@@ -421,7 +419,6 @@ public class DuelView implements Initializable {
         pane = DuelFieldPane;
         hBoxS = upHBox;
         downHBoxS = downHBox;
-        gridPane = fieldsGridPane;
         userLifPointLBL = lifePointOfUser;
         opponentLifPointLBL = lifePointOfOpponent;
         showCardImage = showCard;
@@ -434,24 +431,14 @@ public class DuelView implements Initializable {
         hboxSpellS = hboxSpell;
 
         for (int j = 0; j < 5; j++) {
-            URL url = null;
-            try {
-                url = new File("src/main/resource/Icons/100201Parts1.dds.png").toURI().toURL();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            Image image = new Image(Objects.requireNonNull(url).toString());
-            ImageView imageView = new ImageView(image);
-            imageView.setFitHeight(120);
-            imageView.setFitWidth(100);
             hboxMonsterS.setSpacing(90);
-            hboxMonsterS.getChildren().add(j, imageView);
+            hboxMonsterS.getChildren().add(getImage());
             hboxOpponentMonsterS.setSpacing(90);
-            hboxOpponentMonsterS.getChildren().add(j, imageView);
+            hboxOpponentMonsterS.getChildren().add(getImage());
             hboxSpellS.setSpacing(90);
-            hboxSpellS.getChildren().add(j, imageView);
+            hboxSpellS.getChildren().add(getImage());
             hboxOpponenetSpellS.setSpacing(90);
-            hboxOpponenetSpellS.getChildren().add(j, imageView);
+            hboxOpponenetSpellS.getChildren().add(getImage());
         }
         for (int i = 0; i < 8; i++) {
             URL url = null;
@@ -462,19 +449,32 @@ public class DuelView implements Initializable {
             }
             Image image = new Image(Objects.requireNonNull(url).toString());
             ImageView imageView = new ImageView(image);
-            imageView.setFitHeight(100);
-            imageView.setFitWidth(80);
+            imageView.setFitHeight(110);
+            imageView.setFitWidth(90);
             ImageView imageView1 = new ImageView(image);
-            imageView1.setFitHeight(100);
-            imageView1.setFitWidth(80);
+            imageView1.setFitHeight(110);
+            imageView1.setFitWidth(90);
             upHBox.setSpacing(20);
             downHBox.setSpacing(20);
-            if (i != 7)
             upHBox.getChildren().add(imageView);
             downHBox.getChildren().add(imageView1);
         }
         downHBox.setAlignment(Pos.CENTER_RIGHT);
         //duelModel.getBoard();
+    }
+
+    public ImageView getImage(){
+        URL url = null;
+        try {
+            url = new File("src/main/resource/Icons/100201Parts1.dds.png").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Image image = new Image(Objects.requireNonNull(url).toString());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(110);
+        imageView.setFitWidth(90);
+        return imageView;
     }
 
     public void setCard(MouseEvent mouseEvent) {

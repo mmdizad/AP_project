@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="DuelFieldPane" prefHeight="766.0" prefWidth="1334.0" styleClass="normalField" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DuelView">
+<AnchorPane fx:id="DuelFieldPane" prefHeight="766.0" prefWidth="1334.0" styleClass="normalField" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DuelView">
     <children>
         <HBox fx:id="upHBox" layoutX="363.0" layoutY="14.0" prefHeight="85.0" prefWidth="476.0">
 
@@ -135,8 +135,8 @@
       <ImageView fx:id="profileOfOpponent" fitHeight="142.0" fitWidth="167.0" layoutX="1169.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="profileOfUser" fitHeight="112.0" fitWidth="180.0" layoutX="1156.0" layoutY="654.0" pickOnBounds="true" preserveRatio="true" />
       <HBox fx:id="hboxOpponenetSpell" layoutX="273.0" layoutY="133.0" prefHeight="100.0" prefWidth="601.0" />
-      <HBox fx:id="hboxOpponentMonster" layoutX="273.0" layoutY="254.0" prefHeight="100.0" prefWidth="422.0" />
-      <HBox fx:id="hboxMonster" layoutX="273.0" layoutY="406.0" prefHeight="100.0" prefWidth="347.0" />
-      <HBox fx:id="hboxSpell" layoutX="273.0" layoutY="542.0" prefHeight="100.0" prefWidth="200.0" />
+      <HBox fx:id="hboxOpponentMonster" layoutX="273.0" layoutY="254.0" prefHeight="100.0" prefWidth="601.0" />
+      <HBox fx:id="hboxMonster" layoutX="273.0" layoutY="406.0" prefHeight="100.0" prefWidth="601.0" />
+      <HBox fx:id="hboxSpell" layoutX="273.0" layoutY="542.0" prefHeight="100.0" prefWidth="601.0" />
     </children>
 </AnchorPane>
