@@ -439,63 +439,75 @@ public class DuelModel {
         ArrayList<String> board = new ArrayList<>();
         String handCardOpponent = "    ";
         String handCardUser = "    ";
-        for (int i = 0; i < handCards.get(1 - turn).size(); i++) {
+        for (int i = 0; i < 8; i++) {
+            ImageView image;
             handCardOpponent = handCardOpponent + "c    ";
-            ImageView image = getUnknownCard();
-            DuelView.hBoxS.getChildren().set(i, image);
-            image.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    DuelView.showCardImage.setImage(image.getImage());
-                }
-            });
-            image.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    DuelView.showCardImage.setImage(null);
-                }
-            });
-
-        }
-        for (int i = 0; i < handCards.get(turn).size(); i++) {
-            handCardUser = handCardUser + "c    ";
-            ImageView image = getCardImage(handCards.get(turn).get(i));
-            DuelView.downHBoxS.getChildren().set(i, image);
-            String descriptionOfCard = handCards.get(turn).get(i).getDescription();
-            Card card = handCards.get(turn).get(i);
-            image.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    DuelView.showCardImage.setImage(image.getImage());
-                    if (card.getCategory().equals("Monster")) {
-                        DuelView.specificationsOfCard.setText("Level: " + card.getLevel() + "\n" +
-                                "AttackPower: " + card.getAttackPower() + "\n" + "DefensePower: "
-                                + card.getDefensePower() + "\n" + descriptionOfCard);
-                    }else {
-                        DuelView.specificationsOfCard.setText(descriptionOfCard);
+            if (i < handCards.get(1 - turn).size()) {
+                image = getUnknownCard();
+                DuelView.hBoxS.getChildren().set(i, image);
+                image.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        DuelView.showCardImage.setImage(image.getImage());
                     }
-                }
-            });
+                });
+                image.setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        DuelView.showCardImage.setImage(null);
+                    }
+                });
+            } else {
+                image = getEmptyCardForHand();
+                DuelView.hBoxS.getChildren().set(i, image);
+            }
+        }
+        for (int i = 0; i < 8; i++) {
+            ImageView image;
+            handCardUser = handCardUser + "c    ";
+            if (i < handCards.get(turn).size()) {
+                image = getCardImage(handCards.get(turn).get(i));
+                DuelView.downHBoxS.getChildren().set(i, image);
+                String descriptionOfCard = handCards.get(turn).get(i).getDescription();
+                Card card = handCards.get(turn).get(i);
 
-            image.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    DuelView.showCardImage.setImage(null);
-                    DuelView.specificationsOfCard.setText("");
-                }
-            });
-
-            image.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (card.getCategory().equals("Monster")) {
-                        if (!card.isHasSpecialSummon() && !card.getCardType().equals("Ritual")
-                                && card.getLevel() <= 4) {
-                            normalSummonGraphic(card);
+                image.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        DuelView.showCardImage.setImage(image.getImage());
+                        if (card.getCategory().equals("Monster")) {
+                            DuelView.specificationsOfCard.setText("Level: " + card.getLevel() + "\n" +
+                                    "AttackPower: " + card.getAttackPower() + "\n" + "DefensePower: "
+                                    + card.getDefensePower() + "\n" + descriptionOfCard);
+                        } else {
+                            DuelView.specificationsOfCard.setText(descriptionOfCard);
                         }
                     }
-                }
-            });
+                });
+
+                image.setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        DuelView.showCardImage.setImage(null);
+                        DuelView.specificationsOfCard.setText("");
+                    }
+                });
+
+                image.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        if (card.getCategory().equals("Monster")) {
+                            if (!card.isHasSpecialSummon() && !card.getCardType().equals("Ritual")
+                                    && card.getLevel() <= 4) {
+                                normalSummonGraphic(card);
+                            }
+                        }
+                    }
+                });
+            } else {
+                image = getEmptyCardForHand();
+                DuelView.downHBoxS.getChildren().set(i, image);
+            }
         }
         ArrayList<String> spellConditionOpponent = new ArrayList<>();
         ArrayList<String> spellConditionUser = new ArrayList<>();
@@ -503,31 +515,31 @@ public class DuelModel {
         ArrayList<String> conditionMonsterUser = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             if (monstersInField.get(1 - turn).get(i) != null) {
-                if(monsterCondition.get(1-turn).get(i).split("/")[0].equals("OO"))
-                  DuelView.hboxOpponentMonsterS.getChildren().set(i,getCardImage(monstersInField.get(1 - turn).get(i)));
-                else DuelView.hboxOpponentMonsterS.getChildren().set(i,getUnknownCard());
-            }else {
-                DuelView.hboxOpponentMonsterS.getChildren().set(i,getEmptyCard());
+                if (monsterCondition.get(1 - turn).get(i).split("/")[0].equals("OO"))
+                    DuelView.hboxOpponentMonsterS.getChildren().set(i, getCardImage(monstersInField.get(1 - turn).get(i)));
+                else DuelView.hboxOpponentMonsterS.getChildren().set(i, getUnknownCard());
+            } else {
+                DuelView.hboxOpponentMonsterS.getChildren().set(i, getEmptyCardForBoard());
             }
             if (monstersInField.get(turn).get(i) != null) {
                 conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
-                DuelView.hboxMonsterS.getChildren().set(i,getCardImage(monstersInField.get(turn).get(i)));
+                DuelView.hboxMonsterS.getChildren().set(i, getCardImage(monstersInField.get(turn).get(i)));
             } else {
 
-                DuelView.hboxMonsterS.getChildren().set(i,getEmptyCard());
+                DuelView.hboxMonsterS.getChildren().set(i, getEmptyCardForBoard());
                 conditionMonsterUser.add("E");
             }
 
             if (spellsAndTrapsInFiled.get(1 - turn).get(i) != null) {
                 spellConditionOpponent.add(spellAndTrapCondition.get(1 - turn).get(i).split("/")[0]);
-                DuelView.hboxOpponenetSpellS.getChildren().set(i,getUnknownCard());
+                DuelView.hboxOpponenetSpellS.getChildren().set(i, getUnknownCard());
             } else {
                 spellConditionOpponent.add("E");
 
             }
             if (spellsAndTrapsInFiled.get(turn).get(i) != null) {
                 spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/")[0]);
-                DuelView.hboxSpellS.getChildren().set(i,getCardImage(spellsAndTrapsInFiled.get(turn).get(i)));
+                DuelView.hboxSpellS.getChildren().set(i, getCardImage(spellsAndTrapsInFiled.get(turn).get(i)));
             } else {
                 spellConditionUser.add("E");
             }
@@ -567,7 +579,8 @@ public class DuelModel {
         board.add(usernames.get(turn) + ":" + lifePoints.get(turn));
 
     }
-    public ImageView getEmptyCard(){
+
+    public ImageView getEmptyCardForBoard() {
         URL url = null;
         try {
             url = new File("src/main/resource/Icons/100201Parts1.dds.png").toURI().toURL();
@@ -578,7 +591,21 @@ public class DuelModel {
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(110);
         imageView.setFitWidth(90);
-       return imageView;
+        return imageView;
+    }
+
+    public ImageView getEmptyCardForHand() {
+        URL url = null;
+        try {
+            url = new File("src/main/resource/Icons/100401Parts1.dds.png").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Image image = new Image(Objects.requireNonNull(url).toString());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(110);
+        imageView.setFitWidth(90);
+        return imageView;
     }
 
     public void normalSummonGraphic(Card card) {

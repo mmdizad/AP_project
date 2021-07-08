@@ -463,6 +463,7 @@ public class DuelView implements Initializable {
         //duelModel.getBoard();
     }
 
+
     public ImageView getImage(){
         URL url = null;
         try {
