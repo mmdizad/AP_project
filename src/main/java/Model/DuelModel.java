@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 import java.io.File;
@@ -435,7 +436,6 @@ public class DuelModel {
         imageView2 = new ImageView(new Image(Objects.requireNonNull(url1).toString()));
         DuelView.opponentProfile.setImage(imageView2.getImage());
 
-        DuelView duelView = DuelView.getInstance();
         ArrayList<String> board = new ArrayList<>();
         String handCardOpponent = "    ";
         String handCardUser = "    ";
@@ -445,18 +445,7 @@ public class DuelModel {
             if (i < handCards.get(1 - turn).size()) {
                 image = getUnknownCard();
                 DuelView.hBoxS.getChildren().set(i, image);
-                image.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        DuelView.showCardImage.setImage(image.getImage());
-                    }
-                });
-                image.setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        DuelView.showCardImage.setImage(null);
-                    }
-                });
+                showUnKnownCard(image);
             } else {
                 image = getEmptyCardForHand();
                 DuelView.hBoxS.getChildren().set(i, image);
@@ -468,31 +457,8 @@ public class DuelModel {
             if (i < handCards.get(turn).size()) {
                 image = getCardImage(handCards.get(turn).get(i));
                 DuelView.downHBoxS.getChildren().set(i, image);
-                String descriptionOfCard = handCards.get(turn).get(i).getDescription();
                 Card card = handCards.get(turn).get(i);
-
-                image.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        DuelView.showCardImage.setImage(image.getImage());
-                        if (card.getCategory().equals("Monster")) {
-                            DuelView.specificationsOfCard.setText("Level: " + card.getLevel() + "\n" +
-                                    "AttackPower: " + card.getAttackPower() + "\n" + "DefensePower: "
-                                    + card.getDefensePower() + "\n" + descriptionOfCard);
-                        } else {
-                            DuelView.specificationsOfCard.setText(descriptionOfCard);
-                        }
-                    }
-                });
-
-                image.setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        DuelView.showCardImage.setImage(null);
-                        DuelView.specificationsOfCard.setText("");
-                    }
-                });
-
+                showCard(image, card);
                 image.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -515,17 +481,26 @@ public class DuelModel {
         ArrayList<String> conditionMonsterUser = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             if (monstersInField.get(1 - turn).get(i) != null) {
-                if (monsterCondition.get(1 - turn).get(i).split("/")[0].equals("OO"))
-                    DuelView.hboxOpponentMonsterS.getChildren().set(i, getCardImage(monstersInField.get(1 - turn).get(i)));
-                else DuelView.hboxOpponentMonsterS.getChildren().set(i, getUnknownCard());
+                if (monsterCondition.get(1 - turn).get(i).split("/")[0].equals("OO") ||
+                        monsterCondition.get(1 - turn).get(i).split("/")[0].equals("DO")) {
+                    ImageView image = getCardImage(monstersInField.get(1 - turn).get(i));
+                    DuelView.hboxOpponentMonsterS.getChildren().set(i, image);
+                    showCard(image, monstersInField.get(1 - turn).get(i));
+                } else {
+                    ImageView image = getUnknownCard();
+                    DuelView.hboxOpponentMonsterS.getChildren().set(i, image);
+                    showUnKnownCard(image);
+                }
             } else {
                 DuelView.hboxOpponentMonsterS.getChildren().set(i, getEmptyCardForBoard());
             }
             if (monstersInField.get(turn).get(i) != null) {
                 conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
-                DuelView.hboxMonsterS.getChildren().set(i, getCardImage(monstersInField.get(turn).get(i)));
+                ImageView image = getCardImage(monstersInField.get(turn).get(i));
+                DuelView.hboxMonsterS.getChildren().set(i, image);
+                Card card = handCards.get(turn).get(i);
+                showCard(image, card);
             } else {
-
                 DuelView.hboxMonsterS.getChildren().set(i, getEmptyCardForBoard());
                 conditionMonsterUser.add("E");
             }
@@ -580,6 +555,31 @@ public class DuelModel {
 
     }
 
+    public void showCard(ImageView image, Card card) {
+        String descriptionOfCard = card.getDescription();
+        image.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                DuelView.showCardImage.setImage(image.getImage());
+                if (card.getCategory().equals("Monster")) {
+                    DuelView.specificationsOfCard.setText("Level: " + card.getLevel() + "\n" +
+                            "AttackPower: " + card.getAttackPower() + "\n" + "DefensePower: "
+                            + card.getDefensePower() + "\n" + descriptionOfCard);
+                } else {
+                    DuelView.specificationsOfCard.setText(descriptionOfCard);
+                }
+            }
+        });
+
+        image.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                DuelView.showCardImage.setImage(null);
+                DuelView.specificationsOfCard.setText("");
+            }
+        });
+    }
+
     public ImageView getEmptyCardForBoard() {
         URL url = null;
         try {
@@ -621,6 +621,21 @@ public class DuelModel {
                 MainPhaseController.getInstance().summon();
             } else if (type == setButton) {
                 System.out.println("Set");
+            }
+        });
+    }
+
+    public void showUnKnownCard(ImageView image) {
+        image.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                DuelView.showCardImage.setImage(image.getImage());
+            }
+        });
+        image.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                DuelView.showCardImage.setImage(null);
             }
         });
     }
