@@ -431,7 +431,7 @@ public class DuelView implements Initializable {
                 Image image = new Image(Objects.requireNonNull(url).toString());
                 ImageView imageView = new ImageView(image);
                 imageView.setFitHeight(120);
-                imageView.setFitWidth(100);
+                imageView.setFitWidth(90);
                 fieldsGridPane.add(imageView, j, i);
                 fieldsGridPane.setHgap(90);
                 fieldsGridPane.setVgap(15);
@@ -446,10 +446,10 @@ public class DuelView implements Initializable {
             }
             Image image = new Image(Objects.requireNonNull(url).toString());
             ImageView imageView = new ImageView(image);
-            imageView.setFitHeight(100);
+            imageView.setFitHeight(110);
             imageView.setFitWidth(80);
             ImageView imageView1 = new ImageView(image);
-            imageView1.setFitHeight(100);
+            imageView1.setFitHeight(110);
             imageView1.setFitWidth(80);
             upHBox.setSpacing(20);
             downHBox.setSpacing(20);

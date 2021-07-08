@@ -131,7 +131,7 @@
                         <Font size="20.0" />
                     </font>
                 </Label>
-                <Label fx:id="cardSpecifications" layoutX="4.0" layoutY="454.0" prefHeight="182.0" prefWidth="135.0" wrapText="true">
+                <Label fx:id="cardSpecifications" layoutX="4.0" layoutY="467.0" prefHeight="169.0" prefWidth="135.0" wrapText="true">
                <font>
                   <Font size="13.0" />
                </font></Label>
