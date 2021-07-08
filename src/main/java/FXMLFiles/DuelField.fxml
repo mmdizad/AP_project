@@ -138,5 +138,10 @@
       <HBox fx:id="hboxOpponentMonster" layoutX="273.0" layoutY="254.0" prefHeight="100.0" prefWidth="601.0" />
       <HBox fx:id="hboxMonster" layoutX="273.0" layoutY="406.0" prefHeight="100.0" prefWidth="601.0" />
       <HBox fx:id="hboxSpell" layoutX="273.0" layoutY="542.0" prefHeight="100.0" prefWidth="601.0" />
+      <Label fx:id="errorLBL" layoutX="248.0" layoutY="341.0" prefHeight="66.0" prefWidth="934.0" textFill="#1a263b">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

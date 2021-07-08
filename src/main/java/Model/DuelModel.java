@@ -3,13 +3,18 @@ package Model;
 import Controller.DuelController;
 import Controller.MainPhaseController;
 import View.DuelView;
+import com.sun.org.apache.bcel.internal.classfile.Code;
+import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -609,20 +614,37 @@ public class DuelModel {
     }
 
     public void normalSummonGraphic(Card card) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Choose Set Or Summon");
-        alert.setContentText("Do You Want Set Or Summon This Card?");
-        ButtonType summonButton = new ButtonType("Summon");
-        ButtonType setButton = new ButtonType("Set");
-        alert.getButtonTypes().setAll(summonButton, setButton);
-        alert.showAndWait().ifPresent(type -> {
-            if (type == summonButton) {
-                setSelectedCard(turn, card, "Hand");
-                MainPhaseController.getInstance().summon();
-            } else if (type == setButton) {
-                System.out.println("Set");
-            }
-        });
+        if (DuelView.currentPhase.equals("mainPhase1") || DuelView.currentPhase.equals("mainPhase2")) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Choose Set Or Summon");
+            alert.setContentText("Do You Want Set Or Summon This Card?");
+            ButtonType summonButton = new ButtonType("Summon");
+            ButtonType setButton = new ButtonType("Set");
+            alert.getButtonTypes().setAll(summonButton, setButton);
+            alert.showAndWait().ifPresent(type -> {
+                if (type == summonButton) {
+                    setSelectedCard(turn, card, "Hand");
+                     String response = MainPhaseController.getInstance().summon();
+                     errorOrSuccessLBL(response);
+                } else if (type == setButton) {
+                    System.out.println("Set");
+                }
+            });
+        }
+    }
+
+    public void errorOrSuccessLBL(String text) {
+        if (!text.equals("summoned successfully")){
+            DuelView.informationLBL.setTextFill(Color.RED);
+        }
+        System.out.println(text);
+        DuelView.informationLBL.setText(text);
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.seconds(3));
+        fadeTransition.setNode(DuelView.informationLBL);
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.play();
     }
 
     public void showUnKnownCard(ImageView image) {

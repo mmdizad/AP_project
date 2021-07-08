@@ -70,10 +70,12 @@ public class DuelView implements Initializable {
     public HBox hboxOpponentMonster;
     public HBox hboxMonster;
     public HBox hboxSpell;
+    public Label errorLBL;
     public static HBox hboxOpponenetSpellS;
     public static HBox hboxOpponentMonsterS;
     public static HBox hboxMonsterS;
     public static HBox hboxSpellS;
+    public static Label informationLBL;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
@@ -132,7 +134,6 @@ public class DuelView implements Initializable {
     }
 
     public void endPhaseBtnEvent(ActionEvent actionEvent) {
-
         currentPhase.equals("mainPhase1");
         changePhaseTxt.setText("MAIN PHASE 1");
         FadeTransition fadeTransition = new FadeTransition();
@@ -429,7 +430,7 @@ public class DuelView implements Initializable {
         hboxOpponentMonsterS = hboxOpponentMonster;
         hboxMonsterS = hboxMonster;
         hboxSpellS = hboxSpell;
-
+        informationLBL = errorLBL;
         for (int j = 0; j < 5; j++) {
             hboxMonsterS.setSpacing(90);
             hboxMonsterS.getChildren().add(getImage());
