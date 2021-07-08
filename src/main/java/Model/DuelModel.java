@@ -2,11 +2,17 @@ package Model;
 
 import Controller.DuelController;
 import Controller.LoginAndSignUpController;
+import Controller.MainPhaseController;
 import View.DuelView;
+import View.StartDuelView;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -425,7 +431,7 @@ public class DuelModel {
         ImageView imageView2;
         URL url1 = null;
         try {
-            System.out.println(User.getUserByUsername(usernames.get(1 -turn )));
+            System.out.println(User.getUserByUsername(usernames.get(1 - turn)));
             url1 = new File(Objects.requireNonNull(User.getUserByUsername(usernames.get(1 - turn))).getProfileURL()).
                     toURI().toURL();
         } catch (MalformedURLException e) {
@@ -454,12 +460,14 @@ public class DuelModel {
                     DuelView.showCardImage.setImage(null);
                 }
             });
+
         }
         for (int i = 0; i < handCards.get(turn).size(); i++) {
             handCardUser = handCardUser + "c    ";
             ImageView image = getCardImage(handCards.get(turn).get(i));
             DuelView.downHBoxS.getChildren().set(i, image);
             String descriptionOfCard = handCards.get(turn).get(i).getDescription();
+            Card card = handCards.get(turn).get(i);
             image.setOnMouseEntered(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -473,6 +481,18 @@ public class DuelModel {
                 public void handle(MouseEvent event) {
                     DuelView.showCardImage.setImage(null);
                     DuelView.specificationsOfCard.setText("");
+                }
+            });
+
+            image.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (card.getCategory().equals("Monster")) {
+                        if (!card.isHasSpecialSummon() && !card.getCardType().equals("Ritual")
+                                && card.getLevel() >= 4) {
+                            normalSummonGraphic(card);
+                        }
+                    }
                 }
             });
         }
@@ -539,6 +559,23 @@ public class DuelModel {
         board.add(String.valueOf(playersCards.get(turn).size()));
         board.add(usernames.get(turn) + ":" + lifePoints.get(turn));
 
+    }
+
+    public void normalSummonGraphic(Card card) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Choose Set Or Summon");
+        alert.setContentText("Do You Want Set Or Summon This Card?");
+        ButtonType summonButton = new ButtonType("Summon");
+        ButtonType setButton = new ButtonType("Set");
+        alert.getButtonTypes().setAll(summonButton, setButton);
+        alert.showAndWait().ifPresent(type -> {
+            if (type == summonButton) {
+                setSelectedCard(turn, card, "Hand");
+                MainPhaseController.getInstance().summon();
+            } else if (type == setButton) {
+                System.out.println("Set");
+            }
+        });
     }
 
     public ImageView getCardImage(Card card) {
