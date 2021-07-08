@@ -86,10 +86,6 @@ public class DuelView implements Initializable {
         return duelView;
     }
 
-    public void addToUpBox(ImageView imageView) {
-        upHBox.getChildren().add(imageView);
-    }
-
     public void start() {
         try {
             URL url = new File("src/main/java/FXMLFiles/DuelField.fxml").toURI().toURL();
@@ -428,7 +424,7 @@ public class DuelView implements Initializable {
             for (int j = 0; j < 5; j++) {
                 URL url = null;
                 try {
-                    url = new File("src/main/resource/Icons/_images_circle_.png").toURI().toURL();
+                    url = new File("src/main/resource/Icons/100201Parts1.dds.png").toURI().toURL();
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
@@ -441,10 +437,10 @@ public class DuelView implements Initializable {
                 fieldsGridPane.setVgap(15);
             }
         }
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 8; i++) {
             URL url = null;
             try {
-                url = new File("src/main/resource/Icons/_images_circle_.png").toURI().toURL();
+                url = new File("src/main/resource/Icons/100401Parts1.dds.png").toURI().toURL();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -457,6 +453,7 @@ public class DuelView implements Initializable {
             imageView1.setFitWidth(80);
             upHBox.setSpacing(20);
             downHBox.setSpacing(20);
+            if (i != 7)
             upHBox.getChildren().add(imageView);
             downHBox.getChildren().add(imageView1);
         }

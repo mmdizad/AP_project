@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -460,6 +461,7 @@ public class DuelModel {
             ImageView image = getCardImage(handCards.get(turn).get(i));
             DuelView.downHBoxS.getChildren().set(i, image);
             String descriptionOfCard = handCards.get(turn).get(i).getDescription();
+
             image.setOnMouseEntered(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
