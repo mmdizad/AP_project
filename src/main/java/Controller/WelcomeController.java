@@ -27,13 +27,6 @@ public class WelcomeController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loginButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-            }
-        });
-
         signUpButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
