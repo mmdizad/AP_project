@@ -632,18 +632,18 @@ public class DuelModel {
                 if (type == summonButton) {
                     setSelectedCard(turn, card, "Hand");
                     String response = MainPhaseController.getInstance().summon();
-                    errorOrSuccessLBL(response);
+                    errorOrSuccessLBLForSetAndSummon(response);
                 } else if (type == setButton) {
                     setSelectedCard(turn, card, "Hand");
                     String response = MainPhaseController.getInstance().set();
-                    errorOrSuccessLBL(response);
+                    errorOrSuccessLBLForSetAndSummon(response);
                 }
             });
         }
     }
 
-    public void errorOrSuccessLBL(String text) {
-        if (!text.equals("summoned successfully")) {
+    public void errorOrSuccessLBLForSetAndSummon(String text) {
+        if (!text.equals("summoned successfully") && !text.equals("set successfully")) {
             DuelView.informationLBL.setTextFill(Color.RED);
         }
         DuelView.informationLBL.setText(text);
