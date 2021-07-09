@@ -501,10 +501,16 @@ public class DuelModel {
             }
             if (monstersInField.get(turn).get(i) != null) {
                 conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
-                ImageView image = getCardImage(monstersInField.get(turn).get(i));
-                DuelView.hboxMonsterS.getChildren().set(i, image);
-                Card card = handCards.get(turn).get(i);
-                showCard(image, card);
+                if (monsterCondition.get(turn).get(i).split("/")[0].equals("OO") ||
+                        monsterCondition.get(turn).get(i).split("/")[0].equals("DO")) {
+                    ImageView image = getCardImage(monstersInField.get(turn).get(i));
+                    DuelView.hboxMonsterS.getChildren().set(i, image);
+                    showCard(image, monstersInField.get(turn).get(i));
+                } else {
+                    ImageView image1 = getUnknownCard();
+                    DuelView.hboxMonsterS.getChildren().set(i, image1);
+                    showCard(image1, monstersInField.get(turn).get(i));
+                }
             } else {
                 DuelView.hboxMonsterS.getChildren().set(i, getEmptyCardForBoard());
                 conditionMonsterUser.add("E");
@@ -565,7 +571,7 @@ public class DuelModel {
         image.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                DuelView.showCardImage.setImage(image.getImage());
+                DuelView.showCardImage.setImage(getCardImage(card).getImage());
                 if (card.getCategory().equals("Monster")) {
                     DuelView.specificationsOfCard.setText("Level: " + card.getLevel() + "\n" +
                             "AttackPower: " + card.getAttackPower() + "\n" + "DefensePower: "
@@ -624,20 +630,21 @@ public class DuelModel {
             alert.showAndWait().ifPresent(type -> {
                 if (type == summonButton) {
                     setSelectedCard(turn, card, "Hand");
-                     String response = MainPhaseController.getInstance().summon();
-                     errorOrSuccessLBL(response);
+                    String response = MainPhaseController.getInstance().summon();
+                    errorOrSuccessLBL(response);
                 } else if (type == setButton) {
-                    System.out.println("Set");
+                    setSelectedCard(turn, card, "Hand");
+                    String response = MainPhaseController.getInstance().set();
+                    errorOrSuccessLBL(response);
                 }
             });
         }
     }
 
     public void errorOrSuccessLBL(String text) {
-        if (!text.equals("summoned successfully")){
+        if (!text.equals("summoned successfully")) {
             DuelView.informationLBL.setTextFill(Color.RED);
         }
-        System.out.println(text);
         DuelView.informationLBL.setText(text);
         FadeTransition fadeTransition = new FadeTransition();
         fadeTransition.setDuration(Duration.seconds(3));
