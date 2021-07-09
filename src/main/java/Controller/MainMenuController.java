@@ -37,6 +37,9 @@ public class MainMenuController implements Initializable {
     @FXML
     public Button loginButton;
 
+    @FXML
+    public Button importAndExportBtn;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loginButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -134,6 +137,18 @@ public class MainMenuController implements Initializable {
                 ScoreBoardController scoreBoardController = ScoreBoardController.getInstance();
                 try {
                     scoreBoardController.showScoreBoard(stage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        importAndExportBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = (Stage) importAndExportBtn.getScene().getWindow();
+                try {
+                    ImportAndExportController.getInstance().showScene(stage);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
