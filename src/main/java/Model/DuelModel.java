@@ -626,7 +626,8 @@ public class DuelModel {
             alert.setContentText("Do You Want Set Or Summon This Card?");
             ButtonType summonButton = new ButtonType("Summon");
             ButtonType setButton = new ButtonType("Set");
-            alert.getButtonTypes().setAll(summonButton, setButton);
+            ButtonType cancelButton = new ButtonType("Cancel");
+            alert.getButtonTypes().setAll(summonButton, setButton, cancelButton);
             alert.showAndWait().ifPresent(type -> {
                 if (type == summonButton) {
                     setSelectedCard(turn, card, "Hand");
