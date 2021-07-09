@@ -502,6 +502,8 @@ public class DuelModel {
                 DuelView.hboxOpponentMonsterS.getChildren().set(i, getEmptyCardForBoard());
             }
             if (monstersInField.get(turn).get(i) != null) {
+                int counter = i + 1;
+                Card card = monstersInField.get(turn).get(i);
                 conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
                 if (monsterCondition.get(turn).get(i).split("/")[0].equals("OO") ||
                         monsterCondition.get(turn).get(i).split("/")[0].equals("DO")) {
@@ -512,6 +514,12 @@ public class DuelModel {
                     ImageView image1 = getUnknownCard();
                     DuelView.hboxMonsterS.getChildren().set(i, image1);
                     showCard(image1, monstersInField.get(turn).get(i));
+                    image1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            flipSummonGraphic(card, counter);
+                        }
+                    });
                 }
             } else {
                 DuelView.hboxMonsterS.getChildren().set(i, getEmptyCardForBoard());
@@ -675,14 +683,35 @@ public class DuelModel {
                     String response = MainPhaseController.getInstance().set();
                     errorOrSuccessLBLForSetAndSummon(response);
                 } else if (type == activateButton) {
+                    setSelectedCard(turn, card, "Hand");
+                    String response = MainPhaseController.getInstance().activateSpellEffectMainController();
+                    errorOrSuccessLBLForSetAndSummon(response);
+                }
+            });
+        }
+    }
 
+    public void flipSummonGraphic(Card card, int i) {
+        if (DuelView.currentPhase.equals("mainPhase1") || DuelView.currentPhase.equals("mainPhase2")) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Do You Want FlipSummon This Card?");
+            ButtonType summonButton = new ButtonType("FlipSummon");
+            ButtonType cancelButton = new ButtonType("Cancel");
+            alert.getButtonTypes().setAll(summonButton, cancelButton);
+            alert.showAndWait().ifPresent(type -> {
+                if (type == summonButton) {
+                    setSelectedCard(turn, card, "My/DH/" + i);
+                    String response = MainPhaseController.getInstance().flipSummon();
+                    errorOrSuccessLBLForSetAndSummon(response);
+                    getBoard();
                 }
             });
         }
     }
 
     public void errorOrSuccessLBLForSetAndSummon(String text) {
-        if (!text.equals("summoned successfully") && !text.equals("set successfully")) {
+        if (!text.equals("summoned successfully") && !text.equals("set successfully")
+                && !text.equals("flip summoned successfully")) {
             DuelView.informationLBL.setTextFill(Color.RED);
         }
         DuelView.informationLBL.setText(text);
@@ -783,7 +812,8 @@ public class DuelModel {
     }
 
     public void flipSummon(int place) {
-        monsterCondition.get(turn).add(place, "OO/" + place + 1);
+        place = place + 1;
+        monsterCondition.get(turn).set(place - 1, "OO/" + place);
         deSelectedCard();
     }
 
