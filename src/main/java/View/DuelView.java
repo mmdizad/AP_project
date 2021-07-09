@@ -466,7 +466,7 @@ public class DuelView implements Initializable {
     }
 
 
-    public ImageView getImage(){
+    public ImageView getImage() {
         URL url = null;
         try {
             url = new File("src/main/resource/Icons/100201Parts1.dds.png").toURI().toURL();
