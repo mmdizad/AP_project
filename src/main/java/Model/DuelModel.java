@@ -3,15 +3,13 @@ package Model;
 import Controller.DuelController;
 import Controller.MainPhaseController;
 import View.DuelView;
-import com.sun.org.apache.bcel.internal.classfile.Code;
+import View.MainPhaseView;
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -464,6 +462,7 @@ public class DuelModel {
                 DuelView.downHBoxS.getChildren().set(i, image);
                 Card card = handCards.get(turn).get(i);
                 showCard(image, card);
+                int finalI = i;
                 image.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -472,6 +471,9 @@ public class DuelModel {
                                     && card.getLevel() <= 4) {
                                 normalSummonGraphic(card);
                             }
+                        }else if(card.getCategory().equals("Spell")||card.getCategory().equals("Spell")){
+                            MainPhaseView.getInstance().run("select --hand "+ finalI);
+                            MainPhaseView.getInstance().run("set");
                         }
                     }
                 });
@@ -521,13 +523,20 @@ public class DuelModel {
                 DuelView.hboxOpponenetSpellS.getChildren().set(i, getUnknownCard());
             } else {
                 spellConditionOpponent.add("E");
-
+                DuelView.hboxOpponenetSpellS.getChildren().set(i, getEmptyCardForBoard());
             }
             if (spellsAndTrapsInFiled.get(turn).get(i) != null) {
                 spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/")[0]);
+                if(spellAndTrapCondition.get(turn).get(i).split("/")[0].equals("O"))
                 DuelView.hboxSpellS.getChildren().set(i, getCardImage(spellsAndTrapsInFiled.get(turn).get(i)));
+                else{
+                   ImageView spellSet = getUnknownCard();
+                   showCard(spellSet,spellsAndTrapsInFiled.get(turn).get(i));
+                    DuelView.hboxSpellS.getChildren().set(i,spellSet );
+                }
             } else {
                 spellConditionUser.add("E");
+                DuelView.hboxSpellS.getChildren().set(i, getEmptyCardForBoard());
             }
 
         }
@@ -539,8 +548,11 @@ public class DuelModel {
         }
         if (field.get(turn).get(0) != null)
             DuelView.userFieldS = getCardImage(field.get(turn).get(0));
+        else
+            DuelView.userFieldS.setImage(getEmptyCardForBoard().getImage());
         if (field.get(1 - turn).get(0) != null)
             DuelView.opponentFieldS = getCardImage(field.get(1 - turn).get(0));
+        else DuelView.opponentFieldS.setImage(getEmptyCardForBoard().getImage());
 
         String spellFieldOfOpponent = "    " + spellConditionOpponent.get(3) + "    " + spellConditionOpponent.get(1) + "    " + spellConditionOpponent.get(0) + "    " + spellConditionOpponent.get(2) + "    " + spellConditionOpponent.get(4);
         String spellFieldUser = "    " + spellConditionUser.get(4) + "    " + spellConditionUser.get(2) + "    " + spellConditionUser.get(0) + "    " + spellConditionUser.get(1) + "    " + spellConditionUser.get(3);
@@ -622,6 +634,8 @@ public class DuelModel {
     public void normalSummonGraphic(Card card) {
         if (DuelView.currentPhase.equals("mainPhase1") || DuelView.currentPhase.equals("mainPhase2")) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText(null);
+            alert.setGraphic(null);
             alert.setTitle("Choose Set Or Summon");
             alert.setContentText("Do You Want Set Or Summon This Card?");
             ButtonType summonButton = new ButtonType("Summon");

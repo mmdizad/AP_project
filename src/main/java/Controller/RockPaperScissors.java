@@ -1,18 +1,19 @@
 package Controller;
 
-import View.DuelView;
 import View.StartDuelView;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -173,6 +174,8 @@ public class RockPaperScissors implements Initializable {
 
     public void starterTheGame(int turn) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setGraphic(null);
         alert.setTitle("Choose who start game");
         if (turn == 0) {
             alert.setContentText(LoginAndSignUpController.user.getUsername() + " must choose starter Duel" + "\n" +
