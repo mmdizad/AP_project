@@ -404,6 +404,7 @@ public class DuelView implements Initializable {
         return matcher;
     }
 
+
     public void showGraveyardForSomeClasses(int turn) {
         ArrayList<String> output = DuelController.getInstance().showGraveYard(turn);
         for (String s : output) {

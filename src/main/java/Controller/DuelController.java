@@ -43,7 +43,7 @@ public class DuelController {
     //این تابع حین بازی صدا زده میشه تا کارت های ورودی شامل میدان شوند
     public void activeFieldInGame() {
         if (duelModel.getField().get(duelModel.turn).get(0) != null) {
-            Card spell =  duelModel.getField().get(duelModel.turn).get(0);
+            Card spell = duelModel.getField().get(duelModel.turn).get(0);
             if (spell.getName().equals("Yami"))
                 effectOfYami(1);
             else if (spell.getName().equals("Forest"))
@@ -124,7 +124,7 @@ public class DuelController {
 
     public void deActiveOldField() {
         if (duelModel.getField().get(duelModel.turn).get(0) != null) {
-            Card spell =  duelModel.getField().get(duelModel.turn).get(0);
+            Card spell = duelModel.getField().get(duelModel.turn).get(0);
             if (spell.getName().equals("Yami"))
                 effectOfYami(-1);
             else if (spell.getName().equals("Forest"))
@@ -172,7 +172,7 @@ public class DuelController {
     public String activeSetZone() {
         deActiveOldField();
         duelModel.activeField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
-        Card spell =  duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        Card spell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
         duelModel.getField().get(duelModel.turn).set(1, null);
         deselect();
         if (spell.getName().equals("Yami"))
@@ -192,7 +192,7 @@ public class DuelController {
     public String activeZoneFromHand() {
         deActiveOldField();
         duelModel.activeField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
-        Card spell =  duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        Card spell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
         duelModel.getHandCards().get(duelModel.turn).remove(duelModel.getSelectedCards().get(duelModel.turn).get(0));
         if (spell.getName().equals("Yami"))
             return effectOfYami(1);
@@ -1238,16 +1238,16 @@ public class DuelController {
     }
 
     public String activeSpellFromHand() {
-        if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(0) == null) {
-            duelModel.addSpellAndTrapFromHandToGame("O/1", 0);
-        } else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(1) == null) {
-            duelModel.addSpellAndTrapFromHandToGame("O/2", 1);
-        } else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(2) == null) {
-            duelModel.addSpellAndTrapFromHandToGame("O/3", 2);
-        } else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(3) == null) {
-            duelModel.addSpellAndTrapFromHandToGame("O/4", 3);
-        } else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(4) == null) {
-            duelModel.addSpellAndTrapFromHandToGame("O/5", 4);
+        if (DuelController.getInstance().duelModel.getSpellsAndTrapsInFiled().get(DuelController.getInstance().duelModel.turn).get(0) == null) {
+            DuelController.getInstance().duelModel.addSpellAndTrapFromHandToGame("O/1", 0);
+        } else if (DuelController.getInstance().duelModel.getSpellsAndTrapsInFiled().get(DuelController.getInstance().duelModel.turn).get(1) == null) {
+            DuelController.getInstance().duelModel.addSpellAndTrapFromHandToGame("O/2", 1);
+        } else if (DuelController.getInstance().duelModel.getSpellsAndTrapsInFiled().get(DuelController.getInstance().duelModel.turn).get(2) == null) {
+            DuelController.getInstance().duelModel.addSpellAndTrapFromHandToGame("O/3", 2);
+        } else if (DuelController.getInstance().duelModel.getSpellsAndTrapsInFiled().get(DuelController.getInstance().duelModel.turn).get(3) == null) {
+            DuelController.getInstance().duelModel.addSpellAndTrapFromHandToGame("O/4", 3);
+        } else if (DuelController.getInstance().duelModel.getSpellsAndTrapsInFiled().get(DuelController.getInstance().duelModel.turn).get(4) == null) {
+            DuelController.getInstance().duelModel.addSpellAndTrapFromHandToGame("O/5", 4);
         }
         return "spell activated";
     }

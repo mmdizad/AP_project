@@ -3,15 +3,12 @@ package Model;
 import Controller.DuelController;
 import Controller.MainPhaseController;
 import View.DuelView;
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -472,8 +469,10 @@ public class DuelModel {
                                     && card.getLevel() <= 4) {
                                 normalSummonGraphic(card);
                             }
-                        } else {
-                            setSpellAndTrapGraphic(card);
+                        } else if (card.getCategory().equals("Spell")) {
+                            setAndActivateSpellGraphic(card);
+                        } else if (card.getCategory().equals("Trap")) {
+                            setTrapGraphic(card);
                         }
                     }
                 });
@@ -542,6 +541,8 @@ public class DuelModel {
                 DuelView.hboxOpponenetSpellS.getChildren().set(i, getEmptyCardForBoard());
             }
             if (spellsAndTrapsInFiled.get(turn).get(i) != null) {
+                Card card = spellsAndTrapsInFiled.get(turn).get(i);
+                int counter = i + 1;
                 spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/")[0]);
                 if (spellAndTrapCondition.get(turn).get(i).split("/")[0].equals("O")) {
                     ImageView image = getCardImage(spellsAndTrapsInFiled.get(turn).get(i));
@@ -551,6 +552,14 @@ public class DuelModel {
                     ImageView image1 = getUnknownCard();
                     DuelView.hboxSpellS.getChildren().set(i, image1);
                     showCard(image1, spellsAndTrapsInFiled.get(turn).get(i));
+                    if (spellsAndTrapsInFiled.get(turn).get(i).getCategory().equals("Spell")) {
+                        image1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                activeSpellCard(card, counter);
+                            }
+                        });
+                    }
                 }
             } else {
                 spellConditionUser.add("E");
@@ -668,7 +677,7 @@ public class DuelModel {
         }
     }
 
-    public void setSpellAndTrapGraphic(Card card) {
+    public void setAndActivateSpellGraphic(Card card) {
         if (DuelView.currentPhase.equals("mainPhase1") || DuelView.currentPhase.equals("mainPhase2")) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Choose Set Or Activate");
@@ -684,8 +693,48 @@ public class DuelModel {
                     errorOrSuccessLBLForSetAndSummon(response);
                 } else if (type == activateButton) {
                     setSelectedCard(turn, card, "Hand");
-                    String response = MainPhaseController.getInstance().activateSpellEffectMainController();
+                    String response = MainPhaseController.getInstance().activeSpellFromHand();
                     errorOrSuccessLBLForSetAndSummon(response);
+                }
+            });
+        }
+    }
+
+    public void setTrapGraphic(Card card) {
+        if (DuelView.currentPhase.equals("mainPhase1") || DuelView.currentPhase.equals("mainPhase2")) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Choose Set");
+            alert.setContentText("Do You Want Set This Card?");
+            ButtonType setButton = new ButtonType("Set");
+            ButtonType cancelButton = new ButtonType("Cancel");
+            alert.getButtonTypes().setAll(setButton, cancelButton);
+            alert.showAndWait().ifPresent(type -> {
+                if (type == setButton) {
+                    setSelectedCard(turn, card, "Hand");
+                    String response = MainPhaseController.getInstance().set();
+                    errorOrSuccessLBLForSetAndSummon(response);
+                }
+            });
+        }
+    }
+
+    public void activeSpellCard(Card card, int i) {
+        if (DuelView.currentPhase.equals("mainPhase1") || DuelView.currentPhase.equals("mainPhase2")
+         || DuelView.currentPhase.equals("battlePhase")) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Choose Active");
+            alert.setContentText("Do You Want Active This Card?");
+            ButtonType activeButton = new ButtonType("Active");
+            ButtonType cancelButton = new ButtonType("Cancel");
+            alert.getButtonTypes().setAll(activeButton, cancelButton);
+            alert.showAndWait().ifPresent(type -> {
+                if (type == activeButton) {
+                    setSelectedCard(turn, card, "My/H/" + i);
+                    spellsAndTrapsInFiled.get(turn).set(i - 1, selectedCards.get(turn).get(0));
+                    int i1 = i - 1;
+                    spellAndTrapCondition.get(turn).set(i - 1, "O/" + i1);
+                    errorOrSuccessLBLForSetAndSummon("activated successfully!");
+                    getBoard();
                 }
             });
         }
@@ -711,7 +760,7 @@ public class DuelModel {
 
     public void errorOrSuccessLBLForSetAndSummon(String text) {
         if (!text.equals("summoned successfully") && !text.equals("set successfully")
-                && !text.equals("flip summoned successfully")) {
+                && !text.equals("flip summoned successfully") && !text.equals("activated successfully!")) {
             DuelView.informationLBL.setTextFill(Color.RED);
         }
         DuelView.informationLBL.setText(text);

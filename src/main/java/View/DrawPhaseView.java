@@ -68,7 +68,7 @@ public class DrawPhaseView extends DuelView {
 
     public String scanResponseForScanner() {
         System.out.println("do you want to change it with monster in opponent graveyard int this turn? (enter yes or no)");
-        return scanner1.nextLine();
+        return "";
     }
 
     public int scanPlaceOfCardForInsteadOfScanner() {
