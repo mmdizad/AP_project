@@ -19,14 +19,8 @@
 
         <ImageView fitHeight="90.0" fitWidth="107.0" layoutX="3.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
         <ImageView fx:id="userField" fitHeight="130.0" fitWidth="110.0" layoutX="146.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../resource/Monsters/Unknown.jpg" />
-            </image>
         </ImageView>
         <ImageView fx:id="opponentField" fitHeight="130.0" fitWidth="110.0" layoutX="1236.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../resource/Monsters/Unknown.jpg" />
-            </image>
         </ImageView>
         <ImageView fx:id="opponentDeck" fitHeight="130.0" fitWidth="110.0" layoutX="138.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
             <image>

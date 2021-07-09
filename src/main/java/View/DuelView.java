@@ -1,6 +1,9 @@
 package View;
 
-import Controller.*;
+import Controller.DuelController;
+import Controller.LoginAndSignUpController;
+import Controller.NewCardToHandController;
+import Controller.RockPaperScissors;
 import Model.DuelModel;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -15,12 +18,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -76,6 +77,7 @@ public class DuelView implements Initializable {
     public static HBox hboxMonsterS;
     public static HBox hboxSpellS;
     public static Label informationLBL;
+
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
@@ -432,14 +434,15 @@ public class DuelView implements Initializable {
         hboxMonsterS = hboxMonster;
         hboxSpellS = hboxSpell;
         informationLBL = errorLBL;
+
         for (int j = 0; j < 5; j++) {
-            hboxMonsterS.setSpacing(90);
+            hboxMonsterS.setSpacing(95);
             hboxMonsterS.getChildren().add(getImage());
-            hboxOpponentMonsterS.setSpacing(90);
+            hboxOpponentMonsterS.setSpacing(95);
             hboxOpponentMonsterS.getChildren().add(getImage());
-            hboxSpellS.setSpacing(90);
+            hboxSpellS.setSpacing(95);
             hboxSpellS.getChildren().add(getImage());
-            hboxOpponenetSpellS.setSpacing(90);
+            hboxOpponenetSpellS.setSpacing(95);
             hboxOpponenetSpellS.getChildren().add(getImage());
         }
         for (int i = 0; i < 8; i++) {

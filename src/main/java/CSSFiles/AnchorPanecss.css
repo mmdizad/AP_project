@@ -50,4 +50,8 @@
     -fx-background-color: #9481bf;
     -fx-background-size: cover;
 }
+.graveYard{
+    -fx-background-image : url(../../resource/Icons/GUI_T_WCS_Window2.dds.png);
+    -fx-background-size: cover;
+}
 
