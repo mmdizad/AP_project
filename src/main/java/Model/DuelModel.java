@@ -472,6 +472,8 @@ public class DuelModel {
                                     && card.getLevel() <= 4) {
                                 normalSummonGraphic(card);
                             }
+                        } else {
+                            setSpellAndTrapGraphic(card);
                         }
                     }
                 });
@@ -518,18 +520,34 @@ public class DuelModel {
 
             if (spellsAndTrapsInFiled.get(1 - turn).get(i) != null) {
                 spellConditionOpponent.add(spellAndTrapCondition.get(1 - turn).get(i).split("/")[0]);
-                DuelView.hboxOpponenetSpellS.getChildren().set(i, getUnknownCard());
+                if (spellAndTrapCondition.get(1 - turn).get(i).split("/")[0].equals("O")) {
+                    ImageView image = getCardImage(spellsAndTrapsInFiled.get(1 - turn).get(i));
+                    DuelView.hboxOpponenetSpellS.getChildren().set(i, image);
+                    showCard(image, spellsAndTrapsInFiled.get(1 - turn).get(i));
+                } else {
+                    ImageView image1 = getUnknownCard();
+                    DuelView.hboxOpponenetSpellS.getChildren().set(i, image1);
+                    showUnKnownCard(image1);
+                }
             } else {
                 spellConditionOpponent.add("E");
-
+                DuelView.hboxOpponenetSpellS.getChildren().set(i, getEmptyCardForBoard());
             }
             if (spellsAndTrapsInFiled.get(turn).get(i) != null) {
                 spellConditionUser.add(spellAndTrapCondition.get(turn).get(i).split("/")[0]);
-                DuelView.hboxSpellS.getChildren().set(i, getCardImage(spellsAndTrapsInFiled.get(turn).get(i)));
+                if (spellAndTrapCondition.get(turn).get(i).split("/")[0].equals("O")) {
+                    ImageView image = getCardImage(spellsAndTrapsInFiled.get(turn).get(i));
+                    DuelView.hboxSpellS.getChildren().set(i, image);
+                    showCard(image, spellsAndTrapsInFiled.get(turn).get(i));
+                } else {
+                    ImageView image1 = getUnknownCard();
+                    DuelView.hboxSpellS.getChildren().set(i, image1);
+                    showCard(image1, spellsAndTrapsInFiled.get(turn).get(i));
+                }
             } else {
                 spellConditionUser.add("E");
+                DuelView.hboxSpellS.getChildren().set(i, getEmptyCardForBoard());
             }
-
         }
         for (int i = 0; i < graveyard.get(1 - turn).size(); i++) {
             DuelView.opponentBinS = getCardImage(graveyard.get(1 - turn).get(i));
@@ -637,6 +655,27 @@ public class DuelModel {
                     setSelectedCard(turn, card, "Hand");
                     String response = MainPhaseController.getInstance().set();
                     errorOrSuccessLBLForSetAndSummon(response);
+                }
+            });
+        }
+    }
+
+    public void setSpellAndTrapGraphic(Card card) {
+        if (DuelView.currentPhase.equals("mainPhase1") || DuelView.currentPhase.equals("mainPhase2")) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Choose Set Or Activate");
+            alert.setContentText("Do You Want Set Or Activate This Card?");
+            ButtonType setButton = new ButtonType("Set");
+            ButtonType activateButton = new ButtonType("Activate");
+            ButtonType cancelButton = new ButtonType("Cancel");
+            alert.getButtonTypes().setAll(setButton, activateButton, cancelButton);
+            alert.showAndWait().ifPresent(type -> {
+                if (type == setButton) {
+                    setSelectedCard(turn, card, "Hand");
+                    String response = MainPhaseController.getInstance().set();
+                    errorOrSuccessLBLForSetAndSummon(response);
+                } else if (type == activateButton) {
+
                 }
             });
         }
