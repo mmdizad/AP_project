@@ -3,17 +3,23 @@ package Model;
 import Controller.DuelController;
 import Controller.MainPhaseController;
 import View.DuelView;
+import View.GraveYard;
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -551,15 +557,33 @@ public class DuelModel {
                 }
             } else {
                 spellConditionUser.add("E");
+                DuelView.hboxSpellS.getChildren().set(i,getEmptyCardForBoard());
             }
 
         }
-        for (int i = 0; i < graveyard.get(1 - turn).size(); i++) {
-            DuelView.opponentBinS = getCardImage(graveyard.get(1 - turn).get(i));
-        }
-        for (int i = 0; i < graveyard.get(turn).size(); i++) {
-            DuelView.userBinS = getCardImage(graveyard.get(turn).get(i));
-        }
+        DuelView.opponentBinS.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                showGraveYard();
+                for (int i = 0; i < graveyard.get(1 - turn).size(); i++) {
+                    GraveYard.graveYardHboxS.getChildren().set(i,getCardImage(graveyard.get(1 - turn).get(i)));
+                }
+            }
+        });
+        if(graveyard.get(1-turn).size()>0)
+        DuelView.opponentBinS = getCardImage(graveyard.get(1 - turn).get(0));
+       DuelView.userBinS.setOnMouseClicked(new EventHandler<MouseEvent>() {
+           @Override
+           public void handle(MouseEvent event) {
+               showGraveYard();
+               for (int i = 0; i < graveyard.get(turn).size(); i++) {
+                 GraveYard.graveYardHboxS.getChildren().set(i,getCardImage(graveyard.get(turn).get(i)));
+               }
+           }
+       });
+
+        if(graveyard.get(turn).size()>0)
+            DuelView.opponentBinS = getCardImage(graveyard.get(turn).get(0));
         if (field.get(turn).get(0) != null)
             DuelView.userFieldS = getCardImage(field.get(turn).get(0));
         if (field.get(1 - turn).get(0) != null)
@@ -626,6 +650,27 @@ public class DuelModel {
         imageView.setFitHeight(110);
         imageView.setFitWidth(90);
         return imageView;
+    }
+
+    public void showGraveYard(){
+        URL url = null;
+        try {
+            url = new File("src/main/java/FXMLFiles/GraveYard.fxml").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Parent root = null;
+        try {
+            assert url != null;
+            root = FXMLLoader.load(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage mainMenuStage = new Stage();
+        mainMenuStage.setTitle("graveyard");
+        assert root != null;
+        mainMenuStage.setScene(new Scene(root, 1320, 700));
+        mainMenuStage.show();
     }
 
     public ImageView getEmptyCardForHand() {

@@ -77,6 +77,7 @@ public class DuelView implements Initializable {
     public static HBox hboxMonsterS;
     public static HBox hboxSpellS;
     public static Label informationLBL;
+
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
@@ -432,6 +433,7 @@ public class DuelView implements Initializable {
         hboxMonsterS = hboxMonster;
         hboxSpellS = hboxSpell;
         informationLBL = errorLBL;
+
         for (int j = 0; j < 5; j++) {
             hboxMonsterS.setSpacing(95);
             hboxMonsterS.getChildren().add(getImage());
