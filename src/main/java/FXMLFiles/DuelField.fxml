@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="DuelFieldPane" prefHeight="766.0" prefWidth="1334.0" styleClass="normalField" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DuelView">
+<AnchorPane fx:id="DuelFieldPane" prefHeight="766.0" prefWidth="1334.0" styleClass="normalField" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DuelView">
     <children>
         <HBox fx:id="upHBox" layoutX="363.0" layoutY="14.0" prefHeight="85.0" prefWidth="476.0">
 
@@ -148,5 +148,15 @@
          </font>
       </Label>
       <HBox fx:id="hboxOpponentMonster1" layoutX="283.0" layoutY="264.0" prefHeight="100.0" prefWidth="601.0" />
+      <ImageView fx:id="cheatBTN" fitHeight="57.0" fitWidth="62.0" layoutX="161.0" layoutY="686.0" onMouseClicked="#cheat" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resource/Items/ItemA0125.dds.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="163.0" layoutY="743.0" text="increaseLife">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

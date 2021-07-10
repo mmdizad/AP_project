@@ -5,6 +5,7 @@ import Controller.MainPhaseController;
 import View.DuelView;
 import View.GraveYard;
 import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -372,6 +373,18 @@ public class DuelModel {
     }
 
     public void addCardToGraveyard(int turn, Card card) {
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setDuration(Duration.seconds(3));
+        translateTransition.setNode(card.getImageView());
+        translateTransition.setFromX(card.getImageView().getX());
+        translateTransition.setFromY(card.getImageView().getY());
+        if(turn==this.turn){
+            translateTransition.setToX(DuelView.userBinS.getX());
+            translateTransition.setToY(DuelView.userBinS.getY());
+        }else{
+            translateTransition.setToX(DuelView.opponentBinS.getX());
+            translateTransition.setToY(DuelView.opponentBinS.getY());
+        }
         if (card.getCategory().equals("Monster")) {
             //اینارو برای میدان زدم وقتی که کارت حذف میشه باید
             card.setAttackPower(Card.getCardByName(card.name).getAttackPower());

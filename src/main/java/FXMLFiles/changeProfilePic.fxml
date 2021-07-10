@@ -23,7 +23,7 @@
         </rowConstraints>
       </GridPane>
       <ImageView fx:id="profImageInChangeImg" fitHeight="115.0" fitWidth="185.0" layoutX="448.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="125.0" fitWidth="134.0" layoutX="588.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="125.0" fitWidth="134.0" layoutX="745.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
       <Label layoutX="337.0" layoutY="61.0" prefHeight="67.0" prefWidth="296.0" text="please click on image to set profile">
          <font>
             <Font size="14.0" />
