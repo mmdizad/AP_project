@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class BattlePhaseController extends DuelController {
 
-    public ArrayList<Integer> attackedCards = new ArrayList<>();
+    public ArrayList<Card> attackedCards = new ArrayList<>();
     private final DuelModel duelModel = duelController.duelModel;
 
     private static BattlePhaseController battlePhaseController = new BattlePhaseController();
@@ -34,17 +34,17 @@ public class BattlePhaseController extends DuelController {
             Card ourCard = selectedCards.get(duelModel.turn).get(0);
             ArrayList<HashMap<Card, String>> detailOfSelectedCards = duelModel.getDetailOfSelectedCard();
             String[] condition = detailOfSelectedCards.get(duelModel.turn).get(ourCard).split("/");
-            if (!ourCard.getCategory().equals("Monster") || !condition[0].equals("My") || !condition[1].equals("OO")) {
+            if (!ourCard.getCategory().equals("Monster") ) {
                 return "you can’t attack with this card";
             } else {
-                if (attackedCards.contains(Integer.parseInt(condition[2]))) {
+                if (attackedCards.contains(selectedCards.get(duelModel.turn).get(0))) {
                     return "this card already attacked";
                 } else {
                     if (monstersInField.get(1 - duelModel.turn).get(placeNumber - 1) == null) {
                         return "there is no card to attack here";
                     } else {
                         int ourCardFirstAttackPower = ourCard.getAttackPower();
-                        attackedCards.add(Integer.parseInt(condition[2]));
+                        attackedCards.add(selectedCards.get(duelModel.turn).get(0));
                         Card opponentCard = monstersInField.get(1 - duelModel.turn).get(placeNumber - 1);
                         for (int i = 1; i < 6; i++) {
                             Card card = duelModel.getSpellAndTrap(1 - duelModel.turn, i);
@@ -310,10 +310,10 @@ public class BattlePhaseController extends DuelController {
             Card ourCard = selectedCards.get(duelModel.turn).get(0);
             ArrayList<HashMap<Card, String>> detailOfSelectedCards = duelModel.getDetailOfSelectedCard();
             String[] condition = detailOfSelectedCards.get(duelModel.turn).get(ourCard).split("/");
-            if (!ourCard.getCategory().equals("Monster") || !condition[0].equals("My") || !condition[1].equals("OO")) {
+            if (!ourCard.getCategory().equals("Monster") ) {
                 return "you can’t attack with this card";
             } else {
-                if (attackedCards.contains(Integer.parseInt(condition[2]))) {
+                if (attackedCards.contains(selectedCards.get(duelModel.turn).get(0))) {
                     return "this card already attacked";
                 } else {
                     boolean canAttack = true;
@@ -326,9 +326,10 @@ public class BattlePhaseController extends DuelController {
                         return "you can’t attack the opponent directly";
                     } else {
                         int ourCardAttack = ourCard.getAttackPower();
-                        attackedCards.add(Integer.parseInt(condition[2]));
+                        attackedCards.add(selectedCards.get(duelModel.turn).get(0));
                         duelModel.decreaseLifePoint(ourCardAttack, 1 - duelModel.turn);
                         duelModel.deSelectedCard();
+                        System.out.println("you opponent receives " + ourCardAttack + " battale damage");
                         return "you opponent receives " + ourCardAttack + " battale damage";
                     }
                 }
