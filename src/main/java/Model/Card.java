@@ -52,7 +52,7 @@ public class Card {
             imageView.setFitHeight(120);
 
         } else {
-             URL url = null;
+            URL url = null;
             try {
                 url = new File("src/main/resource/SpellTrap/" + name + ".jpg").toURI().toURL();
             } catch (MalformedURLException e) {

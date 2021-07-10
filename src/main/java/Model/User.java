@@ -48,6 +48,10 @@ public class User {
 
     }
 
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
     public static User getUserByUsername(String username) {
         try {
             File openingUser = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users\\" + username + "user.txt");
@@ -175,7 +179,7 @@ public class User {
     }
 
     public void setUsername(String username) {
-       this.username=username;
+        this.username = username;
     }
 
     public String getPassword() {
