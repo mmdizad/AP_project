@@ -22,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -72,6 +73,10 @@ public class DuelView implements Initializable {
     public HBox hboxMonster;
     public HBox hboxSpell;
     public Label errorLBL;
+    public Label opponentUsername;
+    public Label userUsername;
+    public static Label userUsernameLBL;
+    public static Label opponentUsernameLBL;
     public static HBox hboxOpponenetSpellS;
     public static HBox hboxOpponentMonsterS;
     public static HBox hboxMonsterS;
@@ -434,7 +439,8 @@ public class DuelView implements Initializable {
         hboxMonsterS = hboxMonster;
         hboxSpellS = hboxSpell;
         informationLBL = errorLBL;
-
+        userUsernameLBL = userUsername;
+        opponentUsernameLBL = opponentUsername;
         for (int j = 0; j < 5; j++) {
             hboxMonsterS.setSpacing(95);
             hboxMonsterS.getChildren().add(getImage());

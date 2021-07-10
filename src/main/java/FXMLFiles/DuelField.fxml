@@ -112,6 +112,16 @@
                <font>
                   <Font size="13.0" />
                </font></Label>
+            <Label fx:id="userUsername" layoutX="22.0" layoutY="711.0" prefHeight="26.0" prefWidth="98.0">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <Label fx:id="opponentUsername" layoutX="24.0" layoutY="89.0" prefHeight="26.0" prefWidth="98.0">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
             </children>
         </Pane>
         <ImageView fx:id="opponentBin" fitHeight="130.0" fitWidth="110.0" layoutX="1219.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true" />
@@ -137,5 +147,6 @@
             <Font size="35.0" />
          </font>
       </Label>
+      <HBox fx:id="hboxOpponentMonster1" layoutX="283.0" layoutY="264.0" prefHeight="100.0" prefWidth="601.0" />
     </children>
 </AnchorPane>
