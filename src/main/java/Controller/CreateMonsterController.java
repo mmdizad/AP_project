@@ -55,7 +55,6 @@ public class CreateMonsterController implements Initializable {
         setAttributes();
         setTypesOfMonster();
 
-
         cardImage.requestFocus();
         cardImage.setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
