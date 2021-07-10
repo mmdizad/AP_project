@@ -40,6 +40,9 @@ public class MainMenuController implements Initializable {
     @FXML
     public Button importAndExportBtn;
 
+    @FXML
+    public Button createCardBTN;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loginButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -152,6 +155,30 @@ public class MainMenuController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        createCardBTN.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = (Stage) createCardBTN.getScene().getWindow();
+                URL url = null;
+                try {
+                    url = new File("src/main/java/FXMLFiles/CreateCard.fxml").toURI().toURL();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                Parent root = null;
+                try {
+                    assert url != null;
+                    root = FXMLLoader.load(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                stage.setTitle("CreateCard");
+                assert root != null;
+                stage.setScene(new Scene(root, 1920, 1150));
+                stage.show();
             }
         });
     }

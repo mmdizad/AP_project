@@ -84,3 +84,9 @@
     -fx-background-radius: 30;
     -fx-background-position: center;
 }
+
+.CreateCardBTN{
+    -fx-background-color: #97bebe;
+    -fx-background-radius: 30;
+    -fx-background-position: center;
+}
