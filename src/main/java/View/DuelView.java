@@ -82,7 +82,7 @@ public class DuelView implements Initializable {
     public static HBox hboxMonsterS;
     public static HBox hboxSpellS;
     public static Label informationLBL;
-
+    public static AnchorPane duelFieldPaneS;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
