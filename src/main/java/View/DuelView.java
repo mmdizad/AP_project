@@ -132,7 +132,7 @@ public class DuelView implements Initializable {
 
     public void mainPhase2BtnEvent(ActionEvent actionEvent) {
         if (currentPhase.equals("battlePhase") || currentPhase.equals("mainPhase1")) {
-            currentPhase.equals("mainPhase2");
+            currentPhase = "mainPhase2";
             changePhaseTxt.setText("MAIN PHASE 2");
             FadeTransition fadeTransition = new FadeTransition();
             fadeTransition.setDuration(Duration.seconds(2));
@@ -144,7 +144,7 @@ public class DuelView implements Initializable {
     }
 
     public void endPhaseBtnEvent(ActionEvent actionEvent) {
-        currentPhase.equals("mainPhase1");
+        currentPhase = "mainPhase1";
         changePhaseTxt.setText("MAIN PHASE 1");
         FadeTransition fadeTransition = new FadeTransition();
         fadeTransition.setDuration(Duration.seconds(2));
