@@ -1641,6 +1641,7 @@ public class DuelController {
     }
 
     public String effectOfUmiiruka(int activeOrdeActive) {
+        DuelView.duelFieldPaneS.setStyle("-fx-background-image: url(../../resource/Field/fie_yama.jpg)");
         for (int i = 0; i < 5; i++) {
             Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
             Monster monster1 = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
@@ -1664,7 +1665,7 @@ public class DuelController {
     }
 
     public String effectOfClosedForest(int activeOrdeActive) {
-
+        DuelView.duelFieldPaneS.setStyle("-fx-background-image: url(../../resource/Field/fie_mori.jpg)");
         for (int i = 0; i < 5; i++) {
             Monster monster = (Monster) duelModel.getMonstersInField().get(playerActiveCloseForest).get(i);
             if (monster != null)
@@ -1683,7 +1684,7 @@ public class DuelController {
     }
 
     public String effectOfForest(int activeOrdeActive) {
-
+        DuelView.duelFieldPaneS.setStyle("-fx-background-image: url(../../resource/Field/fie_sougen.jpg)");
         for (int i = 0; i < 5; i++) {
             Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(i);
             Card monster1 = duelModel.getMonstersInField().get(1 - duelModel.turn).get(i);
@@ -1708,6 +1709,7 @@ public class DuelController {
     }
 
     public String effectOfYami(int activeOrdeActive) {
+         DuelView.duelFieldPaneS.setStyle("-fx-background-image: url(../../resource/Field/fie_yami.jpg)");
         for (int i = 0; i < 5; i++) {
             Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
             Monster monster1 = (Monster) duelModel.getMonstersInField().get(1 - duelModel.turn).get(i);
