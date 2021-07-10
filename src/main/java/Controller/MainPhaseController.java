@@ -7,7 +7,6 @@ import View.MainPhaseView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.regex.Matcher;
 
 public class MainPhaseController extends DuelController {
     private static final MainPhaseController mainPhaseController = new MainPhaseController();
@@ -95,33 +94,18 @@ public class MainPhaseController extends DuelController {
         return "set successfully";
     }
 
-    public String setPosition(Matcher matcher) {
-        String newPosition = matcher.group(1);
+    public String setPosition() {
+
         int place = duelModel.getMonstersInField().get(duelModel.turn).indexOf(duelModel.getSelectedCards().get(duelModel.turn).get(0));
         if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) return "no card is selected yet";
         else if (!duelModel.getMonstersInField().get(duelModel.turn).contains(duelModel.getSelectedCards().get(duelModel.turn).get(0)))
             return "you can’t change this card position";
-        else if (newPosition.equals("attack")) {
-            if (duelModel.getMonsterCondition(duelModel.turn, place).equals("OO"))
-                return "this card is already in the wanted position";
             else if (duelModel.setPosition[place - 1])
                 return "you already changed this card position in this turn";
             else {
                 duelModel.changeAttackAndDefense(place);
                 return "monster card position changed successfully";
             }
-
-        } else {
-            if (duelModel.getMonsterCondition(duelModel.turn, place).equals("DO"))
-                return "this card is already in the wanted position";
-            else if (duelModel.setPosition[place - 1])
-                return "you already changed this card position in this turn";
-            else {
-                duelModel.changeAttackAndDefense(place);
-                return "monster card position changed successfully";
-            }
-        }
-
     }
 
     public String summon() {
