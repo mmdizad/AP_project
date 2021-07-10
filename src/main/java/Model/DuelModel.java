@@ -422,6 +422,8 @@ public class DuelModel {
     }
 
     public void getBoard() {
+        DuelView.userLifPointLBL.setText("    " + lifePoints.get(turn));
+        DuelView.opponentLifPointLBL.setText("   " + lifePoints.get(1 - turn));
         ImageView imageView1;
         URL url = null;
         try {
