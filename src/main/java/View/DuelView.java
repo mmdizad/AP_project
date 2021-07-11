@@ -16,7 +16,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
@@ -551,35 +550,35 @@ public class DuelView implements Initializable {
         alert.setHeaderText(null);
         alert.setGraphic(null);
         alert.setTitle("Cheat");
-       alert.setContentText("do you want to increase 2000 life for 2000 coins?");
+        alert.setContentText("do you want to increase 2000 life for 2000 coins?");
 
         ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(okButton, noButton);
         alert.showAndWait().ifPresent(type -> {
             if (type == okButton) {
-                duelModel=DuelView.getInstance().duelModel;
-                User user =User.getUserByUsername(duelModel.getUsernames().get(duelModel.turn));
-               if(user.getCoins()>2000){
-                   user.decreaseCoins(2000);
-                   duelModel.increaseLifePoint(2000,duelModel.turn);
-                   changePhaseTxt.setText("Life increase successfully");
-                   FadeTransition fadeTransition = new FadeTransition();
-                   fadeTransition.setDuration(Duration.seconds(2));
-                   fadeTransition.setNode(changePhaseTxt);
-                   fadeTransition.setFromValue(1);
-                   fadeTransition.setToValue(0);
-                   fadeTransition.play();
-                   duelModel.getBoard();
-               }else{
-                   changePhaseTxt.setText("you dont have enough money!");
-                   FadeTransition fadeTransition = new FadeTransition();
-                   fadeTransition.setDuration(Duration.seconds(2));
-                   fadeTransition.setNode(changePhaseTxt);
-                   fadeTransition.setFromValue(1);
-                   fadeTransition.setToValue(0);
-                   fadeTransition.play();
-               }
+                duelModel = DuelView.getInstance().duelModel;
+                User user = User.getUserByUsername(duelModel.getUsernames().get(duelModel.turn));
+                if (user.getCoins() > 2000) {
+                    user.decreaseCoins(2000);
+                    duelModel.increaseLifePoint(2000, duelModel.turn);
+                    changePhaseTxt.setText("Life increase successfully");
+                    FadeTransition fadeTransition = new FadeTransition();
+                    fadeTransition.setDuration(Duration.seconds(2));
+                    fadeTransition.setNode(changePhaseTxt);
+                    fadeTransition.setFromValue(1);
+                    fadeTransition.setToValue(0);
+                    fadeTransition.play();
+                    duelModel.getBoard();
+                } else {
+                    changePhaseTxt.setText("you dont have enough money!");
+                    FadeTransition fadeTransition = new FadeTransition();
+                    fadeTransition.setDuration(Duration.seconds(2));
+                    fadeTransition.setNode(changePhaseTxt);
+                    fadeTransition.setFromValue(1);
+                    fadeTransition.setToValue(0);
+                    fadeTransition.play();
+                }
             } else if (type == noButton) {
 
             }
