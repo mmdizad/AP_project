@@ -2,6 +2,7 @@ package View;
 
 import Controller.DeckController;
 import Controller.LoginAndSignUpController;
+import Model.DuelModel;
 import Model.User;
 import javafx.stage.Stage;
 
@@ -44,7 +45,7 @@ public class StartDuelView extends MainMenu {
         if (round == 1) {
             DuelView duelView = DuelView.getInstance();
             duelView.selectFirstPlayer(secondUser.getUsername(), scanner, duelView, true);
-            printWinnerAndGiveScoreOneRound(duelView, LoginAndSignUpController.user, secondUser);
+            printWinnerAndGiveScoreOneRound(duelView.duelModel, LoginAndSignUpController.user, secondUser);
         } else {
             int userWins = 0;
             int secondPlayerWins = 0;
@@ -108,7 +109,7 @@ public class StartDuelView extends MainMenu {
         DuelView duelView = DuelView.getInstance();
         if (round1 == 1) {
             duelView.selectFirstPlayer(secondPlayerUserName1, scanner1, duelView, false);
-            printWinnerAndGiveScoreOneRound(duelView, LoginAndSignUpController.user, secondUser);
+            printWinnerAndGiveScoreOneRound(duelView.duelModel, LoginAndSignUpController.user, secondUser);
         } else {
             int userWins = 0;
             int secondPlayerWins = 0;
@@ -165,30 +166,36 @@ public class StartDuelView extends MainMenu {
         }
     }
 
-    public static void printWinnerAndGiveScoreOneRound(DuelView duelView, User firstUser, User secondUser) {
-        if (duelView.duelModel.getLifePoint(0) <= 0) {
+    public static String printWinnerAndGiveScoreOneRound(DuelModel duelModel, User firstUser, User secondUser) {
+        if (duelModel.getLifePoint(0) <= 0) {
             secondUser.setScore(1000);
-            secondUser.increaseCoins(1000 + duelView.duelModel.getLifePoint(1));
+            secondUser.increaseCoins(1000 + duelModel.getLifePoint(1));
             firstUser.increaseCoins(100);
-            System.out.println(secondUser.getUsername() + " won the game and the score is: 1000 - 0");
-        } else if (duelView.duelModel.getLifePoint(1) <= 0) {
+            LoginAndSignUpController.saveChangesToFileByUser(secondUser);
+            LoginAndSignUpController.saveChangesToFileByUser(firstUser);
+            return(secondUser.getUsername() + " won the game and the score is: 1000 - 0");
+        } else if (duelModel.getLifePoint(1) <= 0) {
             firstUser.setScore(1000);
-            firstUser.increaseCoins(1000 + duelView.duelModel.getLifePoint(1));
+            firstUser.increaseCoins(1000 + duelModel.getLifePoint(1));
             secondUser.increaseCoins(100);
-            System.out.println(firstUser.getUsername() + " won the game and the score is: 1000 - 0");
-        } else if (duelView.duelModel.turn == 0) {
+            LoginAndSignUpController.saveChangesToFileByUser(secondUser);
+            LoginAndSignUpController.saveChangesToFileByUser(firstUser);
+            return(firstUser.getUsername() + " won the game and the score is: 1000 - 0");
+        } else if (duelModel.turn == 0) {
             secondUser.setScore(1000);
-            secondUser.increaseCoins(1000 + duelView.duelModel.getLifePoint(1));
+            secondUser.increaseCoins(1000 + duelModel.getLifePoint(1));
             firstUser.increaseCoins(100);
-            System.out.println(secondUser.getUsername() + " won the game and the score is: 1000 - 0");
+            LoginAndSignUpController.saveChangesToFileByUser(secondUser);
+            LoginAndSignUpController.saveChangesToFileByUser(firstUser);
+            return(secondUser.getUsername() + " won the game and the score is: 1000 - 0");
         } else {
             firstUser.setScore(1000);
-            firstUser.increaseCoins(1000 + duelView.duelModel.getLifePoint(1));
+            firstUser.increaseCoins(1000 + duelModel.getLifePoint(1));
             secondUser.increaseCoins(100);
-            System.out.println(firstUser.getUsername() + " won the game and the score is: 1000 - 0");
+            LoginAndSignUpController.saveChangesToFileByUser(secondUser);
+            LoginAndSignUpController.saveChangesToFileByUser(firstUser);
+            return(firstUser.getUsername() + " won the game and the score is: 1000 - 0");
         }
-        LoginAndSignUpController.saveChangesToFileByUser(secondUser);
-        LoginAndSignUpController.saveChangesToFileByUser(firstUser);
     }
 
     public static void changeCardsBetweenRounds(User first, User second, Scanner scanner) {

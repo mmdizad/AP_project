@@ -1,10 +1,8 @@
 package View;
 
-import Controller.DuelController;
-import Controller.LoginAndSignUpController;
-import Controller.NewCardToHandController;
-import Controller.RockPaperScissors;
+import Controller.*;
 import Model.DuelModel;
+import com.sun.xml.internal.ws.api.client.ClientPipelineHook;
 import Model.User;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -32,6 +30,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -101,7 +103,7 @@ public class DuelView implements Initializable {
     protected boolean isCommandInvalid = true;
     protected boolean isAi;
     @FXML
-    Text changePhaseTxt;
+    public Text changePhaseTxt;
 
     public DuelView() {
 
@@ -128,6 +130,7 @@ public class DuelView implements Initializable {
 
     public void battlePhaseBtnEvent(ActionEvent actionEvent) {
         if (currentPhase.equals("mainPhase1")) {
+            BattlePhaseController.getInstance().attackedCards.clear();
             currentPhase = "battlePhase";
             changePhaseTxt.setText("BATTLE PHASE");
             FadeTransition fadeTransition = new FadeTransition();
@@ -184,9 +187,16 @@ public class DuelView implements Initializable {
         stage.setScene(new Scene(root, 1360, 765));
         stage.show();
 
-        Media media = new Media(Paths.get("src/main/resource/Music/yugioh.mp3").toUri().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                    new File("src/main/resource/Music/yugioh.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView, boolean isAi) {

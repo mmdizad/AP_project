@@ -1,12 +1,16 @@
 package Model;
 
-import Controller.DuelController;
-import Controller.MainPhaseController;
+import Controller.*;
 import View.DuelView;
 import View.GraveYard;
+import View.MainMenu;
+import View.StartDuelView;
 import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -15,14 +19,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.jws.soap.SOAPBinding;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DuelModel {
     private final ArrayList<Integer> lifePoints;
@@ -56,6 +64,7 @@ public class DuelModel {
     private ArrayList<ArrayList<Card>> activatedMonsterEffects;
     private HashMap<Card, Integer> cardsInsteadOfScanners;
     private ArrayList<HashMap<Card, Card>> equipSpells;
+
 
     public DuelModel(String playerUsername, String opponentUsername) {
         lifePoints = new ArrayList<>();
@@ -524,7 +533,7 @@ public class DuelModel {
                         @Override
                         public void handle(MouseEvent event) {
                             if (monsterCondition.get(turn).get(finalI).split("/")[0].equals("OO")) {
-                                attack(finalI);
+                                attack(finalI, monstersInField.get(turn).get(finalI), event);
                             }
                         }
                     });
@@ -676,6 +685,123 @@ public class DuelModel {
                 size()));
         board.add(usernames.get(turn) + ":" + lifePoints.get(turn));
 
+    }
+
+    public void attack(int i,Card card, MouseEvent event) {
+        if (DuelView.currentPhase.equals("battlePhase")) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText(null);
+            alert.setGraphic(null);
+            alert.setTitle("Choose attack");
+            alert.setContentText("choose attack to a card or direct?");
+            ButtonType attack1Button = new ButtonType("attack 1");
+            ButtonType attack2Button = new ButtonType("attack 2");
+            ButtonType attack3Button = new ButtonType("attack 3");
+            ButtonType attack4Button = new ButtonType("attack 4");
+            ButtonType attack5Button = new ButtonType("attack 5");
+            ButtonType attackDirectButton = new ButtonType("direct attack");
+            ButtonType cancelButton = new ButtonType("Cancel");
+
+            alert.getButtonTypes().setAll(attack1Button, attack2Button, attack3Button
+                    , attack4Button, attack5Button, attackDirectButton, cancelButton);
+            alert.showAndWait().ifPresent(type -> {
+                if (type == attack1Button) {
+                    setSelectedCard(turn, card, "My/OO/" + i+1);
+                    Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
+                    Matcher matcher1 = pattern1.matcher("attack 1");
+                    if (matcher1.find()) {
+                        BattlePhaseController.getInstance().attack(matcher1);
+                    }
+                    selectedCards.get(turn).set(0,null);
+                } else if (type == attack2Button) {
+                    setSelectedCard(turn, card, "My/OO/" + i+1);
+                    Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
+                    Matcher matcher1 = pattern1.matcher("attack 2");
+                    if (matcher1.find()) {
+                        BattlePhaseController.getInstance().attack(matcher1);
+                    }
+                    selectedCards.get(turn).set(0,null);
+                } else if (type == attack3Button) {
+                    setSelectedCard(turn, card, "My/OO/" + i+1);
+                    Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
+                    Matcher matcher1 = pattern1.matcher("attack 3");
+                    if (matcher1.find()) {
+                        BattlePhaseController.getInstance().attack(matcher1);
+                    }
+                    selectedCards.get(turn).set(0,null);
+                } else if (type == attack4Button) {
+                    setSelectedCard(turn, card, "My/OO/" + i+1);
+                    Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
+                    Matcher matcher1 = pattern1.matcher("attack 4");
+                    if (matcher1.find()) {
+                        BattlePhaseController.getInstance().attack(matcher1);
+                    }
+                    selectedCards.get(turn).set(0,null);
+                } else if (type == attack5Button) {
+                    setSelectedCard(turn, card, "My/OO/" + i+1);
+                    Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
+                    Matcher matcher1 = pattern1.matcher("attack 5");
+                    if (matcher1.find()) {
+                        BattlePhaseController.getInstance().attack(matcher1);
+                    }
+                    selectedCards.get(turn).set(0,null);
+                } else if (type == attackDirectButton) {
+                    setSelectedCard(turn, card, "My/OO/" + i+1);
+                    Pattern pattern1 = Pattern.compile("^attack direct$");
+                    Matcher matcher1 = pattern1.matcher("attack direct");
+                    if (matcher1.find()) {
+                        System.out.println(BattlePhaseController.getInstance().directAttack(matcher1));
+                    }
+                }
+                try {
+                    checkEndGame(event);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+    }
+
+    public void checkEndGame(MouseEvent event) throws IOException {
+        if (lifePoints.get(0) <= 0 || lifePoints.get(1) <= 0) {
+            DuelView.stage.close();
+            DeckController.getInstance().showSceneEndGame(event, checkWinner());
+        }
+    }
+
+
+    public String checkWinner() {
+        User secondUser = User.getUserByUsername(usernames.get(1));
+        User firstUser = User.getUserByUsername(usernames.get(0));
+        if (getLifePoint(0) <= 0) {
+            secondUser.setScore(1000);
+            secondUser.increaseCoins(1000 + getLifePoint(1));
+            firstUser.increaseCoins(100);
+            LoginAndSignUpController.saveChangesToFileByUser(secondUser);
+            LoginAndSignUpController.saveChangesToFileByUser(firstUser);
+            return(secondUser.getUsername() + " won the game and the score is: 1000 - 0");
+        } else if (getLifePoint(1) <= 0) {
+            firstUser.setScore(1000);
+            firstUser.increaseCoins(1000 + getLifePoint(1));
+            secondUser.increaseCoins(100);
+            LoginAndSignUpController.saveChangesToFileByUser(secondUser);
+            LoginAndSignUpController.saveChangesToFileByUser(firstUser);
+            return(firstUser.getUsername() + " won the game and the score is: 1000 - 0");
+        } else if (turn == 0) {
+            secondUser.setScore(1000);
+            secondUser.increaseCoins(1000 + getLifePoint(1));
+            firstUser.increaseCoins(100);
+            LoginAndSignUpController.saveChangesToFileByUser(secondUser);
+            LoginAndSignUpController.saveChangesToFileByUser(firstUser);
+            return(secondUser.getUsername() + " won the game and the score is: 1000 - 0");
+        } else {
+            firstUser.setScore(1000);
+            firstUser.increaseCoins(1000 + getLifePoint(1));
+            secondUser.increaseCoins(100);
+            LoginAndSignUpController.saveChangesToFileByUser(secondUser);
+            LoginAndSignUpController.saveChangesToFileByUser(firstUser);
+            return(firstUser.getUsername() + " won the game and the score is: 1000 - 0");
+        }
     }
 
     public void showCard(ImageView image, Card card) {
