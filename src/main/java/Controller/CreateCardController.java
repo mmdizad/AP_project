@@ -42,7 +42,7 @@ public class CreateCardController implements Initializable {
                 }
                 stage.setTitle("MainMenu");
                 assert root != null;
-                stage.setScene(new Scene(root, 1920, 1150));
+                stage.setScene(new Scene(root, 1920, 1080));
                 stage.show();
             }
         });

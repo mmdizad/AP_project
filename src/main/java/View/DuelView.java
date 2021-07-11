@@ -7,13 +7,16 @@ import Controller.RockPaperScissors;
 import Model.DuelModel;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -78,6 +81,7 @@ public class DuelView implements Initializable {
     public Label errorLBL;
     public Label opponentUsername;
     public Label userUsername;
+    public ToggleButton settingButton;
     public static Label userUsernameLBL;
     public static Label opponentUsernameLBL;
     public static HBox hboxOpponenetSpellS;
@@ -86,6 +90,7 @@ public class DuelView implements Initializable {
     public static HBox hboxSpellS;
     public static Label informationLBL;
     public static AnchorPane duelFieldPaneS;
+    public static ToggleButton settingsButton;
     protected DuelController duelController;
     protected DuelModel duelModel;
     protected Scanner scanner1;
@@ -448,6 +453,32 @@ public class DuelView implements Initializable {
         informationLBL = errorLBL;
         userUsernameLBL = userUsername;
         opponentUsernameLBL = opponentUsername;
+        settingsButton = settingButton;
+
+        settingsButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                URL url = null;
+                try {
+                    url = new File("src/main/java/FXMLFiles/settingFxml.fxml").toURI().toURL();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                Parent root = null;
+                try {
+                    assert url != null;
+                    root = FXMLLoader.load(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Stage stage1 = new Stage();
+                stage1.setTitle("Setting");
+                assert root != null;
+                stage1.setScene(new Scene(root, 500, 400));
+                stage1.show();
+            }
+        });
+
         for (int j = 0; j < 5; j++) {
             hboxMonsterS.setSpacing(95);
             hboxMonsterS.getChildren().add(getImage());

@@ -1709,7 +1709,7 @@ public class DuelController {
     }
 
     public String effectOfYami(int activeOrdeActive) {
-         DuelView.duelFieldPaneS.setStyle("-fx-background-image: url(../../resource/Field/fie_yami.jpg)");
+        DuelView.duelFieldPaneS.setStyle("-fx-background-image: url(../../resource/Field/fie_yami.jpg)");
         for (int i = 0; i < 5; i++) {
             Monster monster = (Monster) duelModel.getMonstersInField().get(duelModel.turn).get(i);
             Monster monster1 = (Monster) duelModel.getMonstersInField().get(1 - duelModel.turn).get(i);
