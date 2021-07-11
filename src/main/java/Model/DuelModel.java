@@ -19,11 +19,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import javax.jws.soap.SOAPBinding;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -431,8 +429,8 @@ public class DuelModel {
     }
 
     public void getBoard() {
-        DuelView.userUsernameLBL.setText("    "+ usernames.get(turn));
-        DuelView.opponentUsernameLBL.setText("    "+ usernames.get(1 - turn));
+        DuelView.userUsernameLBL.setText("    " + usernames.get(turn));
+        DuelView.opponentUsernameLBL.setText("    " + usernames.get(1 - turn));
         DuelView.userLifPointLBL.setText("    " + lifePoints.get(turn));
         DuelView.opponentLifPointLBL.setText("   " + lifePoints.get(1 - turn));
         ImageView imageView1;
@@ -687,7 +685,7 @@ public class DuelModel {
 
     }
 
-    public void attack(int i,Card card, MouseEvent event) {
+    public void attack(int i, Card card, MouseEvent event) {
         if (DuelView.currentPhase.equals("battlePhase")) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(null);
@@ -706,47 +704,47 @@ public class DuelModel {
                     , attack4Button, attack5Button, attackDirectButton, cancelButton);
             alert.showAndWait().ifPresent(type -> {
                 if (type == attack1Button) {
-                    setSelectedCard(turn, card, "My/OO/" + i+1);
+                    setSelectedCard(turn, card, "My/OO/" + i + 1);
                     Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
                     Matcher matcher1 = pattern1.matcher("attack 1");
                     if (matcher1.find()) {
                         BattlePhaseController.getInstance().attack(matcher1);
                     }
-                    selectedCards.get(turn).set(0,null);
+                    selectedCards.get(turn).set(0, null);
                 } else if (type == attack2Button) {
-                    setSelectedCard(turn, card, "My/OO/" + i+1);
+                    setSelectedCard(turn, card, "My/OO/" + i + 1);
                     Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
                     Matcher matcher1 = pattern1.matcher("attack 2");
                     if (matcher1.find()) {
                         BattlePhaseController.getInstance().attack(matcher1);
                     }
-                    selectedCards.get(turn).set(0,null);
+                    selectedCards.get(turn).set(0, null);
                 } else if (type == attack3Button) {
-                    setSelectedCard(turn, card, "My/OO/" + i+1);
+                    setSelectedCard(turn, card, "My/OO/" + i + 1);
                     Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
                     Matcher matcher1 = pattern1.matcher("attack 3");
                     if (matcher1.find()) {
                         BattlePhaseController.getInstance().attack(matcher1);
                     }
-                    selectedCards.get(turn).set(0,null);
+                    selectedCards.get(turn).set(0, null);
                 } else if (type == attack4Button) {
-                    setSelectedCard(turn, card, "My/OO/" + i+1);
+                    setSelectedCard(turn, card, "My/OO/" + i + 1);
                     Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
                     Matcher matcher1 = pattern1.matcher("attack 4");
                     if (matcher1.find()) {
                         BattlePhaseController.getInstance().attack(matcher1);
                     }
-                    selectedCards.get(turn).set(0,null);
+                    selectedCards.get(turn).set(0, null);
                 } else if (type == attack5Button) {
-                    setSelectedCard(turn, card, "My/OO/" + i+1);
+                    setSelectedCard(turn, card, "My/OO/" + i + 1);
                     Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
                     Matcher matcher1 = pattern1.matcher("attack 5");
                     if (matcher1.find()) {
                         BattlePhaseController.getInstance().attack(matcher1);
                     }
-                    selectedCards.get(turn).set(0,null);
+                    selectedCards.get(turn).set(0, null);
                 } else if (type == attackDirectButton) {
-                    setSelectedCard(turn, card, "My/OO/" + i+1);
+                    setSelectedCard(turn, card, "My/OO/" + i + 1);
                     Pattern pattern1 = Pattern.compile("^attack direct$");
                     Matcher matcher1 = pattern1.matcher("attack direct");
                     if (matcher1.find()) {
@@ -779,28 +777,28 @@ public class DuelModel {
             firstUser.increaseCoins(100);
             LoginAndSignUpController.saveChangesToFileByUser(secondUser);
             LoginAndSignUpController.saveChangesToFileByUser(firstUser);
-            return(secondUser.getUsername() + " won the game and the score is: 1000 - 0");
+            return (secondUser.getUsername() + " won the game and the score is: 1000 - 0");
         } else if (getLifePoint(1) <= 0) {
             firstUser.setScore(1000);
             firstUser.increaseCoins(1000 + getLifePoint(1));
             secondUser.increaseCoins(100);
             LoginAndSignUpController.saveChangesToFileByUser(secondUser);
             LoginAndSignUpController.saveChangesToFileByUser(firstUser);
-            return(firstUser.getUsername() + " won the game and the score is: 1000 - 0");
+            return (firstUser.getUsername() + " won the game and the score is: 1000 - 0");
         } else if (turn == 0) {
             secondUser.setScore(1000);
             secondUser.increaseCoins(1000 + getLifePoint(1));
             firstUser.increaseCoins(100);
             LoginAndSignUpController.saveChangesToFileByUser(secondUser);
             LoginAndSignUpController.saveChangesToFileByUser(firstUser);
-            return(secondUser.getUsername() + " won the game and the score is: 1000 - 0");
+            return (secondUser.getUsername() + " won the game and the score is: 1000 - 0");
         } else {
             firstUser.setScore(1000);
             firstUser.increaseCoins(1000 + getLifePoint(1));
             secondUser.increaseCoins(100);
             LoginAndSignUpController.saveChangesToFileByUser(secondUser);
             LoginAndSignUpController.saveChangesToFileByUser(firstUser);
-            return(firstUser.getUsername() + " won the game and the score is: 1000 - 0");
+            return (firstUser.getUsername() + " won the game and the score is: 1000 - 0");
         }
     }
 
