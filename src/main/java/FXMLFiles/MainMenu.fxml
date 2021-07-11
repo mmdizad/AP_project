@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="AnchorMainMenu" stylesheets="@../CSSFiles/AnchorPanecss.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainMenuController">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0c0a26ba" height="633.0" layoutX="439.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="984.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0c0a26ba" height="664.0" layoutX="439.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="984.0" />
         <Button fx:id="loginButton" layoutX="1015.0" layoutY="565.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="280.0" styleClass="loginButton" stylesheets="@../CSSFiles/Button.css" text="Login" textFill="#9e4f3a">
             <font>
                 <Font size="25.0" />
@@ -44,7 +44,12 @@
                 <Font size="50.0" />
             </font>
         </Label>
-      <Button fx:id="importAndExportBtn" layoutX="802.0" layoutY="680.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="280.0" styleClass="profileButton" stylesheets="@../CSSFiles/Button.css" text="Import and Export" textFill="#9e4f3a">
+      <Button fx:id="importAndExportBtn" layoutX="588.0" layoutY="678.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="280.0" styleClass="profileButton" stylesheets="@../CSSFiles/Button.css" text="Import and Export" textFill="#9e4f3a">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Button>
+      <Button fx:id="createCardBTN" layoutX="1022.0" layoutY="678.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="280.0" styleClass="profileButton" stylesheets="@../CSSFiles/Button.css" text="CreateCard" textFill="#9e4f3a">
          <font>
             <Font size="25.0" />
          </font>

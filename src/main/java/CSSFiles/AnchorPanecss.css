@@ -41,17 +41,29 @@
     -fx-background-image: url(../../resource/Field/fie_normal.jpg);
     -fx-background-size: cover;
 }
-.ProfileBackground{
+
+.ProfileBackground {
     -fx-background-image: url(../../resource/profile.jpg);
     -fx-background-size: cover;
 }
 
-.paneOfLifePoint{
+.paneOfLifePoint {
     -fx-background-color: #9481bf;
     -fx-background-size: cover;
 }
-.graveYard{
-    -fx-background-image : url(../../resource/Icons/GUI_T_WCS_Window2.dds.png);
+
+.graveYard {
+    -fx-background-image: url(../../resource/Icons/GUI_T_WCS_Window2.dds.png);
+    -fx-background-size: cover;
+}
+
+.createCardAnchorPane {
+    -fx-background-image: url("../../resource/OtherImagesInGame/createCard.jpeg");
+    -fx-background-size: cover;
+}
+
+.createMonsterPane{
+    -fx-background-image: url("../../resource/OtherImagesInGame/createCard.jpeg");
     -fx-background-size: cover;
 }
 

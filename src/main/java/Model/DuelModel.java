@@ -4,9 +4,7 @@ import Controller.DuelController;
 import Controller.MainPhaseController;
 import View.DuelView;
 import View.GraveYard;
-import View.MainPhaseView;
 import javafx.animation.FadeTransition;
-import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -374,18 +372,6 @@ public class DuelModel {
     }
 
     public void addCardToGraveyard(int turn, Card card) {
-        TranslateTransition translateTransition = new TranslateTransition();
-        translateTransition.setDuration(Duration.seconds(3));
-        translateTransition.setNode(card.getImageView());
-        translateTransition.setFromX(card.getImageView().getX());
-        translateTransition.setFromY(card.getImageView().getY());
-        if(turn==this.turn){
-            translateTransition.setToX(DuelView.userBinS.getX());
-            translateTransition.setToY(DuelView.userBinS.getY());
-        }else{
-            translateTransition.setToX(DuelView.opponentBinS.getX());
-            translateTransition.setToY(DuelView.opponentBinS.getY());
-        }
         if (card.getCategory().equals("Monster")) {
             //اینارو برای میدان زدم وقتی که کارت حذف میشه باید
             card.setAttackPower(Card.getCardByName(card.name).getAttackPower());
@@ -511,14 +497,10 @@ public class DuelModel {
         ArrayList<String> conditionMonsterUser = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             if (monstersInField.get(1 - turn).get(i) != null) {
-                if (monsterCondition.get(1 - turn).get(i).split("/")[0].equals("OO")) {
+                if (monsterCondition.get(1 - turn).get(i).split("/")[0].equals("OO") ||
+                        monsterCondition.get(1 - turn).get(i).split("/")[0].equals("DO")) {
                     ImageView image = getCardImage(monstersInField.get(1 - turn).get(i));
                     DuelView.hboxOpponentMonsterS.getChildren().set(i, image);
-                    showCard(image, monstersInField.get(1 - turn).get(i));
-                }else if( monsterCondition.get(1 - turn).get(i).split("/")[0].equals("DO")){
-                    ImageView image = getCardImage(monstersInField.get(1 - turn).get(i));
-                    DuelView.hboxOpponentMonsterS.getChildren().set(i, image);
-                    image.setRotate(90);
                     showCard(image, monstersInField.get(1 - turn).get(i));
                 } else {
                     ImageView image = getUnknownCard();
@@ -532,7 +514,8 @@ public class DuelModel {
                 int counter = i + 1;
                 Card card = monstersInField.get(turn).get(i);
                 conditionMonsterUser.add(monsterCondition.get(turn).get(i).split("/")[0]);
-                if (monsterCondition.get(turn).get(i).split("/")[0].equals("OO")) {
+                if (monsterCondition.get(turn).get(i).split("/")[0].equals("OO") ||
+                        monsterCondition.get(turn).get(i).split("/")[0].equals("DO")) {
                     ImageView image = getCardImage(monstersInField.get(turn).get(i));
                     DuelView.hboxMonsterS.getChildren().set(i, image);
                     showCard(image, monstersInField.get(turn).get(i));
@@ -540,28 +523,16 @@ public class DuelModel {
                     image.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            MainPhaseView.getInstance().selectMonster(MainPhaseView.getInstance().getCommandMatcher("select --monster "+ finalI,"^select --monster (\\d+)$"));
-                            MainPhaseView.getInstance().setPosition();
-                        }
-                    });
-                }else if( monsterCondition.get(turn).get(i).split("/")[0].equals("DO")){
-                    ImageView image = getCardImage(monstersInField.get(turn).get(i));
-                    image.setRotate(90);
-                    DuelView.hboxMonsterS.getChildren().set(i, image);
-                    showCard(image, monstersInField.get(turn).get(i));
-                    int finalI = i;
-                    image.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            MainPhaseView.getInstance().selectMonster(MainPhaseView.getInstance().getCommandMatcher("select --monster "+ finalI,"^select --monster (\\d+)$"));
-                            MainPhaseView.getInstance().setPosition();
+                            if (monsterCondition.get(turn).get(finalI).split("/")[0].equals("OO")) {
+                                attack(finalI);
+                            }
                         }
                     });
                 } else {
-                    ImageView image = getUnknownCard();
-                    DuelView.hboxMonsterS.getChildren().set(i, image);
-                    showCard(image, monstersInField.get(turn).get(i));
-                    image.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    ImageView image1 = getUnknownCard();
+                    DuelView.hboxMonsterS.getChildren().set(i, image1);
+                    showCard(image1, monstersInField.get(turn).get(i));
+                    image1.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
                             flipSummonGraphic(card, counter);
