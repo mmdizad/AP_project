@@ -1,6 +1,8 @@
 package Controller;
 
 import Model.*;
+import View.DuelView;
+import View.MainMenu;
 import com.google.gson.Gson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -130,6 +132,9 @@ public class DeckController {
     @FXML
     Button deckMenuBackBtn;
 
+    @FXML
+    public Text endGameTxt;
+
 
     private static DeckController deckController = new DeckController();
 
@@ -149,6 +154,27 @@ public class DeckController {
         stage.setScene(new Scene(root, 1920, 1000));
         stage.show();
 
+    }
+
+    public void showSceneEndGame(MouseEvent event, String winner) throws IOException {
+
+        URL url = new File("src/main/java/FXMLFiles/EndGame.fxml").toURI().toURL();
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(url));
+        Stage stage = new Stage();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+        endGameTxt = (Text) scene.lookup("#endGameTxt1");
+        endGameTxt.setText(winner);
+    }
+
+    public void endGameBtnEvent(ActionEvent actionEvent) throws IOException {
+        URL url = new File("src/main/java/FXMLFiles/MainMenu.fxml").toURI().toURL();
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(url));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public String deckCreate(Matcher matcher) {
