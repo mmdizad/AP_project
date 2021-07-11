@@ -235,6 +235,7 @@ public class ProfileView extends MainMenu  {
         profImageViewS=profImageView;
         profImagesS=profileImages;
         resaultOfChangeImageS=resaultOfChangeImage;
+        profImageInChangeImgS=profImageInChangeImg;
      }
     public void initializeProfImage(){
         for (int i = 1; i <= 18; i++) {
@@ -258,6 +259,17 @@ public class ProfileView extends MainMenu  {
                     LoginAndSignUpController.user.setProfileURL("src/main/resource/Icons/" + finalNum + ".dds.png");
                     resaultOfChangeImageS.setTextFill(Color.GREEN);
                     resaultOfChangeImageS.setText("image changed");
+                    ImageView imageViewUser;
+                    URL urls = null;
+                    try {
+                        urls = new File(LoginAndSignUpController.user.getProfileURL()).toURI().toURL();
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                    imageViewUser = new ImageView(new Image(Objects.requireNonNull(urls).toString()));
+                    imageViewUser.setFitWidth(90);
+                    imageViewUser.setFitHeight(110);
+                    profImageInChangeImgS.setImage(imageViewUser.getImage());
                 }
             });
             if(i<=9)
@@ -273,10 +285,10 @@ public class ProfileView extends MainMenu  {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            imageView = new ImageView(new Image(Objects.requireNonNull(urls).toString()));
-            imageView.setFitWidth(90);
-            imageView.setFitHeight(110);
-            profImageInChangeImgS.setImage(imageView.getImage());
+            imageViewUser = new ImageView(new Image(Objects.requireNonNull(urls).toString()));
+            imageViewUser.setFitWidth(90);
+            imageViewUser.setFitHeight(110);
+            profImageInChangeImgS.setImage(imageViewUser.getImage());
         }
 
 

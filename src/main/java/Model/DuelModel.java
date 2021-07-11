@@ -1,6 +1,5 @@
 package Model;
 
-import Controller.BattlePhaseController;
 import Controller.DuelController;
 import Controller.MainPhaseController;
 import View.DuelView;
@@ -24,8 +23,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class DuelModel {
     private final ArrayList<Integer> lifePoints;
@@ -704,101 +701,6 @@ public class DuelModel {
                 DuelView.specificationsOfCard.setText("");
             }
         });
-    }
-
-    public void attack(int i) {
-        if (DuelView.currentPhase.equals("battlePhase")) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText(null);
-            alert.setGraphic(null);
-            alert.setTitle("Choose attack");
-            alert.setContentText("choose attack to a card or direct?");
-            ButtonType attack1Button = new ButtonType("attack 1");
-            ButtonType attack2Button = new ButtonType("attack 2");
-            ButtonType attack3Button = new ButtonType("attack 3");
-            ButtonType attack4Button = new ButtonType("attack 4");
-            ButtonType attack5Button = new ButtonType("attack 5");
-            ButtonType attackDirectButton = new ButtonType("direct attack");
-            ButtonType cancelButton = new ButtonType("Cancel");
-
-            alert.getButtonTypes().setAll(attack1Button, attack2Button, attack3Button
-                    , attack4Button, attack5Button, attackDirectButton, cancelButton);
-            alert.showAndWait().ifPresent(type -> {
-                if (type == attack1Button) {
-                    Pattern pattern = Pattern.compile("^select (\\d+)&");
-                    Matcher matcher = pattern.matcher("select " + (i+1));
-                    if (matcher.find()) {
-                        DuelController.getInstance().selectMonster(matcher);
-                    }
-                    Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
-                    Matcher matcher1 = pattern1.matcher("attack 1");
-                    if (matcher1.find()) {
-                        BattlePhaseController.getInstance().attack(matcher1);
-                    }
-                    selectedCards.get(turn).set(0,null);
-                } else if (type == attack2Button) {
-                    Pattern pattern = Pattern.compile("^select (\\d+)&");
-                    Matcher matcher = pattern.matcher("select " + (i+1));
-                    if (matcher.find()) {
-                        DuelController.getInstance().selectMonster(matcher);
-                    }
-                    Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
-                    Matcher matcher1 = pattern1.matcher("attack 2");
-                    if (matcher1.find()) {
-                        BattlePhaseController.getInstance().attack(matcher1);
-                    }
-                    selectedCards.get(turn).set(0,null);
-                } else if (type == attack3Button) {
-                    Pattern pattern = Pattern.compile("^select (\\d+)&");
-                    Matcher matcher = pattern.matcher("select " + (i+1));
-                    if (matcher.find()) {
-                        DuelController.getInstance().selectMonster(matcher);
-                    }
-                    Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
-                    Matcher matcher1 = pattern1.matcher("attack 3");
-                    if (matcher1.find()) {
-                        BattlePhaseController.getInstance().attack(matcher1);
-                    }
-                    selectedCards.get(turn).set(0,null);
-                } else if (type == attack4Button) {
-                    Pattern pattern = Pattern.compile("^select (\\d+)&");
-                    Matcher matcher = pattern.matcher("select " + (i+1));
-                    if (matcher.find()) {
-                        DuelController.getInstance().selectMonster(matcher);
-                    }
-                    Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
-                    Matcher matcher1 = pattern1.matcher("attack 4");
-                    if (matcher1.find()) {
-                        BattlePhaseController.getInstance().attack(matcher1);
-                    }
-                    selectedCards.get(turn).set(0,null);
-                } else if (type == attack5Button) {
-                    Pattern pattern = Pattern.compile("^select (\\d+)&");
-                    Matcher matcher = pattern.matcher("select " + (i+1));
-                    if (matcher.find()) {
-                        DuelController.getInstance().selectMonster(matcher);
-                    }
-                    Pattern pattern1 = Pattern.compile("^attack (\\d+)$");
-                    Matcher matcher1 = pattern1.matcher("attack 5");
-                    if (matcher1.find()) {
-                        BattlePhaseController.getInstance().attack(matcher1);
-                    }
-                    selectedCards.get(turn).set(0,null);
-                } else if (type == attackDirectButton) {
-                    Pattern pattern = Pattern.compile("^select (\\d+)&");
-                    Matcher matcher = pattern.matcher("select " + (i+1));
-                    if (matcher.find()) {
-                        DuelController.getInstance().selectMonster(matcher);
-                    }
-                    Pattern pattern1 = Pattern.compile("^attack direct$");
-                    Matcher matcher1 = pattern1.matcher("attack direct");
-                    if (matcher1.find()) {
-                        System.out.println(BattlePhaseController.getInstance().directAttack(matcher1));
-                    }
-                    selectedCards.get(turn).set(0,null);
-                }
-            });
-        }
     }
 
     public ImageView getEmptyCardForBoard() {
