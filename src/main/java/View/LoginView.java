@@ -48,10 +48,12 @@ public class LoginView extends Menu {
     public void login(String username, String password, Scanner scanner) {
         LoginController loginController = new LoginController();
         String response = loginController.login(username, password);
-        System.out.println(response);
-        if (response.equals("user logged in successfully!")) {
+        if (!response.equals("Username and password didn't match!") && !response.equals("An error occurred.")
+                && !response.equals("")) {
             MainMenu mainMenu = new MainMenu();
             mainMenu.run(scanner);
+        } else {
+            System.out.println(response);
         }
     }
 
