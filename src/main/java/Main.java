@@ -1,9 +1,13 @@
+import Controller.LoginAndSignUpController;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -49,6 +53,15 @@ public class Main {
     }
 
     private static String process(String input) {
-             return "";
+        if (input.startsWith("create user")) {
+            LoginAndSignUpController loginAndSignUpController = LoginAndSignUpController.getInstance();
+            return loginAndSignUpController.createUser(input);
+        }
+        return "";
+    }
+
+    public Matcher getCommandMatcher(String input, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(input);
     }
 }
