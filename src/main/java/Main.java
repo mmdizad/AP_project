@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        LoginAndSignUpController.createFolders();
+        LoginAndSignUpController.createCard();
         runApp();
     }
 
@@ -56,6 +58,9 @@ public class Main {
         if (input.startsWith("create user")) {
             LoginAndSignUpController loginAndSignUpController = LoginAndSignUpController.getInstance();
             return loginAndSignUpController.createUser(input);
+        } else if (input.startsWith("login user")) {
+            LoginAndSignUpController loginAndSignUpController = LoginAndSignUpController.getInstance();
+            return loginAndSignUpController.login(input);
         }
         return "";
     }
