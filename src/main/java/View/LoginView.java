@@ -12,9 +12,8 @@ public class LoginView extends Menu {
     private boolean invalidCommand;
 
     public void run() {
-        LoginController.createFolders();
+        //LoginController.createFolders();
         Scanner scanner = new Scanner(System.in);
-        LoginController.createCard();
         while (true) {
             invalidCommand = true;
             String input = scanner.nextLine();
@@ -50,6 +49,7 @@ public class LoginView extends Menu {
         String response = loginController.login(username, password);
         if (!response.equals("Username and password didn't match!") && !response.equals("An error occurred.")
                 && !response.equals("")) {
+            System.out.println("login successfully");
             MainMenu mainMenu = new MainMenu();
             mainMenu.run(scanner);
         } else {

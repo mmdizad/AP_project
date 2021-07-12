@@ -37,7 +37,7 @@ public class TestMethod {
 
     @Test
     public void TestForCreateCardLoginController() {
-        LoginController.createCard();
+        //LoginController.createCard();
         Assert.assertNotNull(Card.getCardByName("Trap Hole"));
     }
 
