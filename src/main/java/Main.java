@@ -1,4 +1,5 @@
 import Controller.LoginAndSignUpController;
+import Controller.StartDuelController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -61,6 +62,8 @@ public class Main {
         } else if (input.startsWith("login user")) {
             LoginAndSignUpController loginAndSignUpController = LoginAndSignUpController.getInstance();
             return loginAndSignUpController.login(input);
+        }else if (input.startsWith("new Duel")){
+            return StartDuelController.getInstance().startTheGame(input);
         }
         return "";
     }
