@@ -39,7 +39,6 @@ public class DuelView {
         if (starterGame % 2 == 0) {
             duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
             duelController = DuelController.getInstance();
-            NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
             duelController.setDuelModel(duelModel, duelView, duelController, isAi);
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);

@@ -1,24 +1,18 @@
 package Controller;
 
 import Model.*;
-import View.MainMenu;
 import com.google.gson.*;
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class LoginController {
     public static User user;
-    private static String token = "";
+    public static String token = "";
 
-    private static Socket socket;
-    private static DataInputStream dataInputStream;
-    private static DataOutputStream dataOutputStream;
+    public static Socket socket;
+    public static DataInputStream dataInputStream;
+    public static DataOutputStream dataOutputStream;
 
     public static void initializeNetwork() {
         try {
@@ -47,6 +41,7 @@ public class LoginController {
             dataOutputStream.flush();
             String response = dataInputStream.readUTF();
             if (!response.equals("Username and password didn't match!") && !response.equals("An error occurred.")) {
+                user = User.getUserByUsername(username);
                 token = response;
             }
             return response;
@@ -85,20 +80,4 @@ public class LoginController {
             }
         }
     }
-//
-//    public static void createFolders() {
-//        File apFiles = new File(System.getProperty("user.home") + "/Desktop\\AP FILES");
-//        if (!apFiles.exists()) {
-//            apFiles.mkdir();
-//        }
-//        File users = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Users");
-//        if (!users.exists()) {
-//            users.mkdir();
-//        }
-//        File decks = new File(System.getProperty("user.home") + "/Desktop\\AP FILES\\Decks");
-//        if (!decks.exists()) {
-//            decks.mkdir();
-//        }
-//    }
-
 }

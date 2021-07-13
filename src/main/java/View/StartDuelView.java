@@ -4,6 +4,7 @@ import Controller.DeckController;
 import Controller.LoginController;
 import Model.User;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -20,7 +21,6 @@ public class StartDuelView extends MainMenu {
             Matcher matcher1 = pattern1.matcher(input);
             Pattern pattern2 = Pattern.compile("duel --new --ai --rounds (\\d+)");
             Matcher matcher2 = pattern2.matcher(input);
-
             if (matcher.find()) {
                 startTheGame(scanner, matcher, 1, 2);
             } else if (matcher1.find()) {
@@ -83,20 +83,17 @@ public class StartDuelView extends MainMenu {
     private void startTheGame(Scanner scanner, Matcher matcher, int i2, int i3) {
         String secondPlayerUserName = matcher.group(i2);
         int round = Integer.parseInt(matcher.group(i3));
-
-        if (!User.isUserWithThisUsernameExists(secondPlayerUserName))
-            System.out.println("there is no player with this username");
-        else {
-            User secondUser = User.getUserByUsername(secondPlayerUserName);
-            if (LoginController.user.getActiveDeck() == null)
-                System.out.println(LoginController.user.getUsername() + " has no active deck");
-            else if (secondUser.getActiveDeck() == null)
-                System.out.println(secondUser.getUsername() + " has no active deck");
-            else if (LoginController.user.getActiveDeck().getCardsMain().size() < 40) {
-                System.out.println(LoginController.user.getUsername() + "'s deck is invalid");
-            } else if (secondUser.getActiveDeck().getCardsMain().size() < 40) {
-                System.out.println(secondUser.getUsername() + "'s deck is invalid");
-            } else if (round == 3 || round == 1) {
+        String response = "";
+        try {
+            LoginController.dataOutputStream.writeUTF("new Duel/" + secondPlayerUserName + "/" + round + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            response = LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
+        }
+        if (response.equals("Duel Started Successfully")) {
+            if (round == 3 || round == 1) {
+                User secondUser = User.getUserByUsername(secondPlayerUserName);
                 if (round == 1) {
                     DuelView duelView = DuelView.getInstance();
                     duelView.selectFirstPlayer(secondPlayerUserName, scanner, duelView, false);
@@ -130,9 +127,10 @@ public class StartDuelView extends MainMenu {
                         changeCardsBetweenRounds(LoginController.user, secondUser, scanner);
                     }
                 }
-            } else System.out.println("number of rounds is not supported");
-        }
+            }
+        } else System.out.println(response);
     }
+
 
     public void finishThreeRound(DuelView duelView, User winner, User looser, int maxLP) {
         winner.setScore(3000);

@@ -8,13 +8,11 @@ public class MainMenu {
 
     public void run(Scanner scanner) {
         String input;
-
         while (true) {
             invalidCommand = true;
             input = scanner.nextLine();
             showMenu(getCommandMatcher(input, "^menu show-current$"));
             enterMenu(getCommandMatcher(input, "^menu enter (\\S+)$"), scanner);
-
 
             if (input.equals("user logout") || input.equals("menu exit")) {
                 break;
