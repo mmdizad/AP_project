@@ -97,7 +97,6 @@ public class DeckView extends MainMenu {
             if (!isCommandValid) {
                 System.out.println("Invalid command");
             }
-            LoginController.saveChangesToFile();
         }
     }
 
@@ -128,34 +127,21 @@ public class DeckView extends MainMenu {
 
     public void deckShow(Matcher matcher) {
         DeckController deckController = DeckController.getInstance();
-        ArrayList<String> output = deckController.deckShow(matcher);
-        for (int i = 0; i < output.size(); i++) {
-            System.out.println(output.get(i));
-        }
+        System.out.println(deckController.deckShow(matcher));
     }
 
     public void showCard(Matcher matcher) {
         DeckController deckController = DeckController.getInstance();
-        ArrayList<String> output = deckController.showAllOwnedCards();
-        for (int i = 0; i < output.size(); i++) {
-            System.out.println(output.get(i));
-        }
+        System.out.println(deckController.showAllOwnedCards());
     }
 
     public void showOneCard(Matcher matcher) {
         DeckController deckController = DeckController.getInstance();
-        ArrayList<String> output = deckController.checkCard(matcher);
-        for (int i = 0; i < output.size(); i++) {
-            System.out.println(output.get(i));
-        }
+        System.out.println(deckController.checkCard(matcher));
     }
 
     public void showAllDeck() {
         DeckController deckController = DeckController.getInstance();
-        ArrayList<String> output = deckController.showAllDeck();
-        for (int i = 0; i < output.size(); i++) {
-            System.out.println(output.get(i));
-        }
-
+        System.out.println(deckController.showAllDeck());
     }
 }
