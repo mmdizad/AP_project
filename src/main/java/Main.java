@@ -1,3 +1,4 @@
+import Controller.DeckController;
 import Controller.LoginAndSignUpController;
 import Controller.StartDuelController;
 
@@ -64,6 +65,24 @@ public class Main {
             return loginAndSignUpController.login(input);
         }else if (input.startsWith("new Duel")){
             return StartDuelController.getInstance().startTheGame(input);
+        }else if (input.startsWith("deck create")) {
+            return DeckController.getInstance().deckCreate(input);
+        }else if (input.startsWith("deck delete")) {
+            return DeckController.getInstance().deckDelete(input);
+        }else if (input.startsWith("deck setActive")) {
+            return DeckController.getInstance().deckSetActive(input);
+        }else if (input.startsWith("add card")) {
+            return DeckController.getInstance().addCard(input);
+        }else if (input.startsWith("delete card")) {
+            return DeckController.getInstance().deleteCard(input);
+        }else if (input.startsWith("deck show")) {
+            return DeckController.getInstance().deckShow(input);
+        }else if (input.startsWith("show all owned cards")) {
+            return DeckController.getInstance().showAllOwnedCards(input);
+        }else if (input.startsWith("show all deck")) {
+            return DeckController.getInstance().showAllDeck(input);
+        }else if (input.startsWith("show one card")) {
+            return DeckController.getInstance().showOneCard(input);
         }
         return "";
     }
