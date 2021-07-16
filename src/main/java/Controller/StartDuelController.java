@@ -1,9 +1,5 @@
 package Controller;
-
 import Model.User;
-
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class StartDuelController {
     private static StartDuelController startDuelController;
@@ -50,5 +46,4 @@ public class StartDuelController {
         }
         return "";
     }
-
 }

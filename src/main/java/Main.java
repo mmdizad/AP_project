@@ -1,4 +1,5 @@
 import Controller.DeckController;
+import Controller.DuelController;
 import Controller.LoginAndSignUpController;
 import Controller.StartDuelController;
 
@@ -63,26 +64,31 @@ public class Main {
         } else if (input.startsWith("login user")) {
             LoginAndSignUpController loginAndSignUpController = LoginAndSignUpController.getInstance();
             return loginAndSignUpController.login(input);
-        }else if (input.startsWith("new Duel")){
+        } else if (input.startsWith("new Duel")) {
             return StartDuelController.getInstance().startTheGame(input);
-        }else if (input.startsWith("deck create")) {
+        } else if (input.startsWith("Select First Player")) {
+            DuelController duelController = new DuelController();
+            return String.valueOf(duelController.selectFirstPlayer(input));
+        } else if (input.startsWith("deck create")) {
             return DeckController.getInstance().deckCreate(input);
-        }else if (input.startsWith("deck delete")) {
+        } else if (input.startsWith("deck delete")) {
             return DeckController.getInstance().deckDelete(input);
-        }else if (input.startsWith("deck setActive")) {
+        } else if (input.startsWith("deck setActive")) {
             return DeckController.getInstance().deckSetActive(input);
-        }else if (input.startsWith("add card")) {
+        } else if (input.startsWith("add card")) {
             return DeckController.getInstance().addCard(input);
-        }else if (input.startsWith("delete card")) {
+        } else if (input.startsWith("delete card")) {
             return DeckController.getInstance().deleteCard(input);
-        }else if (input.startsWith("deck show")) {
+        } else if (input.startsWith("deck show")) {
             return DeckController.getInstance().deckShow(input);
-        }else if (input.startsWith("show all owned cards")) {
+        } else if (input.startsWith("show all owned cards")) {
             return DeckController.getInstance().showAllOwnedCards(input);
-        }else if (input.startsWith("show all deck")) {
+        } else if (input.startsWith("show all deck")) {
             return DeckController.getInstance().showAllDeck(input);
-        }else if (input.startsWith("show one card")) {
+        } else if (input.startsWith("show one card")) {
             return DeckController.getInstance().showOneCard(input);
+        } else if (input.startsWith("New Card To Hand")) {
+            return DuelController.newCardToHand(input);
         }
         return "";
     }

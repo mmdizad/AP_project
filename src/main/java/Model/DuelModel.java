@@ -229,7 +229,8 @@ public class DuelModel {
         return usernames.get(turn);
     }
 
-    public ArrayList<Card> addCardToHand() {
+    public String addCardToHand() {
+        String addHandCards = "";
         if (handCards.size() <= turn) {
             ArrayList<Card> handCardsPlayer = new ArrayList<>();
             handCards.add(handCardsPlayer);
@@ -237,16 +238,21 @@ public class DuelModel {
             for (int i = 0; i < 5; i++) {
                 firstCardsInPlayerHand.add(playersCards.get(turn).get(playersCards.get(turn).size() - 1));
                 playersCards.get(turn).remove(playersCards.get(turn).get(playersCards.get(turn).size() - 1));
+                if (i != 4)
+                    addHandCards = "new card added to the hand :" + firstCardsInPlayerHand.get(i) + "\n";
+                else
+                    addHandCards = "new card added to the hand :" + firstCardsInPlayerHand.get(i);
             }
             handCards.get(turn).addAll(firstCardsInPlayerHand);
-            return firstCardsInPlayerHand;
+            return addHandCards;
         } else {
             ArrayList<Card> cardAddedInPlayerHand = new ArrayList<>();
             handCards.get(turn).add(playersCards.get(turn).get(playersCards.get(turn).size() - 1));
             cardAddedInPlayerHand.add(playersCards.get(turn).get(playersCards.get(turn).size() - 1));
+            addHandCards = "new card added to the hand :" + cardAddedInPlayerHand.get(0);
             playersCards.get(turn).remove(playersCards.get(turn).get(playersCards.get(turn).size() - 1));
             //DuelView.getInstance().showBoard();
-            return cardAddedInPlayerHand;
+            return addHandCards;
         }
     }
 
