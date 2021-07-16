@@ -22,11 +22,10 @@ public class DrawPhaseView extends DuelView {
     public void newCard(Scanner scanner, String playerUsername, boolean startOfGame) {
         System.out.println("DrawPhase");
         NewCardToHandController newCardToHandController = NewCardToHandController.getInstance();
-        ArrayList<Card> cardsAddedToPlayerHand = newCardToHandController.newCardToHand(playerUsername);
-        if (cardsAddedToPlayerHand != null) {
-            for (Card card : cardsAddedToPlayerHand) {
-                System.out.println("new card added to the hand :" + card.getName());
-            }
+        String response = newCardToHandController.newCardToHand(playerUsername);
+
+        if (!response.equals("")) {
+            System.out.println(response);
         } else {
             System.out.println("no card added to hand");
         }
@@ -76,6 +75,4 @@ public class DrawPhaseView extends DuelView {
                 "card is InsteadOf your scanner in this turn");
         return scanner1.nextInt();
     }
-
-
 }

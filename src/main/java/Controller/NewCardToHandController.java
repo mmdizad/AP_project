@@ -4,6 +4,7 @@ import Model.*;
 import View.DrawPhaseView;
 import View.DuelView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -24,8 +25,9 @@ public class NewCardToHandController extends DuelController {
         return newCardToHandController;
     }
 
-    public ArrayList<Card> newCardToHand(String playerUsername) {
+    public String newCardToHand(String playerUsername) {
         User user = User.getUserByUsername(playerUsername);
+        assert user != null;
         Deck deck = user.getActiveDeck();
         ArrayList<Card> cardsInDeck = deck.getCardsMain();
         if (cardsInDeck.size() >= 1) {
@@ -40,11 +42,16 @@ public class NewCardToHandController extends DuelController {
                     }
                 }
             }
-            return duelController.duelModel.addCardToHand();
-        } else {
-            return null;
-            // جایگزین دارد
+            try {
+                LoginController.dataOutputStream.writeUTF("New Card To Hand/" + playerUsername + "/" +
+                        LoginController.token);
+                LoginController.dataOutputStream.flush();
+                return LoginController.dataInputStream.readUTF();
+            } catch (IOException x) {
+                x.printStackTrace();
+            }
         }
+        return null;
     }
 
     public String hasHeraldOfCreation() {

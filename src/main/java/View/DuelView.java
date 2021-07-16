@@ -2,9 +2,8 @@ package View;
 
 import Controller.*;
 import Model.DuelModel;
-
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,42 +27,47 @@ public class DuelView {
     }
 
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView, boolean isAi) {
+        String response = "";
+        try {
+            LoginController.dataOutputStream.writeUTF("Select First Player/" + secondPlayerUsername + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            response = LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
+        }
         scanner1 = scanner;
         this.isAi = isAi;
-        ArrayList<Integer> someRandomNumbers = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            someRandomNumbers.add(i + 1);
-        }
-        Collections.shuffle(someRandomNumbers);
-        int starterGame = someRandomNumbers.get(0);
-        if (starterGame % 2 == 0) {
-            duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
-            duelController = DuelController.getInstance();
-            duelController.setDuelModel(duelModel, duelView, duelController, isAi);
-            DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
-            drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);
-            System.out.println("EndPhase");
-            duelModel.turn = 1 - duelModel.turn;
-            drawPhaseView.newCard(scanner, secondPlayerUsername, true);
-            System.out.println("EndPhase");
-            duelModel.turn = 1 - duelModel.turn;
-            StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
-            showBoard();
-            standByPhaseView.run(scanner);
-        } else {
-            duelModel = new DuelModel(secondPlayerUsername, LoginController.user.getUsername());
-            duelController = DuelController.getInstance();
-            duelController.setDuelModel(duelModel, duelView, duelController, isAi);
-            DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
-            drawPhaseView.newCard(scanner, secondPlayerUsername, true);
-            System.out.println("EndPhase");
-            duelModel.turn = 1 - duelModel.turn;
-            drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);
-            System.out.println("EndPhase");
-            duelModel.turn = 1 - duelModel.turn;
-            StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
-            showBoard();
-            standByPhaseView.run(scanner);
+        int starterGame = Integer.parseInt(response);
+        if (starterGame != -1) {
+            if (starterGame % 2 == 0) {
+                duelModel = new DuelModel(LoginController.user.getUsername(), secondPlayerUsername);
+                duelController = DuelController.getInstance();
+                duelController.setDuelModel(duelModel, duelView, duelController, isAi);
+                DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
+                drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);
+                System.out.println("EndPhase");
+                duelModel.turn = 1 - duelModel.turn;
+                drawPhaseView.newCard(scanner, secondPlayerUsername, true);
+                System.out.println("EndPhase");
+                duelModel.turn = 1 - duelModel.turn;
+                StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
+                showBoard();
+                standByPhaseView.run(scanner);
+            } else {
+                duelModel = new DuelModel(secondPlayerUsername, LoginController.user.getUsername());
+                duelController = DuelController.getInstance();
+                duelController.setDuelModel(duelModel, duelView, duelController, isAi);
+                DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
+                drawPhaseView.newCard(scanner, secondPlayerUsername, true);
+                System.out.println("EndPhase");
+                duelModel.turn = 1 - duelModel.turn;
+                drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);
+                System.out.println("EndPhase");
+                duelModel.turn = 1 - duelModel.turn;
+                StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
+                showBoard();
+                standByPhaseView.run(scanner);
+            }
         }
     }
 
