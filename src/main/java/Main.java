@@ -67,7 +67,7 @@ public class Main {
         } else if (input.startsWith("new Duel")) {
             return StartDuelController.getInstance().startTheGame(input);
         } else if (input.startsWith("Select First Player")) {
-            DuelController duelController = new DuelController();
+            DuelController duelController = DuelController.getInstance();
             return String.valueOf(duelController.selectFirstPlayer(input));
         } else if (input.startsWith("deck create")) {
             return DeckController.getInstance().deckCreate(input);

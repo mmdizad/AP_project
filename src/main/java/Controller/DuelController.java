@@ -10,6 +10,18 @@ import java.util.Collections;
 
 public class DuelController {
     public static ArrayList<DuelModel> duelModels;
+    private static DuelController duelController;
+
+    private DuelController() {
+
+    }
+
+    public static DuelController getInstance() {
+        if (duelController == null)
+            duelController = new DuelController();
+
+        return duelController;
+    }
 
     static {
         duelModels = new ArrayList<>();
