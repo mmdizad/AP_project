@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Card;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.regex.Matcher;
@@ -20,6 +21,14 @@ public class ShopController extends LoginController {
 
     public String buyCard(Matcher matcher) {
         String cardName = matcher.group(1);
+        try {
+            dataOutputStream.writeUTF("shop buy card/" + matcher.group(1) + "/" + token);
+            dataOutputStream.flush();
+            return dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         ArrayList<Card> cards = Card.getAllCardsCard();
         boolean cardNameExist = false;
         for (Card value : cards) {
@@ -54,8 +63,14 @@ public class ShopController extends LoginController {
     }
 
     public String increaseMoney(Matcher matcher) {
-        user.increaseCoins(Integer.parseInt(matcher.group(1)));
-        return "coin increased";
+        try {
+            dataOutputStream.writeUTF("shop increase money/" + matcher.group(1) + "/" + token);
+            dataOutputStream.flush();
+            return dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return " ";
     }
 
     public ArrayList<String> checkCard(Matcher matcher) {

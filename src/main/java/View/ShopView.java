@@ -28,7 +28,6 @@ public class ShopView extends MainMenu {
             if (matcher.find()){
                 increaseMoney(matcher);
             }
-            //trim matcher later!
             Pattern patternBuy = Pattern.compile("shop buy (.+)");
             Matcher matcherBuy = patternBuy.matcher(input);
             if (matcherBuy.find())
