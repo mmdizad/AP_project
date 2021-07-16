@@ -1,7 +1,4 @@
-import Controller.DeckController;
-import Controller.DuelController;
-import Controller.LoginAndSignUpController;
-import Controller.StartDuelController;
+import Controller.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -14,8 +11,8 @@ import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        LoginAndSignUpController.createFolders();
-        LoginAndSignUpController.createCard();
+//        LoginAndSignUpController.createFolders();
+//        LoginAndSignUpController.createCard();
         runApp();
     }
 
@@ -103,6 +100,10 @@ public class Main {
             return DuelController.getInstance().selectOpponentFieldZone(input);
         } else if (input.startsWith("Select Hand")) {
             return DuelController.getInstance().selectHand(input);
+        }else if (input.startsWith("shop buy card")){
+            return ShopController.getInstance().buyCard(input);
+        }else if (input.startsWith("shop increase money")){
+            return ShopController.getInstance().increaseMoney(input);
         }
         return "";
     }
