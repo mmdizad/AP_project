@@ -7,10 +7,11 @@ import Model.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.regex.Matcher;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DuelController {
-    public static ArrayList<DuelModel> duelModels;
+    public static HashMap<DuelModel, Boolean> duelModels;
     private static DuelController duelController;
 
     private DuelController() {
@@ -25,13 +26,14 @@ public class DuelController {
     }
 
     static {
-        duelModels = new ArrayList<>();
+        duelModels = new HashMap<>();
     }
 
     public int selectFirstPlayer(String input) {
         String[] partsOfInput = input.split("/");
         String secondPlayerUsername = partsOfInput[1];
-        String token = partsOfInput[2];
+        boolean isAi = Boolean.parseBoolean(partsOfInput[2]);
+        String token = partsOfInput[3];
         if (LoginAndSignUpController.loggedInUsers.containsKey(token)) {
             ArrayList<Integer> someRandomNumbers = new ArrayList<>();
             for (int i = 0; i < 100; i++) {
@@ -46,7 +48,7 @@ public class DuelController {
             } else {
                 duelModel = new DuelModel(secondPlayerUsername, user.getUsername());
             }
-            duelModels.add(duelModel);
+            duelModels.put(duelModel, isAi);
             return starterGame;
         }
         return -1;
@@ -63,7 +65,8 @@ public class DuelController {
             ArrayList<Card> cardsInDeck = deck.getCardsMain();
 
             if (cardsInDeck.size() >= 1) {
-                for (DuelModel duelModel : duelModels) {
+                for (Map.Entry<DuelModel, Boolean> entry : duelModels.entrySet()) {
+                    DuelModel duelModel = entry.getKey();
                     if (duelModel.getUsernames().get(0).equals(playerUsername) ||
                             duelModel.getUsernames().get(1).equals(playerUsername))
                         return duelModel.addCardToHand();
@@ -78,7 +81,8 @@ public class DuelController {
         int placeOfMonster = Integer.parseInt(input.split("/")[1]);
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
-            for (DuelModel duelModel : duelModels) {
+            for (Map.Entry<DuelModel, Boolean> entry : duelModels.entrySet()) {
+                DuelModel duelModel = entry.getKey();
                 if (duelModel.getUsernames().get(0).equals(playerUsername) ||
                         duelModel.getUsernames().get(1).equals(playerUsername)) {
                     if (duelModel.getMonster(duelModel.turn, placeOfMonster) == null) {
@@ -100,7 +104,8 @@ public class DuelController {
         int placeOfMonster = Integer.parseInt(input.split("/")[1]);
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
-            for (DuelModel duelModel : duelModels) {
+            for (Map.Entry<DuelModel, Boolean> entry : duelModels.entrySet()) {
+                DuelModel duelModel = entry.getKey();
                 if (duelModel.getUsernames().get(0).equals(playerUsername) ||
                         duelModel.getUsernames().get(1).equals(playerUsername)) {
                     if (duelModel.getMonster(1 - duelModel.turn, placeOfMonster) == null) {
@@ -123,7 +128,8 @@ public class DuelController {
         int placeOfSpellOrTrap = Integer.parseInt(input.split("/")[1]);
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
-            for (DuelModel duelModel : duelModels) {
+            for (Map.Entry<DuelModel, Boolean> entry : duelModels.entrySet()) {
+                DuelModel duelModel = entry.getKey();
                 if (duelModel.getUsernames().get(0).equals(playerUsername) ||
                         duelModel.getUsernames().get(1).equals(playerUsername)) {
                     if (duelModel.getSpellAndTrap(duelModel.turn, placeOfSpellOrTrap) == null) {
@@ -146,7 +152,8 @@ public class DuelController {
         int placeOfSpellOrTrap = Integer.parseInt(input.split("/")[1]);
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
-            for (DuelModel duelModel : duelModels) {
+            for (Map.Entry<DuelModel, Boolean> entry : duelModels.entrySet()) {
+                DuelModel duelModel = entry.getKey();
                 if (duelModel.getUsernames().get(0).equals(playerUsername) ||
                         duelModel.getUsernames().get(1).equals(playerUsername)) {
                     if (duelModel.getSpellAndTrap(1 - duelModel.turn, placeOfSpellOrTrap) == null) {
@@ -169,7 +176,8 @@ public class DuelController {
         int place = Integer.parseInt(input.split("/")[1]);
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
-            for (DuelModel duelModel : duelModels) {
+            for (Map.Entry<DuelModel, Boolean> entry : duelModels.entrySet()) {
+                DuelModel duelModel = entry.getKey();
                 if (duelModel.getUsernames().get(0).equals(playerUsername) ||
                         duelModel.getUsernames().get(1).equals(playerUsername)) {
                     if (duelModel.getField().get(place) == null) {
@@ -189,7 +197,8 @@ public class DuelController {
         int place = Integer.parseInt(input.split("/")[1]);
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
-            for (DuelModel duelModel : duelModels) {
+            for (Map.Entry<DuelModel, Boolean> entry : duelModels.entrySet()) {
+                DuelModel duelModel = entry.getKey();
                 if (duelModel.getUsernames().get(0).equals(playerUsername) ||
                         duelModel.getUsernames().get(1).equals(playerUsername)) {
                     if (duelModel.getFieldZoneCard(1 - duelModel.turn) == null) {
@@ -210,7 +219,8 @@ public class DuelController {
         int placeOfCard = Integer.parseInt(input.split("/")[1]);
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
-            for (DuelModel duelModel : duelModels) {
+            for (Map.Entry<DuelModel, Boolean> entry : duelModels.entrySet()) {
+                DuelModel duelModel = entry.getKey();
                 if (duelModel.getUsernames().get(0).equals(playerUsername) ||
                         duelModel.getUsernames().get(1).equals(playerUsername)) {
                     if (duelModel.getHandCards().get(duelModel.turn).size() < placeOfCard) {
