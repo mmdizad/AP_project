@@ -4,6 +4,7 @@ import Model.*;
 import View.DuelView;
 import View.MainPhaseView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class DuelController {
     //این تابع حین بازی صدا زده میشه تا کارت های ورودی شامل میدان شوند
     public void activeFieldInGame() {
         if (duelModel.getField().get(duelModel.turn).get(0) != null) {
-            Card spell =  duelModel.getField().get(duelModel.turn).get(0);
+            Card spell = duelModel.getField().get(duelModel.turn).get(0);
             if (spell.getName().equals("Yami"))
                 effectOfYami(1);
             else if (spell.getName().equals("Forest"))
@@ -124,7 +125,7 @@ public class DuelController {
 
     public void deActiveOldField() {
         if (duelModel.getField().get(duelModel.turn).get(0) != null) {
-            Card spell =  duelModel.getField().get(duelModel.turn).get(0);
+            Card spell = duelModel.getField().get(duelModel.turn).get(0);
             if (spell.getName().equals("Yami"))
                 effectOfYami(-1);
             else if (spell.getName().equals("Forest"))
@@ -175,7 +176,7 @@ public class DuelController {
     public String activeSetZone() {
         deActiveOldField();
         duelModel.activeField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
-        Card spell =  duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        Card spell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
         duelModel.getField().get(duelModel.turn).set(1, null);
         deselect();
         if (spell.getName().equals("Yami"))
@@ -195,7 +196,7 @@ public class DuelController {
     public String activeZoneFromHand() {
         deActiveOldField();
         duelModel.activeField(duelModel.getSelectedCards().get(duelModel.turn).get(0));
-        Card spell =  duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        Card spell = duelModel.getSelectedCards().get(duelModel.turn).get(0);
         duelModel.getHandCards().get(duelModel.turn).remove(spell);
         if (spell.getName().equals("Yami"))
             return effectOfYami(1);
@@ -1689,7 +1690,7 @@ public class DuelController {
     public String effectOfForest(int activeOrdeActive) {
 
         for (int i = 0; i < 5; i++) {
-            Card monster =  duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(i);
             Card monster1 = duelModel.getMonstersInField().get(1 - duelModel.turn).get(i);
             if (monster != null)
                 if (monster.getCardType().equals("Beast-Warrior") || monster.getCardType().equals("Beast") || monster.getCardType().equals("Insect")) {
@@ -1713,7 +1714,7 @@ public class DuelController {
 
     public String effectOfYami(int activeOrdeActive) {
         for (int i = 0; i < 5; i++) {
-            Card monster =  duelModel.getMonstersInField().get(duelModel.turn).get(i);
+            Card monster = duelModel.getMonstersInField().get(duelModel.turn).get(i);
             Card monster1 = duelModel.getMonstersInField().get(1 - duelModel.turn).get(i);
             if (monster != null) {
                 if (monster.getCardType().equals("Fiend") || monster.getCardType().equals("Spellcaster")) {
@@ -2139,83 +2140,91 @@ public class DuelController {
     }
 
     public String selectMonster(Matcher matcher) {
-        if (duelModel.getMonster(duelModel.turn, Integer.parseInt(matcher.group(1))) == null) {
-            return "no card found in the given position";
-        } else {
-            String condition = "My/";
-            condition = condition + duelModel.getMonsterCondition(duelModel.turn, Integer.parseInt(matcher.group(1)));
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getMonster(duelModel.turn,
-                    Integer.parseInt(matcher.group(1))), condition);
-            return "card selected";
+        try {
+            LoginController.dataOutputStream.writeUTF("Select Monster" + "/" + Integer.parseInt(matcher.group(1))
+                    + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            return LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
         }
+        return "";
     }
 
 
     public String selectOpponentMonster(Matcher matcher) {
-        if (duelModel.getMonster(duelModel.turn - 1, Integer.parseInt(matcher.group(1))) == null) {
-            return "no card found in the given position";
-        } else {
-            String condition = "Opponent/";
-            condition = condition + duelModel.getMonsterCondition(duelModel.turn - 1, Integer.parseInt(matcher.group(1)));
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getMonster(duelModel.turn - 1,
-                    Integer.parseInt(matcher.group(1))), condition);
-            return "card selected";
+        try {
+            LoginController.dataOutputStream.writeUTF("Select Opponent Monster" + "/" + Integer.parseInt(matcher.group(1))
+                    + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            return LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
         }
+        return "";
     }
 
 
     public String selectSpellOrTrap(Matcher matcher) {
-        if (duelModel.getSpellAndTrap(duelModel.turn, Integer.parseInt(matcher.group(1))) == null) {
-            return "no card found in the given position";
-        } else {
-            String condition = "My/";
-            condition = condition + duelModel.getMonsterCondition(duelModel.turn, Integer.parseInt(matcher.group(1)));
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getSpellAndTrap(duelModel.turn,
-                    Integer.parseInt(matcher.group(1))), condition);
-            return "card selected";
+        try {
+            LoginController.dataOutputStream.writeUTF("Select Spell Or Trap" + "/" + Integer.parseInt(matcher.group(1))
+                    + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            return LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
         }
+        return "";
     }
 
     public String selectOpponentSpellOrTrap(Matcher matcher) {
-        if (duelModel.getSpellAndTrap(duelModel.turn - 1, Integer.parseInt(matcher.group(1))) == null) {
-            return "no card found in the given position";
-        } else {
-            String condition = "Opponent/";
-            condition = condition + duelModel.getMonsterCondition(duelModel.turn - 1, Integer.parseInt(matcher.group(1)));
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getSpellAndTrap(duelModel.turn - 1,
-                    Integer.parseInt(matcher.group(1))), condition);
-            return "card selected";
+        try {
+            LoginController.dataOutputStream.writeUTF("Select Opponent Spell Or Trap" + "/" + Integer.parseInt(matcher.group(1))
+                    + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            return LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
         }
+        return "";
     }
 
     public String selectFieldZone(int place) {
-        if (duelModel.getField().get(place) == null) {
-            return "no card found in the given position";
-        } else {
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn), "My/Filed/" + place);
-            return "card selected";
+        try {
+            LoginController.dataOutputStream.writeUTF("Select FieldZone" + "/" + place + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            return LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
         }
+        return "";
     }
 
     public String selectOpponentFieldZone(int place) {
-        if (duelModel.getFieldZoneCard(duelModel.turn - 1) == null) {
-            return "no card found in the given position";
-        } else {
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getFieldZoneCard(duelModel.turn - 1), "Opponent/Field/" + place);
-            return "card selected";
+        try {
+            LoginController.dataOutputStream.writeUTF("Select Opponent FieldZone" + "/" + place + "/" +
+                    LoginController.token);
+            LoginController.dataOutputStream.flush();
+            return LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
         }
+        return "";
     }
 
 
     public String selectHand(Matcher matcher) {
-        if (duelModel.getHandCards().get(duelModel.turn).size() < Integer.parseInt(matcher.group(1))) {
-            return "invalid selection";
-        } else {
-            duelModel.setSelectedCard(duelModel.turn, duelModel.getHandCards().get(duelModel.turn).
-                    get(Integer.parseInt(matcher.group(1)) - 1), "Hand");
-            return "card selected";
+        try {
+            LoginController.dataOutputStream.writeUTF("Select Hand" + "/" + Integer.parseInt(matcher.group(1)) + "/" +
+                    LoginController.token);
+            LoginController.dataOutputStream.flush();
+            return LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
         }
+        return "";
     }
+
 
     public void hasSwordCard() {
         for (Map.Entry<Card, Integer> entry : duelModel.getSwordsCard().get(duelModel.turn).entrySet()) {

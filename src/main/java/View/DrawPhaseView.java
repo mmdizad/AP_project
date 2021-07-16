@@ -1,10 +1,7 @@
 package View;
 
 import Controller.NewCardToHandController;
-import Model.Card;
 import Model.DuelModel;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DrawPhaseView extends DuelView {
