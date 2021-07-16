@@ -88,7 +88,21 @@ public class Main {
         } else if (input.startsWith("show one card")) {
             return DeckController.getInstance().showOneCard(input);
         } else if (input.startsWith("New Card To Hand")) {
-            return DuelController.newCardToHand(input);
+            return DuelController.getInstance().newCardToHand(input);
+        } else if (input.startsWith("Select Monster")) {
+            return DuelController.getInstance().selectMonster(input);
+        } else if (input.startsWith("Select Opponent Monster")) {
+            return DuelController.getInstance().selectOpponentMonster(input);
+        } else if (input.startsWith("Select Spell Or Trap")) {
+            return DuelController.getInstance().selectSpellOrTrap(input);
+        } else if (input.startsWith("Select Opponent Spell Or Trap")) {
+            return DuelController.getInstance().selectOpponentSpellOrTrap(input);
+        } else if (input.startsWith("Select FieldZone")) {
+            return DuelController.getInstance().selectFieldZone(input);
+        } else if (input.startsWith("Select Opponent FieldZone")) {
+            return DuelController.getInstance().selectOpponentFieldZone(input);
+        } else if (input.startsWith("Select Hand")) {
+            return DuelController.getInstance().selectHand(input);
         }
         return "";
     }
