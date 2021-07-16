@@ -52,7 +52,7 @@ public class DuelController {
         return -1;
     }
 
-    public String newCardToHand(String input) {
+    public static String newCardToHand(String input) {
         String playerUsername = input.split("/")[1];
         String tokenOfPlayer = input.split("/")[2];
 
