@@ -55,7 +55,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
                 showSelectedCard(getCommandMatcher(command, "card show --selected"));
                 showGraveyard(getCommandMatcher(command, "show graveyard"));
                 summon(getCommandMatcher(command, "^summon$"));
-                flipSummon(getCommandMatcher(command, "^flip-summon$"));
+                flipSummon(getCommandMatcher(command, "^flip-summon$")); 
                 specialSummon(getCommandMatcher(command, "^special-summon$"));
                 increaseLP(getCommandMatcher(command,"^increase --LP (\\d+)$"));
                 activateEffectMainView(getCommandMatcher(command, "^activate effect$"));

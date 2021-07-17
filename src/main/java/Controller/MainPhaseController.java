@@ -172,44 +172,6 @@ public class MainPhaseController extends DuelController {
     }
 
 
-    public void effectOfCommandKnight() {
-        for (Card card : duelModel.getMonstersInField().get(duelModel.turn)) {
-            if (card != null) {
-                card.setAttackPower(card.getAttackPower() + 400);
-            }
-        }
-        for (Card card : duelModel.getMonstersInField().get(1 - duelModel.turn)) {
-            if (card != null) {
-                card.setAttackPower(card.getAttackPower() + 400);
-            }
-        }
-    }
-
-    public String specialSummonMonsterOnField(String state) {
-        String stateOfCard = "OO";
-        if (state.equals("Attack")) {
-            stateOfCard = "OO";
-        } else if (state.equals("Defence")) {
-            stateOfCard = "DO";
-        }
-        Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-        if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
-            duelModel.addMonsterFromHandToGame(stateOfCard + "/1", 0);
-        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null) {
-            duelModel.addMonsterFromHandToGame(stateOfCard + "/2", 1);
-        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null) {
-            duelModel.addMonsterFromHandToGame(stateOfCard + "/3", 2);
-        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null) {
-            duelModel.addMonsterFromHandToGame(stateOfCard + "/4", 3);
-        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null) {
-            duelModel.addMonsterFromHandToGame(stateOfCard + "/5", 4);
-        } else {
-            return "monster card zone is full";
-        }
-        duelModel.monsterSummonForEffectOfSomeTraps = card;
-        return "summoned successfully";
-    }
-
     public String flipSummon() {
         if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
             return "no card is selected yet";
@@ -285,99 +247,44 @@ public class MainPhaseController extends DuelController {
     }
 
     public String specialSummon() {
+        String result = "";
+        try {
+            LoginController.dataOutputStream.writeUTF("special Summon" + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            result = LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
+        }
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
-        if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
-            return "there is no way you could special summon a monster";
-        } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Monster")) {
-            return "there is no way you could special summon a monster";
-        } else {
-            Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-            String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
-            if (!detailsOfSelectedCard.equals("Hand")) {
-                return "there is no way you could special summon a monster";
-            } else if (!card.isHasSpecialSummon()) {
-                return "there is no way you could special summon a monster";
-            } else if (card.getName().equals("The Tricky")) {
-                int address;
-                if (!isAi) {
-                    address = mainPhaseView.getCardAddressForTribute();
-                } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
-                    address = mainPhaseView.getCardAddressForTribute();
-                } else {
-                    address = 1;
-                }
-                if (address > duelModel.getHandCards().get(duelModel.turn).size()) {
-                    return "there is no way you could special summon a monster";
-                } else {
-                    String stateOfCard;
-                    if (!isAi) {
-                        stateOfCard = mainPhaseView.getStateOfCardForSummon();
-                    } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
-                        stateOfCard = mainPhaseView.getStateOfCardForSummon();
-                    } else {
-                        stateOfCard = "Attack";
-                    }
-                    if (!stateOfCard.equals("Defence") && !stateOfCard.equals("Attack")) {
-                        return "please enter the appropriate state (Defence or Attack)";
-                    } else {
-                        duelModel.deleteCardFromHandWithIndex(address - 1);
-                        duelModel.addCardToGraveyard(duelModel.turn, duelModel.getHandCards().
-                                get(duelModel.turn).get(address - 1));
-                        return specialSummonMonsterOnField(stateOfCard);
-                    }
-                }
-            } else if (card.getName().equals("Gate Guardian")) {
-                int address;
-                int address1;
-                int address2;
-                if (!isAi) {
-                    address = mainPhaseView.getCardAddressForTribute();
-                    address1 = mainPhaseView.getCardAddressForTribute();
-                    address2 = mainPhaseView.getCardAddressForTribute();
-                } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
-                    address = mainPhaseView.getCardAddressForTribute();
-                    address1 = mainPhaseView.getCardAddressForTribute();
-                    address2 = mainPhaseView.getCardAddressForTribute();
-                } else {
-                    address = getPlaceOfMonsterForAiTribute(1);
-                    address1 = getPlaceOfMonsterForAiTribute(2);
-                    address2 = getPlaceOfMonsterForAiTribute(3);
-                }
-                if (address > 5 || address1 > 5 || address2 > 5 || address == address1 || address == address2
-                        || address1 == address2) {
-                    return "there is no way you could special summon a monster";
-                } else if (duelModel.getMonstersInField().get(duelModel.turn).get(address - 1) == null
-                        || duelModel.getMonstersInField().get(duelModel.turn).get(address1 - 1) == null ||
-                        duelModel.getMonstersInField().get(duelModel.turn).get(address2 - 1) == null) {
-                    return "there is no way you could special summon a monster";
-                } else {
-                    String stateOfCard;
-                    if (!isAi) {
-                        stateOfCard = mainPhaseView.getStateOfCardForSummon();
-                    } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
-                        stateOfCard = mainPhaseView.getStateOfCardForSummon();
-                    } else {
-                        stateOfCard = "Attack";
-                    }
-                    if (!stateOfCard.equals("Defence") && !stateOfCard.equals("Attack")) {
-                        return "please enter the appropriate state (Defence or Attack)";
-                    } else {
-                        duelModel.deleteMonster(duelModel.turn, address - 1);
-                        duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
-                                address));
-                        duelModel.deleteMonster(duelModel.turn, address1 - 1);
-                        duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
-                                address1));
-                        duelModel.deleteMonster(duelModel.turn, address2 - 1);
-                        duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
-                                address2));
-                        return specialSummonMonsterOnField(stateOfCard);
-                    }
-                }
+
+        if (result.equals("Special Summon The Tricky")) {
+            int address = mainPhaseView.getCardAddressForTribute();
+            String stateOfCard = mainPhaseView.getStateOfCardForSummon();
+            try {
+                LoginController.dataOutputStream.writeUTF("Special Summon The Tricky" + "/" + address
+                        + "/" + stateOfCard + "/" + LoginController.token);
+                LoginController.dataOutputStream.flush();
+                return LoginController.dataInputStream.readUTF();
+            } catch (IOException x) {
+                x.printStackTrace();
+            }
+        } else if (result.equals("Special Summon Gate Guardian")) {
+            int address = mainPhaseView.getCardAddressForTribute();
+            int address1 = mainPhaseView.getCardAddressForTribute();
+            int address2 = mainPhaseView.getCardAddressForTribute();
+            String stateOfCard = mainPhaseView.getStateOfCardForSummon();
+            try {
+                LoginController.dataOutputStream.writeUTF("Special Summon Gate Guardian" + "/" + address
+                     + "/" + address1 + "/" + address2 + "/" + stateOfCard + "/" + LoginController.token);
+                LoginController.dataOutputStream.flush();
+                return LoginController.dataInputStream.readUTF();
+            } catch (IOException x) {
+                x.printStackTrace();
             }
         }
-        return "";
+        return result;
     }
+
 
     public String summonMonsterHasTwoMethods() {
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
