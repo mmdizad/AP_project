@@ -13,8 +13,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
         LoginAndSignUpController.createFolders();
         LoginAndSignUpController.createCard();
-//        LoginAndSignUpController.createFolders();
-//        LoginAndSignUpController.createCard();
         ShopController.initializeCard();
         runApp();
     }
@@ -104,9 +102,9 @@ public class Main {
         } else if (input.startsWith("Select Hand")) {
             return DuelController.getInstance().selectHand(input);
         } else if (input.startsWith("shop buy card")) {
-            //return ShopController.getInstance().buyCard(input);
+            return ShopController.getInstance().buyCard(input);
         } else if (input.startsWith("shop increase money")) {
-            //return ShopController.getInstance().increaseMoney(input);
+            return ShopController.getInstance().increaseMoney(input);
         } else if (input.startsWith("Summon Terratiger, the Empowered Warrior")) {
             return DuelController.getInstance().normalSummonCardThatCanSummonAnotherCard(input);
         } else if (input.startsWith("summon")) {
@@ -128,7 +126,7 @@ public class Main {
         } else if (input.startsWith("Flip Summon ManEaterBug")) {
             return DuelController.getInstance().flipSummonManEaterBug(input);
         } else if (input.startsWith("shop show --all")) {
-            //return ShopController.getInstance().getAllCard();
+            return ShopController.getInstance().getAllCard();
         } else if (input.startsWith("change nickname")) {
             ProfileController.getInstance().changeNickName(input);
         } else if (input.startsWith("change password")) {
