@@ -20,7 +20,10 @@ public class ScoreBoardController {
 
     }
 
-    public String getScoreBoard() {
+    public String getScoreBoard(String command) {
+        if (!LoginAndSignUpController.loggedInUsers.containsKey(command.split("/")[1])) {
+            return "wrong token!";
+        }
         ArrayList<User> users = User.getAllUsers();
         Comparator<User> compareScoreboard = Comparator
                 .comparing(User::getScore, Comparator.reverseOrder())

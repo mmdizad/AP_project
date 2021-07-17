@@ -73,9 +73,13 @@ public class Main {
             return DeckController.getInstance().deckDelete(input);
         } else if (input.startsWith("deck setActive")) {
             return DeckController.getInstance().deckSetActive(input);
+        } else if (input.startsWith("attack")) {
+            return BattlePhaseController.getInstance().attack(input);
+        } else if (input.startsWith("direct attack")) {
+            return BattlePhaseController.getInstance().directAttack(input);
         } else if (input.startsWith("scoreBoard")) {
-            return ScoreBoardController.getInstance().getScoreBoard();
-        }else if (input.startsWith("add card")) {
+            return ScoreBoardController.getInstance().getScoreBoard(input);
+        } else if (input.startsWith("add card")) {
             return DeckController.getInstance().addCard(input);
         } else if (input.startsWith("delete card")) {
             return DeckController.getInstance().deleteCard(input);
