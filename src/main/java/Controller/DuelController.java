@@ -260,7 +260,7 @@ public class DuelController {
                             return "there are not enough cards for tribute";
                         } else if (card.getName().equals("Beast King Barbaros")) {
                             return "Summon Beast King Barbaros";
-                        }else if (card.getLevel() >= 7) {
+                        } else if (card.getLevel() >= 7) {
                             return "Summon Monster With Level 7 Or More";
                         }
                     }
@@ -467,6 +467,10 @@ public class DuelController {
         } else {
             return "monster card zone is full";
         }
+        if (monster.getName().equals("Command knight")) {
+            effectOfCommandKnight(duelModel);
+        }
+
         if (monster.getLevel() <= 4) {
             if (monster.getAttackPower() >= 1000) {
                 duelModel.monsterFlipSummonOrNormalSummonForTrapHole = monster;
@@ -475,4 +479,142 @@ public class DuelController {
         duelModel.monsterSummonForEffectOfSomeTraps = monster;
         return "summoned successfully";
     }
+
+    public String specialSummon(String input) {
+        String tokenOfPlayer = input.split("/")[1];
+
+        if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
+            String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
+            for (DuelModel duelModel : duelModels) {
+                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
+                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                    if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
+                        return "there is no way you could special summon a monster";
+                    } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Monster")) {
+                        return "there is no way you could special summon a monster";
+                    } else {
+                        Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                        String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
+                        if (!detailsOfSelectedCard.equals("Hand")) {
+                            return "there is no way you could special summon a monster";
+                        } else if (!card.isHasSpecialSummon()) {
+                            return "there is no way you could special summon a monster";
+                        } else if (card.getName().equals("The Tricky")) {
+                            return "Special Summon The Tricky";
+                        } else if (card.getName().equals("Gate Guardian")) {
+                            return "Special Summon Gate Guardian";
+                        }
+                    }
+                }
+            }
+        }
+        return "";
+    }
+
+    public String specialSummonTheTricky(String input) {
+        int address = Integer.parseInt(input.split("/")[1]);
+        String stateOfCard = input.split("/")[2];
+        String tokenOfPlayer = input.split("/")[3];
+        if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
+            String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
+            for (DuelModel duelModel : duelModels) {
+                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
+                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                    if (address > duelModel.getHandCards().get(duelModel.turn).size()) {
+                        return "there is no way you could special summon a monster";
+                    } else {
+                        if (!stateOfCard.equals("Defence") && !stateOfCard.equals("Attack")) {
+                            return "please enter the appropriate state (Defence or Attack)";
+                        } else {
+                            duelModel.deleteCardFromHandWithIndex(address - 1);
+                            duelModel.addCardToGraveyard(duelModel.turn, duelModel.getHandCards().
+                                    get(duelModel.turn).get(address - 1));
+                            return specialSummonMonsterOnField(stateOfCard, duelModel);
+                        }
+                    }
+                }
+            }
+        }
+        return "";
+    }
+
+    public String specialSummonGateGuardian(String input) {
+        int address = Integer.parseInt(input.split("/")[1]);
+        int address1 = Integer.parseInt(input.split("/")[2]);
+        int address2 = Integer.parseInt(input.split("/")[3]);
+        String stateOfCard = input.split("/")[4];
+        String tokenOfPlayer = input.split("/")[5];
+
+        if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
+            String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
+            for (DuelModel duelModel : duelModels) {
+                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
+                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                    if (address > 5 || address1 > 5 || address2 > 5 || address == address1 || address == address2
+                            || address1 == address2) {
+                        return "there is no way you could special summon a monster";
+                    } else if (duelModel.getMonstersInField().get(duelModel.turn).get(address - 1) == null
+                            || duelModel.getMonstersInField().get(duelModel.turn).get(address1 - 1) == null ||
+                            duelModel.getMonstersInField().get(duelModel.turn).get(address2 - 1) == null) {
+                        return "there is no way you could special summon a monster";
+                    } else {
+                        if (!stateOfCard.equals("Defence") && !stateOfCard.equals("Attack")) {
+                            return "please enter the appropriate state (Defence or Attack)";
+                        } else {
+                            duelModel.deleteMonster(duelModel.turn, address - 1);
+                            duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
+                                    address));
+                            duelModel.deleteMonster(duelModel.turn, address1 - 1);
+                            duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
+                                    address1));
+                            duelModel.deleteMonster(duelModel.turn, address2 - 1);
+                            duelModel.addCardToGraveyard(duelModel.turn, duelModel.getMonster(duelModel.turn,
+                                    address2));
+                            return specialSummonMonsterOnField(stateOfCard, duelModel);
+                        }
+                    }
+                }
+            }
+        }
+        return "";
+    }
+
+    public String specialSummonMonsterOnField(String state, DuelModel duelModel) {
+        String stateOfCard = "OO";
+        if (state.equals("Attack")) {
+            stateOfCard = "OO";
+        } else if (state.equals("Defence")) {
+            stateOfCard = "DO";
+        }
+        Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
+            duelModel.addMonsterFromHandToGame(stateOfCard + "/1", 0);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null) {
+            duelModel.addMonsterFromHandToGame(stateOfCard + "/2", 1);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null) {
+            duelModel.addMonsterFromHandToGame(stateOfCard + "/3", 2);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null) {
+            duelModel.addMonsterFromHandToGame(stateOfCard + "/4", 3);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null) {
+            duelModel.addMonsterFromHandToGame(stateOfCard + "/5", 4);
+        } else {
+            return "monster card zone is full";
+        }
+        duelModel.monsterSummonForEffectOfSomeTraps = card;
+        return "summoned successfully";
+    }
+
+    public void effectOfCommandKnight(DuelModel duelModel) {
+        for (Card card : duelModel.getMonstersInField().get(duelModel.turn)) {
+            if (card != null) {
+                card.setAttackPower(card.getAttackPower() + 400);
+            }
+        }
+        for (Card card : duelModel.getMonstersInField().get(1 - duelModel.turn)) {
+            if (card != null) {
+                card.setAttackPower(card.getAttackPower() + 400);
+            }
+        }
+    }
+
 }

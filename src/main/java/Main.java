@@ -101,7 +101,7 @@ public class Main {
         } else if (input.startsWith("Select Hand")) {
             return DuelController.getInstance().selectHand(input);
         } else if (input.startsWith("shop buy card")) {
-            return ShopController.getInstance().buyCard(input);
+             return ShopController.getInstance().buyCard(input);
         } else if (input.startsWith("shop increase money")) {
             return ShopController.getInstance().increaseMoney(input);
         } else if (input.startsWith("Summon Terratiger, the Empowered Warrior")) {
@@ -114,11 +114,17 @@ public class Main {
             return DuelController.getInstance().summonMonsterHasTwoMethods(input);
         } else if (input.startsWith("Summon Monster With Level 7 Or More")) {
             return DuelController.getInstance().summonCardWithLevel7orMore(input);
-        }else if (input.startsWith("shop show --all")){
+        } else if (input.startsWith("special Summon")) {
+            return DuelController.getInstance().specialSummon(input);
+        } else if (input.startsWith("Special Summon The Tricky")) {
+            return DuelController.getInstance().specialSummonTheTricky(input);
+        } else if (input.startsWith("Special Summon Gate Guardian")) {
+            return DuelController.getInstance().specialSummonGateGuardian(input);
+        } else if (input.startsWith("shop show --all")) {
             return ShopController.getInstance().getAllCard();
-        }else if(input.startsWith("change nickname")){
-                 ProfileController.getInstance().changeNickName(input);
-        }else if (input.startsWith("change password")){
+        } else if (input.startsWith("change nickname")) {
+            ProfileController.getInstance().changeNickName(input);
+        } else if (input.startsWith("change password")) {
             ProfileController.getInstance().changePassword(input);
         }
         return "";
