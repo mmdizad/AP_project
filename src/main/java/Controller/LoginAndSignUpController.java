@@ -9,7 +9,7 @@ import java.util.*;
 
 public class LoginAndSignUpController {
     private static LoginAndSignUpController loginAndSignUpController;
-    public static HashMap<String, User> loggedInUsers;
+    public static HashMap<String, User> loggedInUsers=new HashMap<>();
 
     private LoginAndSignUpController() {
 

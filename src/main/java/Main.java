@@ -114,6 +114,12 @@ public class Main {
             return DuelController.getInstance().summonMonsterHasTwoMethods(input);
         } else if (input.startsWith("Summon Monster With Level 7 Or More")) {
             return DuelController.getInstance().summonCardWithLevel7orMore(input);
+        }else if (input.startsWith("shop show --all")){
+            return ShopController.getInstance().getAllCard();
+        }else if(input.startsWith("change nickname")){
+                 ProfileController.getInstance().changeNickName(input);
+        }else if (input.startsWith("change password")){
+            ProfileController.getInstance().changePassword(input);
         }
         return "";
     }
