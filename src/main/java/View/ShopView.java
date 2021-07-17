@@ -3,7 +3,6 @@ package View;
 import Controller.LoginController;
 import Controller.ShopController;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,13 +24,11 @@ public class ShopView extends MainMenu {
 
             Pattern pattern = Pattern.compile("^increase --money (\\d+)$");
             Matcher matcher = pattern.matcher(input);
-            if (matcher.find()){
-                increaseMoney(matcher);
-            }
-            //trim matcher later!
             Pattern patternBuy = Pattern.compile("shop buy (.+)");
             Matcher matcherBuy = patternBuy.matcher(input);
-            if (matcherBuy.find())
+            if (matcher.find()){
+                increaseMoney(matcher);
+            }else if (matcherBuy.find())
                 buyCard(matcherBuy);
             else if (input.equals("shop show --all"))
                 showCard();
@@ -45,6 +42,7 @@ public class ShopView extends MainMenu {
     public void increaseMoney(Matcher matcher) {
         ShopController shopController = ShopController.getInstance();
         System.out.println(shopController.increaseMoney(matcher));
+
     }
 
     public void buyCard(Matcher matcher) {
@@ -54,10 +52,8 @@ public class ShopView extends MainMenu {
 
     public void showCard() {
         ShopController shopController = ShopController.getInstance();
-        ArrayList<String> cards = shopController.getAllCard();
-        for (String card : cards) {
-            System.out.println(card);
-        }
+        String cards = shopController.getAllCard();
+        System.out.println(cards);
     }
 
 }
