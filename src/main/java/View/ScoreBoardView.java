@@ -31,9 +31,16 @@ public class ScoreBoardView extends MainMenu {
 
     public void showScoreboard() {
         ScoreBoardController scoreBoardController = ScoreBoardController.getInstance();
-        ArrayList<String> output = scoreBoardController.scoreBoard();
-        for (int i = 0; i < output.size(); i++) {
-            System.out.println(output.get(i));
+        System.out.println(scoreBoardController.scoreBoard());
+        while (true) {
+            System.out.println("enter Refresh to load data again or Back to exit: ");
+            Scanner scanner = new Scanner(System.in);
+            String command = scanner.nextLine();
+            if (command.equals("Refresh")) {
+                System.out.println(scoreBoardController.scoreBoard());
+            } else if (command.equals("Back")) {
+                return;
+            }
         }
     }
 
