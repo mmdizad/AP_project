@@ -186,77 +186,28 @@ public class MainPhaseController extends DuelController {
     }
 
     public String flipSummon() {
-        if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
-            return "no card is selected yet";
-        } else {
-            Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
-            if (!card.getCategory().equals("Monster")) {
-                return "you can’t flipSummon this card";
-            }
-            String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
-            String[] details = detailsOfSelectedCard.split("/");
-            if (details[0].equals("Hand") || details[0].equals("Opponent")) {
-                return "you can’t change this card position";
-            } else if (!details[1].equals("DO") && !details[1].equals("DH") && !details[1].equals("OO")) {
-                return "you can’t change this card position";
-            } else if (!details[1].equals("DH")) {
-                return "you can’t flip summon this card";
-            } else {
-                int placeOfSummonCard = Integer.parseInt(details[2]);
-                if (duelModel.getMonsterSetOrSummonInThisTurn() == null) {
-                    duelModel.flipSummon(placeOfSummonCard - 1);
-                    return "flip summoned successfully";
-                } else {
-                    String detailsOfCardSummonedOrSetInThisTurn = duelModel.getMonsterCondition(duelModel.turn,
-                            duelModel.thePlaceOfMonsterSetOrSummonInThisTurn - 1);
-                    String[] details1 = detailsOfCardSummonedOrSetInThisTurn.split("/");
-                    int placeOfCardSummonedOrSetInThisTurn = Integer.parseInt(details1[1]);
-                    if (placeOfCardSummonedOrSetInThisTurn == placeOfSummonCard) {
-                        return "you can’t flip summon this card";
-                    } else {
-                        duelModel.flipSummon(placeOfSummonCard - 1);
-                        if (card.getName().equals("Command knight")) {
-                            effectOfCommandKnight();
-                        }
-                        if (card.getLevel() <= 4) {
-                            if (card.getAttackPower() >= 1000) {
-                                duelModel.monsterFlipSummonOrNormalSummonForTrapHole = card;
-                            }
-                        }
-                        duelModel.monsterSummonForEffectOfSomeTraps = card;
-                        if (card.getName().equals("Man-Eater Bug")) {
-                            return "flipSummon Man-Eater Bug";
-                        }
-                        return "flip summoned successfully";
-                    }
-                }
-            }
+        try {
+            LoginController.dataOutputStream.writeUTF("flip Summon" + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            return LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
         }
+        return "";
     }
 
     public String flipSummonManEaterBug() {
-        int placeOfMonster;
         MainPhaseView mainPhaseView = MainPhaseView.getInstance();
-        if (!isAi) {
-            placeOfMonster = mainPhaseView.scanPlaceOfMonsterForDestroyInManEaterFlipSummon();
-        } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
-            placeOfMonster = mainPhaseView.scanPlaceOfMonsterForDestroyInManEaterFlipSummon();
-        } else {
-            Card card = getBestMonsterOfOpponentForAi();
-            placeOfMonster = duelModel.getMonstersInField().get(1 - duelModel.turn).indexOf(card) + 1;
+        int placeOfMonster = mainPhaseView.scanPlaceOfMonsterForDestroyInManEaterFlipSummon();
+        try {
+            LoginController.dataOutputStream.writeUTF("Flip Summon ManEaterBug" + "/" + placeOfMonster + "/" +
+                    LoginController.token);
+            LoginController.dataOutputStream.flush();
+            return LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
         }
-        if (placeOfMonster > 5) {
-            return "you must enter correct address";
-        } else {
-            Card card = duelModel.getMonster(1 - duelModel.turn, placeOfMonster);
-            if (card == null) {
-                return "this address has not monster";
-            } else {
-                duelModel.deleteMonster(1 - duelModel.turn, placeOfMonster - 1);
-                duelModel.addCardToGraveyard(1 - duelModel.turn, card);
-                return "monster with this address in opponent board destroyed";
-            }
-        }
+        return "";
     }
 
     public String specialSummon() {
@@ -288,7 +239,7 @@ public class MainPhaseController extends DuelController {
             String stateOfCard = mainPhaseView.getStateOfCardForSummon();
             try {
                 LoginController.dataOutputStream.writeUTF("Special Summon Gate Guardian" + "/" + address
-                     + "/" + address1 + "/" + address2 + "/" + stateOfCard + "/" + LoginController.token);
+                        + "/" + address1 + "/" + address2 + "/" + stateOfCard + "/" + LoginController.token);
                 LoginController.dataOutputStream.flush();
                 return LoginController.dataInputStream.readUTF();
             } catch (IOException x) {
