@@ -172,6 +172,19 @@ public class MainPhaseController extends DuelController {
     }
 
 
+    public void effectOfCommandKnight() {
+        for (Card card : duelModel.getMonstersInField().get(duelModel.turn)) {
+            if (card != null) {
+                card.setAttackPower(card.getAttackPower() + 400);
+            }
+        }
+        for (Card card : duelModel.getMonstersInField().get(1 - duelModel.turn)) {
+            if (card != null) {
+                card.setAttackPower(card.getAttackPower() + 400);
+            }
+        }
+    }
+
     public String flipSummon() {
         if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
             return "no card is selected yet";
