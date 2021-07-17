@@ -13,6 +13,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 //        LoginAndSignUpController.createFolders();
 //        LoginAndSignUpController.createCard();
+        ShopController.initializeCard();
         runApp();
     }
 
