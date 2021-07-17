@@ -29,7 +29,8 @@ public class DuelView {
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView, boolean isAi) {
         String response = "";
         try {
-            LoginController.dataOutputStream.writeUTF("Select First Player/" + secondPlayerUsername + "/" + LoginController.token);
+            LoginController.dataOutputStream.writeUTF("Select First Player/" + secondPlayerUsername + "/" + isAi +"/"
+                    + LoginController.token);
             LoginController.dataOutputStream.flush();
             response = LoginController.dataInputStream.readUTF();
         } catch (IOException x) {
