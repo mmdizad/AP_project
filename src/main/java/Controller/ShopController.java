@@ -4,7 +4,6 @@ import Model.Card;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.regex.Matcher;
 
 public class ShopController extends LoginController {
@@ -51,15 +50,15 @@ public class ShopController extends LoginController {
 
     }
 
-    public ArrayList<String> getAllCard() {
-        ArrayList<String> output = new ArrayList<>();
-        ArrayList<Card> cards = Card.getAllCardsCard();
-        cards.sort(Comparator.comparing(Card::getName));
-
-        for (Card card : cards) {
-            output.add(card.getName() + ": " + card.getDescription());
+    public String getAllCard() {
+        try {
+            dataOutputStream.writeUTF("shop show --all");
+            dataOutputStream.flush();
+            return dataInputStream.readUTF();
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        return output;
+        return "assd";
     }
 
     public String increaseMoney(Matcher matcher) {
