@@ -104,6 +104,12 @@ public class Main {
             return ShopController.getInstance().buyCard(input);
         }else if (input.startsWith("shop increase money")){
             return ShopController.getInstance().increaseMoney(input);
+        }else if (input.startsWith("shop show --all")){
+            return ShopController.getInstance().getAllCard();
+        }else if(input.startsWith("change nickname")){
+                 ProfileController.getInstance().changeNickName(input);
+        }else if (input.startsWith("change password")){
+            ProfileController.getInstance().changePassword(input);
         }
         return "";
     }
