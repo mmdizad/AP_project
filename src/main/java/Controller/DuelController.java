@@ -442,6 +442,7 @@ public class DuelController {
         return numberOfMonstersInPlayerFiled;
     }
 
+
     public String normalSummonMonsterOnField(Card monster, String state, DuelModel duelModel) {
         String stateOfCard = "OO";
         if (state.equals("Attack")) {
@@ -615,6 +616,91 @@ public class DuelController {
                 card.setAttackPower(card.getAttackPower() + 400);
             }
         }
+    }
+
+    public String flipSummon(String input) {
+        String tokenOfPlayer = input.split("/")[1];
+        if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
+            String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
+            for (DuelModel duelModel : duelModels) {
+                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
+                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                    if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
+                        return "no card is selected yet";
+                    } else {
+                        Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+                        if (!card.getCategory().equals("Monster")) {
+                            return "you can’t flipSummon this card";
+                        }
+                        String detailsOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn).get(card);
+                        String[] details = detailsOfSelectedCard.split("/");
+                        if (details[0].equals("Hand") || details[0].equals("Opponent")) {
+                            return "you can’t change this card position";
+                        } else if (!details[1].equals("DO") && !details[1].equals("DH") && !details[1].equals("OO")) {
+                            return "you can’t change this card position";
+                        } else if (!details[1].equals("DH")) {
+                            return "you can’t flip summon this card";
+                        } else {
+                            int placeOfSummonCard = Integer.parseInt(details[2]);
+                            if (duelModel.getMonsterSetOrSummonInThisTurn() == null) {
+                                duelModel.flipSummon(placeOfSummonCard - 1);
+                                return "flip summoned successfully";
+                            } else {
+                                String detailsOfCardSummonedOrSetInThisTurn = duelModel.getMonsterCondition(duelModel.turn,
+                                        duelModel.thePlaceOfMonsterSetOrSummonInThisTurn - 1);
+                                String[] details1 = detailsOfCardSummonedOrSetInThisTurn.split("/");
+                                int placeOfCardSummonedOrSetInThisTurn = Integer.parseInt(details1[1]);
+                                if (placeOfCardSummonedOrSetInThisTurn == placeOfSummonCard) {
+                                    return "you can’t flip summon this card";
+                                } else {
+                                    duelModel.flipSummon(placeOfSummonCard - 1);
+                                    if (card.getName().equals("Command knight")) {
+                                        effectOfCommandKnight(duelModel);
+                                    }
+                                    if (card.getLevel() <= 4) {
+                                        if (card.getAttackPower() >= 1000) {
+                                            duelModel.monsterFlipSummonOrNormalSummonForTrapHole = card;
+                                        }
+                                    }
+                                    duelModel.monsterSummonForEffectOfSomeTraps = card;
+                                    if (card.getName().equals("Man-Eater Bug")) {
+                                        return "flipSummon Man-Eater Bug";
+                                    }
+                                    return "flip summoned successfully";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return "";
+    }
+
+    public String flipSummonManEaterBug(String input) {
+        int placeOfMonster = Integer.parseInt(input.split("/")[1]);
+        String tokenOfPlayer = input.split("/")[2];
+        if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
+            String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
+            for (DuelModel duelModel : duelModels) {
+                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
+                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                    if (placeOfMonster > 5) {
+                        return "you must enter correct address";
+                    } else {
+                        Card card = duelModel.getMonster(1 - duelModel.turn, placeOfMonster);
+                        if (card == null) {
+                            return "this address has not monster";
+                        } else {
+                            duelModel.deleteMonster(1 - duelModel.turn, placeOfMonster - 1);
+                            duelModel.addCardToGraveyard(1 - duelModel.turn, card);
+                            return "monster with this address in opponent board destroyed";
+                        }
+                    }
+                }
+            }
+        }
+        return "";
     }
 
 }
