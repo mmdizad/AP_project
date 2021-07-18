@@ -286,24 +286,22 @@ public class MainPhaseController extends DuelController {
     }
 
     public String activateSpellEffectMainController() {
-        if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
-            return "no card is selected yet";
-        } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Spell")) {
-            return "activate effect is only for spell cards.";
-        } else {
-            String[] detailOfSelectedCard = duelModel.getDetailOfSelectedCard().get(duelModel.turn)
-                    .get(duelModel.getSelectedCards().get(duelModel.turn).get(0)).split("/");
-            if (detailOfSelectedCard[0].equals("Hand")) {
-                return duelController.activateEffect(-1);
-            } else if (detailOfSelectedCard[0].equals("opponent"))
-                return "you cant active your opponent field card";
-            else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("O")) {
-                return "you have already activated this card";
-            } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("H")) {
-                return duelController.activateEffect(Integer.parseInt(detailOfSelectedCard[2]));
-            }
-            return "you cant active this card";
+        String response = "";
+        try {
+            LoginController.dataOutputStream.writeUTF("Activate Effect Main Controller" + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            response = LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
         }
+        String[] partsOfResponse = response.split("/");
+        if (partsOfResponse.length > 2) {
+            int placeOfSpell = Integer.parseInt(partsOfResponse[0]);
+            String cardName = partsOfResponse[1];
+            String cardType = partsOfResponse[2];
+            return duelController.activateEffect(placeOfSpell, cardName, cardType);
+        }
+        return response;
     }
 
     public void aiMainPhaseController() {

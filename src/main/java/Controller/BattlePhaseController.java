@@ -166,7 +166,7 @@ public class BattlePhaseController extends DuelController {
             } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("O")) {
                 return "you have already activated this card";
             } else if (detailOfSelectedCard[0].equals("My") && detailOfSelectedCard[1].equals("H")) {
-                return duelController.activateEffect(Integer.parseInt(detailOfSelectedCard[2]));
+              //  return duelController.activateEffect(Integer.parseInt(detailOfSelectedCard[2]));
             }
             return "you cant active this card";
         }

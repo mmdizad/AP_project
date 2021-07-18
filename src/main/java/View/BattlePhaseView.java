@@ -2,9 +2,11 @@ package View;
 
 import Controller.BattlePhaseController;
 import Controller.DuelController;
+import Controller.LoginController;
 import Controller.MainPhaseController;
 import Model.DuelModel;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -28,19 +30,16 @@ public class BattlePhaseView extends DuelView {
         if (duelModel.getCreatorUsername(duelModel.turn).equals("ai")) {
             BattlePhaseController battlePhaseController = BattlePhaseController.getInstance();
             battlePhaseController.setCommandsForAi();
-            if (anyOneWon()){
+            if (anyOneWon()) {
                 return;
             }
-            if (duelModel.getBorrowCards().size() > 0) {
-                duelController.refundsTheBorrowCards();
+            try {
+                LoginController.dataOutputStream.writeUTF("EndPhase" + "/" + LoginController.token);
+                LoginController.dataOutputStream.flush();
+                LoginController.dataInputStream.readUTF();
+            } catch (IOException x) {
+                x.printStackTrace();
             }
-            duelController.hasSwordCard();
-            duelController.hasSupplySquadCard();
-            duelController.hasSomeCardsInsteadOfScanner();
-            duelModel.deleteMonstersDestroyedInThisTurn();
-            duelModel.deleteSpellAndTrapsSetInThisTurn();
-            duelModel.deleteCardsInsteadOfScanners();
-            duelModel.deleteMonsterSetOrSummonInThisTurn();
             System.out.println("EndPhase");
             BattlePhaseController.getInstance().attackedCards.clear();
             duelModel.turn = 1 - duelModel.turn;
@@ -67,7 +66,7 @@ public class BattlePhaseView extends DuelView {
                 showSelectedCard(getCommandMatcher(command, "card show --selected"));
                 showGraveyard(getCommandMatcher(command, "show graveyard"));
                 activateEffectBattlePhaseView(getCommandMatcher(command, "^activate effect$"));
-                increaseLP(getCommandMatcher(command,"^increase --LP (\\d+)$"));
+                increaseLP(getCommandMatcher(command, "^increase --LP (\\d+)$"));
                 if (command.equals("enterPhase")) {
                     enterPhase(scanner);
                     break;
@@ -78,7 +77,7 @@ public class BattlePhaseView extends DuelView {
                     System.out.println("invalid command");
                 }
                 isCommandInvalid = true;
-                if (anyOneWon()){
+                if (anyOneWon()) {
                     return;
                 }
             }
@@ -91,7 +90,7 @@ public class BattlePhaseView extends DuelView {
     }
 
     public void increaseLP(Matcher matcher) {
-        if (matcher.find()){
+        if (matcher.find()) {
             isCommandInvalid = false;
             DuelController duelController = DuelController.getInstance();
             duelController.increaseLP(matcher);
@@ -144,18 +143,15 @@ public class BattlePhaseView extends DuelView {
             MainPhaseView mainPhaseView = MainPhaseView.getInstance();
             mainPhaseView.run(scanner, "MainPhase2", true);
         } else if (newPhase.equals("EndPhase")) {
-            if (duelModel.getBorrowCards().size() > 0) {
-                duelController.refundsTheBorrowCards();
+            try {
+                LoginController.dataOutputStream.writeUTF("EndPhase" + "/" + LoginController.token);
+                LoginController.dataOutputStream.flush();
+                LoginController.dataInputStream.readUTF();
+            } catch (IOException x) {
+                x.printStackTrace();
             }
-            duelController.hasSwordCard();
-            duelController.hasSupplySquadCard();
-            duelController.hasSomeCardsInsteadOfScanner();
-            duelModel.deleteMonstersDestroyedInThisTurn();
-            duelModel.deleteSpellAndTrapsSetInThisTurn();
-            duelModel.deleteCardsInsteadOfScanners();
-            duelModel.deleteMonsterSetOrSummonInThisTurn();
-            System.out.println("EndPhase");
             BattlePhaseController.getInstance().attackedCards.clear();
+            System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
             drawPhaseView.newCard(scanner, duelModel.getUsernames().get(duelModel.turn), false);

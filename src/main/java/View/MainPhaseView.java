@@ -1,9 +1,11 @@
 package View;
 
 import Controller.DuelController;
+import Controller.LoginController;
 import Controller.MainPhaseController;
 import Model.DuelModel;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -246,16 +248,13 @@ public class MainPhaseView extends DuelView implements Set, Summon {
 
     public void endPhaseMethod(Scanner scanner, String newPhase) {
         if (newPhase.equals("EndPhase")) {
-            if (duelModel.getBorrowCards().size() > 0) {
-                duelController.refundsTheBorrowCards();
+            try {
+                LoginController.dataOutputStream.writeUTF("EndPhase" + "/" + LoginController.token);
+                LoginController.dataOutputStream.flush();
+                LoginController.dataInputStream.readUTF();
+            } catch (IOException x) {
+                x.printStackTrace();
             }
-            duelController.hasSwordCard();
-            duelController.hasSupplySquadCard();
-            duelController.hasSomeCardsInsteadOfScanner();
-            duelModel.deleteMonstersDestroyedInThisTurn();
-            duelModel.deleteSpellAndTrapsSetInThisTurn();
-            duelModel.deleteCardsInsteadOfScanners();
-            duelModel.deleteMonsterSetOrSummonInThisTurn();
             System.out.println("EndPhase");
             duelModel.turn = 1 - duelModel.turn;
             DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();

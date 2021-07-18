@@ -2,23 +2,33 @@ package Controller;
 
 import Model.DuelModel;
 
+import java.io.IOException;
+
 public class StandByPhaseController extends DuelController {
     DuelModel duelModel = duelController.duelModel;
 
     public Integer hasSpellEffectInThisPhase() {
-        return duelModel.getMessengerOfPeace().get(duelModel.turn).size();
+        String response = "";
+        try {
+            LoginController.dataOutputStream.writeUTF("hasSpellEffectInStandByPhase" + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            response = LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
+        }
+        return Integer.parseInt(response);
     }
 
     public String effectOfSpellInThisPhase(int response) {
-        if (response != 1 && response != 2) {
-            return "you must entered 1 or 2";
-        } else if (response == 1) {
-            duelModel.deleteMessengerOfPeaceCards(duelModel.turn, duelModel.getMessengerOfPeace().get(duelModel.turn)
-                    .get(0));
-            return "your messenger of peace card destroyed";
-        } else {
-            duelModel.decreaseLifePoint(100, duelModel.turn);
-            return "your lp decreases 100 unit";
+        String result = "";
+        try {
+            LoginController.dataOutputStream.writeUTF("effectOfSpellInStandByPhase" + "/" + response + "/"
+                    + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            result = LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
         }
+        return result;
     }
 }
