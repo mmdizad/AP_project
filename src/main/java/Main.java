@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,6 +27,8 @@ public class Main {
 
             }
         }).start();
+        LoginAndSignUpController.createFolders();
+        LoginAndSignUpController.createCard();
         ShopController.initializeCard();
         runApp();
 
@@ -111,6 +112,12 @@ public class Main {
             return DeckController.getInstance().deckDelete(input);
         } else if (input.startsWith("deck setActive")) {
             return DeckController.getInstance().deckSetActive(input);
+        } else if (input.startsWith("attack")) {
+            return BattlePhaseController.getInstance().attack(input);
+        } else if (input.startsWith("direct attack")) {
+            return BattlePhaseController.getInstance().directAttack(input);
+        } else if (input.startsWith("scoreBoard")) {
+            return ScoreBoardController.getInstance().getScoreBoard(input);
         } else if (input.startsWith("add card")) {
             return DeckController.getInstance().addCard(input);
         } else if (input.startsWith("delete card")) {
@@ -140,9 +147,9 @@ public class Main {
         } else if (input.startsWith("Select Hand")) {
             return DuelController.getInstance().selectHand(input);
         } else if (input.startsWith("shop buy card")) {
-            //return ShopController.getInstance().buyCard(input);
+            return ShopController.getInstance().buyCard(input);
         } else if (input.startsWith("shop increase money")) {
-            //return ShopController.getInstance().increaseMoney(input);
+            return ShopController.getInstance().increaseMoney(input);
         } else if (input.startsWith("Summon Terratiger, the Empowered Warrior")) {
             return DuelController.getInstance().normalSummonCardThatCanSummonAnotherCard(input);
         } else if (input.startsWith("summon")) {
@@ -164,7 +171,7 @@ public class Main {
         } else if (input.startsWith("Flip Summon ManEaterBug")) {
             return DuelController.getInstance().flipSummonManEaterBug(input);
         } else if (input.startsWith("shop show --all")) {
-            //return ShopController.getInstance().getAllCard();
+            return ShopController.getInstance().getAllCard();
         } else if (input.startsWith("change nickname")) {
             ProfileController.getInstance().changeNickName(input);
         } else if (input.startsWith("change password")) {
