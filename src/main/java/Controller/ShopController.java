@@ -11,8 +11,7 @@ import java.util.regex.Matcher;
 
 public class ShopController  {
      public static HashMap<String,Integer> cards = new HashMap<>();
-     public ArrayList<String> forbiddenCards;
-
+     public ArrayList<String> forbiddenCards= new ArrayList<>();
     private static ShopController shopController = new ShopController();
 
 
@@ -69,7 +68,28 @@ public class ShopController  {
         }
         return output.toString();
     }
-
+       public String increaseNumberOfCard(String name , int number){
+        if(cards.containsKey(name)) {
+            int numberOfCard = cards.get(name);
+            numberOfCard += number;
+            cards.put(name, numberOfCard);
+            return "card increase successfully";
+        }else return "no such card exist";
+       }
+       public Integer banCard(String name){
+        if(cards.containsKey(name)) {
+            forbiddenCards.add(name);
+            return 1;
+        }
+        else return 2;
+       }
+       public Integer removeBanCard(String name){
+           if(cards.containsKey(name)) {
+               forbiddenCards.remove(name);
+               return 1;
+           }
+        else return 2;
+       }
     public String increaseMoney(String command) {
         LoginAndSignUpController.loggedInUsers.get(command.split("/")[2]).increaseCoins(Integer.parseInt(command.split("/")[1]));
         return "coin increased";

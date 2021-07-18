@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,10 +14,47 @@ public class Main {
     public static void main(String[] args) throws IOException {
 //        LoginAndSignUpController.createFolders();
 //        LoginAndSignUpController.createCard();
+        Scanner scanner = new Scanner(System.in);
+        new Thread(()-> {
+            while (true){
+                String command = scanner.nextLine();
+                if(command.startsWith("increase card")){
+                    increaseCard(getCommandMatcher(command,"increase card (.+) (\\d+)"));
+                } else if(command.startsWith("ban")){
+                    banCard(getCommandMatcher(command, "ban card (\\w+)"));
+                }else if(command.startsWith("remove ban card")){
+                    removeBanCard(getCommandMatcher(command,"remove ban card (\\w+)"));
+                }else System.out.println("invalid command");
+
+            }
+        }).start();
         ShopController.initializeCard();
         runApp();
-    }
 
+    }
+   private static void increaseCard(Matcher matcher){
+        if(matcher.find()){
+            String cardName = matcher.group(1);
+            int numberOfCard = Integer.parseInt(matcher.group(2));
+            System.out.println(ShopController.getInstance().increaseNumberOfCard(cardName,numberOfCard));
+        }else System.out.println("gg");
+ }
+    private static void banCard(Matcher matcher){
+        if(matcher.find()){
+            String cardName =matcher.group(1);
+            if(ShopController.getInstance().banCard(cardName)==1)
+            System.out.println("card "+cardName +"banned successfully");
+            else System.out.println("card doesn't exist");
+        }
+    }
+    private static void removeBanCard(Matcher matcher){
+        if(matcher.find()){
+            String cardName =matcher.group(1);
+            if(ShopController.getInstance().removeBanCard(cardName)==1)
+            ShopController.getInstance().removeBanCard(cardName);
+            System.out.println("card "+cardName +" removed ban successfully");
+        }else System.out.println("invalid command");
+    }
     public static void runApp() throws IOException {
         // TODO ServerController.loadData();
 
@@ -135,7 +173,7 @@ public class Main {
         return "";
     }
 
-    public Matcher getCommandMatcher(String input, String regex) {
+    public static Matcher getCommandMatcher(String input, String regex) {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input);
     }
