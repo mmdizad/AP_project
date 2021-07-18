@@ -54,7 +54,7 @@ public class ShopController extends LoginController {
         try {
             dataOutputStream.writeUTF("shop show --all");
             dataOutputStream.flush();
-            return dataInputStream.readUTF();
+            return dataInputStream.readUTF()+"tt";
         }catch (Exception e){
             e.printStackTrace();
         }

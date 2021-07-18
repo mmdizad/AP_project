@@ -24,25 +24,33 @@ public class MainPhaseController extends DuelController {
     }
 
     public String set() {
-        ArrayList<ArrayList<Card>> selectedCards = duelModel.getSelectedCards();
-        if (selectedCards.get(duelModel.turn) == null) {
-            return "no card is selected yet";
-        } else {
-            if (!(duelModel.getHandCards().get(duelModel.turn)).contains((selectedCards.get(duelModel.turn)).get(0))) {
-                return "you can’t set this card";
-            } else if ((selectedCards.get(duelModel.turn).get(0)).getCategory().equals("Monster")) {
-                if (selectedCards.get(duelModel.turn).get(0).getLevel() > 4)
-                    return "this card cannot set normally";
-                if (duelModel.monsterSetOrSummonInThisTurn != null)
-                    return "you already summoned/set on this turn";
-                if (selectedCards.get(duelModel.turn).get(0).getLevel() > 5)
-                    return "this card can not set";
-                else
-                    return this.setMonster();
-
-            } else
-                return setTrapOrSpell();
+        try {
+            LoginController.dataOutputStream.writeUTF("set/"+ LoginController.token);
+            LoginController.dataOutputStream.flush();
+            return  LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
         }
+        return "cant send massege to server";
+//        ArrayList<ArrayList<Card>> selectedCards = duelModel.getSelectedCards();
+//        if (selectedCards.get(duelModel.turn) == null) {
+//            return "no card is selected yet";
+//        } else {
+//            if (!(duelModel.getHandCards().get(duelModel.turn)).contains((selectedCards.get(duelModel.turn)).get(0))) {
+//                return "you can’t set this card";
+//            } else if ((selectedCards.get(duelModel.turn).get(0)).getCategory().equals("Monster")) {
+//                if (selectedCards.get(duelModel.turn).get(0).getLevel() > 4)
+//                    return "this card cannot set normally";
+//                if (duelModel.monsterSetOrSummonInThisTurn != null)
+//                    return "you already summoned/set on this turn";
+//                if (selectedCards.get(duelModel.turn).get(0).getLevel() > 5)
+//                    return "this card can not set";
+//                else
+//                    return this.setMonster();
+//
+//            } else
+//                return setTrapOrSpell();
+//        }
     }
 
     public String setTrapOrSpell() {
