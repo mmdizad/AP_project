@@ -176,7 +176,7 @@ public class Main {
         } else if (input.startsWith("change nickname")) {
             return ProfileController.getInstance().changeNickName(input);
         } else if (input.startsWith("change password")) {
-            ProfileController.getInstance().changePassword(input);
+            return ProfileController.getInstance().changePassword(input);
         } else if (input.startsWith("Activate Effect Main Controller")) {
             return ActiveEffectController.getInstance().activateSpellEffectMainController(input);
         } else if (input.startsWith("Effect Of MonsterReborn")) {
@@ -207,7 +207,6 @@ public class Main {
             return String.valueOf(DuelController.getInstance().hasSpellEffectInStandByPhase(input));
         }else if (input.startsWith("effectOfSpellInStandByPhase")){
             return String.valueOf(DuelController.getInstance().effectOfSpellInStandByPhase(input));
-            return ProfileController.getInstance().changePassword(input);
         }else if(input.startsWith("set")){
             DuelController.getInstance().set(input);
         }
