@@ -61,10 +61,10 @@ public class ShopController  {
 
     public String getAllCard() {
        StringBuilder output = new StringBuilder();
-       ArrayList cards = new ArrayList(this.cards.keySet());
+       ArrayList cards = new ArrayList(ShopController.cards.keySet());
 
-        for (int i = 0; i < this.cards.size(); i++) {
-            output.append(cards.get(i)).append(" : ").append(this.cards.get(cards.get(i)));
+        for (int i = 0; i < ShopController.cards.size(); i++) {
+            output.append(cards.get(i)).append(" : ").append(ShopController.cards.get(cards.get(i)));
         }
         return output.toString();
     }

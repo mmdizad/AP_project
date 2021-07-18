@@ -702,5 +702,86 @@ public class DuelController {
         }
         return "";
     }
+    public String set(String command) {
+        String tokenOfPlayer = command.split("/")[1];
+        String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
+        for (DuelModel duelModel : duelModels) {
+            if (duelModel.getUsernames().get(0).equals(playerUsername) ||
+                    duelModel.getUsernames().get(1).equals(playerUsername)) {
+                ArrayList<ArrayList<Card>> selectedCards = duelModel.getSelectedCards();
+                if (selectedCards.get(duelModel.turn) == null) {
+                    return "no card is selected yet";
+                } else {
+                    if (!(duelModel.getHandCards().get(duelModel.turn)).contains((selectedCards.get(duelModel.turn)).get(0))) {
+                        return "you can’t set this card";
+                    } else if ((selectedCards.get(duelModel.turn).get(0)).getCategory().equals("Monster")) {
+                        if (selectedCards.get(duelModel.turn).get(0).getLevel() > 4)
+                            return "this card cannot set normally";
+                        if (duelModel.monsterSetOrSummonInThisTurn != null)
+                            return "you already summoned/set on this turn";
+                        if (selectedCards.get(duelModel.turn).get(0).getLevel() > 5)
+                            return "this card can not set";
+                        else
+                            return this.setMonster(duelModel);
+
+                    } else
+                        return setTrapOrSpell(duelModel);
+                }
+            }
+        }
+        return "player not found";
+    }
+
+    public String setTrapOrSpell(DuelModel duelModel) {
+        Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        if (card.getCardType().equals("Field")) {
+            duelModel.setField(card);
+        }
+        if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(0) == null)
+            duelModel.addSpellAndTrapFromHandToGame("H/1", 0);
+        else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(1) == null)
+            duelModel.addSpellAndTrapFromHandToGame("H/2", 1);
+        else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(2) == null)
+            duelModel.addSpellAndTrapFromHandToGame("H/3", 2);
+        else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(3) == null)
+            duelModel.addSpellAndTrapFromHandToGame("H/4", 3);
+        else if (duelModel.getSpellsAndTrapsInFiled().get(duelModel.turn).get(4) == null)
+            duelModel.addSpellAndTrapFromHandToGame("H/5", 4);
+        else return "spell card zone is full";
+        duelModel.setSpellsAndTrapsSetInThisTurn(duelModel.turn, card);
+        return "set successfully";
+
+    }
+
+    public String setMonster(DuelModel duelModel) {
+        Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
+        if (duelModel.getMonstersInField().get(duelModel.turn).get(0) == null) {
+            duelModel.addMonsterFromHandToGame("DH/1", 0);
+            duelModel.setMonsterSetOrSummonInThisTurn(card, 1);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(1) == null) {
+            duelModel.addMonsterFromHandToGame("DH/2", 1);
+            duelModel.setMonsterSetOrSummonInThisTurn(card, 2);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(2) == null) {
+            duelModel.addMonsterFromHandToGame("DH/3", 2);
+            duelModel.setMonsterSetOrSummonInThisTurn(card, 3);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(3) == null) {
+            duelModel.addMonsterFromHandToGame("DH/4", 3);
+            duelModel.setMonsterSetOrSummonInThisTurn(card, 4);
+        } else if (duelModel.getMonstersInField().get(duelModel.turn).get(4) == null) {
+            duelModel.addMonsterFromHandToGame("DH/5", 4);
+            duelModel.setMonsterSetOrSummonInThisTurn(card, 5);
+        } else {
+            return "monster card zone is full";
+        }
+        for (Card spellCard : duelModel.getSpellsAndTrapsInFiled().get(1 - duelModel.turn)) {
+            if (spellCard != null) {
+                if (spellCard.getName().equals("Swords of Revealing Light")) {
+                   // duelController.changeStateOfMonsterWithSwordsCard(duelModel.turn);
+                    break;
+                }
+            }
+        }
+        return "set successfully";
+    }
 
 }

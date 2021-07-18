@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -173,9 +174,11 @@ public class Main {
         } else if (input.startsWith("shop show --all")) {
             return ShopController.getInstance().getAllCard();
         } else if (input.startsWith("change nickname")) {
-            ProfileController.getInstance().changeNickName(input);
+            return ProfileController.getInstance().changeNickName(input);
         } else if (input.startsWith("change password")) {
-            ProfileController.getInstance().changePassword(input);
+            return ProfileController.getInstance().changePassword(input);
+        }else if(input.startsWith("set")){
+            DuelController.getInstance().set(input);
         }
         return "";
     }
