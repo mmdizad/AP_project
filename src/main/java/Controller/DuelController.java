@@ -1,12 +1,8 @@
 package Controller;
 
-import Model.Card;
-import Model.Deck;
-import Model.DuelModel;
-import Model.User;
+import Model.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class DuelController {
     public static ArrayList<DuelModel> duelModels;
@@ -696,6 +692,130 @@ public class DuelController {
                             duelModel.addCardToGraveyard(1 - duelModel.turn, card);
                             return "monster with this address in opponent board destroyed";
                         }
+                    }
+                }
+            }
+        }
+        return "";
+    }
+
+    public void endPhaseMethod(String input) {
+        String tokenOfPlayer = input.split("/")[1];
+        if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
+            String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
+            for (DuelModel duelModel : duelModels) {
+                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
+                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                    if (duelModel.getBorrowCards().size() > 0) {
+                        ActiveEffectController.getInstance().refundsTheBorrowCards(duelModel);
+                    }
+                    duelController.hasSwordCard(duelModel);
+                    duelController.hasSupplySquadCard(duelModel);
+                    duelController.hasSomeCardsInsteadOfScanner(duelModel);
+                    duelModel.deleteMonstersDestroyedInThisTurn();
+                    duelModel.deleteSpellAndTrapsSetInThisTurn();
+                    duelModel.deleteCardsInsteadOfScanners();
+                    duelModel.deleteMonsterSetOrSummonInThisTurn();
+                    duelModel.turn = 1 - duelModel.turn;
+                }
+
+            }
+        }
+    }
+
+    public void hasSwordCard(DuelModel duelModel) {
+        for (Map.Entry<Card, Integer> entry : duelModel.getSwordsCard().get(duelModel.turn).entrySet()) {
+            Card swordCard = entry.getKey();
+            int numberOfTurnExist = entry.getValue();
+            if (numberOfTurnExist >= 5) {
+                duelModel.deleteSwordsCard(duelModel.turn, swordCard);
+            } else {
+                entry.setValue(numberOfTurnExist + 1);
+            }
+        }
+        for (Map.Entry<Card, Integer> entry : duelModel.getSwordsCard().get(1 - duelModel.turn).entrySet()) {
+            Card swordCard = entry.getKey();
+            int numberOfTurnExist = entry.getValue();
+            if (numberOfTurnExist >= 5) {
+                duelModel.deleteSwordsCard(1 - duelModel.turn, swordCard);
+            } else {
+                entry.setValue(numberOfTurnExist + 1);
+            }
+        }
+    }
+
+    public void hasSupplySquadCard(DuelModel duelModel) {
+        ArrayList<Card> monsterDestroyedInThisTurn1 = duelModel.getMonsterDestroyedInThisTurn().get(duelModel.turn);
+        ArrayList<Card> monsterDestroyedInThisTurn2 = duelModel.getMonsterDestroyedInThisTurn().get(1 - duelModel.turn);
+        ArrayList<Card> supplyCards1 = duelModel.getSupplySquadCards().get(duelModel.turn);
+        ArrayList<Card> supplyCards2 = duelModel.getSupplySquadCards().get(1 - duelModel.turn);
+        if (monsterDestroyedInThisTurn1.size() > 0) {
+            if (supplyCards1.size() > 0) {
+                for (int i = 0; i < supplyCards1.size(); i++) {
+                    duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
+                            , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
+                                    getPlayersCards().get(duelModel.turn).size() - 1));
+                }
+            }
+        } else if (monsterDestroyedInThisTurn2.size() > 0) {
+            if (supplyCards2.size() > 0) {
+                for (int j = 0; j < supplyCards2.size(); j++) {
+                    duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn
+                            , duelModel.getPlayersCards().get(duelModel.turn).get(duelModel.
+                                    getPlayersCards().get(duelModel.turn).size() - 1));
+                }
+            }
+        }
+    }
+
+    public void hasSomeCardsInsteadOfScanner(DuelModel duelModel) {
+        HashMap<Card, Integer> cardsInsteadOfScanner = duelModel.getCardsInsteadOfScanners();
+        if (cardsInsteadOfScanner.size() > 0) {
+            for (Map.Entry<Card, Integer> entry : cardsInsteadOfScanner.entrySet()) {
+                Card monster = new Monster("Scanner", "Once per turn, you can select 1 of your opponent's monsters" +
+                        " that is removed from play. Until the End Phase, this card's name is treated" +
+                        " as the selected monster's name, and this card has the same Attribute, Level, ATK," +
+                        " and DEF as the selected monster. If this card is removed from the field while this effect" +
+                        " is applied, remove it from play.", "Effect", 8000, "Monster",
+                        0, 0, "Machine", "LIGHT", 1, false);
+                int placeOfScanner = entry.getValue();
+                duelModel.getMonstersInField().get(duelModel.turn).set(placeOfScanner - 1, monster);
+            }
+        }
+    }
+
+    public Integer hasSpellEffectInStandByPhase(String input) {
+        String tokenOfPlayer = input.split("/")[1];
+        if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
+            String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
+            for (DuelModel duelModel : duelModels) {
+                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
+                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                    return duelModel.getMessengerOfPeace().get(duelModel.turn).size();
+                }
+            }
+        }
+        return null;
+    }
+
+    public String effectOfSpellInStandByPhase(String input) {
+        String tokenOfPlayer = input.split("/")[1];
+        int response = Integer.parseInt(input.split("/")[2]);
+
+        if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
+            String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
+            for (DuelModel duelModel : duelModels) {
+                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
+                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                    if (response != 1 && response != 2) {
+                        return "you must entered 1 or 2";
+                    } else if (response == 1) {
+                        duelModel.deleteMessengerOfPeaceCards(duelModel.turn, duelModel.getMessengerOfPeace().get(duelModel.turn)
+                                .get(0));
+                        return "your messenger of peace card destroyed";
+                    } else {
+                        duelModel.decreaseLifePoint(100, duelModel.turn);
+                        return "your lp decreases 100 unit";
                     }
                 }
             }

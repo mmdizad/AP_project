@@ -137,6 +137,36 @@ public class Main {
             ProfileController.getInstance().changeNickName(input);
         } else if (input.startsWith("change password")) {
             ProfileController.getInstance().changePassword(input);
+        } else if (input.startsWith("Activate Effect Main Controller")) {
+            return ActiveEffectController.getInstance().activateSpellEffectMainController(input);
+        } else if (input.startsWith("Effect Of MonsterReborn")) {
+            return ActiveEffectController.getInstance().effectOfMonsterReborn(input);
+        } else if (input.startsWith("Effect Of Terraforming")) {
+            return ActiveEffectController.getInstance().effectOfTerraforming(input);
+        } else if (input.startsWith("Effect Of PotOfGreed")) {
+            return ActiveEffectController.getInstance().effectOfPotOfGreed(input);
+        } else if (input.startsWith("Effect Of Raigeki")) {
+            return ActiveEffectController.getInstance().effectOfRaigeki(input);
+        } else if (input.startsWith("Effect Of ChangeOfHeart")) {
+            return ActiveEffectController.getInstance().effectOfChangeOfHeart(input);
+        } else if (input.startsWith("EndPhase")) {
+            DuelController.getInstance().endPhaseMethod(input);
+        } else if (input.startsWith("Effect Of HarpiesFeatherDuster")) {
+            return ActiveEffectController.getInstance().effectOfHarpiesFeatherDuster(input);
+        } else if (input.startsWith("Effect Of SwordsOfRevealingLight")) {
+            return ActiveEffectController.getInstance().effectOfSwordsOfRevealingLight(input);
+        } else if (input.startsWith("Effect Of DarkHole")) {
+            return ActiveEffectController.getInstance().effectOfDarkHole(input);
+        } else if (input.startsWith("Effect Of SupplySquad")) {
+            return ActiveEffectController.getInstance().effectOfSupplySquad(input);
+        } else if (input.startsWith("Effect Of SpellAbsorption")) {
+            return ActiveEffectController.getInstance().effectOfSpellAbsorption(input);
+        }else if (input.startsWith("Effect Of MessengerOfPeace")){
+            return ActiveEffectController.getInstance().effectOfMessengerOfPeace(input);
+        }else if (input.startsWith("hasSpellEffectInStandByPhase")){
+            return String.valueOf(DuelController.getInstance().hasSpellEffectInStandByPhase(input));
+        }else if (input.startsWith("effectOfSpellInStandByPhase")){
+            return String.valueOf(DuelController.getInstance().effectOfSpellInStandByPhase(input));
         }
         return "";
     }
