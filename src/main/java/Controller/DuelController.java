@@ -1049,89 +1049,39 @@ public class DuelController {
         return "";
     }
 
-    public ArrayList<String> showGraveYard(int turn) {
-        ArrayList<Card> graveyardCards = duelModel.getGraveyard(turn);
-        ArrayList<String> output = new ArrayList<>();
-        for (int i = 0; i < graveyardCards.size(); i++) {
-            output.add(i + 1 + ". " + graveyardCards.get(i).getName() + ": " + graveyardCards.get(i).getDescription());
+    public String showGraveYard(int turn) {
+        try {
+            LoginController.dataOutputStream.writeUTF("show graveyard/" + turn + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            return LoginController.dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        if (graveyardCards.size() == 0) {
-            output.add("graveyard empty");
+        return "";
+    }
+
+    public String checkCard(Matcher matcher) {
+        try {
+            LoginController.dataOutputStream.writeUTF("show one card/" + matcher.group(1) + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            return LoginController.dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return output;
+        return "";
     }
 
-    public ArrayList<String> checkCard(Matcher matcher) {
-        ArrayList<String> output = new ArrayList<>();
-        if (Card.getCardByName(matcher.group(1)) == null) {
-            output.add("card with name " + matcher.group(1) + " does not exist");
-        } else {
-            Card card = Card.getCardByName(matcher.group(1));
-            if (card.getCategory().equals("Monster")) {
-                output = showMonster(matcher.group(1));
-            } else if (card.getCategory().equals("Spell")) {
-                output = showSpell(matcher.group(1));
-            } else {
-                output = showTrap(matcher.group(1));
-            }
+    public String checkSelectedCard(Matcher matcher) {
+        try {
+            LoginController.dataOutputStream.writeUTF("show selected card/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            return LoginController.dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return output;
+        return "";
     }
 
-    public ArrayList<String> checkSelectedCard(Matcher matcher) {
-        ArrayList<String> output = new ArrayList<>();
-        ArrayList<ArrayList<Card>> selectedCards = duelModel.getSelectedCards();
-        ArrayList<HashMap<Card, String>> detailsOfSelectedCards = duelModel.getDetailOfSelectedCard();
-        if (selectedCards.get(duelModel.turn).get(0) == null) {
-            output.add("no card is selected yet");
-        } else {
-            Card card = selectedCards.get(duelModel.turn).get(0);
-            if (detailsOfSelectedCards.get(duelModel.turn).get(card).equals("Opponent/H")) {
-                output.add("card is not visible");
-            } else {
-                if (card.getCategory().equals("Monster")) {
-                    output = showMonster(card.getName());
-                } else if (card.getCategory().equals("Spell")) {
-                    output = showSpell(card.getName());
-                } else {
-                    output = showTrap(card.getName());
-                }
-            }
-        }
-        return output;
-    }
-
-    private ArrayList<String> showMonster(String cardName) {
-        Card monster = Card.getCardByName(cardName);
-        ArrayList<String> output = new ArrayList<>();
-        output.add("Name: " + monster.getName());
-        output.add("Level: " + monster.getLevel());
-        output.add("Type: " + monster.getCardType());
-        output.add("ATK: " + monster.getAttackPower());
-        output.add("DEF: " + monster.getDefensePower());
-        output.add("Description: " + monster.getDescription());
-        return output;
-    }
-
-    private ArrayList<String> showSpell(String cardName) {
-        Card spell = Card.getCardByName(cardName);
-        ArrayList<String> output = new ArrayList<>();
-        output.add("Name: " + spell.getName());
-        output.add("Spell");
-        output.add("Type: " + spell.getCardType());
-        output.add("Description: " + spell.getDescription());
-        return output;
-    }
-
-    private ArrayList<String> showTrap(String cardName) {
-        Card trap = Card.getCardByName(cardName);
-        ArrayList<String> output = new ArrayList<>();
-        output.add("Name: " + trap.getName());
-        output.add("Trap");
-        output.add("Type: " + trap.getCardType());
-        output.add("Description: " + trap.getDescription());
-        return output;
-    }
 
     public String selectMonster(Matcher matcher) {
         try {
