@@ -174,7 +174,6 @@ public class BattlePhaseController extends DuelController {
 
     public void setCommandsForAi() {
         MainPhaseController mainPhaseController = MainPhaseController.getInstance();
-        mainPhaseController.aiActiveEffect();
         int attackPower = 0;
         int place = 0;
         ArrayList<Card> ourMonsters = duelModel.getMonstersInField().get(duelModel.turn);

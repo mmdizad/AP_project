@@ -31,54 +31,45 @@ public class MainPhaseView extends DuelView implements Set, Summon {
         if (startOfPhase) {
             System.out.println(phaseName);
         }
-        if (duelView.isAi && duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
-            if (anyOneWon()){
-                return;
+        while (true) {
+            String command = scanner.nextLine();
+            isCommandInvalid = true;
+            selectMonster(getCommandMatcher(command, "^select --monster (\\d+)$"));
+            selectOpponentMonster(getCommandMatcher(command, "^select --monster (\\d+) --opponent$"));
+            selectOpponentMonster(getCommandMatcher(command, "^select --opponent --monster (\\d+)$"));
+            selectSpellOrTrap(getCommandMatcher(command, "^select --spell (\\d+)$"));
+            selectOpponentSpell(getCommandMatcher(command, "^select --spell (\\d+) --opponent$"));
+            selectOpponentSpell(getCommandMatcher(command, "^select --opponent --spell (\\d+)$"));
+            selectField(getCommandMatcher(command, "^select --field (\\d+)$"));
+            selectOpponentField(getCommandMatcher(command, "^select --opponent --field (\\d+)$"));
+            selectOpponentField(getCommandMatcher(command, "^select --field (\\d+) --opponent$"));
+            deselect(getCommandMatcher(command, "^select -d$"));
+            selectHand(getCommandMatcher(command, "^select --hand (\\d+)$"));
+            showCard(getCommandMatcher(command, "^card show (.+)$"));
+            showSelectedCard(getCommandMatcher(command, "card show --selected"));
+            showGraveyard(getCommandMatcher(command, "show graveyard"));
+            summon(getCommandMatcher(command, "^summon$"));
+            flipSummon(getCommandMatcher(command, "^flip-summon$"));
+            specialSummon(getCommandMatcher(command, "^special-summon$"));
+            increaseLP(getCommandMatcher(command, "^increase --LP (\\d+)$"));
+            activateEffectMainView(getCommandMatcher(command, "^activate effect$"));
+
+            if (command.equals("enterPhase")) {
+                isCommandInvalid = false;
+                enterPhase(scanner);
+                break;
+            } else if (command.equals("set")) {
+                isCommandInvalid = false;
+                set();
+            } else if (command.equals("surrender")) {
+                break;
+            } else if (isCommandInvalid) {
+                System.out.println("invalid command");
             }
-            aiMainPhaseView();
-            BattlePhaseView battlePhaseView = BattlePhaseView.getInstance();
-            battlePhaseView.run(scanner, true);
-        } else {
-            while (true) {
-                String command = scanner.nextLine();
-                isCommandInvalid = true;
-                selectMonster(getCommandMatcher(command, "^select --monster (\\d+)$"));
-                selectOpponentMonster(getCommandMatcher(command, "^select --monster (\\d+) --opponent$"));
-                selectOpponentMonster(getCommandMatcher(command, "^select --opponent --monster (\\d+)$"));
-                selectSpellOrTrap(getCommandMatcher(command, "^select --spell (\\d+)$"));
-                selectOpponentSpell(getCommandMatcher(command, "^select --spell (\\d+) --opponent$"));
-                selectOpponentSpell(getCommandMatcher(command, "^select --opponent --spell (\\d+)$"));
-                selectField(getCommandMatcher(command, "^select --field (\\d+)$"));
-                selectOpponentField(getCommandMatcher(command, "^select --opponent --field (\\d+)$"));
-                selectOpponentField(getCommandMatcher(command, "^select --field (\\d+) --opponent$"));
-                deselect(getCommandMatcher(command, "^select -d$"));
-                selectHand(getCommandMatcher(command, "^select --hand (\\d+)$"));
-                showCard(getCommandMatcher(command, "^card show (.+)$"));
-                showSelectedCard(getCommandMatcher(command, "card show --selected"));
-                showGraveyard(getCommandMatcher(command, "show graveyard"));
-                summon(getCommandMatcher(command, "^summon$"));
-                flipSummon(getCommandMatcher(command, "^flip-summon$"));
-                specialSummon(getCommandMatcher(command, "^special-summon$"));
-                increaseLP(getCommandMatcher(command,"^increase --LP (\\d+)$"));
-                activateEffectMainView(getCommandMatcher(command, "^activate effect$"));
 
-                if (command.equals("enterPhase")) {
-                    isCommandInvalid = false;
-                    enterPhase(scanner);
-                    break;
-                } else if (command.equals("set")) {
-                    isCommandInvalid = false;
-                    set();
-                } else if (command.equals("surrender")) {
-                    break;
-                } else if (isCommandInvalid) {
-                    System.out.println("invalid command");
-                }
-
-                isCommandInvalid = true;
-                if (anyOneWon()){
-                    return;
-                }
+            isCommandInvalid = true;
+            if (anyOneWon()) {
+                return;
             }
         }
     }
@@ -88,13 +79,8 @@ public class MainPhaseView extends DuelView implements Set, Summon {
         return mainPhaseController.anyoneWon();
     }
 
-    public void aiMainPhaseView() {
-        MainPhaseController mainPhaseController = MainPhaseController.getInstance();
-        mainPhaseController.aiMainPhaseController();
-    }
-
     public void increaseLP(Matcher matcher) {
-        if (matcher.find()){
+        if (matcher.find()) {
             isCommandInvalid = false;
             DuelController duelController = DuelController.getInstance();
             duelController.increaseLP(matcher);
