@@ -25,8 +25,7 @@ public class ActiveEffectController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : DuelController.duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
                         return "no card is selected yet";
                     } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Spell")) {
@@ -65,8 +64,7 @@ public class ActiveEffectController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : DuelController.duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (!kindOfGraveyard.equals("My") && !kindOfGraveyard.equals("Opponent")) {
                         return "you must enter correct state of card for summon";
                     } else if (kindOfGraveyard.equals("My")) {
@@ -113,7 +111,6 @@ public class ActiveEffectController {
             card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
             duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-            // TODO duelController.isOpponentHasAnySpellOrTrapForActivate(); // CHAIN
             duelModel.monsterSummonForEffectOfSomeTraps = null;
             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                 specialSummonMonsterOnFieldFromGraveyard(1 - duelModel.turn
@@ -128,7 +125,6 @@ public class ActiveEffectController {
             Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
             String response1 = activeSpellFromHand(duelModel);
             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-            //TODO duelController.isOpponentHasAnySpellOrTrapForActivate(); // CHAIN
             duelModel.monsterSummonForEffectOfSomeTraps = null;
             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                 specialSummonMonsterOnFieldFromGraveyard(1 - duelModel.turn
@@ -151,8 +147,7 @@ public class ActiveEffectController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : DuelController.duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     Card card = null;
                     ArrayList<Card> cardsInDeckOfPlayer = duelModel.getPlayersCards().get(duelModel.turn);
                     for (Card card1 : cardsInDeckOfPlayer) {
@@ -172,7 +167,6 @@ public class ActiveEffectController {
                         if (placeOfSpell != -1) {
                             duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card1, false);
-                            // TODO isOpponentHasAnySpellOrTrapForActivate();
                             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card1)) {
                                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card1);
                                 duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn, card);
@@ -184,7 +178,6 @@ public class ActiveEffectController {
                         } else {
                             String response = activeSpellFromHand(duelModel);
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card1, false);
-                            // TODO isOpponentHasAnySpellOrTrapForActivate();
                             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card1)) {
                                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card1);
                                 duelModel.addCardFromDeckToHandInMiddleOfGame(duelModel.turn, card);
@@ -211,8 +204,7 @@ public class ActiveEffectController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : DuelController.duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     ArrayList<Card> cardsInDeckOfPlayer = duelModel.getPlayersCards().get(duelModel.turn);
                     if (cardsInDeckOfPlayer.size() < 2) {
                         return "you dont have enough card for add to your hand";
@@ -221,7 +213,6 @@ public class ActiveEffectController {
                         if (placeOfSpell != -1) {
                             duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                            // TODO duelController.isOpponentHasAnySpellOrTrapForActivate();
                             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                                 specialEffectOfPotOfGreed(duelModel);
@@ -232,7 +223,6 @@ public class ActiveEffectController {
                         } else {
                             String response = activeSpellFromHand(duelModel);
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                            //TODO duelController.isOpponentHasAnySpellOrTrapForActivate();
                             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                                 specialEffectOfPotOfGreed(duelModel);
@@ -268,8 +258,7 @@ public class ActiveEffectController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : DuelController.duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     boolean opponentHasAnyMonster = false;
                     ArrayList<Card> monstersInFieldOfPlayer = duelModel.getMonstersInField().get(1 - duelModel.turn);
 
@@ -283,7 +272,6 @@ public class ActiveEffectController {
                         if (placeOfSpell != -1) {
                             duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                            //TODO isOpponentHasAnySpellOrTrapForActivate();
                             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                                 deleteAllMonsters(1 - duelModel.turn, duelModel);
@@ -295,7 +283,6 @@ public class ActiveEffectController {
                         } else {
                             String response = activeSpellFromHand(duelModel);
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                            //TODO isOpponentHasAnySpellOrTrapForActivate();
                             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                                 deleteAllMonsters(1 - duelModel.turn, duelModel);
@@ -324,8 +311,7 @@ public class ActiveEffectController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : DuelController.duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (numberOfMonsterCard > 5) {
                         return "you cant get card with this address";
                     } else if (duelModel.getMonstersInField().get(1 - duelModel.turn).get(numberOfMonsterCard - 1) == null) {
@@ -340,7 +326,6 @@ public class ActiveEffectController {
                             if (placeOfSpell != -1) {
                                 duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
                                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                                // TODO isOpponentHasAnySpellOrTrapForActivate();
                                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                                     duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                                     duelModel.deleteMonster(1 - duelModel.turn, numberOfMonsterCard - 1);
@@ -353,7 +338,6 @@ public class ActiveEffectController {
                             } else {
                                 String response = activeSpellFromHand(duelModel);
                                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                                // TODO isOpponentHasAnySpellOrTrapForActivate();
                                 if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                                     duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                                     duelModel.deleteMonster(1 - duelModel.turn, numberOfMonsterCard - 1);
@@ -427,8 +411,7 @@ public class ActiveEffectController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : DuelController.duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     ArrayList<Card> spellAndTraps = duelModel.getSpellsAndTrapsInFiled().get(1 - duelModel.turn);
                     boolean hasSpellOrTrapCard = false;
                     for (Card card : spellAndTraps) {
@@ -444,7 +427,6 @@ public class ActiveEffectController {
                         if (placeOfSpell != -1) {
                             duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                            //TODO isOpponentHasAnySpellOrTrapForActivate();
                             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                                 specialEffectOfHarpiesFeatherDuster(duelModel);
@@ -456,7 +438,6 @@ public class ActiveEffectController {
                         } else {
                             String response = activeSpellFromHand(duelModel);
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                            //TODO isOpponentHasAnySpellOrTrapForActivate();
                             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                                 specialEffectOfHarpiesFeatherDuster(duelModel);
@@ -510,13 +491,11 @@ public class ActiveEffectController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : DuelController.duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     if (placeOfSpell != -1) {
                         duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
                         duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                        //isOpponentHasAnySpellOrTrapForActivate();
                         if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                             duelModel.setSwordsCard(duelModel.turn, card);
@@ -527,7 +506,6 @@ public class ActiveEffectController {
                     } else {
                         String response = activeSpellFromHand(duelModel);
                         duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                        //duelController.isOpponentHasAnySpellOrTrapForActivate();
                         if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                             duelModel.setSwordsCard(duelModel.turn, card);
@@ -566,8 +544,7 @@ public class ActiveEffectController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : DuelController.duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     boolean opponentHasAnyMonster = false;
                     boolean youHaveAnyMonster = false;
                     ArrayList<Card> monstersInField1 = duelModel.getMonstersInField().get(1 - duelModel.turn);
@@ -589,7 +566,6 @@ public class ActiveEffectController {
                         if (placeOfSpell != -1) {
                             duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                            //duelController.isOpponentHasAnySpellOrTrapForActivate();
                             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                                 deleteAllMonsters(duelModel.turn, duelModel);
@@ -597,12 +573,11 @@ public class ActiveEffectController {
                                 duelModel.effectOfSpellAbsorptionCards();
                                 duelModel.deleteSpellAndTrap(duelModel.turn, placeOfSpell - 1);
                                 duelModel.addCardToGraveyard(duelModel.turn, card);
-                                 return "spell activated";
+                                return "spell activated";
                             }
                         } else {
                             String response = activeSpellFromHand(duelModel);
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                            //duelController.isOpponentHasAnySpellOrTrapForActivate();
                             if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                                 duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                                 deleteAllMonsters(duelModel.turn, duelModel);
@@ -631,13 +606,11 @@ public class ActiveEffectController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : DuelController.duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     if (placeOfSpell != -1) {
                         duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
                         duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                        //isOpponentHasAnySpellOrTrapForActivate();
                         duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
                         if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
@@ -648,7 +621,6 @@ public class ActiveEffectController {
                     } else {
                         String response = activeSpellFromHand(duelModel);
                         duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                        //isOpponentHasAnySpellOrTrapForActivate();
                         if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                             duelModel.setSupplySquad(duelModel.turn, card);
@@ -670,13 +642,11 @@ public class ActiveEffectController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : DuelController.duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     if (placeOfSpell != -1) {
                         duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
                         duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                        //isOpponentHasAnySpellOrTrapForActivate();
                         if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                             duelModel.effectOfSpellAbsorptionCards();
@@ -686,7 +656,6 @@ public class ActiveEffectController {
                     } else {
                         String response = activeSpellFromHand(duelModel);
                         duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                        //isOpponentHasAnySpellOrTrapForActivate();
                         if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                             duelModel.effectOfSpellAbsorptionCards();
@@ -708,13 +677,11 @@ public class ActiveEffectController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : DuelController.duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     if (placeOfSpell != -1) {
                         duelModel.changePositionOfSpellOrTrapCard(duelModel.turn, placeOfSpell);
                         duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                        //isOpponentHasAnySpellOrTrapForActivate();
                         if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                             duelModel.setMessengerOfPeace(duelModel.turn, card);
@@ -724,7 +691,6 @@ public class ActiveEffectController {
                     } else {
                         String response = activeSpellFromHand(duelModel);
                         duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                        //isOpponentHasAnySpellOrTrapForActivate();
                         if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                             duelModel.setMessengerOfPeace(duelModel.turn, card);
@@ -747,8 +713,7 @@ public class ActiveEffectController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : DuelController.duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (hasSpellSetInThisTurn(duelModel)) {
                         return "preparations of this spell are not done yet";
                     }
@@ -759,7 +724,6 @@ public class ActiveEffectController {
                         activeSpellFromHand(duelModel);
                     }
                     duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                    //isOpponentHasAnySpellOrTrapForActivate();
                     if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                         duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                         String[] splitResponse = response.split(" ");
@@ -786,8 +750,7 @@ public class ActiveEffectController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : DuelController.duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (hasSpellSetInThisTurn(duelModel)) {
                         return "preparations of this spell are not done yet";
                     } else {
@@ -798,7 +761,6 @@ public class ActiveEffectController {
                             activeSpellFromHand(duelModel);
                         }
                         duelModel.getSpellOrTrapActivated().get(duelModel.turn).put(card, false);
-                        //isOpponentHasAnySpellOrTrapForActivate();
                         if (!duelModel.getSpellOrTrapActivated().get(duelModel.turn).get(card)) {
                             duelModel.getSpellOrTrapActivated().get(duelModel.turn).remove(card);
                             duelModel.effectOfSpellAbsorptionCards();

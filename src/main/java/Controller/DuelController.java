@@ -59,8 +59,7 @@ public class DuelController {
 
             if (cardsInDeck.size() >= 1) {
                 for (DuelModel duelModel : duelModels) {
-                    if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                            duelModel.getUsernames().get(1).equals(playerUsername))
+                    if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername))
                         return duelModel.addCardToHand();
                 }
             }
@@ -74,8 +73,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (duelModel.getMonster(duelModel.turn, placeOfMonster) == null) {
                         return "no card found in the given position";
                     } else {
@@ -96,8 +94,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (duelModel.getMonster(1 - duelModel.turn, placeOfMonster) == null) {
                         return "no card found in the given position";
                     } else {
@@ -119,8 +116,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (duelModel.getSpellAndTrap(duelModel.turn, placeOfSpellOrTrap) == null) {
                         return "no card found in the given position";
                     } else {
@@ -142,8 +138,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (duelModel.getSpellAndTrap(1 - duelModel.turn, placeOfSpellOrTrap) == null) {
                         return "no card found in the given position";
                     } else {
@@ -165,8 +160,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (duelModel.getField().get(place) == null) {
                         return "no card found in the given position";
                     } else {
@@ -185,8 +179,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (duelModel.getFieldZoneCard(1 - duelModel.turn) == null) {
                         return "no card found in the given position";
                     } else {
@@ -206,8 +199,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (duelModel.getHandCards().get(duelModel.turn).size() < placeOfCard) {
                         return "invalid selection";
                     } else {
@@ -246,8 +238,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
                         return "no card is selected yet";
                     } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Monster")) {
@@ -290,8 +281,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (!response.equals("NO") && !response.equals("YES")) {
                         return "Please enter correct response";
                     } else if (response.equals("YES")) {
@@ -326,8 +316,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (address > 5) {
                         return "there no monsters one this address";
                     } else if (duelModel.getMonstersInField().get(duelModel.turn).get(address - 1) == null) {
@@ -361,8 +350,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     Card monster = duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     if (!response.equals("NO") && !response.equals("YES")) {
                         return "Please enter correct response";
@@ -414,8 +402,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     Card card = duelModel.getSelectedCards().get(duelModel.turn).get(0);
                     if (getNumberOfMonstersInPlayerField(duelModel) < 2) {
                         return "there are not enough cards for tribute";
@@ -501,8 +488,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
                         return "there is no way you could special summon a monster";
                     } else if (!duelModel.getSelectedCards().get(duelModel.turn).get(0).getCategory().equals("Monster")) {
@@ -533,8 +519,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (address > duelModel.getHandCards().get(duelModel.turn).size()) {
                         return "there is no way you could special summon a monster";
                     } else {
@@ -563,8 +548,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (address > 5 || address1 > 5 || address2 > 5 || address == address1 || address == address2
                             || address1 == address2) {
                         return "there is no way you could special summon a monster";
@@ -637,8 +621,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
                         return "no card is selected yet";
                     } else {
@@ -697,8 +680,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (placeOfMonster > 5) {
                         return "you must enter correct address";
                     } else {
@@ -721,8 +703,7 @@ public class DuelController {
         String tokenOfPlayer = command.split("/")[1];
         String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
         for (DuelModel duelModel : duelModels) {
-            if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                    duelModel.getUsernames().get(1).equals(playerUsername)) {
+            if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                 ArrayList<ArrayList<Card>> selectedCards = duelModel.getSelectedCards();
                 if (selectedCards.get(duelModel.turn) == null) {
                     return "no card is selected yet";
@@ -804,8 +785,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (duelModel.getBorrowCards().size() > 0) {
                         ActiveEffectController.getInstance().refundsTheBorrowCards(duelModel);
                     }
@@ -889,8 +869,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     return duelModel.getMessengerOfPeace().get(duelModel.turn).size();
                 }
             }
@@ -905,8 +884,7 @@ public class DuelController {
         if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
             for (DuelModel duelModel : duelModels) {
-                if (duelModel.getUsernames().get(0).equals(playerUsername) ||
-                        duelModel.getUsernames().get(1).equals(playerUsername)) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
                     if (response != 1 && response != 2) {
                         return "you must entered 1 or 2";
                     } else if (response == 1) {
