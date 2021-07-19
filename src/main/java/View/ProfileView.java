@@ -36,7 +36,6 @@ public class ProfileView extends MainMenu {
             } else if (input.equals("menu exit")) break;
             else if (input.equals("menu show-current")) System.out.println("ProfileMenu");
             else System.out.println("invalid command!");
-            LoginController.saveChangesToFile();
         }
     }
 
