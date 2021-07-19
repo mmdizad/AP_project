@@ -36,7 +36,7 @@ public class ShopController  {
 
         if (!cardNameExist) return "there is no card with this name";
         else {
-            if (!LoginAndSignUpController.loggedInUsers.containsKey(command.split("/")[1])) {
+            if (!LoginAndSignUpController.loggedInUsers.containsKey(command.split("/")[2])) {
                 return "wrong token!";
             }else {
                 User user = LoginAndSignUpController.loggedInUsers.get(command.split("/")[2]);

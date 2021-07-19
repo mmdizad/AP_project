@@ -221,6 +221,24 @@ public class DuelController {
         return "";
     }
 
+    public String deselect(String input) {
+        String tokenOfPlayer = input.split("/")[1];
+        if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
+            String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
+            for (DuelModel duelModel : duelModels) {
+                if (duelModel.getUsernames().get(duelModel.turn).equals(playerUsername)) {
+                    if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
+                        return "no card is selected yet";
+                    } else {
+                        duelModel.deSelectedCard();
+                        return "card deselected";
+                    }
+                }
+            }
+        }
+        return "";
+    }
+
 
     public String summon(String input) {
         String response = "";
@@ -698,6 +716,7 @@ public class DuelController {
         }
         return "";
     }
+
     public String set(String command) {
         String tokenOfPlayer = command.split("/")[1];
         String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
@@ -772,7 +791,7 @@ public class DuelController {
         for (Card spellCard : duelModel.getSpellsAndTrapsInFiled().get(1 - duelModel.turn)) {
             if (spellCard != null) {
                 if (spellCard.getName().equals("Swords of Revealing Light")) {
-                   // duelController.changeStateOfMonsterWithSwordsCard(duelModel.turn);
+                    // duelController.changeStateOfMonsterWithSwordsCard(duelModel.turn);
                     break;
                 }
             }

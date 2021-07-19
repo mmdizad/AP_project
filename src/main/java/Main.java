@@ -209,6 +209,12 @@ public class Main {
             return String.valueOf(DuelController.getInstance().effectOfSpellInStandByPhase(input));
         }else if(input.startsWith("set")){
             DuelController.getInstance().set(input);
+        }else if (input.startsWith("Effect Of MysticalSpaceTyphoon")){
+            return ActiveEffectController.getInstance().effectOfMysticalSpaceTyphoon(input);
+        }else if (input.startsWith("Effect Of RingOfDefense")){
+            return ActiveEffectController.getInstance().effectOfRingOfDefense(input);
+        }else if (input.startsWith("Deselect Card")){
+            return DuelController.getInstance().deselect(input);
         }
         return "";
     }
