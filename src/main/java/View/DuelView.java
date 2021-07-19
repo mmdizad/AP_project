@@ -79,55 +79,9 @@ public class DuelView {
         }
     }
 
-    public String scanAddressForTributeForRitualSummon() {
-        System.out.println("please enter two address from deck for tribute for ritual summon" +
-                "separate it with space (ex: 3 4)");
-        return scanner1.nextLine();
-    }
-
-    public Integer scanAddressOfCardForRitualSummon() {
-        System.out.println("please enter address of monster in your hand for ritual summon");
-        return scanner1.nextInt();
-    }
-
-
     public String getCardNameForTrapMindCrush() {
         System.out.println("enter card name:");
         return scanner1.nextLine();
-    }
-
-    public void opponentActiveEffect(boolean hasAnySpellOrTrap) {
-        if (hasAnySpellOrTrap) {
-            duelModel.turn = 1 - duelModel.turn;
-            if (duelModel.getCreatorUsername(duelModel.turn).equals("ai")) {
-                DuelController.getInstance().aiOpponentActiveSpellOrTrap();
-                duelModel.turn = 1 - duelModel.turn;
-            } else {
-                System.out.println("now it will be " + duelModel.getUsernames().get(duelModel.turn) + " turn");
-                System.out.println("do you want to activate your trap or spell?");
-                System.out.println("enter YES or NO");
-                String response = scanner1.nextLine();
-                while (!response.equals("NO") && !response.equals("YES")) {
-                    System.out.println("you must enter NO or YES");
-                    response = scanner1.nextLine();
-                }
-                if (response.equals("YES")) {
-                    // check ...
-                    String result = DuelController.getInstance().opponentActiveSpellOrTrap();
-                    System.out.println(result);
-                    duelModel.turn = 1 - duelModel.turn;
-                }
-                if (response.equals("NO")) {
-                    duelModel.turn = 1 - duelModel.turn;
-                    System.out.println("now it will be " + duelModel.getUsernames().get(duelModel.turn) + " turn");
-                }
-            }
-        }
-    }
-
-    public Matcher scanCommandForActiveSpell() {
-        String command = scanner1.nextLine();
-        return getCommandMatcher(command, "^select --spell (\\d+)$");
     }
 
     public String scanKindOfGraveyardForActiveEffect() {
@@ -143,11 +97,6 @@ public class DuelView {
 
     public Integer scanNumberOfCardForDeleteFromHand() {
         System.out.println("please specify the place of card you want for delete from your hand");
-        return scanner1.nextInt();
-    }
-
-    public Integer scanNumberOfCardThatWouldBeDelete() {
-        System.out.println("please enter number of the  cards you want to destroyed (0 or 1 or 2)");
         return scanner1.nextInt();
     }
 
@@ -203,14 +152,6 @@ public class DuelView {
                 System.out.println(s);
             }
         }
-    }
-
-    public void surrender() {
-
-    }
-
-    protected void select(Matcher matcher) {
-
     }
 
     public void selectMonster(Matcher matcher) {

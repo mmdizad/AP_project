@@ -97,7 +97,6 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             if (result.equals("summoned successfully")) {
                 System.out.println(result);
                 duelController.activeFieldInGame();
-                duelController.isOpponentHasAnySpellOrTrapForActivate();
                 duelModel.monsterFlipSummonOrNormalSummonForTrapHole = null;
                 duelModel.monsterSummonForEffectOfSomeTraps = null;
 
@@ -135,13 +134,11 @@ public class MainPhaseView extends DuelView implements Set, Summon {
                 System.out.println("flip summoned successfully");
                 duelController.activeFieldInGame();
                 System.out.println(mainPhaseController.flipSummonManEaterBug());
-                duelController.isOpponentHasAnySpellOrTrapForActivate();
                 duelModel.monsterFlipSummonOrNormalSummonForTrapHole = null;
             } else {
                 if (response.equals("flip summoned successfully")) {
                     System.out.println(response);
                     duelController.activeFieldInGame();
-                    duelController.isOpponentHasAnySpellOrTrapForActivate();
                     duelModel.monsterFlipSummonOrNormalSummonForTrapHole = null;
                     duelModel.monsterSummonForEffectOfSomeTraps = null;
                 } else {
@@ -166,7 +163,6 @@ public class MainPhaseView extends DuelView implements Set, Summon {
             if (result.equals("summon successfully")) {
                 System.out.println(result);
                 duelController.activeFieldInGame();
-                duelController.isOpponentHasAnySpellOrTrapForActivate();
                 duelModel.monsterSummonForEffectOfSomeTraps = null;
             } else {
                 System.out.println(result);
@@ -188,12 +184,7 @@ public class MainPhaseView extends DuelView implements Set, Summon {
     public void set() {
         MainPhaseController mainPhaseController = MainPhaseController.getInstance();
         String result = mainPhaseController.set();
-        if (result.equals("set successfully")) {
-            System.out.println(result);
-            duelView.duelController.isOpponentHasAnySpellOrTrapForActivate();
-        } else {
-            System.out.println(result);
-        }
+        System.out.println(result);
     }
 
     @Override

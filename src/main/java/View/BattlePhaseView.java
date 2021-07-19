@@ -105,7 +105,6 @@ public class BattlePhaseView extends DuelView {
             if (response.startsWith("opponent’s monster card was") || response.startsWith("no card is destroyed") ||
                     response.startsWith("the defense position monster is destroyed") || response.startsWith("Your monster card is destroyed and you received")
                     || response.startsWith("both you and your opponent monster") || response.startsWith("your opponent’s monster is destroyed")) {
-                duelController.isOpponentHasAnySpellOrTrapForActivate();
             }
             System.out.println(response);
             if (response.equals("opponent had Negate Attack trap and canceled your attack and ended battle phase,enter the phase you want to go:")) {
@@ -130,7 +129,7 @@ public class BattlePhaseView extends DuelView {
             isCommandInvalid = false;
             String response = BattlePhaseController.getInstance().directAttack(matcher);
             if (response.startsWith("you opponent receives")) {
-                duelController.isOpponentHasAnySpellOrTrapForActivate();
+               // duelController.isOpponentHasAnySpellOrTrapForActivate();
             }
             System.out.println(response);
         }
