@@ -19,64 +19,14 @@ public class StartDuelView extends MainMenu {
             Matcher matcher = pattern.matcher(input);
             Pattern pattern1 = Pattern.compile("duel --new --rounds (\\d+) --second-player (\\S+)");
             Matcher matcher1 = pattern1.matcher(input);
-            Pattern pattern2 = Pattern.compile("duel --new --ai --rounds (\\d+)");
-            Matcher matcher2 = pattern2.matcher(input);
             if (matcher.find()) {
                 startTheGame(scanner, matcher, 1, 2);
             } else if (matcher1.find()) {
                 startTheGame(scanner, matcher1, 2, 1);
-            } else if (matcher2.find()) {
-                int round = Integer.parseInt(matcher2.group(1));
-                if (LoginController.user.getActiveDeck() == null) {
-                    System.out.println(LoginController.user.getUsername() + " has no active deck");
-                } else if (LoginController.user.getActiveDeck().getCardsMain().size() < 40) {
-                    System.out.println(LoginController.user.getUsername() + "'s deck is invalid");
-                } else if (round == 3 || round == 1) {
-                    User ai = new User("ai", "ai", "ai");
-                    ai.addDeck(LoginController.user.getActiveDeck());
-                    ai.setActiveDeck(LoginController.user.getActiveDeck());
-                    startTheGameWithAi(round, ai, scanner);
-                } else System.out.println("number of rounds is not supported");
             } else if (input.equals("menu exit")) break;
             else if (input.equals("menu show-current")) System.out.println("StartDuel");
             else System.out.println("invalid command");
             LoginController.saveChangesToFile();
-        }
-    }
-
-    private void startTheGameWithAi(int round, User secondUser, Scanner scanner) {
-        if (round == 1) {
-            DuelView duelView = DuelView.getInstance();
-            duelView.selectFirstPlayer(secondUser.getUsername(), scanner, duelView, true);
-            printWinnerAndGiveScoreOneRound(duelView, LoginController.user, secondUser);
-        } else {
-            int userWins = 0;
-            int secondPlayerWins = 0;
-            ArrayList<Integer> maxLPs = new ArrayList<>();
-            maxLPs.add(0);
-            maxLPs.add(0);
-            for (int i = 0; i < 3; i++) {
-                DuelView duelView = DuelView.getInstance();
-                duelView.selectFirstPlayer(secondUser.getUsername(), scanner, duelView, true);
-                int winner = printWinnerThreeRound(duelView, LoginController.user, secondUser);
-                if (winner == 0) userWins++;
-                else secondPlayerWins++;
-                if (duelView.duelModel.getLifePoint(0) > maxLPs.get(0)) {
-                    maxLPs.set(0, duelView.duelModel.getLifePoint(0));
-                }
-                if (duelView.duelModel.getLifePoint(1) > maxLPs.get(1)) {
-                    maxLPs.set(1, duelView.duelModel.getLifePoint(1));
-                }
-                if (userWins == 2) {
-                    finishThreeRound(duelView, LoginController.user, secondUser, maxLPs.get(0));
-                    return;
-                }
-                if (secondPlayerWins == 2) {
-                    finishThreeRound(duelView, secondUser, LoginController.user, maxLPs.get(1));
-                    return;
-                }
-                changeCardsBetweenRounds(LoginController.user, secondUser, scanner);
-            }
         }
     }
 
