@@ -18,7 +18,7 @@ public class DuelController {
     protected DuelView duelView;
     protected boolean isAi;
     int playerActiveCloseForest;
-    int attackaddedForClosedForest = 0;
+    int attackedForClosedForest = 0;
 
     protected DuelController() {
 
@@ -37,10 +37,6 @@ public class DuelController {
         DuelController.duelController = duelController;
     }
 
-    public void selectFirstPlayer() {
-
-    }
-
     //این تابع حین بازی صدا زده میشه تا کارت های ورودی شامل میدان شوند
     public void activeFieldInGame() {
         if (duelModel.getField().get(duelModel.turn).get(0) != null) {
@@ -50,7 +46,7 @@ public class DuelController {
             else if (spell.getName().equals("Forest"))
                 effectOfForest(1);
             else if (spell.getName().equals("Closed Forest"))
-                effectOfClosedForest(1);
+                 effectOfClosedForest(1);
             else if (spell.getName().equals("UMIIRUKA"))
                 effectOfUmiiruka(1);
         } else if (duelModel.getField().get(1 - duelModel.turn).get(0) != null) {
@@ -67,12 +63,15 @@ public class DuelController {
     }
 
     public String deselect() {
-        if (duelModel.getSelectedCards().get(duelModel.turn).get(0) == null) {
-            return "no card is selected yet";
-        } else {
-            duelModel.deSelectedCard();
-            return "card deselected";
+        String response = "";
+        try {
+            LoginController.dataOutputStream.writeUTF("Deselect Card" + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            response = LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
         }
+        return response;
     }
 
     public String activateEffect(int placeOfSpell, String cardName, String cardType) {
@@ -824,11 +823,11 @@ public class DuelController {
                     if (!duelModel.getSpellZoneActivate().get(playerActiveCloseForest).get(i))
                         duelModel.getSpellZoneActivate().get(playerActiveCloseForest).add(i, true);
                     if (activeOrdeActive == 1)
-                        monster.setAttackPower(monster.getAttackPower() + duelModel.getGraveyard(playerActiveCloseForest).size() * 100 - attackaddedForClosedForest);
+                        monster.setAttackPower(monster.getAttackPower() + duelModel.getGraveyard(playerActiveCloseForest).size() * 100 - attackedForClosedForest);
                     else
-                        monster.setAttackPower(monster.getAttackPower() - attackaddedForClosedForest);
+                        monster.setAttackPower(monster.getAttackPower() - attackedForClosedForest);
                 }
-            attackaddedForClosedForest = duelModel.getGraveyard(playerActiveCloseForest).size() * 100;
+            attackedForClosedForest = duelModel.getGraveyard(playerActiveCloseForest).size() * 100;
 
         }
         return "spellZone activated";
