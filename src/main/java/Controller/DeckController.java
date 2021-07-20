@@ -395,8 +395,9 @@ public class DeckController {
             } else {
                 validation = "valid";
             }
-            output.add(decks.get(i).getName() + ":  main deck " + decks.get(i).getCardsMain().size()
-                    + ", side deck" + decks.get(i).getCardsSide().size() + ", " + validation);
+            Deck deck = Deck.getDeckByName(decks.get(i).getName());
+            output.add(deck.getName() + ":  main deck " + deck.getCardsMain().size()
+                    + ", side deck" + deck.getCardsSide().size() + ", " + validation);
         }
         String response = "";
         for (String s : output) {

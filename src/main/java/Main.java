@@ -135,6 +135,10 @@ public class Main {
             return DeckController.getInstance().showAllDeck(input);
         } else if (input.startsWith("show one card")) {
             return DeckController.getInstance().showOneCard(input);
+        } else if (input.startsWith("show selected card")) {
+            return DuelController.getInstance().showSelectedCard(input);
+        } else if (input.startsWith("show graveyard")) {
+            return DuelController.getInstance().showGraveYard(input);
         } else if (input.startsWith("New Card To Hand")) {
             return DuelController.getInstance().newCardToHand(input);
         } else if (input.startsWith("Select Monster")) {

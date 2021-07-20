@@ -901,4 +901,100 @@ public class DuelController {
         return "";
     }
 
+    public String showSelectedCard(String command) {
+        if (!LoginAndSignUpController.loggedInUsers.containsKey(command.split("/")[1])) {
+            return "wrong token!";
+        }
+        User user = LoginAndSignUpController.loggedInUsers.get(command.split("/")[1]);
+        for (DuelModel duelModel : DuelController.duelModels) {
+            if (duelModel.getUsernames().get(duelModel.turn).equals(user.getUsername())) {
+                ArrayList<String> output = new ArrayList<>();
+                ArrayList<ArrayList<Card>> selectedCards = duelModel.getSelectedCards();
+                ArrayList<HashMap<Card, String>> detailsOfSelectedCards = duelModel.getDetailOfSelectedCard();
+                if (selectedCards.get(duelModel.turn).get(0) == null) {
+                    output.add("no card is selected yet");
+                } else {
+                    Card card = selectedCards.get(duelModel.turn).get(0);
+                    if (detailsOfSelectedCards.get(duelModel.turn).get(card).equals("Opponent/H")) {
+                        output.add("card is not visible");
+                    } else {
+                        if (card.getCategory().equals("Monster")) {
+                            output = showMonster(card.getName());
+                        } else if (card.getCategory().equals("Spell")) {
+                            output = showSpell(card.getName());
+                        } else {
+                            output = showTrap(card.getName());
+                        }
+                    }
+                }
+                String response = "";
+                for (String s : output) {
+                    response = response + s;
+                    response = response + "\n";
+                }
+                return response;
+            }
+        }
+        return "its not your turn!";
+    }
+
+    private ArrayList<String> showMonster(String cardName) {
+        Monster monster = Monster.getMonsterByName(cardName);
+        ArrayList<String> output = new ArrayList<>();
+        output.add("Name: " + monster.getName());
+        output.add("Level: " + monster.getLevel());
+        output.add("Type: " + monster.getMonsterType());
+        output.add("ATK: " + monster.getAttackPower());
+        output.add("DEF: " + monster.getDefensePower());
+        output.add("Description: " + monster.getDescription());
+        return output;
+    }
+
+    private ArrayList<String> showSpell(String cardName) {
+        Spell spell = Spell.getSpellByName(cardName);
+        ArrayList<String> output = new ArrayList<>();
+        output.add("Name: " + spell.getName());
+        output.add("Spell");
+        output.add("Type: " + spell.getCardType());
+        output.add("Description: " + spell.getDescription());
+        return output;
+    }
+
+    private ArrayList<String> showTrap(String cardName) {
+        Trap trap = Trap.getTrapByName(cardName);
+        ArrayList<String> output = new ArrayList<>();
+        output.add("Name: " + trap.getName());
+        output.add("Trap");
+        output.add("Type: " + trap.getCardType());
+        output.add("Description: " + trap.getDescription());
+        return output;
+    }
+
+    public String showGraveYard(String command) {
+        if (!LoginAndSignUpController.loggedInUsers.containsKey(command.split("/")[2])) {
+            return "wrong token!";
+        }
+        User user = LoginAndSignUpController.loggedInUsers.get(command.split("/")[2]);
+        for (DuelModel duelModel : DuelController.duelModels) {
+            if (duelModel.getUsernames().get(duelModel.turn).equals(user.getUsername())) {
+                int turn = Integer.parseInt(command.split("/")[1]);
+                ArrayList<Card> graveyardCards = duelModel.getGraveyard(turn);
+                ArrayList<String> output = new ArrayList<>();
+                for (int i = 0; i < graveyardCards.size(); i++) {
+                    output.add(i + 1 + ". " + graveyardCards.get(i).getName() + ": " + graveyardCards.get(i).getDescription());
+                }
+                if (graveyardCards.size() == 0) {
+                    output.add("graveyard empty");
+                }
+                String response = "";
+                for (String s : output) {
+                    response = response + s;
+                    response = response + "\n";
+                }
+                return response;
+            }
+        }
+        return "its not your turn";
+    }
+
 }
