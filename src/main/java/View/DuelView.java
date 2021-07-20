@@ -2,6 +2,7 @@ package View;
 
 import Controller.*;
 import Model.DuelModel;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -29,7 +30,7 @@ public class DuelView {
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView, boolean isAi) {
         String response = "";
         try {
-            LoginController.dataOutputStream.writeUTF("Select First Player/" + secondPlayerUsername + "/" + isAi +"/"
+            LoginController.dataOutputStream.writeUTF("Select First Player/" + secondPlayerUsername + "/" + isAi + "/"
                     + LoginController.token);
             LoginController.dataOutputStream.flush();
             response = LoginController.dataInputStream.readUTF();
@@ -125,10 +126,7 @@ public class DuelView {
     public void showGraveyard(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
-            ArrayList<String> output = DuelController.getInstance().showGraveYard(duelView.duelModel.turn);
-            for (String s : output) {
-                System.out.println(s);
-            }
+            System.out.println(DuelController.getInstance().showGraveYard(duelView.duelModel.turn));
         }
     }
 
@@ -136,10 +134,7 @@ public class DuelView {
         if (matcher.find()) {
             if (!matcher.group(1).equals("--selected")) {
                 isCommandInvalid = false;
-                ArrayList<String> output = DuelController.getInstance().checkCard(matcher);
-                for (String s : output) {
-                    System.out.println(s);
-                }
+                System.out.println(DuelController.getInstance().checkCard(matcher));
             }
         }
     }
@@ -147,10 +142,7 @@ public class DuelView {
     protected void showSelectedCard(Matcher matcher) {
         if (matcher.find()) {
             isCommandInvalid = false;
-            ArrayList<String> output = DuelController.getInstance().checkSelectedCard(matcher);
-            for (String s : output) {
-                System.out.println(s);
-            }
+            System.out.println(DuelController.getInstance().checkSelectedCard(matcher));
         }
     }
 
@@ -213,10 +205,8 @@ public class DuelView {
     }
 
     public void showGraveyardForSomeClasses(int turn) {
-        ArrayList<String> output = DuelController.getInstance().showGraveYard(turn);
-        for (String s : output) {
-            System.out.println(s);
-        }
+        System.out.println(DuelController.getInstance().showGraveYard(turn));
+
     }
 
 }

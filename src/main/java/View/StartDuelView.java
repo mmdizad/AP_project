@@ -30,7 +30,6 @@ public class StartDuelView extends MainMenu {
             } else if (input.equals("menu exit")) break;
             else if (input.equals("menu show-current")) System.out.println("StartDuel");
             else System.out.println("invalid command");
-            LoginController.saveChangesToFile();
         }
     }
 
