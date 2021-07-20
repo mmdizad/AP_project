@@ -81,7 +81,7 @@ public class Main {
                 serverSocket.close();
                 dataInputStream.close();
             } catch (IOException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-                e.printStackTrace();
+                System.out.println("client disconnected!");
             }
         }).start();
     }
@@ -139,6 +139,16 @@ public class Main {
             return DuelController.getInstance().showSelectedCard(input);
         } else if (input.startsWith("show graveyard")) {
             return DuelController.getInstance().showGraveYard(input);
+        } else if (input.startsWith("send message")) {
+            return ChatController.getInstance().sendMessage(input);
+        } else if (input.startsWith("load message")) {
+            return ChatController.getInstance().loadMessages(input);
+        } else if (input.startsWith("delete message")) {
+            return ChatController.getInstance().deleteMessage(input);
+        } else if (input.startsWith("pin message")) {
+            return ChatController.getInstance().pinMessage(input);
+        } else if (input.startsWith("edit message")) {
+            return ChatController.getInstance().editMessage(input);
         } else if (input.startsWith("New Card To Hand")) {
             return DuelController.getInstance().newCardToHand(input);
         } else if (input.startsWith("Select Monster")) {
