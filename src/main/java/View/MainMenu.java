@@ -55,7 +55,9 @@ public class MainMenu {
             } else if (menuName.equals("ImportAndExport")) {
                 ImportAndExport importAndExport = ImportAndExport.getInstance();
                 importAndExport.run(scanner);
-            } else {
+            } else if (menuName.equals("Chat")) {
+                ChatView.getInstance().run(scanner);
+            } else{
                 System.out.println("invalid command");
             }
         }
