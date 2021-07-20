@@ -15,16 +15,16 @@ public class Main {
 //        LoginAndSignUpController.createFolders();
 //        LoginAndSignUpController.createCard();
         Scanner scanner = new Scanner(System.in);
-        new Thread(()-> {
-            while (true){
+        new Thread(() -> {
+            while (true) {
                 String command = scanner.nextLine();
-                if(command.startsWith("increase card")){
-                    increaseCard(getCommandMatcher(command,"increase card (.+) (\\d+)"));
-                } else if(command.startsWith("ban")){
+                if (command.startsWith("increase card")) {
+                    increaseCard(getCommandMatcher(command, "increase card (.+) (\\d+)"));
+                } else if (command.startsWith("ban")) {
                     banCard(getCommandMatcher(command, "ban card (\\w+)"));
-                }else if(command.startsWith("remove ban card")){
-                    removeBanCard(getCommandMatcher(command,"remove ban card (\\w+)"));
-                }else System.out.println("invalid command");
+                } else if (command.startsWith("remove ban card")) {
+                    removeBanCard(getCommandMatcher(command, "remove ban card (\\w+)"));
+                } else System.out.println("invalid command");
 
             }
         }).start();
@@ -34,29 +34,33 @@ public class Main {
         runApp();
 
     }
-   private static void increaseCard(Matcher matcher){
-        if(matcher.find()){
+
+    private static void increaseCard(Matcher matcher) {
+        if (matcher.find()) {
             String cardName = matcher.group(1);
             int numberOfCard = Integer.parseInt(matcher.group(2));
-            System.out.println(ShopController.getInstance().increaseNumberOfCard(cardName,numberOfCard));
-        }else System.out.println("gg");
- }
-    private static void banCard(Matcher matcher){
-        if(matcher.find()){
-            String cardName =matcher.group(1);
-            if(ShopController.getInstance().banCard(cardName)==1)
-            System.out.println("card "+cardName +"banned successfully");
+            System.out.println(ShopController.getInstance().increaseNumberOfCard(cardName, numberOfCard));
+        } else System.out.println("gg");
+    }
+
+    private static void banCard(Matcher matcher) {
+        if (matcher.find()) {
+            String cardName = matcher.group(1);
+            if (ShopController.getInstance().banCard(cardName) == 1)
+                System.out.println("card " + cardName + "banned successfully");
             else System.out.println("card doesn't exist");
         }
     }
-    private static void removeBanCard(Matcher matcher){
-        if(matcher.find()){
-            String cardName =matcher.group(1);
-            if(ShopController.getInstance().removeBanCard(cardName)==1)
-            ShopController.getInstance().removeBanCard(cardName);
-            System.out.println("card "+cardName +" removed ban successfully");
-        }else System.out.println("invalid command");
+
+    private static void removeBanCard(Matcher matcher) {
+        if (matcher.find()) {
+            String cardName = matcher.group(1);
+            if (ShopController.getInstance().removeBanCard(cardName) == 1)
+                ShopController.getInstance().removeBanCard(cardName);
+            System.out.println("card " + cardName + " removed ban successfully");
+        } else System.out.println("invalid command");
     }
+
     public static void runApp() throws IOException {
         // TODO ServerController.loadData();
 
@@ -201,20 +205,22 @@ public class Main {
             return ActiveEffectController.getInstance().effectOfSupplySquad(input);
         } else if (input.startsWith("Effect Of SpellAbsorption")) {
             return ActiveEffectController.getInstance().effectOfSpellAbsorption(input);
-        }else if (input.startsWith("Effect Of MessengerOfPeace")){
+        } else if (input.startsWith("Effect Of MessengerOfPeace")) {
             return ActiveEffectController.getInstance().effectOfMessengerOfPeace(input);
-        }else if (input.startsWith("hasSpellEffectInStandByPhase")){
+        } else if (input.startsWith("hasSpellEffectInStandByPhase")) {
             return String.valueOf(DuelController.getInstance().hasSpellEffectInStandByPhase(input));
-        }else if (input.startsWith("effectOfSpellInStandByPhase")){
+        } else if (input.startsWith("effectOfSpellInStandByPhase")) {
             return String.valueOf(DuelController.getInstance().effectOfSpellInStandByPhase(input));
-        }else if(input.startsWith("set")){
+        } else if (input.startsWith("set")) {
             DuelController.getInstance().set(input);
-        }else if (input.startsWith("Effect Of MysticalSpaceTyphoon")){
+        } else if (input.startsWith("Effect Of MysticalSpaceTyphoon")) {
             return ActiveEffectController.getInstance().effectOfMysticalSpaceTyphoon(input);
-        }else if (input.startsWith("Effect Of RingOfDefense")){
+        } else if (input.startsWith("Effect Of RingOfDefense")) {
             return ActiveEffectController.getInstance().effectOfRingOfDefense(input);
-        }else if (input.startsWith("Deselect Card")){
+        } else if (input.startsWith("Deselect Card")) {
             return DuelController.getInstance().deselect(input);
+        } else if (input.startsWith("Cancel Duel")) {
+            return StartDuelController.getInstance().cancelTheGame(input);
         }
         return "";
     }
