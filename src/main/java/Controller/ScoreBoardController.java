@@ -20,7 +20,7 @@ public class ScoreBoardController extends LoginController {
 
     public String scoreBoard() {
         try {
-            dataOutputStream.writeUTF("scoreBoard");
+            dataOutputStream.writeUTF("scoreBoard/" + token);
             dataOutputStream.flush();
             return dataInputStream.readUTF();
         } catch (IOException e) {

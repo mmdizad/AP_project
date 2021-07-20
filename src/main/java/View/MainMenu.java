@@ -1,4 +1,7 @@
 package View;
+import Controller.LoginController;
+
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +18,12 @@ public class MainMenu {
             enterMenu(getCommandMatcher(input, "^menu enter (\\S+)$"), scanner);
 
             if (input.equals("user logout") || input.equals("menu exit")) {
+                try {
+                    LoginController.dataOutputStream.writeUTF("logout/" + LoginController.token);
+                    LoginController.dataOutputStream.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
             if (invalidCommand) {
