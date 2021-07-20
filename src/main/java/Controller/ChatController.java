@@ -42,6 +42,7 @@ public class ChatController {
         for (String message : messages) {
             output += message.split("/")[1] + ": " + message.split("/")[0] + "\n";
         }
+        output += "online gamers: " + LoginAndSignUpController.onlineUsers;
         return output;
     }
 

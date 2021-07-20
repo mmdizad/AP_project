@@ -34,6 +34,10 @@ public class ScoreBoardController {
             int j = i + 1;
             output += (j + "-" + users.get(i).getUsername() + ": " + users.get(i).getScore()) + "\n";
         }
+        output += "online users: \n";
+        for (String s : LoginAndSignUpController.onlineUsernames) {
+            output += s + "\n";
+        }
         return output;
     }
 

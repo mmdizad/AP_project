@@ -82,6 +82,7 @@ public class Main {
                 dataInputStream.close();
             } catch (IOException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 System.out.println("client disconnected!");
+                LoginAndSignUpController.onlineUsers --;
             }
         }).start();
     }
@@ -113,6 +114,8 @@ public class Main {
             return String.valueOf(duelController.selectFirstPlayer(input));
         } else if (input.startsWith("deck create")) {
             return DeckController.getInstance().deckCreate(input);
+        } else if (input.startsWith("logout")) {
+            LoginAndSignUpController.getInstance().logout(input);
         } else if (input.startsWith("deck delete")) {
             return DeckController.getInstance().deckDelete(input);
         } else if (input.startsWith("deck setActive")) {

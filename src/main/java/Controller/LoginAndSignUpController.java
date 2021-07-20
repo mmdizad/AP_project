@@ -10,6 +10,8 @@ import java.util.*;
 public class LoginAndSignUpController {
     private static LoginAndSignUpController loginAndSignUpController;
     public static HashMap<String, User> loggedInUsers=new HashMap<>();
+    public static int onlineUsers = 0;
+    public static ArrayList<String> onlineUsernames = new ArrayList<>();
 
     private LoginAndSignUpController() {
 
@@ -74,11 +76,23 @@ public class LoginAndSignUpController {
                     String token = UUID.randomUUID().toString();
                     User user = User.getUserByUsername(username);
                     loggedInUsers.put(token, user);
+                    onlineUsers ++;
+                    if (!onlineUsernames.contains(username)) {
+                        onlineUsernames.add(username);
+                    }
                     return token;
                 }
             }
         } catch (IOException e) {
             return "An error occurred.";
+        }
+    }
+
+    public void logout(String command) {
+        User user = loggedInUsers.get(command.split("/")[1]);
+        if (user != null) {
+            onlineUsernames.remove(user.getUsername());
+            onlineUsers-- ;
         }
     }
 
