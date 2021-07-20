@@ -19,15 +19,31 @@ public class StartDuelView extends MainMenu {
             Matcher matcher = pattern.matcher(input);
             Pattern pattern1 = Pattern.compile("duel --new --rounds (\\d+) --second-player (\\S+)");
             Matcher matcher1 = pattern1.matcher(input);
+            Pattern pattern2 = Pattern.compile("Cancel Duel With (\\S+)");
+            Matcher matcher2 = pattern2.matcher(input);
             if (matcher.find()) {
                 startTheGame(scanner, matcher, 1, 2);
             } else if (matcher1.find()) {
                 startTheGame(scanner, matcher1, 2, 1);
+            } else if (matcher2.find()) {
+                cancelTheGame(matcher2.group(1));
             } else if (input.equals("menu exit")) break;
             else if (input.equals("menu show-current")) System.out.println("StartDuel");
             else System.out.println("invalid command");
             LoginController.saveChangesToFile();
         }
+    }
+
+    public void cancelTheGame(String secondPlayerUsername) {
+        String response = "";
+        try {
+            LoginController.dataOutputStream.writeUTF("Cancel Duel/" + secondPlayerUsername + "/" + LoginController.token);
+            LoginController.dataOutputStream.flush();
+            response = LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
+        }
+        System.out.println(response);
     }
 
     private void startTheGame(Scanner scanner, Matcher matcher, int i2, int i3) {
