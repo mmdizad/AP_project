@@ -24,15 +24,14 @@ public class Main {
                     banCard(getCommandMatcher(command, "ban card (\\w+)"));
                 } else if (command.startsWith("remove ban card")) {
                     removeBanCard(getCommandMatcher(command, "remove ban card (\\w+)"));
-                } else System.out.println("invalid command");
-
+                } else
+                    System.out.println("invalid command");
             }
         }).start();
         LoginAndSignUpController.createFolders();
         LoginAndSignUpController.createCard();
         ShopController.initializeCard();
         runApp();
-
     }
 
     private static void increaseCard(Matcher matcher) {
@@ -40,7 +39,8 @@ public class Main {
             String cardName = matcher.group(1);
             int numberOfCard = Integer.parseInt(matcher.group(2));
             System.out.println(ShopController.getInstance().increaseNumberOfCard(cardName, numberOfCard));
-        } else System.out.println("gg");
+        } else
+            System.out.println("gg");
     }
 
     private static void banCard(Matcher matcher) {
@@ -48,7 +48,8 @@ public class Main {
             String cardName = matcher.group(1);
             if (ShopController.getInstance().banCard(cardName) == 1)
                 System.out.println("card " + cardName + "banned successfully");
-            else System.out.println("card doesn't exist");
+            else
+                System.out.println("card doesn't exist");
         }
     }
 
@@ -58,12 +59,12 @@ public class Main {
             if (ShopController.getInstance().removeBanCard(cardName) == 1)
                 ShopController.getInstance().removeBanCard(cardName);
             System.out.println("card " + cardName + " removed ban successfully");
-        } else System.out.println("invalid command");
+        } else
+            System.out.println("invalid command");
     }
 
     public static void runApp() throws IOException {
         // TODO ServerController.loadData();
-
         ServerSocket serverSocket = new ServerSocket(7777);
         while (true) {
             Socket socket = serverSocket.accept();
@@ -82,7 +83,7 @@ public class Main {
                 dataInputStream.close();
             } catch (IOException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 System.out.println("client disconnected!");
-                LoginAndSignUpController.onlineUsers --;
+                LoginAndSignUpController.onlineUsers--;
             }
         }).start();
     }
@@ -239,6 +240,8 @@ public class Main {
             return DuelController.getInstance().deselect(input);
         } else if (input.startsWith("Cancel Duel")) {
             return StartDuelController.getInstance().cancelTheGame(input);
+        } else if (input.startsWith("Wait For Game")) {
+            return StartDuelController.getInstance().waitForStartDuel(input);
         }
         return "";
     }

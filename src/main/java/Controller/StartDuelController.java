@@ -63,6 +63,7 @@ public class StartDuelController {
                             if (opponentUsername.equals(user1.getUsername())) {
                                 if (user2.getUsername().equals(playerUsername)) {
                                     if (roundOfGame == round) {
+                                        startDuel.put(user1.getUsername(), user2.getUsername() + "/" + round);
                                         return "Duel Started Successfully";
                                     }
                                 }
@@ -78,17 +79,28 @@ public class StartDuelController {
         return "";
     }
 
-    public String cancelTheGame(String input){
+    public String cancelTheGame(String input) {
         String[] partsOfInput = input.split("/");
         String secondPlayerUserName = partsOfInput[1];
         String tokenOfPlayer = partsOfInput[2];
-        if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)){
+        if (LoginAndSignUpController.loggedInUsers.containsKey(tokenOfPlayer)) {
             String playerUsername = LoginAndSignUpController.loggedInUsers.get(tokenOfPlayer).getUsername();
-            if (startDuel.containsKey(playerUsername)){
-                if (startDuel.get(playerUsername).equals(secondPlayerUserName)){
+            if (startDuel.containsKey(playerUsername)) {
+                if (startDuel.get(playerUsername).equals(secondPlayerUserName)) {
                     startDuel.remove(playerUsername);
                     return "Duel Canceled Successfully";
                 }
+            }
+        }
+        return "";
+    }
+
+    public String waitForStartDuel(String input) {
+        String[] partsOfInput = input.split("/");
+        String token = partsOfInput[1];
+        if (LoginAndSignUpController.loggedInUsers.containsKey(token)) {
+            if (startDuel.containsValue(LoginAndSignUpController.loggedInUsers.get(token).getUsername())) {
+                         return "Duel Started Successfully";
             }
         }
         return "";
