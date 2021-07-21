@@ -21,6 +21,7 @@ public class MainMenu {
                 try {
                     LoginController.dataOutputStream.writeUTF("logout/" + LoginController.token);
                     LoginController.dataOutputStream.flush();
+                    System.out.println(LoginController.dataInputStream.readUTF());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
