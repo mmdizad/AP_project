@@ -28,28 +28,13 @@ public class NewCardToHandController extends DuelController {
     public String newCardToHand(String playerUsername) {
         User user = User.getUserByUsername(playerUsername);
         assert user != null;
-        Deck deck = user.getActiveDeck();
-        ArrayList<Card> cardsInDeck = deck.getCardsMain();
-        if (cardsInDeck.size() >= 1) {
-            for (int i = 1; i < 6; i++) {
-                duelController.deselect();
-                Card card = duelController.duelModel.getSpellAndTrap(1 - duelController.duelModel.turn, i);
-                if (card != null) {
-                    if (card.getName().equals("Time Seal") && duelController.duelModel.getSpellAndTrapCondition(1 - duelModel.turn, i).charAt(0) == 'O') {
-                        duelController.duelModel.deleteSpellAndTrap(1 - duelController.duelModel.turn, i - 1);
-                        duelController.duelModel.addCardToGraveyard(1 - duelController.duelModel.turn, card);
-                        return null;
-                    }
-                }
-            }
-            try {
-                LoginController.dataOutputStream.writeUTF("New Card To Hand/" + playerUsername + "/" +
-                        LoginController.token);
-                LoginController.dataOutputStream.flush();
-                return LoginController.dataInputStream.readUTF();
-            } catch (IOException x) {
-                x.printStackTrace();
-            }
+        try {
+            LoginController.dataOutputStream.writeUTF("New Card To Hand/" + playerUsername + "/" +
+                    LoginController.token);
+            LoginController.dataOutputStream.flush();
+            return LoginController.dataInputStream.readUTF();
+        } catch (IOException x) {
+            x.printStackTrace();
         }
         return null;
     }

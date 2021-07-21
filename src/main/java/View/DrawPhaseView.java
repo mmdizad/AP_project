@@ -26,23 +26,6 @@ public class DrawPhaseView extends DuelView {
         } else {
             System.out.println("no card added to hand");
         }
-        if (!startOfGame) {
-            DuelView.getInstance().showBoard();
-            String resultOfEffectOfHeraldOfCreation = newCardToHandController.hasHeraldOfCreation();
-            if (!duelView.isAi) {
-                System.out.println(resultOfEffectOfHeraldOfCreation);
-            } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
-                System.out.println(resultOfEffectOfHeraldOfCreation);
-            }
-            String resultOfEffectOfScanner = newCardToHandController.hasScannerMonster();
-            if (!duelView.isAi) {
-                System.out.println(resultOfEffectOfScanner);
-            } else if (!duelModel.getUsernames().get(duelModel.turn).equals("ai")) {
-                System.out.println(resultOfEffectOfHeraldOfCreation);
-            }
-            StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
-            standByPhaseView.run(scanner);
-        }
     }
 
     public int scanNumberCardTributeForHeraldOfCreation() {

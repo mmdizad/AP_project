@@ -30,7 +30,7 @@ public class DuelView {
     public void selectFirstPlayer(String secondPlayerUsername, Scanner scanner, DuelView duelView, boolean isAi) {
         String response = "";
         try {
-            LoginController.dataOutputStream.writeUTF("Select First Player/" + secondPlayerUsername + "/" + isAi + "/"
+            LoginController.dataOutputStream.writeUTF("Select First Player/" + secondPlayerUsername + "/"
                     + LoginController.token);
             LoginController.dataOutputStream.flush();
             response = LoginController.dataInputStream.readUTF();
@@ -48,10 +48,10 @@ public class DuelView {
                 DrawPhaseView drawPhaseView = DrawPhaseView.getInstance();
                 drawPhaseView.newCard(scanner, LoginController.user.getUsername(), true);
                 System.out.println("EndPhase");
-                duelModel.turn = 1 - duelModel.turn;
-                drawPhaseView.newCard(scanner, secondPlayerUsername, true);
-                System.out.println("EndPhase");
-                duelModel.turn = 1 - duelModel.turn;
+//                duelModel.turn = 1 - duelModel.turn;
+//                drawPhaseView.newCard(scanner, secondPlayerUsername, true);
+//                System.out.println("EndPhase");
+//                duelModel.turn = 1 - duelModel.turn;
                 StandByPhaseView standByPhaseView = StandByPhaseView.getInstance();
                 showBoard();
                 standByPhaseView.run(scanner);

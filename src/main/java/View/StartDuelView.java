@@ -93,7 +93,55 @@ public class StartDuelView extends MainMenu {
                     }
                 }
             }
-        } else System.out.println(response);
+        } else {
+            while (true) {
+                try {
+                    LoginController.dataOutputStream.writeUTF("Wait For Game" + "/" + LoginController.token);
+                    LoginController.dataOutputStream.flush();
+                    response = LoginController.dataInputStream.readUTF();
+                } catch (IOException x) {
+                    x.printStackTrace();
+                }
+                if (response.equals("Duel Started Successfully")) {
+                    if (round == 3 || round == 1) {
+                        User secondUser = User.getUserByUsername(secondPlayerUserName);
+                        if (round == 1) {
+                            DuelView duelView = DuelView.getInstance();
+                            duelView.selectFirstPlayer(secondPlayerUserName, scanner, duelView, false);
+                            printWinnerAndGiveScoreOneRound(duelView, LoginController.user, secondUser);
+                        } else {
+                            int userWins = 0;
+                            int secondPlayerWins = 0;
+                            ArrayList<Integer> maxLPs = new ArrayList<>();
+                            maxLPs.add(0);
+                            maxLPs.add(0);
+                            for (int i = 0; i < 3; i++) {
+                                DuelView duelView = DuelView.getInstance();
+                                duelView.selectFirstPlayer(secondPlayerUserName, scanner, duelView, false);
+                                int winner = printWinnerThreeRound(duelView, LoginController.user, secondUser);
+                                if (winner == 0) userWins++;
+                                else secondPlayerWins++;
+                                if (duelView.duelModel.getLifePoint(0) > maxLPs.get(0)) {
+                                    maxLPs.set(0, duelView.duelModel.getLifePoint(0));
+                                }
+                                if (duelView.duelModel.getLifePoint(1) > maxLPs.get(1)) {
+                                    maxLPs.set(1, duelView.duelModel.getLifePoint(1));
+                                }
+                                if (userWins == 2) {
+                                    finishThreeRound(duelView, LoginController.user, secondUser, maxLPs.get(0));
+                                    return;
+                                }
+                                if (secondPlayerWins == 2) {
+                                    finishThreeRound(duelView, secondUser, LoginController.user, maxLPs.get(1));
+                                    return;
+                                }
+                                changeCardsBetweenRounds(LoginController.user, secondUser, scanner);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
 

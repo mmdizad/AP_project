@@ -1,4 +1,5 @@
 package View;
+
 import Controller.LoginController;
 
 import java.io.IOException;
@@ -67,7 +68,7 @@ public class MainMenu {
                 importAndExport.run(scanner);
             } else if (menuName.equals("Chat")) {
                 ChatView.getInstance().run(scanner);
-            } else{
+            } else {
                 System.out.println("invalid command");
             }
         }
