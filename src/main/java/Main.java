@@ -116,6 +116,7 @@ public class Main {
             return DeckController.getInstance().deckCreate(input);
         } else if (input.startsWith("logout")) {
             LoginAndSignUpController.getInstance().logout(input);
+            return "logout done";
         } else if (input.startsWith("deck delete")) {
             return DeckController.getInstance().deckDelete(input);
         } else if (input.startsWith("deck setActive")) {
